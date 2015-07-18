@@ -1,0 +1,136 @@
+/* 题目难度控件 */
+
+.br-wrapper .br-widget a {
+  display: block;
+  width: 40px;
+  padding: 5px 0;
+  height: 8px;
+  float: left;
+  background-color: #fbedd9;
+  margin: 1px;
+  text-align: center;
+}
+.br-wrapper .br-widget a.br-active,
+.br-wrapper .br-widget a.br-selected {
+  background-color: #edb867;
+}
+.br-wrapper .br-widget .br-current-rating {
+  display: inline-block;
+  padding: 0 0 0 15px;
+  color: #edb867;
+  position: relative;
+  top: -4px;
+}
+
+.question-difficulty {
+  overflow: hidden;
+}
+
+/* 题目选项编辑对话框 */
+
+#quiz-option-error-message i {
+  cursor: pointer;
+}
+
+#quiz-summary div {
+  margin-bottom: 15px;
+}
+
+#quiz-summary i {
+  margin-right: 6px;
+}
+
+.quiz-option-common {
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+#quiz-type {
+  padding-left: 0px;
+}
+
+#quiz-type .dropdown-toggle {
+  height: 34px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#quiz-countdown {
+  padding-right: 0px;
+}
+
+#quiz-countdown-input {
+  display: none;
+}
+
+#enable-quiz-countdown {
+  display: inline-block;
+}
+
+.quiz-countdown-input {
+  display: inline-block;
+  float: right;
+  width: 30%;
+}
+
+.dlg-control {
+  padding: 6px;
+}
+
+.quiz-option-pages {
+  min-height: 250px;
+}
+
+.quiz-option-page table tr th {
+  border-bottom: none;
+}
+
+.quiz-option-page table input {
+  margin-bottom: 0px;
+}
+
+.quiz-option-page table td {
+  min-width: 50px;
+}
+
+.quiz-option-page.default-page {
+  top: 100px;
+  position: relative;
+  text-align: center;
+}
+
+.quiz-word-group {
+  margin-top: -1px;
+}
+
+.quiz-option-crossword-answer {
+  margin-bottom: 10px;
+}
+
+.quiz-option-crossword-answer input {
+  margin-bottom: 0;
+}
+
+#quiz-option-crossword-words {
+  margin-bottom: 0;
+}
+
+#quiz-option-crossword-words-hint .match {
+  color: green;
+  padding: 0 6px;
+}
+
+#quiz-option-crossword-words-hint .mismatch {
+  color: red;
+  padding: 0 6px;
+}
+
+.quiz-option-crossword-toolbar {
+  margin-top: 10px;
+}
+
+#quiz-option-crossword-auto, #quiz-option-crossword-shuffle {
+  float: right;
+  margin-left: 15px;
+}

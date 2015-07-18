@@ -1,0 +1,355 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="aw-container-wrap">
+	<div class="container aw-publish">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+				<div class="col-sm-12 col-md-9 aw-main-content">
+					<!-- tab 切换 -->
+					<ul class="nav nav-tabs aw-nav-tabs active">
+						<?php if (check_extension_package('project') && get_setting('project_enabled') == 'Y' && $this->user_info['permission']['publish_project']) { ?>
+						<li><a href="project/publish/"><?php _e('活动'); ?></a></li>
+						<?php } ?>
+						<?php if (check_extension_package('ticket') && get_setting('ticket_enabled') == 'Y' && $this->user_info['permission']['publish_ticket']) { ?>
+						<li><a href="ticket/publish/"><?php _e('工单'); ?></a></li>
+						<?php } ?>
+						<?php if ($this->user_info['permission']['publish_article']) { ?>
+						<li><a href="publish/article/"><?php _e('文章'); ?></a></li>
+						<?php } ?>
+						<li class="active"><a href="publish/"><?php _e('问题'); ?></a></li>
+						<h2 class="hidden-xs"><i class="icon icon-ask"></i> <?php _e('发起'); ?></h2>
+					</ul>
+					<!-- end tab 切换 -->
+					<form action="publish/ajax/<?php if ($this->question_info['question_id']) { ?>modify<?php } else { ?>publish<?php } ?>_question/" method="post" id="question_form" onsubmit="return false;">
+						<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+						<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
+						<input type="hidden" name="question_id" id="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
+						<input type="hidden" name="ask_user_id" value="<?php echo $_POST['ask_user_id']; ?>" />
+						<?php if ($this->question_category_list) { ?>
+						<select name="category_id" class="hide" id="category_id">
+							<option value="0">- <?php _e('请选择分类'); ?> -</option>
+							<?php echo $this->question_category_list; ?>
+						</select>
+						<?php } ?>
+						<div class="aw-mod aw-mod-publish">
+							<div class="mod-body">
+								<h3><?php _e('问题标题'); ?>:</h3>
+								<!-- 问题标题 -->
+								<div class="aw-publish-title<?php if (!$this->question_category_list) { ?> active<?php } ?>">
+									<div>
+										<input type="text" placeholder="<?php _e('问题标题'); ?>..." name="question_content" id="question_contents" value="<?php echo $this->question_info['question_content']; ?>" class="form-control" />
+										<div class="aw-publish-suggest-question hide">
+											<p class="text-color-999">你的问题可能已经有答案</p>
+											<ul class="aw-dropdown-list">
+											</ul>
+										</div>
+									</div>
+									<?php if ($this->question_category_list) { ?>
+									<div class="dropdown">
+										<div class="dropdown-toggle" data-toggle="dropdown">
+											<span id="aw-topic-tags-select" class="aw-hide-txt"><?php _e('选择分类'); ?></span>
+											<a href="javascript:;"><i class="icon icon-down"></i></a>
+										</div>
+									</div>
+									<?php } ?>
+								</div>
+								<!-- end 问题标题 -->
+
+								<h3><?php _e('问题补充 (选填)'); ?>:</h3>
+								<div class="aw-mod aw-editor-box">
+									<div class="mod-head">
+										<div class="wmd-panel">
+								            <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="question_detail"><?php echo $this->question_info['question_detail']; ?></textarea>
+								        </div>
+									</div>
+									<div class="mod-body">
+										<span class="pull-right text-color-999" id="question_detail_message">&nbsp;</span>
+										<?php if (get_setting('upload_enable') == 'Y') { ?>
+										<div class="aw-upload-box">
+											<a class="btn btn-default">上传附件</a>
+											<div class="upload-container"></div>
+											<span class="text-color-999 aw-upload-tips hidden-xs"><?php _e('允许'); ?> : <?php echo get_setting('allowed_upload_types'); ?></span>
+										</div>
+										<?php } ?>
+									</div>
+								</div>
+								<!-- end 问题补充 -->
+
+								<h3><?php _e('问题难度系数'); ?>:</h3>
+								<input id="question_difficulty" type="hidden" name="question_difficulty" value="<?php if($this->question_info['difficulty']) {echo $this->question_info['difficulty'];}else{ echo '2';} ?>"></input>
+								<div class='question-difficulty'>
+									<select id="question-difficulty-control">
+									  <option value="1">1</option>
+									  <option value="2">2</option>
+									  <option value="3">3</option>
+									  <option value="4">4</option>
+									  <option value="5">5</option>
+									</select>
+								</div>
+								<span class="text-color-999">问题难度系数：1（简单）~ 5（困难）</span>
+								<!-- end 问题难度 -->								
+
+								<h3><?php _e('答题选项（可选）'); ?>:</h3>
+								<input id="quiz_content" type="hidden" name="quiz_content" value=""></input>
+								<div class="quiz-content-container">
+									<div class="panel panel-default">
+										<div class="panel-body">
+											<div id="quiz-summary">
+												
+											</div>
+											<div class="quiz-preview">
+												
+											</div>
+											<div>
+												<a id="edit-quiz-options" class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><span class="glyphicon glyphicon-pencil"></span><?php _e(' 编辑答题选项'); ?></a>
+											</div>
+										</div>
+									</div>
+
+									<!-- 选项编辑对话框 -->
+									<div class="modal fade" id="dlg-quiz-options" tabindex="-1" role="dialog" aria-labelledby="dlg-quiz-option-label">
+									  <div class="modal-dialog" role="document">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <a type="button" class="close icon icon-delete" data-dismiss="modal" aria-hidden="true"></a>
+									        <h4 class="modal-title" id="dlg-quiz-option-label"><?php _e('编辑答题选项'); ?></h4>
+									      </div>
+									      <div class="modal-body">
+									      	<div id="quiz-option-error-message" class="alert alert-danger hidden error_message">
+									      		<i class="icon icon-delete"></i>
+									      		<em></em>
+									      	</div>
+									      	<div class="quiz-option-common">
+									      		<div id="quiz-type" class="form-group col-xs-4">
+													<div class="btn-group">
+														<a class="btn btn-default dropdown-toggle btn-select" data-toggle="dropdown" href="#">
+															<span class="quiz-type-select"><?php _e('答题类型 '); ?></span>
+															<span class="caret"></span>
+														</a>
+											            <ul class="dropdown-menu">
+											                <li><a href="#" data-quiz-type="1"><?php _e('单项选择'); ?></a></li>
+											                <li><a href="#" data-quiz-type="2"><?php _e('多项选择'); ?></a></li>
+											                <li><a href="#" data-quiz-type="3"><?php _e('成语字谜'); ?></a></li>
+											                <li><a href="#" data-quiz-type="4"><?php _e('完形填空'); ?></a></li>
+											            </ul>
+											        </div>
+										        </div>
+										        <div id="quiz-countdown" class="form-group col-xs-8">
+										        	<div id="enable-quiz-countdown" class="dlg-control">
+										        		<input class="dlg-control" type="checkbox" name="enable-quiz-countdown"></input>
+										        		<span><?php _e('限时答题'); ?></span>
+										        	</div>
+										        	<div class="quiz-countdown-input">
+										        		<input id="quiz-countdown-input" class="form-control" type="text" name="quiz-countdown" value="" placeholder="秒"></input>
+										        	</div>
+										        </div>
+									      	</div>
+									      	<div class="panel panel-default quiz-option-pages">
+												<div class="panel-body">
+													<ul>
+														<li class="quiz-option-page default-page" data-quiz-type="0">
+															<span><?php _e('请选择答题类型'); ?></span>
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="1">
+															<table class="table">
+														        <thead>
+														          <tr>
+														            <th><?php _e('选项'); ?></th>
+														            <th><?php _e('答案'); ?></th>
+														            <th><?php _e('操作');?></th>
+														          </tr>
+														        </thead>
+														        <tbody class="quiz-option-single-list">
+														          <tr class="quiz-option-single">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-single">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-single-add">
+														            <td colspan="2"><span class="text-color-999">提示：选项个数不能少于2个，不能多于15个</span></td>
+														            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+														          </tr>
+														        </tbody>
+														    </table>
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="2">
+															<table class="table">
+														        <thead>
+														          <tr>
+														            <th><?php _e('选项'); ?></th>
+														            <th><?php _e('答案'); ?></th>
+														            <th><?php _e('操作');?></th>
+														          </tr>
+														        </thead>
+														        <tbody class="quiz-option-multiple-list">
+														          <tr class="quiz-option-multiple">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="checkbox" name="quiz-option-multiple-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-multiple">
+														            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+														            <td><input class="dlg-control" type="checkbox" name="quiz-option-multiple-answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-multiple-add">
+														            <td colspan="2"><span class="text-color-999">提示：选项个数不能少于2个，不能多于15个</span></td>   
+														            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+														          </tr>
+														        </tbody>
+														    </table>
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="3">
+															<div class="quiz-option-crossword-answer">
+																<input id="quiz-option-crossword-answer" type="text" class="form-control" name="quiz-option-crossword-answer" placeholder="字谜答案">
+																<span class="text-color-999">您设计的字谜答案，一般不要超过5个汉字</span>
+															</div>
+															<div class="quiz-option-crossword-words">
+																<textarea id="quiz-option-crossword-words" class="form-control" name="quiz-option-crossword-words" id="quiz-option-crossword-words" rows="4" placeholder="字谜可选汉字"></textarea>
+																<span id="quiz-option-crossword-words-hint" class="text-color-999">可选汉字：答案长度 &times; 8</span>
+																<div class="quiz-option-crossword-toolbar">
+																	<a href="#" class="btn btn-success btn-sm" id="quiz-option-crossword-auto"><?php _e('随机生成'); ?></a>
+																	<a href="#" class="btn btn-success btn-sm" id="quiz-option-crossword-shuffle"><?php _e('打乱内容'); ?></a>
+																</div>
+															</div>
+														</li>
+														<li class="quiz-option-page hidden" data-quiz-type="4">
+															<table class="table">
+														        <thead>
+														          <tr>
+														            <th><?php _e('标签'); ?></th>
+														            <th><?php _e('答案'); ?></th>
+														            <th><?php _e('操作');?></th>
+														          </tr>
+														        </thead>
+														        <tbody class="quiz-option-textinput-list">
+														          <tr class="quiz-option-textinput">
+														          	<td><input class="form-control" type="text" placeholder="填空标签" data-textinput-field="label"></td>
+														            <td><input class="form-control" type="text" placeholder="填空答案" data-textinput-field="answer"></td>
+														            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+														          </tr>
+														          <tr class="quiz-option-textinput-add">
+														            <td colspan="2"><span class="text-color-999">提示：填空个数不能多于6个</span></td>
+														            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+														          </tr>
+														        </tbody>
+														    </table>
+														</li>
+													</ul>
+												</div>
+									      	</div>
+									      </div>
+									      <div class="modal-footer">
+									        <button id="quiz-options-save" type="button" class="btn btn-primary"><?php _e('确认保存'); ?></button>
+									      </div>
+									    </div>
+									  </div>
+									</div>
+									<!-- end 选项编辑对话框-->
+								</div>
+
+								<!-- end 问题难度 -->
+
+								<?php if (!$this->question_info['question_id']) { ?>
+								<h3><?php _e('添加话题'); ?>:</h3>
+								<div class="aw-topic-bar" data-type="publish">
+									<div class="tag-bar clearfix">
+										<?php if ($_GET['topic_title']) { ?>
+										<span class="topic-tag">
+											<a class="text"><?php echo urldecode($_GET['topic_title']); ?></a>
+											<a class="close" onclick="$(this).parents('.topic-tag').remove();">
+												<i class="icon icon-delete"></i>
+											</a>
+											<input type="hidden" value="<?php echo urldecode($_GET['topic_title']); ?>" name="topics[]" />
+										</span>
+										<?php } ?>
+
+										<?php if ($_POST['topics']) { ?>
+										<?php foreach ($_POST['topics'] AS $key => $val) { ?>
+										<span class="topic-tag">
+											<a class="text"><?php echo $val; ?></a>
+											<input type="hidden" value="<?php echo $val; ?>" name="topics[]" />
+										</span>
+										<?php } ?>
+										<?php } ?>
+
+										<span class="aw-edit-topic icon-inverse"><i class="icon icon-edit"></i> <?php _e('编辑话题'); ?></span>
+										</span>
+									</div>
+								</div>
+								<?php if ($this->recent_topics) { ?>
+								<h3><?php _e('最近话题'); ?>:</h3>
+								<div class="aw-topic-bar">
+									<div class="topic-bar clearfix">
+										<?php foreach($this->recent_topics as $key => $val) { ?>
+										<span class="topic-tag" onclick="$('#aw_edit_topic_title').val('<?php echo $val; ?>');$('.add').click();$(this).hide();">
+											<a class="text">
+												<?php echo $val; ?>
+											</a>
+										</span>
+										<?php } ?>
+									</div>
+								</div>
+								<?php } ?>
+								<?php } ?>
+								<?php if ($this->human_valid) { ?>
+								<div class="aw-auth-img clearfix">
+									<input class="form-control pull-right" type="text" name="seccode_verify" placeholder="验证码" />
+									<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha"  /></em>
+								</div>
+								<?php } ?>
+							</div>
+							<div class="mod-footer clearfix">
+								<?php if (get_setting('integral_system_enabled') == 'Y') { ?><a href="integral/rule/" target="_blank">[<?php _e('积分规则'); ?>]</a><?php } ?>
+								<span class="aw-anonymity">
+									<?php if ($this->question_info['question_id'] AND ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'])) { ?>
+									<label><input type="checkbox" class="pull-left" value="1" name="do_delete" />
+										<?php _e('删除问题'); ?></label>
+									<?php } ?>
+									<?php if (!$this->question_info['question_id'] AND get_setting('anonymous_enable') == 'Y') { ?>
+									<label><input type="checkbox" class="pull-left" value="1" name="anonymous" />
+										<?php _e('匿名'); ?></label>
+									<?php } ?>
+
+								</span>
+								<a class="btn btn-large btn-success btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- 侧边栏 -->
+				<div class="col-sm-12 col-md-3 aw-side-bar hidden-xs">
+					<!-- 问题发起指南 -->
+					<div class="aw-mod publish-help">
+						<div class="mod-head">
+							<h3><?php _e('问题发起指南'); ?></h3>
+						</div>
+						<div class="mod-body">
+							<p><b>• <?php _e('问题标题'); ?>:</b> <?php _e('请用准确的语言描述您发布的问题思想'); ?></p>
+							<p><b>• <?php _e('问题补充'); ?>:</b> <?php _e('详细补充您的问题内容, 并提供一些相关的素材以供参与者更多的了解您所要问题的主题思想'); ?></p>
+							<p><b>• <?php _e('选择话题'); ?>:</b> <?php _e('选择一个或者多个合适的话题, 让您发布的问题得到更多有相同兴趣的人参与. 所有人可以在您发布问题之后添加和编辑该问题所属的话题'); ?></p>
+							<?php if (get_setting('integral_system_enabled') == 'Y') { ?>
+							<p><b>• <?php _e('关于积分'); ?>：</b> <?php _e('发起一个问题会消耗您 %s 个积分', -get_setting('integral_system_config_new_question')); ?>, <?php if (get_setting('integral_system_config_answer_change_source') == 'Y') { _e('每多一个回复你将获得 %s 个积分的奖励', -get_setting('integral_system_config_new_answer')); ?> ,<?php } _e('为了您的利益, 在发起问题的时候希望能够更好的描述您的问题以及多使用站内搜索功能'); ?>.</p>
+							<?php } ?>
+						</div>
+					</div>
+					<!-- end 问题发起指南 -->
+				</div>
+				<!-- end 侧边栏 -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var ATTACH_ACCESS_KEY = '<?php echo $this->attach_access_key; ?>';
+	var CATEGORY_ID = <?php echo $this->question_info['category_id']; ?>;
+	var PUBLISH_TYPE = 'question';
+</script>
+
+<?php TPL::output('global/footer.tpl.htm'); ?>

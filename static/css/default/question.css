@@ -1,0 +1,21 @@
+.question-quiz {
+	margin-top: 15px;
+}
+
+.question-quiz em {
+	font-style: normal;
+}
+
+.question-quiz-info {
+	margin-bottom: 6px;
+}
+
+.question-quiz-info span {
+	margin-right: 6px;
+}
+
+.question-quiz-content {
+	overflow: hidden;
+	padding: 1px;
+	max-width: 316px;
+}
