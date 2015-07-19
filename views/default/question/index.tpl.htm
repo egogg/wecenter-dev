@@ -48,10 +48,7 @@
 					</div>
 					<!-- end 话题bar -->
 					<div class="aw-mod aw-question-detail aw-item">
-						<div class="mod-head">
-							<h1>
-								<?php echo $this->question_info['question_content']; ?>
-							</h1>
+						<div class="mod-head question-header">
 
 							<?php if ($this->user_id) { ?>
 							<div class="operate clearfix">
@@ -106,104 +103,113 @@
 						</div>
 						<div class="mod-body">
 							<div class="content markitup-box">
-								<!-- 问题状态信息 -->
+								<div class="question-content">
+									<div class="question-content-overlay"></div>
 
-								<div class="question-info">
-									<div class="question-difficulty pull-left">
-										<?php if($this->question_info['difficulty'] == 5) { ?>
-											<span class="label label-danger">
-												<i class="glyphicon glyphicon-star"></i>
-												<?php _e('极难'); ?>
-											</span>
-										<?php } elseif($this->question_info['difficulty'] == 4) { ?>
-											<span class="label label-warning">
-												<i class="glyphicon glyphicon-star"></i>
-												<?php _e('困难'); ?>
-											</span>
-										<?php } elseif($this->question_info['difficulty'] == 3) { ?>
-											<span class="label label-primary">
-												<i class="glyphicon glyphicon-star-empty"></i>
-												<?php _e('中等'); ?>
-											</span>
-										<?php } elseif($this->question_info['difficulty'] == 2) { ?>
-											<span class="label label-success">
-												<i class="glyphicon glyphicon-star-empty"></i>
-												<?php _e('简单'); ?>
-											</span>
-										<?php } else { ?>
-											<span class="label label-default">
-												<i class="glyphicon glyphicon-star-empty"></i>
-												<?php _e('轻松'); ?>
-											</span>
-										<?php } ?>
+									<!-- 问题标题 -->
+
+									<h1>
+										<?php echo $this->question_info['question_content']; ?>
+									</h1>
+
+									<!-- 问题状态信息 -->
+					
+									<div class="question-info">
+										<div class="question-difficulty pull-left">
+											<?php if($this->question_info['difficulty'] == 5) { ?>
+												<span class="label label-danger">
+													<i class="glyphicon glyphicon-star"></i>
+													<?php _e('极难'); ?>
+												</span>
+											<?php } elseif($this->question_info['difficulty'] == 4) { ?>
+												<span class="label label-warning">
+													<i class="glyphicon glyphicon-star"></i>
+													<?php _e('困难'); ?>
+												</span>
+											<?php } elseif($this->question_info['difficulty'] == 3) { ?>
+												<span class="label label-primary">
+													<i class="glyphicon glyphicon-star-empty"></i>
+													<?php _e('中等'); ?>
+												</span>
+											<?php } elseif($this->question_info['difficulty'] == 2) { ?>
+												<span class="label label-success">
+													<i class="glyphicon glyphicon-star-empty"></i>
+													<?php _e('简单'); ?>
+												</span>
+											<?php } else { ?>
+												<span class="label label-default">
+													<i class="glyphicon glyphicon-star-empty"></i>
+													<?php _e('轻松'); ?>
+												</span>
+											<?php } ?>
+										</div>
+
+										<div class="question-quiz-type pull-left">
+											<?php if($this->question_quiz['type'] == 1) { ?>
+												<span class="label label-info">
+												<i class="glyphicon glyphicon-ok-circle"></i>
+												<?php _e('单项选择'); ?>
+												</span>
+											<?php } elseif($this->question_quiz['type'] == 2) { ?>
+												<span class="label label-info">
+												<i class="glyphicon glyphicon-check"></i>
+												<?php _e('多项选择'); ?>
+												</span>
+											<?php } elseif($this->question_quiz['type'] == 3) { ?>
+												<span class="label label-info">
+												<i class="glyphicon glyphicon-th"></i>
+												<?php _e('成语字谜'); ?>
+												</span>
+											<?php } elseif($this->question_quiz['type'] == 4) { ?>
+												<span class="label label-info">
+												<i class="glyphicon glyphicon-edit"></i>
+												<?php _e('完形填空'); ?>
+												</span>
+											<?php } else { ?>
+												<span class="label label-info">
+												<i class="glyphicon glyphicon-comment"></i>
+												<?php _e('开放讨论'); ?>
+												</span>
+											<?php } ?>
+										</div>
+										<div class="question-quiz-countdown pull-left">
+											<?php if($this->question_quiz['countdown'] > 0) { ?>
+												<span class="label label-danger">
+												<i class="glyphicon glyphicon-time"></i>
+												<?php _e('限时答题'); ?>
+												</span>
+											<?php } ?>
+										</div>
+
 									</div>
 
-									<div class="question-quiz-type pull-left">
-										<?php if($this->question_quiz['type'] == 1) { ?>
-											<span class="label label-info">
-											<i class="glyphicon glyphicon-ok-circle"></i>
-											<?php _e('单项选择'); ?>
-											</span>
-										<?php } elseif($this->question_quiz['type'] == 2) { ?>
-											<span class="label label-info">
-											<i class="glyphicon glyphicon-check"></i>
-											<?php _e('多项选择'); ?>
-											</span>
-										<?php } elseif($this->question_quiz['type'] == 3) { ?>
-											<span class="label label-info">
-											<i class="glyphicon glyphicon-th"></i>
-											<?php _e('成语字谜'); ?>
-											</span>
-										<?php } elseif($this->question_quiz['type'] == 4) { ?>
-											<span class="label label-info">
-											<i class="glyphicon glyphicon-edit"></i>
-											<?php _e('完形填空'); ?>
-											</span>
-										<?php } else { ?>
-											<span class="label label-info">
-											<i class="glyphicon glyphicon-comment"></i>
-											<?php _e('开放讨论'); ?>
-											</span>
-										<?php } ?>
+									<!-- 问题详细描述 -->
+
+									<div class="question-detail">
+										<?php echo $this->question_info['question_detail']; ?>	
 									</div>
-									<div class="question-quiz-countdown pull-left">
-										<?php if($this->question_quiz['countdown'] > 0) { ?>
-											<span class="label label-danger">
-											<i class="glyphicon glyphicon-time"></i>
-											<?php _e('限时答题'); ?>
-											</span>
-										<?php } ?>
+									
+									<!-- 答题选项 -->
+									
+									<?php if($this->question_quiz) { ?>
+									
+									<div class="question-quiz">
+										<div class="question-quiz-overlay"></div>
+										<div class="question-quiz-content"></div>
 									</div>
-
+									
+									<?php } ?>
+									
+									<?php if ($this->question_info['attachs']) {  ?>
+									<div class="aw-upload-img-list">
+									<?php foreach ($this->question_info['attachs'] AS $attach) { ?>
+									<?php if ($attach['is_image'] AND (!$this->question_info['attachs_ids'] OR !in_array($attach['id'], $this->question_info['attachs_ids']))) { ?>
+										<a href="<?php echo $attach['attachment']; ?>" target="_blank" data-fancybox-group="thumb" rel="lightbox"><img src="<?php echo $attach['attachment']; ?>" class="img-thumbnail" alt="<?php echo $attach['file_name']; ?>" /></a>
+									<?php } ?>
+									<?php } ?>
+									</div>
+									<?php } ?>
 								</div>
-
-								<!-- 问题详细描述 -->
-
-								<div class="question-detail">
-									<?php echo $this->question_info['question_detail']; ?>	
-								</div>
-								
-								<!-- 答题选项 -->
-								
-								<?php if($this->question_quiz) { ?>
-								
-								<div class="question-quiz">
-									<div class="question-quiz-content">
-										
-									</div>	
-								</div>
-								
-								<?php } ?>
-								
-								<?php if ($this->question_info['attachs']) {  ?>
-								<div class="aw-upload-img-list">
-								<?php foreach ($this->question_info['attachs'] AS $attach) { ?>
-								<?php if ($attach['is_image'] AND (!$this->question_info['attachs_ids'] OR !in_array($attach['id'], $this->question_info['attachs_ids']))) { ?>
-									<a href="<?php echo $attach['attachment']; ?>" target="_blank" data-fancybox-group="thumb" rel="lightbox"><img src="<?php echo $attach['attachment']; ?>" class="img-thumbnail" alt="<?php echo $attach['file_name']; ?>" /></a>
-								<?php } ?>
-								<?php } ?>
-								</div>
-								<?php } ?>
 							</div>
 							<?php if ($this->question_info['attachs']) {  ?>
 							<div class="aw-mod aw-upload-file-list">
@@ -710,7 +716,10 @@
 	var USER_ANSWERED = '<?php echo $this->user_answered; ?>';
 	var UPLOAD_ENABLE = '<?php echo get_setting('upload_enable') ?>';
 	var ANSWER_TYPE = 'answer';
+	<?php if ($this->question_quiz) { ?>
+	var QUESTION_QUIZ_ID = <?php echo $this->question_quiz['id']; ?>;
 	var QUESTION_QUIZ = '<?php echo $this->question_quiz['content']; ?>';
+	<?php } ?>
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>

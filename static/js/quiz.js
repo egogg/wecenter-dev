@@ -85,9 +85,9 @@
             };
 
             var getQuizResult = function(element) {
-                var result = [];
+                var result = '';
                 element.find('.quiz-answer-key').each(function(index) {
-                    result[index] = $(this).attr('data-word-index');
+                    result += $(this).text().trim();
                 });
 
                 return result;
@@ -180,7 +180,7 @@
             };
 
             var getQuizResult = function(element) {
-                return $(element.find('.quiz-single-selection .quiz-option.checked')[0]).attr('data-index');
+                return parseInt($(element.find('.quiz-single-selection .quiz-option.checked')[0]).attr('data-index')) + 1;
             };
 
             var lockQuiz = function(element) {
@@ -230,7 +230,7 @@
             var getQuizResult = function(element) {
                 var result = [];
                 element.find('.quiz-multiple-selection .quiz-option.checked').each(function(index) {
-                    result[index] = $(this).attr('data-index');
+                    result[index] = parseInt($(this).attr('data-index')) + 1;
                 });
 
                 return result;
@@ -392,8 +392,8 @@
                                     options.lockQuiz(element);
                                 }
 
-                                if(typeof options.onTimeup == 'function') {
-                                    options.onTimeup();
+                                if(typeof options.onTimeout == 'function') {
+                                    options.onTimeout();
                                 }
                             }
                         }
@@ -418,9 +418,13 @@
 
                         if(typeof options.getQuizResult == 'function') {
                             var answer = options.getQuizResult(this.$element);
-                            var time = this.$element.find('.quiz-countdown .timer').attr('data-time-spend');
+                            var spendTime = -1;
+                            if(quizItem.countdown > 0) {
+                                spendTime = quizItem.countdown - this.$element.find('.quiz-countdown .timer').attr('data-time-spend');
+                            }
+                            
                             if(typeof options.onSubmitAnswer == 'function') {
-                                options.onSubmitAnswer(answer, time);
+                                options.onSubmitAnswer(answer, spendTime);
                             }
                         }
 
@@ -623,7 +627,11 @@
 
         },
 
-        onSubmitAnswer : function (answer) {
+        onSubmitAnswer : function (answer, spendTime) {
+
+        },
+
+        onTimeout : function () {
 
         }
     };

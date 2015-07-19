@@ -31,7 +31,8 @@ class ajax extends AWS_CONTROLLER
 			'log',
 			'get_focus_users',
 			'get_answer_users',
-			'fetch_share_data'
+			'fetch_share_data',
+			'check_quiz_answer'
 		);
 
 		return $rule_action;
@@ -1012,6 +1013,133 @@ class ajax extends AWS_CONTROLLER
 
 		$this->model('answer')->set_best_answer($_POST['answer_id']);
 
+		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+	}
+
+	// 检查问题答案
+
+	public function question_quiz_check_answer_action()
+	{
+		if( !$this->user_id )
+		{
+			H::ajax_json_output(array(
+				'is_valid_user' => false 
+			));
+		}
+
+		// 获取答题选项信息
+
+		$is_valid_answer = true;
+		if($_GET['quiz_id'])
+		{
+			if(!$question_quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($_GET['quiz_id'], true)) {
+				$is_valid_answer = false;
+			}
+		} 
+		else
+		{
+			$is_valid_answer = false;
+		}
+		
+		$quiz = json_decode($question_quiz_info['content'], true);
+        if (!(json_last_error() === JSON_ERROR_NONE))
+        {
+            $is_valid_answer = false;
+        }
+
+        if($_GET['answer'])
+        {
+        	$user_answer = $_GET['answer'];
+        }
+        else
+        {
+        	$is_valid_answer = false;
+        }
+
+        if($_GET['spend_time'])
+        {
+        	$spend_time = $_GET['spend_time'];
+        }
+
+		if(!$is_valid_answer)
+		{
+			H::ajax_json_output(array(
+				'is_valid_user' => true,
+				'is_valid_answer' => false,
+				'user_answer' => $user_answer,
+				'spend_time' => $spend_time
+			));
+		}
+
+		// 检查答案
+
+		$is_correct_answer = true;
+		switch($quiz['type'])
+		{
+			case 'singleSelection':
+				if(!is_numeric($user_answer))
+				{
+					$is_valid_answer = false;
+				}
+				else
+				{	
+					$answer_index = intval($user_answer) - 1;
+					if($answer_index < 0 || $answer_index >= count($quiz['answers'])) 
+					{
+						$is_valid_answer = false;
+					}
+					else
+					{
+						$is_correct_answer = $quiz['answers'][$answer_index]['answer'];
+					}
+				}
+
+				break;
+			case 'multipleSelection':
+				$correct_answer = array();
+				foreach ($quiz['answers'] as $i => $answer)
+				{
+					if($answer['answer'])
+					{
+						$correct_answer[] = ($i + 1);
+					}
+				}
+				$correct_answer = implode(',', $correct_answer);
+				$is_correct_answer = ($correct_answer == $user_answer);
+
+				break;
+			case 'crossword':
+				$is_correct_answer = ($user_answer == $quiz['answers'][0]['answer']);
+				
+				break;
+			case 'textInput':
+				$correct_answer = array();
+				foreach ($quiz['answers'] as $i => $value) 
+				{
+					$correct_answer[] = $value['answer'];
+				}
+				$correct_answer = implode(',', $correct_answer);
+				$is_correct_answer = ($correct_answer == $user_answer);
+
+				break;
+			default :
+				$is_valid_answer = false;
+				$is_correct_answer = false;
+		}
+
+        $quiz_result = array(
+        	'is_valid_user' => true,
+        	'is_valid_answer' => $is_valid_answer,
+        	'user_answer' => $user_answer,
+        	'correct_answer' => $correct_answer,
+        	'spend_time' => $spend_time,
+        	'correct' => $is_correct_answer
+        	);
+        H::ajax_json_output($quiz_result);
+	}
+
+	public function question_quiz_timeout_action () 
+	{
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
 }

@@ -330,7 +330,7 @@ class ajax extends AWS_CONTROLLER
                 H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请重新编辑答题选项')));
             }
             
-            if($quiz_id == 0) 
+            if($quiz_id == 0)
             {
                 $quiz_id = $this->model('quiz')->save_question_quiz($quiz['type'], $quiz['countdown'], $_POST['quiz_content']);
             }

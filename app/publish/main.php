@@ -117,7 +117,7 @@ class main extends AWS_CONTROLLER
 		// 答题选项
 
 		if(intval($question_info['quiz_id']) > 0) {
-			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id'], true);
 
 			TPL::assign('question_quiz', $question_quiz);
 		}

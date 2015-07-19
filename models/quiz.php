@@ -50,27 +50,27 @@ class quiz_class extends AWS_MODEL
 
 	public function update_question_quiz($quiz_id, $quiz_type, $countdown, $quiz_content)
 	{
-		if (!$quesion_quiz_info = $this->get_question_quiz_info_by_id($quiz_id))
+		if (!$question_quiz_info = $this->get_question_quiz_info_by_id($quiz_id, true))
 		{
 			return false;
 		}
 
 		$quiz_type_id = $this->get_quiz_type_id($quiz_type);
-		if($quesion_quiz_info['type'] != $quiz_type_id)
+		if($question_quiz_info['type'] != $quiz_type_id)
 		{
 			$this->update('question_quiz', array(
 				'type' => intval($quiz_type_id)
 			), 'id = ' . intval($quiz_id));
 		}
 
-		if($quesion_quiz_info['countdown'] != $countdown)
+		if($question_quiz_info['countdown'] != $countdown)
 		{
 			$this->update('question_quiz', array(
 				'countdown' => intval($countdown)
 			), 'id = ' . intval($quiz_id));
 		}
 
-		if($quesion_quiz_info['content'] != $quiz_content)
+		if($question_quiz_info['content'] != $quiz_content)
 		{
 			$this->update('question_quiz', array(
 				'content' => $quiz_content
@@ -83,8 +83,27 @@ class quiz_class extends AWS_MODEL
 		$this->delete('question_quiz', 'id = ' . intval($quiz_id));
 	}
 
-	public function get_question_quiz_info_by_id($quiz_id)
+	public function get_question_quiz_info_by_id($quiz_id, $with_answer = false)
 	{
-		return $this->fetch_row('question_quiz', 'id = ' . intval($quiz_id));
+		if(!($question_quiz_info = $this->fetch_row('question_quiz', 'id = ' . intval($quiz_id))))
+		{
+			return false;
+		}
+
+		if(!$with_answer)
+		{
+			// 删除问题答案的部分
+
+			$quiz = json_decode($question_quiz_info['content'], true);
+            if (!(json_last_error() === JSON_ERROR_NONE))
+            {
+                return false;
+            }
+
+            unset($quiz['answers']);
+            $question_quiz_info['content'] = json_encode($quiz);
+		}
+
+		return $question_quiz_info;
 	}
 }
