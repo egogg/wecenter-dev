@@ -319,6 +319,39 @@ class ajax extends AWS_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请填写正确的验证码')));
         }
 
+        // 检查并在数据库中添加答题选项组件
+
+        $quiz_id = $question_info['quiz_id'];
+        if($_POST['quiz_content'])
+        {
+            $quiz = json_decode($_POST['quiz_content'], true);
+            if (!(json_last_error() === JSON_ERROR_NONE))
+            {
+                H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请重新编辑答题选项')));
+            }
+            
+            if($quiz_id == 0) 
+            {
+                $quiz_id = $this->model('quiz')->save_question_quiz($quiz['type'], $quiz['countdown'], $_POST['quiz_content']);
+            }
+            else 
+            {
+                $this->model('quiz')->update_question_quiz($quiz_id, $quiz['type'], $quiz['countdown'], $_POST['quiz_content']);
+            }
+            
+        }
+        else
+        {
+            if($quiz_id > 0)
+            {
+                // 删除答题选项
+
+                $this->model('quiz')->delete_question_quiz_by_id($quiz_id);
+
+                $quiz_id = 0;
+            }
+        }
+
         // !注: 来路检测后面不能再放报错提示
         if (!valid_post_hash($_POST['post_hash']))
         {
@@ -353,7 +386,7 @@ class ajax extends AWS_CONTROLLER
             $IS_MODIFY_VERIFIED = FALSE;
         }
 
-        $this->model('question')->update_question($question_info['question_id'], $_POST['question_content'], $_POST['question_detail'], $this->user_id, $IS_MODIFY_VERIFIED, $_POST['modify_reason'], $question_info['anonymous'], $_POST['category_id']);
+        $this->model('question')->update_question($question_info['question_id'], $_POST['question_content'], $_POST['question_detail'], $this->user_id, $_POST['question_difficulty'], $quiz_id, $IS_MODIFY_VERIFIED, $_POST['modify_reason'], $question_info['anonymous'], $_POST['category_id']);
 
         if ($this->user_id != $question_info['published_uid'])
         {
@@ -438,7 +471,7 @@ class ajax extends AWS_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请填写正确的验证码')));
         }
 
-        // 检查并在数据库中添加question_quiz组件
+        // 检查并在数据库中添加答题选项组件
 
         $quiz_id = 0;
         if($_POST['quiz_content'])

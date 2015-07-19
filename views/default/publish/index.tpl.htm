@@ -90,7 +90,7 @@
 								<!-- end 问题难度 -->								
 
 								<h3><?php _e('答题选项（可选）'); ?>:</h3>
-								<input id="quiz_content" type="hidden" name="quiz_content" value=""></input>
+								<input id="quiz_content" type="hidden" name="quiz_content" value='<?php echo $this->question_quiz['content']; ?>'></input>
 								<div class="quiz-content-container">
 									<div class="panel panel-default">
 										<div class="panel-body">
@@ -102,6 +102,7 @@
 											</div>
 											<div>
 												<a id="edit-quiz-options" class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><span class="glyphicon glyphicon-pencil"></span><?php _e(' 编辑答题选项'); ?></a>
+												<a id="delete-quiz-options" class="btn btn-danger btn-sm" type="button" ><span class="glyphicon glyphicon-remove"></span><?php _e(' 删除答题选项'); ?></a>
 											</div>
 										</div>
 									</div>

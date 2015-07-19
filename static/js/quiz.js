@@ -64,7 +64,7 @@
             this.savedAnswers = [];
         };
 
-        nkrQuiz.prototype.parseQuizOptionCrossWord = function (element, quizOptions) {
+        nkrQuiz.prototype.parseQuizOptionCrossWord = function (element, quizOptions, settings) {
             var quizContent = '<div class="quiz-options"><div class="quiz-word-board"><div class="btn-group quiz-word-group">';
             for (var i = 0; i < quizOptions[0].content.length; i++) {
                     quizContent += '<button type="button" class="btn btn-default quiz-word-key" data-index="' + i + '" data-word="' 
@@ -117,11 +117,9 @@
                 };
             };
 
-            this.settings = $.extend({}, this.settings, { 
-                "getQuizResult" : getQuizResult,
-                "lockQuiz" : lockQuiz,
-                "setupInitAnswer" : setupInitAnswer
-            });
+            settings.getQuizResult = getQuizResult;
+            settings.lockQuiz = lockQuiz;
+            settings.setupInitAnswer = setupInitAnswer;
 
             element.find('.quiz-word-board').on('click', '.quiz-word-key', $.proxy(function(e) {
                 var wordKey = $(e.currentTarget);
@@ -167,12 +165,11 @@
             }, this));
         };
 
-        nkrQuiz.prototype.parseQuizOptionSingleSelection = function (element, quizOptions) {
+        nkrQuiz.prototype.parseQuizOptionSingleSelection = function (element, quizOptions, settings) {
             var quizContent = '<div class="quiz-options"><div class="list-group quiz-single-selection">'
             for (var i = 0; i < quizOptions.length; i++) {
-                var indexTag = this.settings.alphabet[i % this.settings.alphabet.length];
-                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag">' + 
-                    indexTag + '、</span><em>' + quizOptions[i].content + '</em><i class="quiz-option-mark glyphicon glyphicon-ok"></i></a>';
+                var indexTag = settings.alphabet[i % settings.alphabet.length];
+                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag"><em class="quiz-option-index">' + indexTag + '、</em><i class="quiz-option-mark glyphicon glyphicon-ok"></i></span><span>' + quizOptions[i].content + '</span></a>';
             };
             quizContent += '</div></div>';
             element.append(quizContent);
@@ -201,11 +198,9 @@
                 }
             };
 
-            this.settings = $.extend({}, this.settings, {
-                "getQuizResult" : getQuizResult,
-                "lockQuiz" : lockQuiz,
-                "setupInitAnswer" : setupInitAnswer
-            });
+            settings.getQuizResult = getQuizResult;
+            settings.lockQuiz = lockQuiz;
+            settings.setupInitAnswer = setupInitAnswer;
 
             element.find('.quiz-single-selection').on('click', '.quiz-option', $.proxy(function (e) {
                 $(e.currentTarget)
@@ -218,12 +213,11 @@
             }, this));
         };
 
-        nkrQuiz.prototype.parseQuizOptionMultipleSelection = function (element, quizOptions) {
+        nkrQuiz.prototype.parseQuizOptionMultipleSelection = function (element, quizOptions, settings) {
             var quizContent = '<div class="quiz-options"><div class="list-group quiz-multiple-selection">'
             for (var i = 0; i < quizOptions.length; i++) {
-                var indexTag = this.settings.alphabet[i % this.settings.alphabet.length];
-                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag">' + 
-                    indexTag + '、</span><em>' + quizOptions[i].content + '</em><i class="quiz-option-mark glyphicon glyphicon-ok"></i></a>';;
+                var indexTag = settings.alphabet[i % settings.alphabet.length];
+                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag"><em class="quiz-option-index">' + indexTag + '、</em><i class="quiz-option-mark glyphicon glyphicon-check"></i></span><span>' + quizOptions[i].content + '</span></a>';;
             };
             quizContent += '</div></div>';
             element.append(quizContent);
@@ -258,11 +252,9 @@
                 };
             };
 
-            this.settings = $.extend({}, this.settings, { 
-                "getQuizResult" : getQuizResult,
-                "lockQuiz" : lockQuiz,
-                "setupInitAnswer" : setupInitAnswer
-            });
+            settings.getQuizResult = getQuizResult;
+            settings.lockQuiz = lockQuiz;
+            settings.setupInitAnswer = setupInitAnswer;
 
             element.find('.quiz-multiple-selection').on('click', '.quiz-option', $.proxy(function (e) {
                 $(e.currentTarget).toggleClass('checked');
@@ -272,7 +264,7 @@
             }, this));
         };
 
-        nkrQuiz.prototype.parseQuizOptionTextInput = function (element, quizOptions) {
+        nkrQuiz.prototype.parseQuizOptionTextInput = function (element, quizOptions, settings) {
             var quizContent = '<div class="quiz-options"><div class="quiz-text-input">'
             for (var i = 0; i < quizOptions.length; i++) {
                 quizContent += '<div class="form-group"><label>' + (i + 1) + '、' + quizOptions[i].content + '</label>' + 
@@ -322,11 +314,9 @@
                 };
             };
 
-            this.settings = $.extend({}, this.settings, { 
-                "getQuizResult" : getQuizResult,
-                "lockQuiz" : lockQuiz,
-                "setupInitAnswer" : setupInitAnswer
-            });
+            settings.getQuizResult = getQuizResult;
+            settings.lockQuiz = lockQuiz;
+            settings.setupInitAnswer = setupInitAnswer;
 
             element.find('.quiz-text-input').on('input', '.quiz-input', $.proxy(function (e) {
                 updateSubmitButtonStatus(element);
@@ -351,21 +341,20 @@
 
             // quiz options
 
-            var quizOptions = quizItem.options;
             if(quizItem.type === 'crossword') {
-                this.parseQuizOptionCrossWord(element, quizOptions);
+                this.parseQuizOptionCrossWord(element, quizItem.options, options);
                 isValidQuizOption = true;
             }
             else if(quizItem.type === 'singleSelection') {
-                this.parseQuizOptionSingleSelection(element, quizOptions);
+                this.parseQuizOptionSingleSelection(element, quizItem.options, options);
                 isValidQuizOption = true;
             }
             else if(quizItem.type === 'multipleSelection') {
-                this.parseQuizOptionMultipleSelection(element, quizOptions);
+                this.parseQuizOptionMultipleSelection(element, quizItem.options, options);
                 isValidQuizOption = true;
             }
             else if(quizItem.type === 'textInput') {
-                this.parseQuizOptionTextInput(element, quizOptions);
+                this.parseQuizOptionTextInput(element, quizItem.options, options);
                 isValidQuizOption = true;
             }
 
@@ -374,22 +363,22 @@
                 // init answer
 
                 if(typeof options.initAnswer != 'undefined' && 
-                    typeof this.settings.setupInitAnswer == 'function') {
-                    this.settings.setupInitAnswer(this.$element, initAnswer);
+                    typeof options.setupInitAnswer == 'function') {
+                    options.setupInitAnswer(this.$element, initAnswer);
                 }
 
                 // countdown
 
-                var timer = setInterval(countdownUpdate, 1000);
                 if(typeof options.enableCountdown != 'undefined' && options.enableCountdown) {
                     if(quizItem.countdown > 0) {
                         quizContent = '<div class="quiz-countdown">';
-                        quizContent += '<div class="quiz-countdown-title">' + options.quizRemainingTime + '</div>';
                         quizContent += '<div class="timer">' + 
                             _timeFormat(quizItem.countdown) + '</div></div>';
                         this.$element.append(quizContent);
 
                         // setup countdown timer
+
+                        var timer = setInterval(countdownUpdate, 1000);
 
                         var countdown = quizItem.countdown;
                         var timerControl = this.$element.find('.quiz-countdown .timer');
@@ -399,8 +388,8 @@
                             timerControl.attr('data-time-spend', countdown);
                             if(countdown == 0) {
                                 clearInterval(timer);
-                                if(typeof this.settings.lockQuiz == 'function') {
-                                    this.settings.lockQuiz(element);
+                                if(typeof options.lockQuiz == 'function') {
+                                    options.lockQuiz(element);
                                 }
 
                                 if(typeof options.onTimeup == 'function') {
@@ -435,8 +424,8 @@
                             }
                         }
 
-                        if(typeof this.settings.lockQuiz == 'function') {
-                            this.settings.lockQuiz(element);
+                        if(typeof options.lockQuiz == 'function') {
+                            options.lockQuiz(element);
                         }
                     }, this));
                 }
@@ -564,21 +553,21 @@
 
         var timeStr = '';
         if(hour > 0) {
-            timeStr += '<span class="hour label label-primary">' + ('00' + hour).slice(-2) + ' 时</span>';
+            timeStr += '<span class="hour well">' + ('00' + hour).slice(-2) + ' 时</span>';
             hasHour = true;
         }
 
         if(minute > 0) {
-            timeStr += '<span class="minute label label-primary">' + ('00' + minute).slice(-2) + ' 分</span>';
+            timeStr += '<span class="minute well">' + ('00' + minute).slice(-2) + ' 分</span>';
             hasMinute = true;
         }
 
-        var alarmClass = 'label-primary';
+        var alarmClass = '';
         if(!hasHour && !hasMinute && (second < 10)) {
-            alarmClass = 'label-danger';
+            alarmClass = ' alarm';
         }
 
-        timeStr += '<span class="second label ' + alarmClass + '">' + (('00' + second).slice(-2) + ' 秒') + '</span>';
+        timeStr += '<span class="second well' + alarmClass + '">' + (('00' + second).slice(-2) + ' 秒') + '</span>';
 
         return timeStr;
     }
@@ -621,7 +610,18 @@
         quizNavPreviousText : '上一题',
         quizNavNextText : '下一题',
         quizNavCompleteText : '完成测试',
-        quizRemainingTime : '答题剩余时间：',
+
+        getQuizResult : function () {
+
+        },
+
+        lockQuiz : function () {
+
+        },
+
+        setupInitAnswer : function() {
+
+        },
 
         onSubmitAnswer : function (answer) {
 

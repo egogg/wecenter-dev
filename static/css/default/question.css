@@ -1,3 +1,9 @@
+.question-info {
+	overflow: hidden;
+	margin-top: -10px;
+	padding: 10px 0 10px 0;
+}
+
 .question-quiz {
 	margin-top: 15px;
 }

@@ -162,7 +162,7 @@ class question_class extends AWS_MODEL
 		return $question_id;
 	}
 
-	public function update_question($question_id, $question_content, $question_detail, $uid, $verified = true, $modify_reason = null, $anonymous = null, $category_id = null)
+	public function update_question($question_id, $question_content, $question_detail, $uid, $difficulty, $quiz_id, $verified = true, $modify_reason = null, $anonymous = null, $category_id = null)
 	{
 		if (!$quesion_info = $this->get_question_info_by_id($question_id) OR !$uid)
 		{
@@ -187,6 +187,24 @@ class question_class extends AWS_MODEL
 		{
 			$this->update('question', array(
 				'category_id' => intval($category_id)
+			), 'question_id = ' . intval($question_id));
+		}
+
+		// 问题难度
+
+		if($question_info['difficulty'] != $difficulty) 
+		{
+			$this->update('question', array(
+				'difficulty' => intval($difficulty)
+			), 'question_id = ' . intval($question_id));
+		}
+
+		// 答题选项
+
+		if($quesion_info['quiz_id'] != $quiz_id) 
+		{
+			$this->update('question', array(
+				'quiz_id' => intval($quiz_id)
 			), 'question_id = ' . intval($question_id));
 		}
 

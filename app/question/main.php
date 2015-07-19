@@ -412,10 +412,11 @@ class main extends AWS_CONTROLLER
 
 			TPL::import_js('js/quiz.js');
 			TPL::import_css('css/quiz.css');
-			TPL::import_js('js/app/question.js');
-			TPL::import_css('css/question.css');
 			TPL::assign('question_quiz', $question_quiz);
 		}
+
+		TPL::import_js('js/app/question.js');
+		TPL::import_css('css/question.css');
 
 		TPL::output('question/index');
 	}

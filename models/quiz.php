@@ -20,35 +20,67 @@ if (!defined('IN_ANWSION'))
 
 class quiz_class extends AWS_MODEL
 {
-	public function save_question_quiz($quiz_type, $countdown, $quiz_content)
+	private function get_quiz_type_id($quiz_type) 
 	{
 		switch ($quiz_type) {
 			case 'singleSelection':
-				$quiz_type_id = 1;
 
-				break;
+				return 1;
 			case 'multipleSelection':
-				$quiz_type_id = 2;
-
-				break;
+				return 2;
 			case 'crossword':
-				$quiz_type_id = 3;
-
-				break;
+				return 3;
 			case 'textInput':
-				$quiz_type_id = 4;
-
-				break;
+				return 4;
 			default:
-				$quiz_type_id = 0;
-				break;
+				return 0;
 		}
 
+		return 0;
+	}
+
+	public function save_question_quiz($quiz_type, $countdown, $quiz_content)
+	{
 		return $this->insert('question_quiz', array(
-			'type' => intval($quiz_type_id),
+			'type' => intval($this->get_quiz_type_id($quiz_type)),
 			'countdown' => intval($countdown),
 			'content' => $quiz_content
 		));
+	}
+
+	public function update_question_quiz($quiz_id, $quiz_type, $countdown, $quiz_content)
+	{
+		if (!$quesion_quiz_info = $this->get_question_quiz_info_by_id($quiz_id))
+		{
+			return false;
+		}
+
+		$quiz_type_id = $this->get_quiz_type_id($quiz_type);
+		if($quesion_quiz_info['type'] != $quiz_type_id)
+		{
+			$this->update('question_quiz', array(
+				'type' => intval($quiz_type_id)
+			), 'id = ' . intval($quiz_id));
+		}
+
+		if($quesion_quiz_info['countdown'] != $countdown)
+		{
+			$this->update('question_quiz', array(
+				'countdown' => intval($countdown)
+			), 'id = ' . intval($quiz_id));
+		}
+
+		if($quesion_quiz_info['content'] != $quiz_content)
+		{
+			$this->update('question_quiz', array(
+				'content' => $quiz_content
+			), 'id = ' . intval($quiz_id));
+		}
+	}
+
+	public function delete_question_quiz_by_id($quiz_id)
+	{
+		$this->delete('question_quiz', 'id = ' . intval($quiz_id));
 	}
 
 	public function get_question_quiz_info_by_id($quiz_id)

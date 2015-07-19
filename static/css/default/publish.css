@@ -26,10 +26,19 @@
   overflow: hidden;
 }
 
+#delete-quiz-options {
+  margin-left: 15px;
+  border: none !important;
+}
+
 /* 题目选项编辑对话框 */
 
 #quiz-option-error-message i {
   cursor: pointer;
+}
+
+.quiz-preview {
+  max-width: 316px;
 }
 
 #quiz-summary div {
@@ -80,6 +89,10 @@
 
 .quiz-option-pages {
   min-height: 250px;
+}
+
+.quiz-option-page .btn.delete {
+  border: none !important;
 }
 
 .quiz-option-page table tr th {

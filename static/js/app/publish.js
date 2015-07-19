@@ -160,6 +160,8 @@ $(function()
 
 		$('.quiz-preview').nkrQuiz({
 			'mode' : 'single',
+			'showSubmit' : false,
+			'enableCountdown' : false,
 			'data' : quizContent
 		});
 	}
@@ -274,6 +276,13 @@ $(function()
 		  		}
 			}
 		}
+	});
+
+	$('#delete-quiz-options').on('click', function(e) {
+		$('#quiz_content').val('');
+		$('#quiz-summary').html('');
+		$(this).closest('.panel-body').find('.quiz-preview').html('');
+		e.preventDefault();
 	});
 
 	// 答题选项编辑对话框
@@ -498,6 +507,9 @@ $(function()
 				countdown = countdownInput;
 				if(countdown < 10) {
 					ShowErrorMessage('答题时间不能少于10秒');
+					return;
+				} else if(countdown > 3600) {
+					ShowErrorMessage('答题时间不能超过1个小时');
 					return;
 				}
 			}
