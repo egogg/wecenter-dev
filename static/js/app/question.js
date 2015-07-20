@@ -49,14 +49,38 @@ $(function(){
 						spendTimeInfo = '<div>用时 <span>' + spendTime + ' 秒</span></div>';
 					}
 
+					function hideQuizContent(){
+	                    		
+                		// 隐藏答题选项
+
+                		question_quiz_container = $('.question-quiz-content');
+                		if(question_quiz_container.height() < 200) {
+                			question_quiz_container.height(200);
+                		}
+
+                    	$('.question-quiz-content')
+	                    	.addClass('quiz-blur');
+	                    $('.question-quiz-content-overlay')
+	                    	.fadeIn(1000);
+                	}
+
 	                if (quiz_result['correct']) {
+
+	                	// 回答正确
+
 	                    swal({   
 	                    	title: '回答正确！',   
 	                    	text: spendTimeInfo + '<div><span style="color:#A5DC86">+30<span> 积分</div>',   
 	                    	html: true,
 	                    	confirmButtonText: "确定",
 	                    	type: 'success'
-	                    });
+	                    	},
+	                    	function() {
+	                    		$('.post-answer-action.retry').hide();
+	                    		hideQuizContent();
+	                    	}
+	                    );
+
 	                } else {
 						swal({   
 	                    	title: '回答错误！',   
@@ -64,7 +88,11 @@ $(function(){
 	                    	html: true,
 	                    	confirmButtonText: "确定",
 	                    	type: 'error'
-	                    });
+	                    	},
+	                    	function() {
+	                    		hideQuizContent();	
+	                    	}
+	                    );
 	                }
 
 	                // 更新答题统计

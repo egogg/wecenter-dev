@@ -104,8 +104,6 @@
 						<div class="mod-body">
 							<div class="content markitup-box">
 								<div class="question-content">
-									<div class="question-content-overlay"></div>
-
 									<!-- 问题标题 -->
 
 									<h1>
@@ -174,7 +172,7 @@
 										</div>
 										<div class="question-quiz-countdown pull-left">
 											<?php if($this->question_quiz['countdown'] > 0) { ?>
-												<span class="label label-danger">
+												<span class="label label-warning">
 												<i class="glyphicon glyphicon-time"></i>
 												<?php _e('限时答题'); ?>
 												</span>
@@ -194,7 +192,13 @@
 									<?php if($this->question_quiz) { ?>
 									
 									<div class="question-quiz">
-										<div class="question-quiz-overlay"></div>
+										<div class="question-quiz-content-overlay panel panel-default">
+											<ul class="post-answer-actions">
+												<li class="post-answer-action retry"><a href="" class="btn btn-danger btn-block">再答一次试试</a></li>
+												<li class="post-answer-action view-solution"><a href="" class="btn btn-info btn-block">查看答案详解</a></li>
+												<li class="post-answer-action publish-question"><a href="" class="btn btn-success btn-block">出题考考别人</a></li>
+											</ul>
+										</div>
 										<div class="question-quiz-content"></div>
 									</div>
 									
