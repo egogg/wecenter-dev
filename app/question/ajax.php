@@ -32,7 +32,8 @@ class ajax extends AWS_CONTROLLER
 			'get_focus_users',
 			'get_answer_users',
 			'fetch_share_data',
-			'check_quiz_answer'
+			'check_quiz_answer',
+			'load_question_content'
 		);
 
 		return $rule_action;
@@ -1141,5 +1142,28 @@ class ajax extends AWS_CONTROLLER
 	public function question_quiz_timeout_action () 
 	{
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+	}
+
+	public function load_question_content_action ()
+	{
+		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
+		}
+
+		// 答题选项
+
+		if(intval($question_info['quiz_id']) > 0) {
+			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+
+			TPL::import_js('js/quiz.js');
+			TPL::import_css('css/quiz.css');
+			TPL::import_js('js/sweetalert.min.js');
+			TPL::import_css('css/sweetalert.css');
+			TPL::assign('question_quiz', $question_quiz);
+		}
+		TPL::assign('question_info', $question_info);
+
+		TPL::output('question/ajax/question_content');
 	}
 }

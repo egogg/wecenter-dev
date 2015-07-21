@@ -1,5 +1,13 @@
 $(function(){
 
+	// 加载问题内容
+
+	$.get(G_BASE_URL + '/question/ajax/load_question_content/id-' + QUESTION_ID, function (response) {
+		$('.question-content').html(response);
+	});
+
+	// 答题选项部分
+
 	var IS_JSON = true;
 	try {
 		var quizContent = $.parseJSON(QUESTION_QUIZ);	
