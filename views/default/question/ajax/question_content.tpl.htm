@@ -106,3 +106,10 @@
 <?php } ?>
 </div>
 <?php } ?>
+
+<script>
+	<?php if ($this->question_quiz) { ?>
+	var QUESTION_QUIZ_ID = <?php echo $this->question_quiz['id']; ?>;
+	var QUESTION_QUIZ = '<?php echo $this->question_quiz['content']; ?>';
+	<?php } ?>
+</script>

@@ -1151,15 +1151,20 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
 		}
 
+		if ($question_info['has_attach'])
+		{
+			$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'min');
+
+			$question_info['attachs_ids'] = FORMAT::parse_attachs($question_info['question_detail'], true);
+		}
+
+		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
+		
 		// 答题选项
 
 		if(intval($question_info['quiz_id']) > 0) {
 			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 
-			TPL::import_js('js/quiz.js');
-			TPL::import_css('css/quiz.css');
-			TPL::import_js('js/sweetalert.min.js');
-			TPL::import_css('css/sweetalert.css');
 			TPL::assign('question_quiz', $question_quiz);
 		}
 		TPL::assign('question_info', $question_info);
