@@ -1144,7 +1144,7 @@ class ajax extends AWS_CONTROLLER
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
 
-	public function load_question_content_action ()
+	public function init_question_content_action ()
 	{
 		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
 		{
@@ -1162,13 +1162,65 @@ class ajax extends AWS_CONTROLLER
 		
 		// 答题选项
 
-		if(intval($question_info['quiz_id']) > 0) {
+		if(intval($question_info['quiz_id']) > 0) 
+		{
 			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 
 			TPL::assign('question_quiz', $question_quiz);
 		}
 		TPL::assign('question_info', $question_info);
 
+		if($question_quiz && $question_quiz['countdown'] > 0)
+		{
+			// 限时答题
+
+			if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
+			{
+				// 对于特殊用户，直接返回问题内容
+
+				TPL::output('question/ajax/question_content');
+			}
+			else
+			{
+				// 对于普通用户
+
+				TPL::output('question/ajax/question_content_countdown');
+			}
+		}
+		else
+		{
+			// 非限时答题
+
+			TPL::output('question/ajax/question_content');
+		}
+	}
+
+	public function begin_question_quiz_countdown_action ()
+	{
+		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
+		}
+
+		if ($question_info['has_attach'])
+		{
+			$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'min');
+
+			$question_info['attachs_ids'] = FORMAT::parse_attachs($question_info['question_detail'], true);
+		}
+
+		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
+		
+		// 答题选项
+
+		if(intval($question_info['quiz_id']) > 0) 
+		{
+			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+
+			TPL::assign('question_quiz', $question_quiz);
+		}
+		TPL::assign('question_info', $question_info);
+		
 		TPL::output('question/ajax/question_content');
 	}
 }

@@ -2,12 +2,30 @@ $(function(){
 
 	// 加载问题内容
 
-	$.get(G_BASE_URL + '/question/ajax/load_question_content/id-' + QUESTION_ID, function (response) {
+	$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
 		$('.question-content').html(response);
 		parseQuestionQuiz();
 	});
 
-	// 答题选项部分
+	// 限时答题开始
+
+	$('.question-content').on('click', '#begin-question-quiz-countdown', function (e) {
+		loadCountdownQuestion();
+		e.preventDefault();
+	});
+
+	// 重新加载限时答题
+
+	function loadCountdownQuestion() {
+		$.get(G_BASE_URL + '/question/ajax/begin_question_quiz_countdown/id-' + QUESTION_ID, function (response) {
+			$('.countdown-question-welcome').fadeOut(400, function() {
+				$('.question-content').html(response).hide().fadeIn(400);
+				parseQuestionQuiz();
+			});
+		});
+	}
+
+	// 解析答题选项
 
 	function parseQuestionQuiz() {
 		var IS_JSON = true;

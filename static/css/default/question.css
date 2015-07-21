@@ -8,6 +8,16 @@
  	line-height: 30px;
 }
 
+.countdown-question-message h1 {
+	font-size: 20px;
+	line-height: 20px;
+}
+
+.countdown-question-message p {
+	padding: 0;
+	font-size: 16px;
+}
+
 .question-info {
 	overflow: hidden;
 	margin-top: -10px;
@@ -85,4 +95,3 @@
 .post-answer-action:last-child {
 	margin-bottom: 0px;
 }
-
