@@ -28,6 +28,12 @@ $(function(){
 	// 解析答题选项
 
 	function parseQuestionQuiz() {
+		var questionQuizControl = $('.question-quiz');
+		QUESTION_QUIZ = questionQuizControl.attr('data-quiz-content');
+		QUESTION_QUIZ_ID = questionQuizControl.attr('data-quiz-id');
+
+		questionQuizControl.removeAttr('data-quiz-content');
+		questionQuizControl.removeAttr('data-quiz-id');
 		var IS_JSON = true;
 		try {
 			var quizContent = $.parseJSON(QUESTION_QUIZ);	

@@ -611,6 +611,10 @@
 	var USER_ANSWERED = '<?php echo $this->user_answered; ?>';
 	var UPLOAD_ENABLE = '<?php echo get_setting('upload_enable') ?>';
 	var ANSWER_TYPE = 'answer';
+	<?php if ($this->question_quiz) { ?>
+	var QUESTION_QUIZ_ID = <?php echo $this->question_quiz['id']; ?>;
+	var QUESTION_QUIZ = '<?php echo $this->question_quiz['content']; ?>';
+	<?php } ?>
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>

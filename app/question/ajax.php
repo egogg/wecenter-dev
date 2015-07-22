@@ -33,7 +33,8 @@ class ajax extends AWS_CONTROLLER
 			'get_answer_users',
 			'fetch_share_data',
 			'check_quiz_answer',
-			'load_question_content'
+			'init_question_content',
+			'begin_question_quiz_countdown'
 		);
 
 		return $rule_action;

@@ -405,6 +405,15 @@ class main extends AWS_CONTROLLER
 			TPL::assign('recommend_posts', $recommend_posts);
 		}
 
+		// 答题选项
+
+		// if(intval($question_info['quiz_id']) > 0) 
+		// {
+		// 	$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+
+		// 	TPL::assign('question_quiz', $question_quiz);
+		// }
+
 		TPL::import_js('js/app/question.js');
 		TPL::import_css('css/question.css');
 		TPL::import_js('js/quiz.js');
