@@ -2,25 +2,45 @@ $(function(){
 
 	// 加载问题内容
 
-	$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
-		$('.question-content').html(response);
-		parseQuestionQuiz();
-	});
+	function initQuestionContent() {
+		$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
+			$('.question-content').html(response).css('opacity', 0).animate({opacity : 1}, 400);
+			parseQuestionQuiz();
+		});
+	}
+
+	initQuestionContent();
 
 	// 限时答题开始
 
 	$('.question-content').on('click', '#begin-question-quiz-countdown', function (e) {
-		loadCountdownQuestion();
+		beginCountdownQuestion();
+		e.preventDefault();
+	});
+
+	$('.question-content').on('click', '#retry-question-quiz-countdown', function (e) {
+		
+		// 积分操作请求
+
+		// 重新加载题目
+
+		beginCountdownQuestion();
 		e.preventDefault();
 	});
 
 	// 重新加载限时答题
 
-	function loadCountdownQuestion() {
+	function beginCountdownQuestion() {
 		$.get(G_BASE_URL + '/question/ajax/begin_question_quiz_countdown/id-' + QUESTION_ID, function (response) {
 			$('.countdown-question-welcome').fadeOut(400, function() {
-				$('.question-content').html(response).hide().fadeIn(400);
+				$('.question-content').html(response).css('opacity',0).animate({opacity:1}, 400);
 				parseQuestionQuiz();
+				
+				// 答题记录ID
+
+				questionQuizControl = $('.question-quiz');
+				QUESTION_QUIZ_RECORD_ID = $('.question-quiz').attr('data-quiz-record-id');
+				questionQuizControl.removeAttr('data-quiz-record-id');
 			});
 		});
 	}
@@ -59,19 +79,13 @@ $(function(){
 
 					// 检查问题答案
 
-					$.get(G_BASE_URL + '/question/ajax/question_quiz_check_answer/quiz_id-' + QUESTION_QUIZ_ID + '__answer-' + answer + '__spend_time-' + spendTime, function (quiz_result) {
-
-						// 检查是否为有效用户
-
-						if(!quiz_result['is_valid_user']) {
-							window.location.href = G_BASE_URL + '/account/login/';
-							return;
-						}
+					$.get(G_BASE_URL + '/question/ajax/question_quiz_check_answer/question_id-' + QUESTION_ID + '__answer-' + answer + '__spend_time-' + spendTime + '__record_id-' + QUESTION_QUIZ_RECORD_ID, function (quiz_result) {
 
 						// 检查是否为有效答案
 
 						if(!quiz_result['is_valid_answer']) {
 							sweetAlert("系统错误", "答案无效！", "error");
+							window.location.href = G_BASE_URL;
 							return;
 						}
 
@@ -124,7 +138,11 @@ $(function(){
 		                    	type: 'error'
 		                    	},
 		                    	function() {
-		                    		hideQuizContent();	
+		                    		if(quiz_result['is_countdown']) {
+		                    			initQuestionContent();
+		                    		} else {
+										hideQuizContent();
+		                    		}
 		                    	}
 		                    );
 		                }
@@ -145,13 +163,17 @@ $(function(){
 					$.post(G_BASE_URL + '/question/ajax/question_quiz_timeout/quiz_id=' + QUESTION_QUIZ_ID, function (result) {
 						// 超时提示
 
-						swal({   
+						swal({
 	                    	title: '时间到',   
 	                    	text: '<div>答题失败！</div><div><span style="color:#F27474">-30<span> 积分</div>',   
 	                    	html: true,
 	                    	confirmButtonText: "确定",
 	                    	type: 'error'
-	                    });
+	                    	},
+	                    	function() {
+	                    		initQuestionContent();
+	                    	}
+	                    );
 
 						// 更新答题统计
 					}, 'json');

@@ -85,9 +85,14 @@
 				</p>
 			</div>
 			<div>
-				<a id="begin-question-quiz-countdown" class="btn btn-success" href="#" role="button">开始答题</a>
+				<?php if($this->try_count == 0) { ?>
+					<a id="begin-question-quiz-countdown" class="btn btn-success" href="#" role="button">开始答题</a>
+				<?php } ?>
+
+				<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
+					<a id="retry-question-quiz-countdown" class="btn btn-danger" href="#" role="button">重新答题<span class="badge"><?php echo $this->try_count; ?></span></a>
+				<?php } ?>
 			</div>
 		</div>
-		
 	</div>
 </div>

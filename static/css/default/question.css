@@ -95,3 +95,15 @@
 .post-answer-action:last-child {
 	margin-bottom: 0px;
 }
+
+.question-quiz-stats {
+	margin-top: 15px;
+	overflow: hidden;
+}
+
+.question-quiz-total-count, .question-quiz-pass-rate {
+	display: inline-block;
+	min-width: 200px;
+	width: 30%;
+	margin-right: 15px;
+}

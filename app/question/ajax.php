@@ -1022,19 +1022,18 @@ class ajax extends AWS_CONTROLLER
 
 	public function question_quiz_check_answer_action()
 	{
-		if( !$this->user_id )
-		{
-			H::ajax_json_output(array(
-				'is_valid_user' => false 
-			));
-		}
-
-		// 获取答题选项信息
+		// 获取答案信息
 
 		$is_valid_answer = true;
-		if($_GET['quiz_id'])
+		if($_GET['question_id'])
 		{
-			if(!$question_quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($_GET['quiz_id'], true)) {
+			if(!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
+			{
+				$is_valid_answer = false;
+			}
+
+			if(!$question_quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id'], true)) 
+			{
 				$is_valid_answer = false;
 			}
 		} 
@@ -1042,53 +1041,51 @@ class ajax extends AWS_CONTROLLER
 		{
 			$is_valid_answer = false;
 		}
-		
+
 		$quiz = json_decode($question_quiz_info['content'], true);
         if (!(json_last_error() === JSON_ERROR_NONE))
         {
             $is_valid_answer = false;
         }
 
+		if(!$is_valid_answer)
+		{
+			H::ajax_json_output(array(
+				'is_valid_answer' => false 
+			));
+		}
+
+		// 检查答案正确性
+		
+		$is_correct_answer = true;
+        
         if($_GET['answer'])
         {
         	$user_answer = $_GET['answer'];
         }
         else
         {
-        	$is_valid_answer = false;
+        	$is_correct_answer = false;
         }
 
         if($_GET['spend_time'])
         {
         	$spend_time = $_GET['spend_time'];
         }
-
-		if(!$is_valid_answer)
-		{
-			H::ajax_json_output(array(
-				'is_valid_user' => true,
-				'is_valid_answer' => false,
-				'user_answer' => $user_answer,
-				'spend_time' => $spend_time
-			));
-		}
-
-		// 检查答案
-
-		$is_correct_answer = true;
+		
 		switch($quiz['type'])
 		{
 			case 'singleSelection':
 				if(!is_numeric($user_answer))
 				{
-					$is_valid_answer = false;
+					$is_correct_answer = false;
 				}
 				else
 				{	
 					$answer_index = intval($user_answer) - 1;
 					if($answer_index < 0 || $answer_index >= count($quiz['answers'])) 
 					{
-						$is_valid_answer = false;
+						$is_correct_answer = false;
 					}
 					else
 					{
@@ -1125,19 +1122,42 @@ class ajax extends AWS_CONTROLLER
 
 				break;
 			default :
-				$is_valid_answer = false;
 				$is_correct_answer = false;
 		}
 
-        $quiz_result = array(
-        	'is_valid_user' => true,
-        	'is_valid_answer' => $is_valid_answer,
+		// 检查是否为特殊用户
+
+		$is_special_user = ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']);
+
+		// 检查是否为限时答题
+
+		$is_countdown = ($quiz['countdown'] > 0);
+
+		// 保存答题记录
+
+		if($_GET['record_id'])
+		{
+			// 更新已有答题记录状态
+
+			$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
+		}
+		else
+		{
+			// 保存新的答题记录
+
+			$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
+		}
+
+		// 获取新的答题记录
+
+        H::ajax_json_output(array(
+        	'is_valid_answer' => true,
+        	'is_special_user' => $is_special_user,
+        	'is_countdown' => $is_countdown,
         	'user_answer' => $user_answer,
-        	'correct_answer' => $correct_answer,
         	'spend_time' => $spend_time,
         	'correct' => $is_correct_answer
-        	);
-        H::ajax_json_output($quiz_result);
+        ));
 	}
 
 	public function question_quiz_timeout_action () 
@@ -1171,6 +1191,18 @@ class ajax extends AWS_CONTROLLER
 		}
 		TPL::assign('question_info', $question_info);
 
+		// 答题记录
+
+		$try_count = 0;
+		$passed_quiz = false;
+		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
+		{
+			$try_count = count($quiz_record);
+			$passed_quiz = $quiz_record[0]['passed'];
+		}
+		TPL::assign('passed_quiz', $passed_quiz);
+		TPL::assign('try_count', $try_count);
+
 		if($question_quiz && $question_quiz['countdown'] > 0)
 		{
 			// 限时答题
@@ -1185,7 +1217,21 @@ class ajax extends AWS_CONTROLLER
 			{
 				// 对于普通用户
 
-				TPL::output('question/ajax/question_content_countdown');
+				if(!$quiz_record)
+				{
+					TPL::output('question/ajax/question_content_countdown');
+				}
+				else
+				{
+					if($quiz_record[0]['passed'])
+					{
+						TPL::output('question/ajax/question_content');
+					}
+					else
+					{
+						TPL::output('question/ajax/question_content_countdown');
+					}
+				}
 			}
 		}
 		else
@@ -1221,6 +1267,15 @@ class ajax extends AWS_CONTROLLER
 			TPL::assign('question_quiz', $question_quiz);
 		}
 		TPL::assign('question_info', $question_info);
+
+		// 添加临时答题记录
+
+		$record_id = 0;
+		if(!$this->user_info['permission']['is_administortar'] AND !$this->user_info['permission']['is_moderator'] AND $this->user_id != $question_info['published_uid'])
+		{
+			$record_id = $this->model('quiz')->save_question_quiz_record($question_info['question_id'], $this->user_id, null, false, -1);
+		}
+		TPL::assign('question_quiz_record_id', $record_id);
 		
 		TPL::output('question/ajax/question_content');
 	}

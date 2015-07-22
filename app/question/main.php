@@ -405,14 +405,23 @@ class main extends AWS_CONTROLLER
 			TPL::assign('recommend_posts', $recommend_posts);
 		}
 
-		// 答题选项
+		// 获取问题答题记录信息
 
-		// if(intval($question_info['quiz_id']) > 0) 
-		// {
-		// 	$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+		$question_quiz_stats['total'] = 0;
+		$question_quiz_stats['passed'] = 0;
+		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
+		if($question_quiz_record)
+		{
+			foreach ($question_quiz_record as $key => $value) {
+				if($value['passed'])
+				{
+					$question_quiz_stats['passed']++;
+				}
 
-		// 	TPL::assign('question_quiz', $question_quiz);
-		// }
+				$question_quiz_stats['total']++;
+			}
+		}
+		TPL::assign('question_quiz_stats', $question_quiz_stats);
 
 		TPL::import_js('js/app/question.js');
 		TPL::import_css('css/question.css');

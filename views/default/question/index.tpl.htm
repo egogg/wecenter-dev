@@ -136,6 +136,25 @@
 								</div>
 							</div>
 							<?php } ?>
+
+							<!-- 答题信息统计 -->
+							<?php if($this->question_info['quiz_id'] > 0) { ?>
+							<div class="question-quiz-stats">
+								<div class="panel panel-info question-quiz-total-count">
+									<div class="panel-body">
+										<i class="glyphicon glyphicon-stats"></i>
+										答题：<span><?php echo $this->question_quiz_stats['total']; ?></span> 次
+									</div>	
+								</div>
+								<div class="panel panel-success question-quiz-pass-rate">
+									<div class="panel-body">
+										<i class="glyphicon glyphicon-flag"></i>
+										通过率： <span><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
+									</div>
+								</div>
+							</div>
+							<?php } ?>
+							<!-- end 答题信息统计 -->
 						</div>
 						<div class="mod-footer">
 							<div class="meta">
@@ -615,6 +634,7 @@
 	var QUESTION_QUIZ_ID = <?php echo $this->question_quiz['id']; ?>;
 	var QUESTION_QUIZ = '<?php echo $this->question_quiz['content']; ?>';
 	<?php } ?>
+	var QUESTION_QUIZ_RECORD_ID = '0';
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>

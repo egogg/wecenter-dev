@@ -106,4 +106,54 @@ class quiz_class extends AWS_MODEL
 
 		return $question_quiz_info;
 	}
+
+	public function get_question_quiz_record_by_user($question_id, $uid)
+	{
+		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC');
+	}
+
+	public function get_question_quiz_record_by_question($question_id)
+	{
+		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id));
+	}
+
+	public function get_question_quiz_record_by_id($record_id)
+	{
+		if (! $record_id)
+		{
+			return false;
+		}
+
+		return $this->fetch_row('question_quiz_record', 'id = ' . intval($record_id));
+	}
+
+	public function save_question_quiz_record($question_id, $uid, $user_answer, $passed, $time_spend)
+	{
+		$now = time();
+		$quiz_record = array(
+			'question_id' => intval($question_id),
+			'uid' => intval($uid),
+			'start_time' => $now,
+			'end_time' => $now,
+			'user_answer' => $user_answer,
+			'passed' => intval($passed),
+			'time_spend' => intval($time_spend)
+		);
+
+		$record_id = $this->insert('question_quiz_record', $quiz_record);
+
+		return $record_id;
+	}
+
+	public function update_question_quiz_record($record_id, $user_answer, $passed, $time_spend)
+	{
+		$now = time();
+		
+		$this->update('question_quiz_record', array(
+			'end_time' => $now,
+			'user_answer' => $user_answer,
+			'passed' => intval($passed),
+			'time_spend' => intval($time_spend)
+		), 'id = ' . intval($record_id));
+	}
 }
