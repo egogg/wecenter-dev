@@ -140,17 +140,17 @@
 							<!-- 答题信息统计 -->
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
 							<div class="question-quiz-stats">
-								<div class="panel panel-info question-quiz-total-count">
+								<div class="panel panel-info">
 									<div class="panel-body">
-										<i class="glyphicon glyphicon-stats"></i>
-										答题：<span><?php echo $this->question_quiz_stats['total']; ?></span> 次
+										<div class="question-quiz-total-count">
+											<i class="glyphicon glyphicon-stats"></i>
+											总答题：<span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 次
+										</div>
+										<div class="question-quiz-pass-rate">
+											<i class="glyphicon glyphicon-flag"></i>
+											准确率： <span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
+										</div>
 									</div>	
-								</div>
-								<div class="panel panel-success question-quiz-pass-rate">
-									<div class="panel-body">
-										<i class="glyphicon glyphicon-flag"></i>
-										通过率： <span><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
-									</div>
 								</div>
 							</div>
 							<?php } ?>
@@ -630,11 +630,9 @@
 	var USER_ANSWERED = '<?php echo $this->user_answered; ?>';
 	var UPLOAD_ENABLE = '<?php echo get_setting('upload_enable') ?>';
 	var ANSWER_TYPE = 'answer';
-	<?php if ($this->question_quiz) { ?>
-	var QUESTION_QUIZ_ID = <?php echo $this->question_quiz['id']; ?>;
-	var QUESTION_QUIZ = '<?php echo $this->question_quiz['content']; ?>';
-	<?php } ?>
-	var QUESTION_QUIZ_RECORD_ID = '0';
+	
+	var QUESTION_QUIZ_STATS_TOTAL = '<?php echo $this->question_quiz_stats['total']; ?>';
+	var QUESTION_QUIZ_STATS_PASSED = '<?php echo $this->question_quiz_stats['passed']; ?>';
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>

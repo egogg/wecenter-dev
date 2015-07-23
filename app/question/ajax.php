@@ -1148,7 +1148,32 @@ class ajax extends AWS_CONTROLLER
 			$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
 		}
 
-		// 获取新的答题记录
+		// 用户答题记录
+
+		$try_count = 0;
+		$passed_quiz = false;
+		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
+		{
+			$try_count = count($quiz_record);
+			$passed_quiz = $quiz_record[0]['passed'];
+		}
+
+		// 总答题记录信息
+
+		$question_quiz_stats_total = 0;
+		$question_quiz_stats_passed = 0;
+		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
+		if($question_quiz_record)
+		{
+			foreach ($question_quiz_record as $key => $value) {
+				if($value['passed'])
+				{
+					$question_quiz_stats_passed++;
+				}
+
+				$question_quiz_stats_total++;
+			}
+		}
 
         H::ajax_json_output(array(
         	'is_valid_answer' => true,
@@ -1156,7 +1181,11 @@ class ajax extends AWS_CONTROLLER
         	'is_countdown' => $is_countdown,
         	'user_answer' => $user_answer,
         	'spend_time' => $spend_time,
-        	'correct' => $is_correct_answer
+        	'correct' => $is_correct_answer,
+        	'try_count' => $try_count,
+        	'passed_quiz' => $passed_quiz,
+        	'quiz_stats_total' => $question_quiz_stats_total,
+        	'quiz_stats_passed' => $question_quiz_stats_passed
         ));
 	}
 
@@ -1191,7 +1220,7 @@ class ajax extends AWS_CONTROLLER
 		}
 		TPL::assign('question_info', $question_info);
 
-		// 答题记录
+		// 用户答题记录
 
 		$try_count = 0;
 		$passed_quiz = false;

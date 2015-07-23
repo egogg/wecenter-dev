@@ -46,7 +46,6 @@
                 else if(quizMode == 'training') {
                     this.parseQuizTraining();
                 }
-                
             }
         }
 
@@ -378,7 +377,7 @@
 
                         // setup countdown timer
 
-                        var timer = setInterval(countdownUpdate, 1000);
+                        options.timer = setInterval(countdownUpdate, 1000);
 
                         var countdown = quizItem.countdown;
                         var timerControl = this.$element.find('.quiz-countdown .timer');
@@ -387,7 +386,7 @@
                             timerControl.html(_timeFormat(countdown));
                             timerControl.attr('data-time-spend', countdown);
                             if(countdown == 0) {
-                                clearInterval(timer);
+                                clearInterval(options.timer);
                                 if(typeof options.lockQuiz == 'function') {
                                     options.lockQuiz(element);
                                 }
@@ -412,8 +411,8 @@
                     this.$element.find('.quiz-submit-answer').on('click', $.proxy(function(){
                         // stop timer 
 
-                        if(typeof timer != 'undefined') {
-                            clearInterval(timer);
+                        if(typeof options.timer != 'undefined') {
+                            clearInterval(options.timer);
                         }
 
                         if(typeof options.getQuizResult == 'function') {
@@ -432,6 +431,18 @@
                             options.lockQuiz(element);
                         }
                     }, this));
+                }
+
+                // disable quiz item if needed
+
+                if(!options.enabled) {
+                    if(typeof options.lockQuiz == 'function') {
+                        options.lockQuiz(element);
+                    }
+
+                    if(typeof options.timer != 'undefined') {
+                        clearInterval(options.timer);
+                    }
                 }
             }
         };
@@ -608,6 +619,7 @@
      */
     $.fn.nkrQuiz.defaults = {
         mode : 'single',
+        enabled : true,
         alphabet : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
         submitAnswerText : '提交答案',
         startupQuizText: '开始测试',

@@ -101,9 +101,16 @@
 	overflow: hidden;
 }
 
-.question-quiz-total-count, .question-quiz-pass-rate {
+.question-quiz-stats {
+	max-width: 316px;
+}
+
+.question-quiz-total-count {
 	display: inline-block;
-	min-width: 200px;
-	width: 30%;
-	margin-right: 15px;
+	float: left;
+}
+
+.question-quiz-pass-rate {
+	display: inline-block;
+	float: right;
 }
