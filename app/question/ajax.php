@@ -1024,36 +1024,34 @@ class ajax extends AWS_CONTROLLER
 	{
 		// 获取答案信息
 
-		$is_valid_answer = true;
-		if($_GET['question_id'])
+		if(!$_GET['question_id'])
 		{
-			if(!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
-			{
-				$is_valid_answer = false;
-			}
+			H::ajax_json_output(array(
+				'internal_error' => true 
+			));
+		}
 
-			if(!$question_quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id'], true)) 
-			{
-				$is_valid_answer = false;
-			}
-		} 
-		else
+		if(!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
 		{
-			$is_valid_answer = false;
+			H::ajax_json_output(array(
+				'internal_error' => true 
+			));
+		}
+
+		if(!$question_quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id'], true)) 
+		{
+			H::ajax_json_output(array(
+				'internal_error' => true 
+			));
 		}
 
 		$quiz = json_decode($question_quiz_info['content'], true);
         if (!(json_last_error() === JSON_ERROR_NONE))
         {
-            $is_valid_answer = false;
-        }
-
-		if(!$is_valid_answer)
-		{
-			H::ajax_json_output(array(
-				'is_valid_answer' => false 
+            H::ajax_json_output(array(
+				'internal_error' => true 
 			));
-		}
+        }
 
 		// 检查答案正确性
 		
@@ -1127,25 +1125,28 @@ class ajax extends AWS_CONTROLLER
 
 		// 检查是否为特殊用户
 
-		$is_special_user = ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']);
-
+		$is_sepcial_user = ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']);
+		
 		// 检查是否为限时答题
 
 		$is_countdown = ($quiz['countdown'] > 0);
 
 		// 保存答题记录
 
-		if($_GET['record_id'])
+		if(!$is_sepcial_user)
 		{
-			// 更新已有答题记录状态
+			if($_GET['record_id'])
+			{
+				// 更新已有答题记录状态
 
-			$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
-		}
-		else
-		{
-			// 保存新的答题记录
+				$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
+			}
+			else
+			{
+				// 保存新的答题记录
 
-			$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
+				$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
+			}
 		}
 
 		// 用户答题记录
@@ -1176,8 +1177,6 @@ class ajax extends AWS_CONTROLLER
 		}
 
         H::ajax_json_output(array(
-        	'is_valid_answer' => true,
-        	'is_special_user' => $is_special_user,
         	'is_countdown' => $is_countdown,
         	'user_answer' => $user_answer,
         	'spend_time' => $spend_time,

@@ -111,9 +111,23 @@
 	<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
 	<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
 	<div class="question-quiz-content-overlay panel panel-default">
-		<span class="badge btn-success"><i class="glyphicon glyphicon-remove"></i> 答题成功 </span><span class="badge">尝试次数：3次</span>
+		<div class="question-quiz-answer-result">
+			<?php if($this->passed_quiz) { ?>
+				<div class="badge answer-success"><i class="glyphicon glyphicon-flag"></i> 答题成功</div>
+				<?php if($this->try_count > 1) { ?> 
+				<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
+				<?php } ?>
+			<?php } else { ?>
+				<div class="badge answer-failed"><i class="glyphicon glyphicon-remove"></i> 答题失败</div>
+				<?php if($this->try_count > 0) { ?> 
+				<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
+				<?php } ?>
+			<?php } ?>
+		</div>
 		<ul class="post-answer-actions">
-			<li class="post-answer-action retry"><a href="" class="btn btn-danger btn-block" id="quiz-retry-action">再答一次试试 <?php if($this->try_count > 0) { ?> <span class="retry-count badge"><?php echo $this->try_count; ?></span> <?php } ?></a></li>
+			<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
+				<li class="post-answer-action retry"><a href="" class="btn btn-danger btn-block" id="retry-question-quiz-normal">再答一次试试</a></li>
+			<?php } ?>
 			<li class="post-answer-action view-solution"><a href="" class="btn btn-info btn-block">查看答案详解</a></li>
 			<li class="post-answer-action publish-question"><a href="" class="btn btn-success btn-block">出题考考别人</a></li>
 		</ul>

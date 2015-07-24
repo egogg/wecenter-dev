@@ -76,6 +76,18 @@
 	overflow: hidden;
 }
 
+.question-quiz-answer-result .answer-success {
+	color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.question-quiz-answer-result .answer-failed {
+	color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
 .post-answer-actions {
 	position: absolute;
   	top: 50%;
