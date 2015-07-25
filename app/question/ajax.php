@@ -1106,7 +1106,7 @@ class ajax extends AWS_CONTROLLER
 			// 保存为新的答案解析
 
 			$solution_id = $this->model('solution')->save_solution($solution_content);
-			$this->model('question')->update_solution_id($solution_id);
+			$this->model('question')->update_solution_id($question_info['question_id'], $solution_id);
 		}
 		else
 		{
