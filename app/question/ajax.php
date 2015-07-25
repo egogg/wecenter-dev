@@ -1126,7 +1126,7 @@ class ajax extends AWS_CONTROLLER
 		// 检查是否为特殊用户
 
 		$is_sepcial_user = ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']);
-		
+
 		// 检查是否为限时答题
 
 		$is_countdown = ($quiz['countdown'] > 0);
@@ -1140,12 +1140,16 @@ class ajax extends AWS_CONTROLLER
 				// 更新已有答题记录状态
 
 				$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
+
+				// 积分操作
 			}
 			else
 			{
 				// 保存新的答题记录
 
 				$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
+
+				// 积分操作
 			}
 		}
 
@@ -1190,6 +1194,10 @@ class ajax extends AWS_CONTROLLER
 
 	public function question_quiz_timeout_action () 
 	{
+		// 积分操作
+
+		
+
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
 

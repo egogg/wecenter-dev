@@ -134,7 +134,13 @@
 	</div>
 	<div class="question-quiz-content"></div>
 </div>
-
+<?php } else { ?>
+	<div class="question-quiz-content-overlay open panel panel-default">
+		<ul class="post-answer-actions">
+			<li class="post-answer-action view-solution"><a href="" class="btn btn-info btn-block">查看答案详解</a></li>
+			<li class="post-answer-action publish-question"><a href="" class="btn btn-success btn-block">出题考考别人</a></li>
+		</ul>
+	</div>
 <?php } ?>
 
 <?php if ($this->question_info['attachs']) {  ?>

@@ -76,6 +76,13 @@
 	overflow: hidden;
 }
 
+.question-quiz-content-overlay.open {
+	display: block;
+    position: relative;
+    height: 180px;
+    margin: 15px 0;
+}
+
 .question-quiz-answer-result .answer-success {
 	color: #3c763d;
     background-color: #dff0d8;

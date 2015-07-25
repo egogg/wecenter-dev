@@ -115,7 +115,7 @@ $(function(){
 		                    	type: 'success'
 		                    	},
 		                    	function() {
-		                    		window.location.href = G_BASE_URL + '/question/' + QUESTION_ID;	
+		                    		initQuestionContent();
 		                    	}
 		                    );
 
@@ -128,7 +128,7 @@ $(function(){
 		                    	type: 'error'
 		                    	},
 		                    	function() {
-		                    		window.location.href = G_BASE_URL + '/question/' + QUESTION_ID;
+		                    		initQuestionContent();
 		                    	}
 		                    );
 		                }
@@ -144,7 +144,8 @@ $(function(){
 
 					// 提交超时请求
 
-					$.post(G_BASE_URL + '/question/ajax/question_quiz_timeout/quiz_id=' + QUESTION_QUIZ_ID, function (result) {
+					$.post(G_BASE_URL + '/question/ajax/question_quiz_timeout/record_id=' + QUESTION_QUIZ_RECORD_ID, function (result) {
+					
 						// 超时提示
 
 						swal({
@@ -158,8 +159,6 @@ $(function(){
 	                    		initQuestionContent();
 	                    	}
 	                    );
-
-						// 更新答题统计
 					}, 'json');
 				}
 			});
