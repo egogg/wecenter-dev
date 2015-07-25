@@ -461,6 +461,7 @@ class publish_class extends AWS_MODEL
 				case 'solution':
 					$update_key = 'id';
 					$item_type = 'question_solution';
+					break;
 
 				// Modify by wecenter
 				case 'support':
@@ -505,7 +506,7 @@ class publish_class extends AWS_MODEL
 
 		$item_type = $attach['item_type'];
 
-		if (!$this->fetch_row('attach', 'item_id = ' . $attach['item_id']) AND $update_associate_table)
+		if (!$this->fetch_row('attach', 'item_id = ' . $attach['item_id'] . ' AND item_type = "' . $this->quote($attach['item_type']) . '"') AND $update_associate_table)
 		{
 			switch ($item_type)
 			{
