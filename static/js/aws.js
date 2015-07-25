@@ -461,6 +461,7 @@ var AWS =
 	 *	videoBox    : 插入视频
 	 *  linkbox     : 插入链接
 	 *	commentEdit : 评论编辑
+	 * 	solutionEdit: 答案解析编辑
 	 *  favorite    : 评论添加收藏
 	 *	inbox       : 私信
 	 *  report      : 举报问题
@@ -497,6 +498,15 @@ var AWS =
 				var template = Hogan.compile(AW_TEMPLATE.editCommentBox).render(
 				{
 					'answer_id': data.answer_id,
+					'attach_access_key': data.attach_access_key
+				});
+			break;
+
+			case 'solutionEdit':
+				var template = Hogan.compile(AW_TEMPLATE.editSolutionBox).render(
+				{
+					'question_id' : data.question_id,
+					'solution_id': data.solution_id,
 					'attach_access_key': data.attach_access_key
 				});
 			break;
@@ -750,6 +760,34 @@ var AWS =
 						else
 						{
 							$('.aw-edit-comment-box .aw-file-upload-box').hide();
+						}
+					}, 'json');
+				break;
+
+				case 'solutionEdit':
+					$.get(G_BASE_URL + '/question/ajax/get_question_solution_data/' + data.question_id, function (result)
+					{
+						$('#editor_solution').html(result.content.replace('&amp;', '&'));
+
+						var editor = CKEDITOR.replace( 'editor_solution' );
+
+						if (UPLOAD_ENABLE == 'Y')
+						{
+							var fileupload = new FileUpload('file', '.aw-edit-solution-box .aw-upload-box .btn', '.aw-edit-solution-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-solution__attach_access_key-' + ATTACH_ACCESS_KEY, {'insertTextarea': '.aw-edit-solution-box #editor_solution', 'editor' : editor});
+
+							$.post(G_BASE_URL + '/publish/ajax/solution_attach_edit_list/', 'solution_id=' + data.solution_id, function (data) {
+								if (data['err']) {
+									return false;
+								} else {
+									$.each(data['rsm']['attachs'], function (i, v) {
+										fileupload.setFileList(v);
+									});
+								}
+							}, 'json');
+						}
+						else
+						{
+							$('.aw-edit-solution-box .aw-file-upload-box').hide();
 						}
 					}, 'json');
 				break;

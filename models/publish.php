@@ -458,6 +458,9 @@ class publish_class extends AWS_MODEL
 					$update_key = $item_type . '_id';
 
 					break;
+				case 'solution':
+					$update_key = 'id';
+					$item_type = 'question_solution';
 
 				// Modify by wecenter
 				case 'support':
@@ -500,13 +503,19 @@ class publish_class extends AWS_MODEL
 
 		$this->delete('attach', "id = " . intval($id) . " AND access_key = '" . $this->quote($access_key) . "'");
 
+		$item_type = $attach['item_type'];
+
 		if (!$this->fetch_row('attach', 'item_id = ' . $attach['item_id']) AND $update_associate_table)
 		{
-			switch ($attach['item_type'])
+			switch ($item_type)
 			{
 				default:
 					$update_key = $attach['item_type'] . '_id';
 
+					break;
+				case 'solution':
+					$update_key = 'id';
+					$item_type = 'question_solution';
 					break;
 
 				case 'article':
@@ -517,7 +526,7 @@ class publish_class extends AWS_MODEL
 					break;
 			}
 
-			return $this->update($attach['item_type'], array(
+			return $this->update($item_type, array(
 				'has_attach' => 0
 			), $update_key . ' = ' . $attach['item_id']);
 		}

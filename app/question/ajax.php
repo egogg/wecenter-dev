@@ -1018,6 +1018,116 @@ class ajax extends AWS_CONTROLLER
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
 
+	// 答案解析
+
+	public function get_question_solution_data_action()
+	{
+		$solution_info['id'] = 0;
+		$solution_info['content'] = '';
+
+		$question_info = $this->model('question')->get_question_info_by_id($_GET['id']);
+		if($question_info && $question_info['solution_id'])
+		{
+			if ($question_info['uid'] == $this->user_id OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'])
+			{
+				$solution_info = $this->model('solution')->get_solution_info_by_id($question_info['solution_id']);	
+				if($solution_info)
+				{
+					echo json_encode($solution_info);
+					return;
+				}
+			}
+		}
+
+		echo json_encode($solution_info);
+	}
+
+	public function save_question_solution_action()
+	{
+		if(!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('问题不存在')));
+		}
+
+		if($question_info['solution_id'] != $_GET['solution_id'])
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('问题和答案信息不匹配')));
+		}
+
+		$solution_info = $this->model('solution')->get_solution_info_by_id($_GET['solution_id']);
+
+		// 删除答案
+
+		if($_POST['do_delete'])
+		{
+			if($solution_info)
+			{
+				if ($solution_info['uid'] != $this->user_id and ! $this->user_info['permission']['is_administortar'] and ! $this->user_info['permission']['is_moderator'])
+				{
+					H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('你没有权限进行删除操作')));
+				}
+
+				$this->model('solution')->remove_solution_by_id($_GET['solution_id']);
+
+			// 	// 通知答案的作者
+			// 	if ($this->user_id != $answer_info['uid'])
+			// 	{
+			// 		$this->model('notify')->send($this->user_id, $answer_info['uid'], notify_class::TYPE_REMOVE_ANSWER, notify_class::CATEGORY_QUESTION, $answer_info['question_id'], array(
+			// 			'from_uid' => $this->user_id,
+			// 			'question_id' => $answer_info['question_id']
+			// 		));
+			// 	}
+
+				$this->model('question')->update_solution_id($question_info['question_id'], 0);
+			}
+			
+			H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+		}
+
+		$solution_content = trim($_POST['solution_content'], "\r\n\t");
+
+		if (!$solution_content)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入详细答案解析')));
+		}
+
+		if (!$this->model('publish')->insert_attach_is_self_upload($solution_content, $_POST['attach_ids']))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('只允许插入当前页面上传的附件')));
+		}
+
+		if ($question_info['uid'] != $this->user_id and ! $this->user_info['permission']['is_administortar'] and ! $this->user_info['permission']['is_moderator'])
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你没有权限编辑这个回复')));
+		}
+
+		if(!$solution_info)
+		{
+			// 保存为新的答案解析
+
+			$solution_id = $this->model('solution')->save_solution($solution_content);
+			$this->model('question')->update_solution_id($solution_id);
+		}
+		else
+		{
+			// 更新已有的答案解析
+
+			$solution_id = $solution_info['id'];
+			$this->model('solution')->update_solution($solution_id, $solution_content);
+		}
+
+		$attach_access_key = $_POST['attach_access_key'];
+		if ($attach_access_key)
+		{
+			$this->model('publish')->update_attach('solution', $solution_id, $attach_access_key);
+		}
+
+		H::ajax_json_output(AWS_APP::RSM(array(
+			'target_id' => $_GET['target_id'],
+			'display_id' => $_GET['display_id']
+		), 1, null));
+	}
+
 	// 检查问题答案
 
 	public function question_quiz_check_answer_action()

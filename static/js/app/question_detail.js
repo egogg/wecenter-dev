@@ -56,7 +56,6 @@ $(function()
 			}
 		}
 
-
 		//折叠回复
 		$.each($('.aw-question-comment .aw-item'), function (i, e)
 		{
@@ -123,7 +122,7 @@ $(function()
     //邀请回答按钮操作
     $('.aw-question-detail .aw-invite-replay').click(function()
     {
-    	$('.aw-question-detail .aw-comment-box, .aw-question-detail .aw-question-related-box').hide();
+    	$('.aw-question-detail .aw-comment-box, .aw-question-detail .aw-question-related-box, .aw-question-detail .aw-edit-question-solution-box').hide();
     	if ($('.aw-question-detail .aw-invite-box').is(':visible'))
     	{
     		$('.aw-question-detail .aw-invite-box').fadeOut();
@@ -234,7 +233,7 @@ $(function()
 	//相关链接按钮
 	$('.aw-question-detail .aw-add-question-related').click(function()
 	{
-		$('.aw-question-detail .aw-comment-box, .aw-question-detail .aw-invite-box').hide();
+		$('.aw-question-detail .aw-comment-box, .aw-question-detail .aw-invite-box, .aw-question-detail .aw-edit-question-solution-box').hide();
     	if ($('.aw-question-detail .aw-question-related-box').is(':visible'))
     	{
     		$('.aw-question-detail .aw-question-related-box').fadeOut();

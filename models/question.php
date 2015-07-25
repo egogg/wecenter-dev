@@ -1572,4 +1572,11 @@ class question_class extends AWS_MODEL
 
 		return $near_by_questions;
 	}
+
+	public function update_solution_id($question_id, $solution_id)
+	{
+		$this->update('question', array(
+			'solution_id' => intval($solution_id)
+		), 'question_id = ' . intval($question_id));
+	}
 }

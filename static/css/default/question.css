@@ -133,3 +133,19 @@
 	display: inline-block;
 	float: right;
 }
+
+
+.aw-edit-solution-box .aw-file-upload-box {
+	padding: 20px;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+}
+
+.aw-edit-solution-box .cke_inner {
+    border: 1px solid #ddd;
+    border-radius: 3px 3px 0 0;
+}
+
+.aw-edit-solution-box .modal-footer label {
+    margin-left: 5px;

@@ -58,6 +58,7 @@ class ajax extends AWS_CONTROLLER
             case 'ticket':
             case 'ticket_reply':
             case 'project':
+            case 'solution':
                 $item_type = $_GET['id'];
 
                 break;
@@ -256,6 +257,34 @@ class ajax extends AWS_CONTROLLER
 
         H::ajax_json_output(AWS_APP::RSM(array(
             'attachs' => $answer_attach
+        ), 1, null));
+    }
+
+    public function solution_attach_edit_list_action()
+    {
+        if (!$solution_info = $this->model('solution')->get_solution_info_by_id($_POST['solution_id']))
+        {
+            H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('无法获取附件列表')));
+        }
+
+        if ($solution_attach = $this->model('publish')->get_attach('solution', $solution_info['id']))
+        {
+            foreach ($solution_attach as $attach_id => $val)
+            {
+                $solution_attach[$attach_id]['class_name'] = $this->model('publish')->get_file_class($val['file_name']);
+
+                $solution_attach[$attach_id]['delete_link'] = get_js_url('/publish/ajax/remove_attach/attach_id-' . base64_encode(H::encode_hash(array(
+                    'attach_id' => $attach_id,
+                    'access_key' => $val['access_key']
+                ))));
+
+                $solution_attach[$attach_id]['attach_id'] = $attach_id;
+                $solution_attach[$attach_id]['attach_tag'] = 'attach';
+            }
+        }
+
+        H::ajax_json_output(AWS_APP::RSM(array(
+            'attachs' => $solution_attach
         ), 1, null));
     }
 
