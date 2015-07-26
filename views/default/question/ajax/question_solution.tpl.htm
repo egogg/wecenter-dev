@@ -1,0 +1,18 @@
+<div class="panel panel-success">
+  <div class="panel-heading"><span>问题答案详细解析</span><a type="button" class="close-question-solution close icon icon-delete" aria-hidden="true"></a></div>
+  <div class="panel-body">
+  	<div class="quiz-answer">
+		<?php if ($this->quiz_answer) { ?>
+			<div><h3>正确答案为：</h3><blockquote><?php echo $this->quiz_answer; ?></blockquote></div>
+		<?php } ?>
+	</div>
+	<div class="question-answer">
+		<?php if($this->question_solution) { ?>
+			<div>
+				<h3>详细分析：</h3>
+				<?php echo $this->question_solution; ?>
+			</div>
+		<?php } ?>
+	</div>
+  </div>
+</div>

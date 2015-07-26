@@ -18,6 +18,13 @@
 	font-size: 16px;
 }
 
+.countdown-question-message .action-button {
+	margin-right: 15px;
+	width: 120px;
+    margin-bottom: 15px;
+    border: 1px solid transparent !important;
+}
+
 .question-info {
 	overflow: hidden;
 	margin-top: -10px;
@@ -134,6 +141,13 @@
 	float: right;
 }
 
+.question-solution {
+	display: none;
+}
+
+.quiz-answer blockquote {
+	margin: 0 0 20px;
+}
 
 .aw-edit-solution-box .aw-file-upload-box {
 	padding: 20px;

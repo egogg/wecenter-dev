@@ -90,7 +90,9 @@
 				<?php } ?>
 
 				<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
-					<a id="retry-question-quiz-countdown" class="btn btn-danger" href="#" role="button">重新答题<span class="badge"><?php echo $this->try_count; ?></span></a>
+					<a id="retry-question-quiz-countdown" class="action-button btn btn-danger" href="#" role="button"><i class="glyphicon glyphicon-repeat"></i> 重新答题<span class="badge"><?php echo $this->try_count; ?></span></a>
+					<a href="#" role="button" class="action-button action-view-solution btn btn-info"><i class="glyphicon glyphicon-eye-open"></i> 查看答案</a>
+					<a href="#" role="button" class="action-button action-publish-question btn btn-success"><i class="glyphicon glyphicon-edit"></i> 我要出题</a>
 				<?php } ?>
 			</div>
 		</div>

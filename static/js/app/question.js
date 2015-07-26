@@ -204,4 +204,64 @@ $(function(){
 	    $('.question-quiz-content-overlay')
 	    	.fadeOut(300);
 	});
+
+	// 查看问题解析
+
+	$('.question-content').on('click', '.action-view-solution', function (e) {
+		e.preventDefault();
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		swal({   
+        	title: '积分提示',
+        	text: '<p>查看答案解析需要消耗您 <span style="color:#f0ad4e">30<span> 积分</p>',   
+        	html: true,
+        	confirmButtonText: "继续",
+        	showCancelButton: true,
+        	cancelButtonText: "取消",
+        	type: 'info'
+        	},
+        	function() {
+        		// 提交获取答案请求
+
+        		$.get(G_BASE_URL + '/question/ajax/get_question_solution/question_id-' + QUESTION_ID, function (response) {
+
+        			if (!response)
+					{
+						AWS.alert('查看答案解析失败，您没有足够的权限！');
+
+						return;
+					}
+
+        			var countdown_question = $('.countdown-question-welcome');
+        			if(countdown_question.length) {
+        				countdown_question.hide();
+        			} else {
+        				$('.question-quiz').hide();
+        			}
+					
+					$('.question-solution').html(response).fadeIn();
+				});
+        	}
+        );
+	});
+
+	// 关闭答案解析
+
+	$('.question-solution').on('click', '.close-question-solution', function (e) {
+		$('.question-solution').hide();
+		var countdown_question = $('.countdown-question-welcome');
+		if(countdown_question.length)
+		{
+			countdown_question.fadeIn();
+		} else {
+			$('.question-quiz').fadeIn();
+		}
+		
+		e.preventDefault();
+	});
 });

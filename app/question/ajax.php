@@ -34,7 +34,8 @@ class ajax extends AWS_CONTROLLER
 			'fetch_share_data',
 			'check_quiz_answer',
 			'init_question_content',
-			'begin_question_quiz_countdown'
+			'begin_question_quiz_countdown',
+			'get_question_solution'
 		);
 
 		return $rule_action;
@@ -1424,5 +1425,91 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('question_quiz_record_id', $record_id);
 		
 		TPL::output('question/ajax/question_content');
+	}
+
+	public function get_question_solution_action()
+	{
+		if (!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
+		{
+			return;
+		}
+
+		// 检测用户权限
+
+		// $quesiton_solution_record = $this->model('solution')->get_question_solution_record($_GET['question_id'], $this->user_id);
+		// if(!$this->user_info['permission']['is_administortar'] AND !$this->user_info['permission']['is_moderator'] AND $this->user_id != $question_info['published_uid'])
+		// {
+		// 	return;
+		// }
+
+		// 获取答题选项答案
+
+		if($question_info['quiz_id'])
+		{
+			$quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id'], true);
+			if(!$quiz_info)
+			{
+				return;
+			}
+
+			$quiz = json_decode($quiz_info['content'], true);
+			if (!(json_last_error() === JSON_ERROR_NONE))
+	        {
+	            return;
+	        }
+
+	        $answer_alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	        $answer_max_index = strlen($answer_alphabet);
+	        switch($quiz['type'])
+			{
+				case 'singleSelection':
+					foreach ($quiz['answers'] as $i => $answer) {
+					 	if($answer['answer'])
+					 	{
+					 		if($i >= $answer_max_index)
+					 		{
+					 			return;
+					 		}
+
+					 		$quiz_answer = '<p>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</p>';
+
+					 		break;
+					 	}
+					 }
+
+					break;
+				case 'multipleSelection':
+					foreach ($quiz['answers'] as $i => $answer)
+					{
+						if($answer['answer'])
+					 	{
+					 		if($i >= count($answer_alphabet))
+					 		{
+					 			return;
+					 		}
+
+					 		$quiz_answer .= '<p>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</p>'; 
+					 	}
+					}
+
+					break;
+				case 'crossword':
+					$quiz_answer = '<p>' . $quiz['answers'][0]['answer'] . '</p>';
+					
+					break;
+				case 'textInput':
+					foreach ($quiz['answers'] as $i => $answer) 
+					{
+						$quiz_answer .= '<p>' . ($i + 1) . '、' . $quiz['options'][$i]['content'] . '：<strong>' . $answer['answer'] . '</strong></p>';
+					}
+
+					break;
+			}
+		}
+		TPL::assign('quiz_answer', $quiz_answer);
+
+		
+
+		TPL::output('question/ajax/question_solution');
 	}
 }
