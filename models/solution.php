@@ -54,4 +54,22 @@ class solution_class extends AWS_MODEL
 		$solution_info['content'] = htmlspecialchars($solution_content);
 		return $this->update('question_solution', $solution_info, 'id = ' . intval($solution_id));
 	}
+
+	public function get_question_solution_record($question_id, $user_id)
+	{
+		return $this->fetch_row('question_solution_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($user_id));
+	}
+
+	public function save_question_solution_record($question_id, $user_id)
+	{
+		$now = time();
+
+		$solution_record = array (
+			'question_id' => intval($question_id),
+			'uid' => intval($user_id),
+			'add_time' => $now
+		);
+
+		return $this->insert('question_solution_record', $solution_record);
+	}
 }

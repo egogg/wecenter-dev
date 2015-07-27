@@ -20,7 +20,7 @@
 
 .countdown-question-message .action-button {
 	margin-right: 15px;
-	width: 120px;
+	width: 130px;
     margin-bottom: 15px;
     border: 1px solid transparent !important;
 }
@@ -53,7 +53,8 @@
 	padding: 1px;
 	max-width: 316px;
 	position: relative;
-	margin-bottom: 15px;
+	display: inline-block;
+	width: 100%;
 }
 
 .quiz-blur {
@@ -78,9 +79,13 @@
 	top: 0;
 	left: 0;
 	z-index: 100;
-	background-color: rgba(255, 255, 255, 0.5);
 	display: none;
+	/*background-color: rgba(255, 255, 255, 0.5);*/
 	overflow: hidden;
+}
+
+.question-quiz-content-overlay .close-question-quiz-content-overlay {
+	padding-right: 5px;
 }
 
 .question-quiz-content-overlay.open {
@@ -129,16 +134,16 @@
 
 .question-quiz-stats {
 	max-width: 316px;
+	clear: both;
 }
 
 .question-quiz-total-count {
 	display: inline-block;
-	float: left;
+	margin-right: 15px;
 }
 
 .question-quiz-pass-rate {
 	display: inline-block;
-	float: right;
 }
 
 .question-solution {

@@ -443,6 +443,8 @@
                     if(typeof options.timer != 'undefined') {
                         clearInterval(options.timer);
                     }
+
+                    this.$element.find('.quiz-submit').remove();
                 }
             }
         };

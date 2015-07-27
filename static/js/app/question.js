@@ -1,5 +1,26 @@
 $(function(){
 
+	function showQuizContentOverlay()
+	{
+		$('.question-quiz-content').animate({opacity: 0}, 300);
+		question_quiz_container = $('.question-quiz-content');
+		if(question_quiz_container.height() < 200) {
+			question_quiz_container.height(200);
+		}
+		
+		$('.question-quiz-content-overlay').animate({opacity:1}, 300).show();
+	}
+
+	function showQuizContent()
+	{
+		$('.question-quiz-content-overlay')
+	    	.animate({opacity:0}, 300).hide();
+	    $('.question-quiz-content')
+	    	.animate({opacity:1}, 300);
+
+	    $('.question-quiz-content').removeAttr('style');
+	}
+
 	// 加载问题内容
 
 	function initQuestionContent() {
@@ -13,15 +34,7 @@ $(function(){
 			parseQuestionQuiz(!takenQuiz);
 
 			if(takenQuiz) {
-				question_quiz_container = $('.question-quiz-content');
-				if(question_quiz_container.height() < 200) {
-					question_quiz_container.height(200);
-				}
-
-				$('.question-quiz-content')
-			    	.addClass('quiz-blur');
-			    $('.question-quiz-content-overlay')
-			    	.fadeIn(1000);
+				showQuizContentOverlay();
 			}
 		});
 	}
@@ -39,10 +52,9 @@ $(function(){
 		// 倒计时问题开始答题
 
 		$.get(G_BASE_URL + '/question/ajax/begin_question_quiz_countdown/id-' + QUESTION_ID, function (response) {
-			$('.countdown-question-welcome').fadeOut(400, function() {
-				$('.question-content').html(response).css('opacity',0).animate({opacity:1}, 400);
-				parseQuestionQuiz();
-			});
+			$('.countdown-question-welcome').animate({opacity:1}, 300);
+			$('.question-content').html(response).css('opacity',0).animate({opacity:1}, 300);
+			parseQuestionQuiz();
 		});
 	}
 
@@ -167,6 +179,57 @@ $(function(){
 
 	initQuestionContent();
 
+	// 重新答题积分操作
+
+	function retryQuizIntegralAction(callback)
+	{
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		// 获取答题积分
+
+		$.get(G_BASE_URL + '/question/ajax/get_question_quiz_retry_integral/question_id-' + QUESTION_ID, function (result){
+			if(result.err)
+			{
+				AWS.alert(result.err);
+
+				return;
+			}
+				
+			if(result.required_integral > 0)
+			{
+				swal({   
+		        	title: '积分提示',
+		        	text: '<p>重新答题需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',   
+		        	html: true,
+		        	confirmButtonText: "继续",
+		        	showCancelButton: true,
+		        	cancelButtonText: "取消",
+		        	type: 'info'
+		        	},
+		        	function() {
+		        		// 添加积分记录
+
+		        		$.get(G_BASE_URL + '/question/ajax/save_question_quiz_retry_integral/question_id-' + QUESTION_ID, function (result) {
+							if (result.err)
+							{
+								AWS.alert(result.err);
+
+								return;
+							}
+							
+							callback();
+						}, 'json');
+		        	}
+		        );
+			}
+		}, 'json');
+	}
+
 	// 限时答题开始
 
 	$('.question-content').on('click', '#begin-question-quiz-countdown', function (e) {
@@ -179,14 +242,9 @@ $(function(){
 
 	$('.question-content').on('click', '#retry-question-quiz-countdown', function (e) {
 		e.preventDefault();
-
-		// 积分操作请求
-
-
-
-		// 重新加载题目
-
-		beginCountdownQuestion();
+		retryQuizIntegralAction(function(){
+			beginCountdownQuestion();
+		});
 	});
 
 	// 普通答题： 重新答题
@@ -194,18 +252,40 @@ $(function(){
 	$('.question-content').on('click', '#retry-question-quiz-normal', function (e) {
 		e.preventDefault();
 
-		// 重新尝试积分操作请求
+		retryQuizIntegralAction(function(){
+			parseQuestionQuiz();
+		    showQuizContent();
+		});
+	});
+	
+	// 关闭选项框
 
-		// 开发答题区
-
-		parseQuestionQuiz();
-		$('.question-quiz-content')
-	    	.removeClass('quiz-blur');
-	    $('.question-quiz-content-overlay')
-	    	.fadeOut(300);
+	$('.question-content').on('click', '.close-question-quiz-content-overlay', function (e) {
+		showQuizContent();
+		e.preventDefault();
 	});
 
 	// 查看问题解析
+
+	function getQuestionSolution() {
+		$.get(G_BASE_URL + '/question/ajax/get_question_solution/question_id-' + QUESTION_ID, function (response) {
+			if (!response)
+			{
+				AWS.alert('查看答案解析失败，您没有足够的权限！');
+
+				return;
+			}
+
+			var countdown_question = $('.countdown-question-welcome');
+			if(countdown_question.length) {
+				countdown_question.hide();
+			} else {
+				showQuizContent();
+			}
+			
+			$('.question-solution').html(response).fadeIn();
+		});
+	}
 
 	$('.question-content').on('click', '.action-view-solution', function (e) {
 		e.preventDefault();
@@ -216,38 +296,67 @@ $(function(){
 			return;
 		}
 
-		swal({   
-        	title: '积分提示',
-        	text: '<p>查看答案解析需要消耗您 <span style="color:#f0ad4e">30<span> 积分</p>',   
-        	html: true,
-        	confirmButtonText: "继续",
-        	showCancelButton: true,
-        	cancelButtonText: "取消",
-        	type: 'info'
-        	},
-        	function() {
-        		// 提交获取答案请求
+		// 获取答案及相关的记录信息
 
-        		$.get(G_BASE_URL + '/question/ajax/get_question_solution/question_id-' + QUESTION_ID, function (response) {
+		$.get(G_BASE_URL + '/question/ajax/get_question_solution_record/question_id-' + QUESTION_ID, function (result){
+			
+			if(result.err) {
+				AWS.alert(result.err);
 
-        			if (!response)
-					{
-						AWS.alert('查看答案解析失败，您没有足够的权限！');
+				return;
+			}
 
-						return;
-					}
+			// 没有答案
 
-        			var countdown_question = $('.countdown-question-welcome');
-        			if(countdown_question.length) {
-        				countdown_question.hide();
-        			} else {
-        				$('.question-quiz').hide();
-        			}
-					
-					$('.question-solution').html(response).fadeIn();
-				});
-        	}
-        );
+			if(result.solution_not_exist)
+			{
+				swal({   
+		        	title: '系统提示',
+		        	text: '非常抱歉，该问题目前还没有答案解析！',   
+		        	html: true,
+		        	confirmButtonText: "确定",
+		        	type: 'info'
+		        });
+
+				return;
+			}
+
+			if(result.record_exist) {
+				// 直接获取答案
+
+				getQuestionSolution();
+			} else {
+
+				// 发送购买答案请求	
+
+				swal({   
+		        	title: '积分提示',
+		        	text: '<p>查看答案解析需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',   
+		        	html: true,
+		        	confirmButtonText: "继续",
+		        	showCancelButton: true,
+		        	cancelButtonText: "取消",
+		        	type: 'info'
+		        	},
+		        	function() {
+		        		// 添加答案解析查看记录
+
+		        		$.get(G_BASE_URL + '/question/ajax/save_question_solution_record/question_id-' + QUESTION_ID, function (result) {
+							if (result.err)
+							{
+								AWS.alert(result.err);
+							}
+							else
+							{
+								// 获取答案
+
+		        				getQuestionSolution();
+							}
+						}, 'json');
+		        	}
+		        );
+			}
+		}, 'json');
 	});
 
 	// 关闭答案解析
@@ -259,9 +368,16 @@ $(function(){
 		{
 			countdown_question.fadeIn();
 		} else {
-			$('.question-quiz').fadeIn();
+			showQuizContentOverlay();
 		}
 		
+		e.preventDefault();
+	});
+
+	// 出题
+
+	$('.question-content').on('click', '.action-publish-question', function (e){
+		window.location.href = G_BASE_URL + '/publish/';
 		e.preventDefault();
 	});
 });
