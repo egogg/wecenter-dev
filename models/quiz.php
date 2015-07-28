@@ -156,4 +156,23 @@ class quiz_class extends AWS_MODEL
 			'time_spend' => intval($time_spend)
 		), 'id = ' . intval($record_id));
 	}
+
+	public function update_question_quiz_record_timeout($record_id)
+	{
+		$this->update('question_quiz_record', array(
+			'end_time' => time()
+		), 'id = ' . intval($record_id));
+	}
+
+	public function get_unfinished_question_quiz_record($user_id)
+	{
+		return $this->fetch_all('question_quiz_record', 'uid = ' . intval($user_id) . ' AND start_time = end_time AND time_spend > 0');
+	}
+
+	public function update_unfinished_question_quiz_record($user_id)
+	{
+		$this->update('question_quiz_record', array(
+			'end_time' => time()
+		), 'uid = ' . intval($user_id) . ' AND start_time = end_time AND time_spend > 0');
+	}
 }

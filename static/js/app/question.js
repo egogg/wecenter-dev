@@ -121,7 +121,7 @@ $(function(){
 		                if (quiz_result['correct']) {
 		                    swal({   
 		                    	title: '回答正确！',
-		                    	text: spendTimeInfo + '<p><span style="color:#A5DC86">+30<span> 积分</p>',   
+		                    	text: spendTimeInfo + '<p><span style="color:#A5DC86">+' + quiz_result.integral + '<span> 积分</p>',   
 		                    	html: true,
 		                    	confirmButtonText: "确定",
 		                    	type: 'success'
@@ -134,7 +134,7 @@ $(function(){
 		                } else {
 							swal({   
 		                    	title: '回答错误！',   
-		                    	text: spendTimeInfo + '<p><span style="color:#F27474">-30<span> 积分</p>',   
+		                    	text: spendTimeInfo + '<p><span style="color:#F27474"> -' + quiz_result.integral + '<span> 积分</p>',   
 		                    	html: true,
 		                    	confirmButtonText: "确定",
 		                    	type: 'error'
@@ -156,13 +156,19 @@ $(function(){
 
 					// 提交超时请求
 
-					$.post(G_BASE_URL + '/question/ajax/question_quiz_timeout/record_id=' + QUESTION_QUIZ_RECORD_ID, function (result) {
-					
+					$.get(G_BASE_URL + '/question/ajax/question_quiz_timeout/record_id-' + QUESTION_QUIZ_RECORD_ID + '__question_id-' + QUESTION_ID, function (result) {
+						
 						// 超时提示
 
+						textInfo = '<p>答题失败！</p>';
+						if(result.required_integral)
+						{
+							textInfo += '<p><span style="color:#F27474">-' + result.required_integral + '<span> 积分</p>';
+						}
+
 						swal({
-	                    	title: '时间到',   
-	                    	text: '<div>答题失败！</div><div><span style="color:#F27474">-30<span> 积分</div>',   
+	                    	title: '时间到',
+	                    	text: textInfo,   
 	                    	html: true,
 	                    	confirmButtonText: "确定",
 	                    	type: 'error'
@@ -196,6 +202,24 @@ $(function(){
 			if(result.err)
 			{
 				AWS.alert(result.err);
+
+				return;
+			}
+
+			if(result.not_enough_integral)
+			{
+				swal({
+					title: '积分不足',
+		        	text: '<p>重新答题需要 <strong>' + result.required_integral + '</strong> 积分</p><p>您的剩余积分为 <span style="color:#F27474">' + result.user_integral + '<span> 积分</p>',
+		        	html: true,
+		        	confirmButtonText: "如何获取积分",
+		        	type: 'info'
+		        	},
+		        	function() {
+		        		window.location.href = G_BASE_URL + '/integral/rule/';
+						return;	
+		        	}
+		        );
 
 				return;
 			}
@@ -327,34 +351,72 @@ $(function(){
 				getQuestionSolution();
 			} else {
 
-				// 发送购买答案请求	
+				// 发送购买答案请求
 
-				swal({   
-		        	title: '积分提示',
-		        	text: '<p>查看答案解析需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',   
-		        	html: true,
-		        	confirmButtonText: "继续",
-		        	showCancelButton: true,
-		        	cancelButtonText: "取消",
-		        	type: 'info'
-		        	},
-		        	function() {
-		        		// 添加答案解析查看记录
+				$.get(G_BASE_URL + '/question/ajax/get_question_view_solution_integral/question_id-' + QUESTION_ID, function (result){
+					if(result.err)
+					{
+						AWS.alert(result.err);
 
-		        		$.get(G_BASE_URL + '/question/ajax/save_question_solution_record/question_id-' + QUESTION_ID, function (result) {
-							if (result.err)
-							{
-								AWS.alert(result.err);
-							}
-							else
-							{
-								// 获取答案
+						return;
+					}
 
-		        				getQuestionSolution();
-							}
-						}, 'json');
-		        	}
-		        );
+					if(result.not_enough_integral)
+					{
+						swal({
+							title: '积分不足',
+				        	text: '<p>查看答案解析需要 <strong>' + result.required_integral + '</strong> 积分</p><p>您的剩余积分为 <span style="color:#F27474">' + result.user_integral + '<span> 积分</p>',
+				        	html: true,
+				        	confirmButtonText: "如何获取积分",
+				        	type: 'info'
+				        	},
+				        	function() {
+				        		window.location.href = G_BASE_URL + '/integral/rule/';
+								return;	
+				        	}
+				        );
+
+						return;
+					}
+
+					// 提示并查看答案
+
+					if(result.required_integral > 0)
+					{
+						swal({   
+				        	title: '积分提示',
+				        	text: '<p>查看答案解析需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>', 
+				        	html: true,
+				        	confirmButtonText: "继续",
+				        	showCancelButton: true,
+				        	cancelButtonText: "取消",
+				        	type: 'info'
+				        	},
+				        	function() {
+				        		$.get(G_BASE_URL + '/question/ajax/save_question_view_solution_integral/question_id-' + QUESTION_ID, function (result) {
+				        			if(result.err) {
+				        				AWS.alert(result.err);
+				        			}
+
+				        			// 添加答案解析查看记录
+
+					        		$.get(G_BASE_URL + '/question/ajax/save_question_solution_record/question_id-' + QUESTION_ID, function (result) {
+										if (result.err)
+										{
+											AWS.alert(result.err);
+										}
+										else
+										{
+											// 获取答案
+
+					        				getQuestionSolution();
+										}
+									}, 'json');
+				        		});
+				        	}
+				        );
+					}
+				}, 'json');
 			}
 		}, 'json');
 	});

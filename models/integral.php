@@ -91,6 +91,12 @@ class integral_class extends AWS_MODEL
 				case 'ANSWER_INVITE':
 				case 'THANKS_QUESTION':
 				case 'QUESTION_THANKS':
+				case 'QUESTION_QUIZ_RETRY':
+				case 'QUESTION_VIEW_SOLUTION':
+				case 'QUESTION_QUIZ_TIMEOUT':
+				case 'QUESTION_QUIZ_CORRECT':
+				case 'QUESTION_QUIZ_INCORRECT':
+				case 'QUESTION_QUIZ_INVALID':
 					$question_ids[] = $item['item_id'];
 				break;
 
@@ -143,6 +149,12 @@ class integral_class extends AWS_MODEL
 				case 'INVITE_ANSWER':
 				case 'THANKS_QUESTION':
 				case 'QUESTION_THANKS':
+				case 'QUESTION_QUIZ_RETRY':
+				case 'QUESTION_VIEW_SOLUTION':
+				case 'QUESTION_QUIZ_TIMEOUT':
+				case 'QUESTION_QUIZ_CORRECT':
+				case 'QUESTION_QUIZ_INCORRECT':
+				case 'QUESTION_QUIZ_INVALID':
 					if ($questions_info[$item['item_id']])
 					{
 						$result[$log_id] = array(

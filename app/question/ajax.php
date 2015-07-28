@@ -39,7 +39,10 @@ class ajax extends AWS_CONTROLLER
 			'get_question_solution_record',
 			'save_question_solution_record',
 			'get_question_quiz_retry_integral',
-			'save_question_quiz_retry_integral'
+			'save_question_quiz_retry_integral',
+			'get_question_view_solution_integral',
+			'save_question_view_solution_integral',
+			'question_quiz_timeout'
 		);
 
 		return $rule_action;
@@ -1255,16 +1258,25 @@ class ajax extends AWS_CONTROLLER
 				// 更新已有答题记录状态
 
 				$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
-
-				// 积分操作
 			}
 			else
 			{
 				// 保存新的答题记录
 
 				$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
+			}
 
-				// 积分操作
+			// 积分操作
+
+			$required_integral = $this->question_quiz_answer_integral($_GET['question_id'], $is_correct_answer);
+
+			if($is_correct_answer)
+			{
+				$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_CORRECT', $required_integral, AWS_APP::lang()->_t('答题正确 #') . $_GET['question_id']);
+			}
+			else
+			{
+				$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_INCORRECT', -$required_integral, AWS_APP::lang()->_t('答题错误 #') . $_GET['question_id']);
 			}
 		}
 
@@ -1300,6 +1312,7 @@ class ajax extends AWS_CONTROLLER
         	'user_answer' => $user_answer,
         	'spend_time' => $spend_time,
         	'correct' => $is_correct_answer,
+        	'integral' => $required_integral,
         	'try_count' => $try_count,
         	'passed_quiz' => $passed_quiz,
         	'quiz_stats_total' => $question_quiz_stats_total,
@@ -1309,11 +1322,66 @@ class ajax extends AWS_CONTROLLER
 
 	public function question_quiz_timeout_action () 
 	{
-		// 积分操作
+		// 是否为特殊用户
 
-		
+		if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
+		{
+			// 对于特殊用户，直接返回
+
+			H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+		}
+
+		// 更新答题状态
+
+		if($_GET['record_id'])
+		{
+			$this->model('quiz')->update_question_quiz_record_timeout($_GET['record_id']);
+
+			// 积分操作
+
+			$required_integral = $this->question_base_integral($_GET['question_id']) * 2;
+			if($required_integral > 0)
+			{
+				$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_TIMEOUT', -$required_integral, AWS_APP::lang()->_t('答题超时 #') . $_GET['question_id']);
+			}
+
+			H::ajax_json_output(array(
+				'required_integral' => $required_integral
+			));
+		}
 
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+	}
+
+	public function complete_unfinished_question_quiz_record()
+	{
+		if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
+		{
+			// 对于特殊用户，直接返回
+
+			return;
+		}
+
+		// 获取该用户的所有未完成的答题记录
+
+		$unfinished_quiz_record = $this->model('quiz')->get_unfinished_question_quiz_record($this->user_id);
+		if($unfinished_quiz_record)
+		{
+			// 对所有记录按照答题超时进行积分操作
+
+			foreach ($unfinished_quiz_record AS $key => $quiz_record)
+			{
+				$required_integral = $this->question_base_integral($quiz_record['question_id']) * 2;
+				if($required_integral > 0)
+				{
+					$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_INVALID', -$required_integral, AWS_APP::lang()->_t('无效答题 #') . $quiz_record['question_id']);
+				}
+			}
+
+			// 更新未完成记录
+
+			$this->model('quiz')->update_unfinished_question_quiz_record($this->user_id);
+		}
 	}
 
 	public function init_question_content_action ()
@@ -1341,6 +1409,10 @@ class ajax extends AWS_CONTROLLER
 			TPL::assign('question_quiz', $question_quiz);
 		}
 		TPL::assign('question_info', $question_info);
+
+		// 清算该用户的所有超时答题记录
+
+		$this->complete_unfinished_question_quiz_record();
 
 		// 用户答题记录
 
@@ -1585,7 +1657,7 @@ class ajax extends AWS_CONTROLLER
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
 
-	function question_quiz_retry_integral($question_id)
+	function question_base_integral($question_id)
 	{
 		// 获取问题
 
@@ -1593,15 +1665,6 @@ class ajax extends AWS_CONTROLLER
 		{
 			return -1;
 		}
-
-		// 获取答题失败次数
-
-		// $failed_count = 0;
-		// $quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($_GET['question_id'], $this->user_id);
-		// if($quiz_record)
-		// {
-		// 	$failed_count = count($quiz_record);
-		// }
 
 		// 特殊用户不需要积分
 
@@ -1613,12 +1676,66 @@ class ajax extends AWS_CONTROLLER
 		return $question_info['difficulty'] * 10;
 	}
 
+	function question_quiz_answer_integral($question_id, $correct)
+	{
+		$base_integral = $this->question_base_integral($question_id);
+
+		if($base_integral <= 0)
+		{
+			return $base_integral;
+		}
+
+		// 获取答题失败次数
+
+		$failed_count = 0;
+		$quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($_GET['question_id'], $this->user_id);
+		if($quiz_record)
+		{
+			$failed_count = count($quiz_record);
+		}
+
+		if($failed_count == 0)
+		{
+			return $base_integral;
+		}
+
+		if($correct)
+		{
+			if($failed_count > 10)
+			{
+				return round($base_integral / 10);
+			}
+
+			return round($base_integral / $failed_count);
+		}
+		else
+		{
+			if($failed_count >= 4)
+			{
+				return $base_integral * 2;
+			}
+			else
+			{
+				return round($base_integral * (1 + 1/(4 - failed_count)));
+			}
+		}
+	}
+
 	function get_question_quiz_retry_integral_action()
 	{
-		$required_integral = $this->question_quiz_retry_integral($_GET['question_id']);
+		$required_integral = $this->question_base_integral($_GET['question_id']);
 		if($required_integral < 0)
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('计算积分失败')));
+		}
+
+		if ($this->user_info['integral'] < $required_integral)
+		{
+			H::ajax_json_output(array(
+				'not_enough_integral' => true,
+				'user_integral' => $this->user_info['integral'],
+				'required_integral' => $required_integral
+			));
 		}
 
 		H::ajax_json_output(array(
@@ -1628,13 +1745,62 @@ class ajax extends AWS_CONTROLLER
 
 	function save_question_quiz_retry_integral_action()
 	{
-		// 保存积分
+		// 保存积分记录
 
-		$required_integral = $this->question_quiz_retry_integral($_GET['question_id']);
+		$required_integral = $this->question_base_integral($_GET['question_id']);
 		if($required_integral < 0)
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('计算积分失败')));
 		}
+
+		if ($this->user_info['integral'] < $required_integral)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你的剩余积分不足')));
+		}
+
+		$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_RETRY', -$required_integral, AWS_APP::lang()->_t('重新答题 #') . $_GET['question_id']);
+
+		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+	}
+
+	function get_question_view_solution_integral_action()
+	{
+		$required_integral = $this->question_base_integral($_GET['question_id']) * 3;
+		if($required_integral < 0)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('计算积分失败')));
+		}
+
+		if ($this->user_info['integral'] < $required_integral)
+		{
+			H::ajax_json_output(array(
+				'not_enough_integral' => true,
+				'user_integral' => $this->user_info['integral'],
+				'required_integral' => $required_integral
+			));
+		}
+
+		H::ajax_json_output(array(
+			'required_integral' => $required_integral
+		));
+	}
+
+	function save_question_view_solution_integral_action()
+	{
+		// 保存积分记录
+
+		$required_integral = $this->question_base_integral($_GET['question_id']) * 3;
+		if($required_integral < 0)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('计算积分失败')));
+		}
+
+		if ($this->user_info['integral'] < $required_integral)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你的剩余积分不足')));
+		}
+
+		$this->model('integral')->process($this->user_id, 'QUESTION_VIEW_SOLUTION', -$required_integral, AWS_APP::lang()->_t('查看答案 #') . $_GET['question_id']);
 
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}

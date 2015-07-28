@@ -445,6 +445,7 @@
                     }
 
                     this.$element.find('.quiz-submit').remove();
+                    this.$element.find('.quiz-countdown').remove();
                 }
             }
         };
