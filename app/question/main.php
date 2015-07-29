@@ -423,6 +423,13 @@ class main extends AWS_CONTROLLER
 		}
 		TPL::assign('question_quiz_stats', $question_quiz_stats);
 
+		// 添加题目解析提示提示
+
+		if($this->user_id == $question_info['published_uid'] AND !$question_info['solution_id'])
+		{
+			TPL::assign('show_add_solution_hint', true);
+		}
+
 		TPL::import_js('js/app/question.js');
 		TPL::import_css('css/question.css');
 		TPL::import_js('js/quiz.js');

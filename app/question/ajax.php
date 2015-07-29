@@ -644,8 +644,6 @@ class ajax extends AWS_CONTROLLER
 					'ajax_html' => TPL::output('question/ajax/answer', false)
 				), 1, null));
 			}
-
-
 		}
 	}
 

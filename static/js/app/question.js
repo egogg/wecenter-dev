@@ -36,6 +36,16 @@ $(function(){
 			if(takenQuiz) {
 				showQuizContentOverlay();
 			}
+
+			// 提示添加答案解析
+
+			var addSolutionShowHintKey = 'add_solution_hint_shown_' + QUESTION_ID; 
+			var addQuestionSolutionControl = $('.add-question-solution');
+			if(localStorage.getItem(addSolutionShowHintKey) != 'true' && addQuestionSolutionControl.attr('data-toggle') == 'popover')
+			{
+				addQuestionSolutionControl.popover({html: true, placement: 'bottom'}).popover('show');
+			}
+			
 		});
 	}
 
@@ -452,5 +462,14 @@ $(function(){
 	$('.question-content').on('click', '.action-publish-question', function (e){
 		window.location.href = G_BASE_URL + '/publish/';
 		e.preventDefault();
+	});
+
+	// 答案详解添加提示框按钮
+
+	$('body').on('click', '.add-solution-popover-close', function (e) {
+		e.preventDefault();
+		var addSolutionShowHintKey = 'add_solution_hint_shown_' + QUESTION_ID;
+		localStorage.setItem(addSolutionShowHintKey, true);
+		$('.add-question-solution').popover('hide').popover('destroy');
 	});
 });

@@ -180,7 +180,7 @@
 								<?php } ?>
 								
 								<?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid']) { ?>
-								<a class="text-color-999" href="javascript:;" onclick="AWS.dialog('solutionEdit', {question_id:<?php echo $this->question_info['question_id']; ?>,solution_id:<?php echo $this->question_info['solution_id']; ?>,attach_access_key:'<?php echo $this->attach_access_key; ?>'});"><i class="icon icon-bulb"></i> <?php _e('答案解析'); ?></a>
+								<a class="add-question-solution text-color-999" href="javascript:;" onclick="AWS.dialog('solutionEdit', {question_id:<?php echo $this->question_info['question_id']; ?>,solution_id:<?php echo $this->question_info['solution_id']; ?>,attach_access_key:'<?php echo $this->attach_access_key; ?>'});" <?php if($this->show_add_solution_hint) { ?> data-toggle="popover" title="添加答案解析" data-content='<p>您的问题目前还没有答案解析，您可以点击这里进行添加 <a class="add-solution-popover-close btn btn-success btn-mini">我知道了</a></p>' <?php }?> ><i class="icon icon-bulb"></i> <?php _e('答案解析'); ?></a>
 								<?php } ?>
 
 								<div class="pull-right more-operate">
