@@ -78,7 +78,7 @@ class quiz_class extends AWS_MODEL
 		}
 	}
 
-	public function delete_question_quiz_by_id($quiz_id)
+	public function remove_question_quiz_by_id($quiz_id)
 	{
 		$this->delete('question_quiz', 'id = ' . intval($quiz_id));
 	}

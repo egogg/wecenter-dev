@@ -1075,7 +1075,7 @@ class ajax extends AWS_CONTROLLER
 					H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('你没有权限进行删除操作')));
 				}
 
-				$this->model('solution')->remove_solution_by_id($_GET['solution_id']);
+				$this->model('solution')->remove_question_solution_by_id($_GET['solution_id']);
 				
 				// 通知答案的作者
 

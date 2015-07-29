@@ -375,7 +375,7 @@ class ajax extends AWS_CONTROLLER
             {
                 // 删除答题选项
 
-                $this->model('quiz')->delete_question_quiz_by_id($quiz_id);
+                $this->model('quiz')->remove_question_quiz_by_id($quiz_id);
 
                 $quiz_id = 0;
             }

@@ -30,7 +30,7 @@ class solution_class extends AWS_MODEL
 		return $this->fetch_row('question_solution', 'id = ' . intval($solution_id));
 	}
 
-	public function remove_solution_by_id($solution_id)
+	public function remove_question_solution_by_id($solution_id)
 	{
 		$this->delete('question_solution', "id = " . intval($solution_id));
 	}

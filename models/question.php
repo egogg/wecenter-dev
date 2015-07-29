@@ -453,6 +453,16 @@ class question_class extends AWS_MODEL
 		{
 			remove_assoc('ticket', 'question', $question_info['question_id']);
 		}
+
+		// 删除答题选项
+
+		$this->model('quiz')->remove_question_quiz_by_id($question_info['quiz_id']);
+		$this->delete('question_quiz_record', 'question_id = ' . intval($question_id));
+
+		// 删除参考答案
+
+		$this->model('solution')->remove_question_solution_by_id($question_info['solution_id']);
+		$this->delete('question_solution_record', 'question_id = ' . intval($question_id));
 	}
 
 	public function add_focus_question($question_id, $uid, $anonymous = 0, $save_action = true)
