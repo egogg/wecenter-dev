@@ -112,16 +112,23 @@ $(function(){
 
 						// 检查是否为正确答案
 
-						var spendTimeInfo = '';
+						var textInfo = '';
 						if(spendTime > 0)
 						{
-							spendTimeInfo = '<p>用时 <span>' + spendTime + ' 秒</span></p>';
+							textInfo = '<p>用时 <span>' + spendTime + ' 秒</span></p>';
 						}
 
+						
+
 		                if (quiz_result['correct']) {
+		                	if(quiz_result.integral)
+							{
+								textInfo += '<p><span style="color:#A5DC86">+' + quiz_result.integral + '<span> 积分</p>';
+							}
+
 		                    swal({   
 		                    	title: '回答正确！',
-		                    	text: spendTimeInfo + '<p><span style="color:#A5DC86">+' + quiz_result.integral + '<span> 积分</p>',   
+		                    	text: textInfo,   
 		                    	html: true,
 		                    	confirmButtonText: "确定",
 		                    	type: 'success'
@@ -132,9 +139,13 @@ $(function(){
 		                    );
 
 		                } else {
+		                	if(quiz_result.integral)
+							{
+								textInfo += '<p><span style="color:#F27474"> -' + quiz_result.integral + '<span> 积分</p>';
+							}
 							swal({   
 		                    	title: '回答错误！',   
-		                    	text: spendTimeInfo + '<p><span style="color:#F27474"> -' + quiz_result.integral + '<span> 积分</p>',   
+		                    	text: textInfo,   
 		                    	html: true,
 		                    	confirmButtonText: "确定",
 		                    	type: 'error'

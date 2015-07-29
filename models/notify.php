@@ -61,6 +61,8 @@ class notify_class extends AWS_MODEL
 	const TYPE_TICKET_REPLIED = 141; // 工单被回复
 	const TYPE_TICKET_CLOSED = 142; // 工单被关闭
 
+	const TYPE_QUESTION_SOLUTION_MODIFIED = 151; // 问题答案被修改
+
 	public $notify_actions = array();
 	public $notify_action_details;
 
@@ -1079,6 +1081,14 @@ class notify_class extends AWS_MODEL
 
 					case self::TYPE_TICKET_REPLIED:
 						$data[$key]['message'] = AWS_APP::lang()->_t('%s0 回复了你发起的工单 %s1', array(
+							'<a href="' . $val['p_url'] . '">' . $val['p_user_name'] . '</a> ',
+							'<a href="' . $val['key_url'] . '">' . $val['title'] . '</a>'
+						));
+
+						break;
+
+					case self::TYPE_QUESTION_SOLUTION_MODIFIED:
+						$data[$key]['message'] = AWS_APP::lang()->_t('%s0 修改了您关于问题 %s1 的答案详解', array(
 							'<a href="' . $val['p_url'] . '">' . $val['p_user_name'] . '</a> ',
 							'<a href="' . $val['key_url'] . '">' . $val['title'] . '</a>'
 						));

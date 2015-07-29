@@ -137,3 +137,9 @@ $config['action_details'][notify_class::TYPE_TICKET_CLOSED] = array(
 	'combine' => 0,
 	'desc' => AWS_APP::lang()->_t('我的工单被关闭')
 );
+
+$config['action_details'][notify_class::TYPE_QUESTION_SOLUTION_MODIFIED] = array(
+	'user_setting' => 0,
+	'combine' => 0,
+	'desc' => AWS_APP::lang()->_t('我的答案详解被修改')
+);

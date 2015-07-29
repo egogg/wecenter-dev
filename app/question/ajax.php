@@ -1036,7 +1036,7 @@ class ajax extends AWS_CONTROLLER
 		$question_info = $this->model('question')->get_question_info_by_id($_GET['id']);
 		if($question_info && $question_info['solution_id'])
 		{
-			if ($question_info['uid'] == $this->user_id OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'])
+			if ($question_info['published_uid'] == $this->user_id OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'])
 			{
 				$solution_info = $this->model('solution')->get_solution_info_by_id($question_info['solution_id']);	
 				if($solution_info)
@@ -1076,15 +1076,16 @@ class ajax extends AWS_CONTROLLER
 				}
 
 				$this->model('solution')->remove_solution_by_id($_GET['solution_id']);
+				
+				// 通知答案的作者
 
-			// 	// 通知答案的作者
-			// 	if ($this->user_id != $answer_info['uid'])
-			// 	{
-			// 		$this->model('notify')->send($this->user_id, $answer_info['uid'], notify_class::TYPE_REMOVE_ANSWER, notify_class::CATEGORY_QUESTION, $answer_info['question_id'], array(
-			// 			'from_uid' => $this->user_id,
-			// 			'question_id' => $answer_info['question_id']
-			// 		));
-			// 	}
+				if ($this->user_id != $question_info['published_uid'])
+				{
+					$this->model('notify')->send($this->user_id, $question_info['published_uid'], notify_class::TYPE_QUESTION_SOLUTION_MODIFIED, notify_class::CATEGORY_QUESTION, $question_info['question_id'], array(
+						'from_uid' => $this->user_id,
+						'question_id' => $question_info['question_id']
+					));
+				}
 
 				$this->model('question')->update_solution_id($question_info['question_id'], 0);
 			}
@@ -1104,9 +1105,9 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('只允许插入当前页面上传的附件')));
 		}
 
-		if ($question_info['uid'] != $this->user_id and ! $this->user_info['permission']['is_administortar'] and ! $this->user_info['permission']['is_moderator'])
+		if ($question_info['published_uid'] != $this->user_id and ! $this->user_info['permission']['is_administortar'] and ! $this->user_info['permission']['is_moderator'])
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你没有权限编辑这个回复')));
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你没有权限编辑这个答案解析')));
 		}
 
 		if(!$solution_info)
@@ -1128,6 +1129,16 @@ class ajax extends AWS_CONTROLLER
 		if ($attach_access_key)
 		{
 			$this->model('publish')->update_attach('solution', $solution_id, $attach_access_key);
+		}
+
+		// 通知答案的作者
+
+		if ($this->user_id != $question_info['published_uid'])
+		{
+			$this->model('notify')->send($this->user_id, $question_info['published_uid'], notify_class::TYPE_QUESTION_SOLUTION_MODIFIED, notify_class::CATEGORY_QUESTION, $question_info['question_id'], array(
+				'from_uid' => $this->user_id,
+				'question_id' => $question_info['question_id']
+			));
 		}
 
 		H::ajax_json_output(AWS_APP::RSM(array(
@@ -1647,8 +1658,6 @@ class ajax extends AWS_CONTROLLER
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('答案解析不存在')));
 		}
-
-		// 积分操作
 
 		// 添加购买记录
 
