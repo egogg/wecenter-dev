@@ -423,6 +423,11 @@ class main extends AWS_CONTROLLER
 		}
 		TPL::assign('question_quiz_stats', $question_quiz_stats);
 
+		// 获取是否显示评论区
+
+		$enable_comment = (!$question_info['quiz_id'] OR $question_quiz_stats > 0);
+		TPL::assign('enable_comment', $enable_comment);
+
 		// 添加题目解析提示提示
 
 		if($this->user_id == $question_info['published_uid'] AND !$question_info['solution_id'])

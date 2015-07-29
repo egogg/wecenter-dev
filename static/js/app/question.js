@@ -472,4 +472,33 @@ $(function(){
 		localStorage.setItem(addSolutionShowHintKey, true);
 		$('.add-question-solution').popover('hide').popover('destroy');
 	});
+
+
+	// 展开评论框
+
+	$('.question-comment-toolbar .comment-tool-toggle').on('click', function (e){
+		e.preventDefault();
+
+		// 获取答题结论和讨论数
+
+		if(ANSWER_COUNT > 0){
+			swal({
+				title: '友情提示',
+	        	text: '评论中可能透露答案信息，不再思考思考？',
+	        	html: true,
+	        	confirmButtonText: "继续查看",
+	        	showCancelButton: true,
+				cancelButtonText: "我再想想",
+	        	type: 'info'
+	        	},
+	        	function() {
+	        		$('.question-comment-section').slideDown();
+					$('.question-comment-toolbar .comment-tool-toggle').hide();
+	        	}
+	        );
+		} else {
+			$('.question-comment-section').slideDown();
+			$('.question-comment-toolbar .comment-tool-toggle').hide();
+		}
+	});
 });
