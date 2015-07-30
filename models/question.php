@@ -1593,12 +1593,12 @@ class question_class extends AWS_MODEL
 	public function get_next_question_info($question_id)
 	{
 		$questions =  $this->fetch_all('question', 'question_id > ' . intval($question_id), 'question_id', 1);
-		return array_values($questions)[0];
+		return reset($questions);
 	}
 
 	public function get_previous_question_info($question_id)
 	{
 		$questions = $this->fetch_all('question', 'question_id < ' . intval($question_id), 'question_id DESC', 1);
-		return array_values($questions)[0];
+		return reset($questions);
 	}
 }
