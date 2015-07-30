@@ -435,6 +435,13 @@ class main extends AWS_CONTROLLER
 			TPL::assign('show_add_solution_hint', true);
 		}
 
+		// 获取上一道题目和下一道题目的信息
+
+		$question_info_next = $this->model('question')->get_next_question_info($question_info['question_id']);
+		$question_info_previous = $this->model('question')->get_previous_question_info($question_info['question_id']);
+		TPL::assign('question_info_next', $question_info_next);
+		TPL::assign('question_info_previous', $question_info_previous);
+
 		TPL::import_js('js/app/question.js');
 		TPL::import_css('css/question.css');
 		TPL::import_js('js/quiz.js');

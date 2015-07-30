@@ -43,7 +43,7 @@ $(function(){
 			var addQuestionSolutionControl = $('.add-question-solution');
 			if(localStorage.getItem(addSolutionShowHintKey) != 'true' && addQuestionSolutionControl.attr('data-toggle') == 'popover')
 			{
-				addQuestionSolutionControl.popover({html: true, placement: 'bottom'}).popover('show');
+				addQuestionSolutionControl.popover({html: true, placement: 'top'}).popover('show');
 			}
 			
 		});

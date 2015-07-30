@@ -277,13 +277,12 @@
 					<div class="question-pager-nav">
 						<nav>
 						  <ul class="pager">
-						    <li class="previous"><a href="#"><span aria-hidden="true"></span>上一题</a></li>
-						    <li class="next"><a href="#">下一题<span aria-hidden="true"></span></a></li>
+						    <li class="previous <?php if(!$this->question_info_previous) { echo 'disabled'; } ?>"><a href="<?php if ($this->question_info_previous) { echo "question/" . $this->question_info_previous['question_id']; } else { echo "javascript:void(0)"; } ?>">上一题</a></li>
+						    <li class="next <?php if(!$this->question_info_next) { echo 'disabled'; } ?>"><a href="<?php if ($this->question_info_next) { echo "question/" . $this->question_info_next['question_id']; } else { echo "javascript:void(0)"; } ?>">下一题</a></li>
 						  </ul>
 						</nav>
 					</div>
 						
-
 					<!-- end 答题导航 -->
 
 
