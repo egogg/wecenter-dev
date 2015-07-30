@@ -49,7 +49,9 @@
 					<!-- end 话题bar -->
 					<div class="aw-mod aw-question-detail aw-item">
 						<div class="mod-head question-header">
-
+							<h1>
+								<?php echo $this->question_info['question_content']; ?>
+							</h1>
 							<?php if ($this->user_id) { ?>
 							<div class="operate clearfix">
 								<a href="javascript:;" onclick="AWS.User.follow($(this), 'question', <?php echo $this->question_info['question_id']; ?>);" class="follow btn btn-normal btn-success pull-left <?php if ($this->question_focus) { ?> active<?php } ?>"><span><?php if ($this->question_focus) { ?><?php _e('取消关注'); ?><?php } else { ?><?php _e('关注'); ?><?php } ?></span> <em>|</em> <b><?php echo $this->question_info['focus_count']?></b></a>
@@ -145,19 +147,24 @@
 
 							<!-- 答题信息统计 -->
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
-							<div class="question-quiz-stats">
-								<div class="panel panel-info">
-									<div class="panel-body">
-										<div class="question-quiz-total-count">
+							<div class="question-stats">
+								<ul class="question-stats-item">
+									<li class="question-quiz-count">
+										<a href="javascript:void(0);" class="btn btn-default">
 											<i class="glyphicon glyphicon-stats"></i>
 											总答题：<span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 次
-										</div>
-										<div class="question-quiz-pass-rate">
+										</a>
+									</li>
+									<li class="question-quiz-srate">
+										<a href="javascript:void(0);" class="btn btn-default">
 											<i class="glyphicon glyphicon-flag"></i>
 											准确率： <span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
-										</div>
-									</div>	
-								</div>
+										</a>
+									</li>
+									<li class="question-comment-count">
+										<a href="#" class="comment-tool-toggle  btn btn-default"><i class="glyphicon glyphicon-comment"></i> <?php _e('%s 条评论', $this->answer_count); ?></a>
+									</li>
+								</ul>
 							</div>
 							<?php } ?>
 							<!-- end 答题信息统计 -->
@@ -304,9 +311,6 @@
 					</div>
 					<?php } else { ?>
 						<?php if($this->enable_comment) { ?>
-						<div class="question-comment-toolbar">
-							<a href="#" class="comment-tool-toggle"><i class="glyphicon glyphicon-comment"></i> <?php _e('%s 条评论', $this->answer_count); ?></a>
-						</div>
 						<div class='question-comment-section'>
 							<div class="aw-mod aw-question-comment">
 								<div class="mod-head">

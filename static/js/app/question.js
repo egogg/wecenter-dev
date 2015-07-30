@@ -45,7 +45,6 @@ $(function(){
 			{
 				addQuestionSolutionControl.popover({html: true, placement: 'top'}).popover('show');
 			}
-			
 		});
 	}
 
@@ -476,29 +475,41 @@ $(function(){
 
 	// 展开评论框
 
-	$('.question-comment-toolbar .comment-tool-toggle').on('click', function (e){
+	$('.comment-tool-toggle').on('click', function (e){
 		e.preventDefault();
 
-		// 获取答题结论和讨论数
+		var commentSection = $('.question-comment-section');
 
-		if(ANSWER_COUNT > 0){
-			swal({
-				title: '友情提示',
-	        	text: '评论中可能透露答案信息，不再思考思考？',
-	        	html: true,
-	        	confirmButtonText: "继续查看",
-	        	showCancelButton: true,
-				cancelButtonText: "我再想想",
-	        	type: 'info'
-	        	},
-	        	function() {
-	        		$('.question-comment-section').slideDown();
-					$('.question-comment-toolbar .comment-tool-toggle').hide();
-	        	}
-	        );
+		if(!commentSection.is(':visible'))
+		{
+			// 获取答题结论和讨论数
+
+			if(ANSWER_COUNT > 0){
+				swal({
+					title: '友情提示',
+		        	text: '评论中可能透露答案信息，不再思考思考？',
+		        	html: true,
+		        	confirmButtonText: "继续查看",
+		        	showCancelButton: true,
+					cancelButtonText: "我再想想",
+		        	type: 'info'
+		        	},
+		        	function() {
+		        		commentSection.slideDown();
+					    $('html, body').animate({
+					        scrollTop: commentSection.position().top
+					    }, 600);
+		        	}
+		        );
+			} else {
+				commentSection.slideDown();
+				$('html, body').animate({
+			        scrollTop: commentSection.position().top
+			    }, 600);
+			}
 		} else {
-			$('.question-comment-section').slideDown();
-			$('.question-comment-toolbar .comment-tool-toggle').hide();
+			commentSection.slideUp();
 		}
+			
 	});
 });
