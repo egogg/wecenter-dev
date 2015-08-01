@@ -448,7 +448,7 @@ class ajax extends AWS_CONTROLLER
         }
 
         H::ajax_json_output(AWS_APP::RSM(array(
-            'url' => get_js_url('/question/' . $question_info['question_id'] . '?column=log&rf=false')
+            'url' => get_js_url('/question/' . $question_info['question_id'])
         ), 1, null));
 
     }

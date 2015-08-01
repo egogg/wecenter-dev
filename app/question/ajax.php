@@ -1252,7 +1252,7 @@ class ajax extends AWS_CONTROLLER
 
 		// 检查是否为特殊用户
 
-		$is_sepcial_user = ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']);
+		$is_special_user = ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']);
 
 		// 检查是否为限时答题
 
@@ -1260,7 +1260,7 @@ class ajax extends AWS_CONTROLLER
 
 		// 保存答题记录
 
-		if(!$is_sepcial_user)
+		if(!$is_special_user)
 		{
 			if($_GET['record_id'])
 			{
@@ -1337,7 +1337,9 @@ class ajax extends AWS_CONTROLLER
 		{
 			// 对于特殊用户，直接返回
 
-			H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+			H::ajax_json_output(array(
+				'is_special_user' => true
+			));
 		}
 
 		// 更新答题状态
@@ -1615,11 +1617,23 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
 		}
 
-		if(!$question_info['quiz_id'] AND !$question_info['solution_id'])
+		// 获取用户最后一次答题的状态信息
+
+		$passed_quiz = false;
+		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
 		{
-			H::ajax_json_output(array(
-				'solution_not_exist' => true 
-			));
+			$passed_quiz = $quiz_record[0]['passed'];
+		}
+
+		$solution_not_exist = !$question_info['solution_id'] AND (!$question_info['quiz_id'] OR $pass_quiz);
+		if($solution_not_exist) 
+		{
+			if(!$question_info['solution_id'])
+			{
+				H::ajax_json_output(array(
+					'solution_not_exist' => true 
+				));
+			}
 		}
 
 		// 获取用户答题购买答案记录信息
@@ -1736,16 +1750,9 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('计算积分失败')));
 		}
 
-		if ($this->user_info['integral'] < $required_integral)
-		{
-			H::ajax_json_output(array(
-				'not_enough_integral' => true,
-				'user_integral' => $this->user_info['integral'],
-				'required_integral' => $required_integral
-			));
-		}
-
 		H::ajax_json_output(array(
+			'not_enough_integral' => $this->user_info['integral'] < $required_integral,
+			'user_integral' => $this->user_info['integral'],
 			'required_integral' => $required_integral
 		));
 	}
@@ -1778,16 +1785,9 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('计算积分失败')));
 		}
 
-		if ($this->user_info['integral'] < $required_integral)
-		{
-			H::ajax_json_output(array(
-				'not_enough_integral' => true,
-				'user_integral' => $this->user_info['integral'],
-				'required_integral' => $required_integral
-			));
-		}
-
 		H::ajax_json_output(array(
+			'not_enough_integral' => $this->user_info['integral'] < $required_integral,
+			'user_integral' => $this->user_info['integral'],
 			'required_integral' => $required_integral
 		));
 	}

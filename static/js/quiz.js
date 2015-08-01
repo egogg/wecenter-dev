@@ -377,8 +377,6 @@
 
                         // setup countdown timer
 
-                        options.timer = setInterval(countdownUpdate, 1000);
-
                         var countdown = quizItem.countdown;
                         var timerControl = this.$element.find('.quiz-countdown .timer');
                         function countdownUpdate() {
@@ -396,6 +394,8 @@
                                 }
                             }
                         }
+
+                        options.timer = setInterval(countdownUpdate, 1000);
                     }
                 }
 

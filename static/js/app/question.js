@@ -178,6 +178,13 @@ $(function(){
 
 					$.get(G_BASE_URL + '/question/ajax/question_quiz_timeout/record_id-' + QUESTION_QUIZ_RECORD_ID + '__question_id-' + QUESTION_ID, function (result) {
 						
+						// 特殊用户
+
+						if(result.is_special_user)
+						{
+							return;
+						}
+						
 						// 超时提示
 
 						textInfo = '<p>答题失败！</p>';
@@ -230,9 +237,11 @@ $(function(){
 			{
 				swal({
 					title: '积分不足',
-		        	text: '<p>重新答题需要 <strong>' + result.required_integral + '</strong> 积分</p><p>您的剩余积分为 <span style="color:#F27474">' + result.user_integral + '<span> 积分</p>',
+		        	text: '<p>您拥有 <span class="user_integral">' + result.user_integral + '</span> 积分</p>' + '<p>重新答题需要 <span class="required_integral">' + result.required_integral + '</span> 积分</p>',
 		        	html: true,
-		        	confirmButtonText: "如何获取积分",
+		        	confirmButtonText: "获取积分",
+		        	showCancelButton: true,
+				    cancelButtonText: "返回问题",
 		        	type: 'info'
 		        	},
 		        	function() {
@@ -248,7 +257,7 @@ $(function(){
 			{
 				swal({   
 		        	title: '积分提示',
-		        	text: '<p>重新答题需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',   
+		        	text: '<p>您拥有 <span class="user_integral">' + result.user_integral + '</span> 积分</p>' + '<p>重新答题需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',   
 		        	html: true,
 		        	confirmButtonText: "继续",
 		        	showCancelButton: true,
@@ -356,7 +365,7 @@ $(function(){
 			{
 				swal({   
 		        	title: '系统提示',
-		        	text: '非常抱歉，该问题目前还没有答案解析！',   
+		        	text: '该问题目前还没有答案解析！',   
 		        	html: true,
 		        	confirmButtonText: "确定",
 		        	type: 'info'
@@ -385,9 +394,11 @@ $(function(){
 					{
 						swal({
 							title: '积分不足',
-				        	text: '<p>查看答案解析需要 <strong>' + result.required_integral + '</strong> 积分</p><p>您的剩余积分为 <span style="color:#F27474">' + result.user_integral + '<span> 积分</p>',
+				        	text: '<p>您拥有 <span class="user-integral">' + result.user_integral + '</span> 积分</p>' + '<p>查看答案解析需要 <span class="required-integral">' + result.required_integral + '</span> 积分</p>',
 				        	html: true,
-				        	confirmButtonText: "如何获取积分",
+				        	confirmButtonText: "获取积分",
+				        	showCancelButton: true,
+				        	cancelButtonText: "返回问题",
 				        	type: 'info'
 				        	},
 				        	function() {
@@ -405,7 +416,7 @@ $(function(){
 					{
 						swal({   
 				        	title: '积分提示',
-				        	text: '<p>查看答案解析需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>', 
+				        	text: '<p>您拥有 <span class="user_integral">' + result.user_integral + '</span> 积分</p>' + '<p>查看答案解析需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',
 				        	html: true,
 				        	confirmButtonText: "继续",
 				        	showCancelButton: true,
