@@ -451,6 +451,14 @@ $(function(){
 			}
 		}, 'json');
 	});
+		
+	// 参与答题讨论
+
+	$('.question-content').on('click', '.action-post-comment', function (e) {
+		e.preventDefault();
+		toggleComment();
+
+	});
 
 	// 关闭答案解析
 
@@ -483,13 +491,9 @@ $(function(){
 		$('.add-question-solution').popover('hide').popover('destroy');
 	});
 
-
-	// 展开评论框
-
-	$('.comment-tool-toggle').on('click', function (e){
-		e.preventDefault();
-
+	function toggleComment() {
 		var commentSection = $('.question-comment-section');
+		var commentInput = $('.aw-replay-box.question');
 
 		if(!commentSection.is(':visible'))
 		{
@@ -508,19 +512,30 @@ $(function(){
 		        	function() {
 		        		commentSection.slideDown();
 					    $('html, body').animate({
-					        scrollTop: commentSection.position().top
-					    }, 600);
+					        scrollTop: commentInput.position().top
+					    }, 300);
 		        	}
 		        );
 			} else {
 				commentSection.slideDown();
 				$('html, body').animate({
 			        scrollTop: commentSection.position().top
-			    }, 600);
+			    }, 300);
 			}
 		} else {
-			commentSection.slideUp();
+			// commentSection.slideUp();
+			$('html, body').animate({
+		        scrollTop: commentInput.position().top
+		    }, 300);
 		}
+	}
+
+	// 展开评论框
+
+	$('.comment-tool-toggle').on('click', function (e){
+		e.preventDefault();
+
+		toggleComment();
 			
 	});
 });

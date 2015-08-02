@@ -146,9 +146,9 @@
 							<!-- end 问题详解 -->
 
 							<!-- 答题信息统计 -->
-							<?php if($this->question_info['quiz_id'] > 0) { ?>
 							<div class="question-stats">
 								<ul class="question-stats-item">
+								<?php if($this->question_info['quiz_id'] > 0) { ?>
 									<li class="question-quiz-count">
 										<a href="javascript:void(0);" class="btn btn-default">
 											<i class="glyphicon glyphicon-stats"></i>
@@ -161,12 +161,15 @@
 											准确率： <span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
 										</a>
 									</li>
+								<?php } ?>
+								<?php if($this->enable_comment) { ?>
 									<li class="question-comment-count">
 										<a href="#" class="comment-tool-toggle  btn btn-default"><i class="glyphicon glyphicon-comment"></i> <?php _e('%s 条评论', $this->answer_count); ?></a>
 									</li>
+								<?php } ?>
 								</ul>
 							</div>
-							<?php } ?>
+							
 							<!-- end 答题信息统计 -->
 						</div>
 						<div class="mod-footer">
