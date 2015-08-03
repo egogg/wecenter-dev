@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 header {
-	position: absolute;
-	top: 0;
+	/*position: absolute;
+	top: 0;*/
 	width: 100%;
 	background: #fff;
 }
@@ -27,46 +27,97 @@ header .navbar-slogan {
 header .navbar-user {
 	display: inline-block;
 	float: right;
-	margin: 15px 0;
+	padding: 22.5px 0;
+	height: 80px;
+}
+
+header .navbar-user ul>li span {
+	font-size: 160%;
+}
+
+header .navbar-user .menu-bar {
+	display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: #1caaea;
+    margin-top: 4px;
+}
+
+header .navbar-user .navbar-user-notification {
+	margin-right: 13px;
+	font-size: 160%;
+}
+
+header .navbar-user .navbar-user-avatar {
+	padding: 0;
+}
+
+header ul.navbar-user-actions>li {
+	float: right;
+	display: inline-block;
+	padding: 6.5px 0;
+	margin-left: 25px;
+}
+
+header img.avatar {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+    box-sizing: content-box;
 }
 
 header .navbar-search {
 	display: inline-block;
 	width: 246px;
-	padding: 22.5px 0;
 	float: right;
-	margin-right: 30px;
+	height: 80px;
+	margin-right: 100px;
 }
 
 header .navbar-search-input {
 	display: inline-block;
 	width: 100%;
+	padding: 22.5px 0;
 }
 
 header .navbar-search-icon {
 	position: relative;
-	top: -28px;
+	top: -50px;
 	left: 232px;
 }
 
 header .main-nav {
-	background-color: #499ef3;
+	background-color: #2196F3;
+}
+
+header .main-nav ul li {
+	display: inline-block;
+	float: left;
+	position: relative;
 }
 
 header .main-nav ul li a {
+	position: relative;
+    display: block;
+    padding: 10px 15px;
+	line-height: 18px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	color: #fff;
 }
 
 header .main-nav ul li a:hover {
-	background: #4dabff;
+	background: #03A9F4;
 }
 
 header .main-nav ul li a.active {
-	background: #4dabff;
+	background: #03A9F4;
 }
 
+body {
+	padding-top: 0;
+}
 .container{width: 1010px !important;}
 
 /* 重载bootstrap部分 */
@@ -121,8 +172,8 @@ body, input, button, select, textarea, h1, h2, h3, h4, h5, h6{font-family:'Helve
 ul, ol{margin:0;padding:0;list-style:none;}
 h1, h2, h3, h4, h5, h6{margin-top:0;font-size:100%;line-height: 1.7;}
 dd{margin-left: 10px;}
-a{cursor: pointer;color: #155faa;}
-a:hover{text-decoration: none;color: #499ef3;}
+a{cursor: pointer;color: #03A9F4;}
+a:hover{text-decoration: none;color: #2196F3;}
 a:focus{outline: none !important;}
 table td{vertical-align: middle !important;}
 .aw-wecenter{margin:0 auto;}/*兼容2.5*/
@@ -253,7 +304,7 @@ a.aw-load-more-content{display: block;}
 
 /* 顶部 */
 .aw-top-menu-wrap{position:relative;z-index:1001;width:100%;min-height:50px;background-color:#499ef3;}
-.aw-container-wrap{margin-top: 150px;}
+.aw-container-wrap{margin-top: 15px;}
 .aw-logo, .aw-search-box, .aw-top-nav{position:relative;float: left;}
 .aw-publish-btn, .aw-user-nav, .aw-top-notification{position:relative;float: right;margin:10px 0 10px 10px;}
 .aw-logo{width:90px;height:40px;margin:7px 0 0 0;}
@@ -1076,14 +1127,12 @@ blockquote {margin: 0 40px;padding: 0 15px;font-size: 14px;color: #777;border-le
         position: absolute;
         width: 120px;
         left: -15px;
-        background: #499ef3;
     }
 }
 @media (min-width: 768px) {
     .navbar-collapse {
         position: static;
         width: auto;
-        background: #499ef3;
     }
 }
 /* iphone横屏幕 */
