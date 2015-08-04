@@ -17,7 +17,7 @@
 		                    	<?php if($this->user_id) { ?>
 		                    		<li>
 										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><i class="md md-notifications"></i> 消息</a>
-										<span class="badge badge-important" style="display:none" id="notifications_unread"><?php echo $this->user_info['notification_unread']; ?></span>
+										<span class="badge badge-important" style="display:none" id="notifications_unreadx"><?php echo $this->user_info['notification_unread']; ?></span>
 									</li>
 									<li class="divider"></li>
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 主页</a></li>
@@ -33,10 +33,9 @@
 	                        </ul>
 						</li>
 						<li>
-							<a href=""><span class="md md-search"></span></a>
+							<a href="#" id="navbar-mobile-search-icon"><span class="md md-search"></span></a>
 						</li>
 					</ul>
-	                    
                 </div>
 				<div class="navbar-user hidden-xs">
 		            <ul class="navbar-user-actions">
@@ -63,15 +62,28 @@
 							</li>
 
 							<li class="navbar-user-notification dropdown">
-								<a href="notifications/" data-toggle="dropdown" aria-expanded="true" class="tm-notification"><i class="md md-notifications"></i></a>
-								<span class="badge badge-important" style="display:none" id="notifications_unread"><?php echo $this->user_info['notification_unread']; ?></span>
+								<a class="tm-notification" href="notifications/" data-toggle="dropdown" aria-expanded="false">
+									<i class="md md-notifications"></i>
+									<span class="unread-notify" style="display:none" id="notifications_unread"><?php echo $this->user_info['notification_unread']; ?></span>
+								</a>
+								
 								<div class="dropdown-menu dropdown-menu-lg pull-right">
-									<div class="mod-body">
-										<ul id="header_notification_list"></ul>
-									</div>
-									<div class="mod-footer">
-										<a href="notifications/"><?php _e('查看全部'); ?></a>
-									</div>
+									<div class="listview" id="notifications">
+		                                <div class="lv-header">
+		                                    未读消息
+		                                    <ul class="actions">
+		                                        <li class="dropdown">
+		                                            <a onclick="AWS.Message.read_notification(true, 0, true);" data-clear="notification">
+		                                                <i class="md md-done-all"></i>
+		                                            </a>
+		                                        </li>
+		                                    </ul>
+		                                </div>
+		                                <div id="header_notification_list" class="lv-body c-overflow" tabindex="2" style="overflow: hidden; outline: none;">
+		                                </div>
+		                    
+		                                <a class="lv-footer" href="notifications/">查看全部</a>
+		                            </div>
 								</div>
 							</li>
 								
@@ -103,7 +115,19 @@
 						</div>
 					</div>
 				</form>
-
+			</div>
+			<div class="navbar-mobile-search">
+				<div class="navbar-mobile-search-form-wrap">
+					<form class="navbar-search" action="search/" id="navbar-mobile-search-form" method="post">
+						<div class="navbar-search-input">
+							<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、话题或人'); ?>" autocomplete="off" name="q" id="aw-search-query" />
+						</div>
+						<span class="navbar-search-icon" title="<?php _e('搜索'); ?>" id="navbar-mobile-search-btns" onClick="$('#navbar-mobile-search-form').submit();"><a class="icon icon-search"></a></span>
+					</form>
+				</div>
+				<div>
+					<a class="navbar-mobile-search-close" type="button" aria-label="Close"><span aria-hidden="true">×</span></a>
+				</div>
 			</div>
 		</div>
         <nav class="main-nav">

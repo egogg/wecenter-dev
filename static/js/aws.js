@@ -2385,7 +2385,7 @@ AWS.Message =
 			{
 				if ($('#header_notification_list').length)
 				{
-					$("#header_notification_list").html('<p class="aw-padding10" align="center">' + _t('没有未读通知') + '</p>');
+					$("#header_notification_list").html('');
 				}
 
 				if ($("#index_notification").length)
@@ -2469,7 +2469,7 @@ AWS.Message =
 				}
 				else
 				{
-					$("#header_notification_list").html('<p class="aw-padding10" align="center">' + _t('没有未读通知') + '</p>');
+					$("#header_notification_list").html('<div class="aw-padding10" align="center">' + _t('没有未读通知') + '</div>');
 				}
 			});
 		}

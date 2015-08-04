@@ -49,6 +49,25 @@ header .navbar-user .navbar-user-notification {
 	font-size: 160%;
 }
 
+header .navbar-user .unread-notify {
+	position: absolute;
+	color: #FFF;
+	font-style: normal;
+	background: #f44336;
+	padding: 1px 5px;
+	border-radius: 2px;
+	left: 14px;
+	top: -3px;
+	font-size: 10px;
+	line-height: 16px;
+	-webkit-animation-name: wobble;
+	animation-name: wobble;
+	-webkit-animation-duration: 500ms;
+	animation-duration: 500ms;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
+
 header .navbar-user .navbar-user-avatar {
 	padding: 0;
 }
@@ -90,7 +109,8 @@ header .navbar-search-input input {
 header .navbar-search-icon {
 	position: relative;
 	top: -50px;
-	left: 222px;
+	float: right;
+	margin-right: 10px;
 }
 
 header .navbar-search-icon a {
@@ -98,7 +118,59 @@ header .navbar-search-icon a {
 }
 
 header .navbar-search-icon a:hover {
-	color: #000;
+	color: #333;
+}
+
+header .navbar-mobile-search {
+	background-color: #fff;
+	width: 100%;
+	height: 80px;
+	position: absolute;
+	top: -80px;
+	-webkit-transition: all;
+	-o-transition: all;
+	transition: all;
+	-webkit-transition-duration: 300ms;
+	transition-duration: 300ms;
+	filter: alpha(opacity=0);
+	z-index: 10;
+}
+
+header .navbar-mobile-search.open {
+	top: 0;
+	opacity: 1;
+}
+
+header .navbar-mobile-search>div {
+	display: table-cell;
+	height: 80px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+header .navbar-mobile-search-form-wrap {
+	width: 100%;
+}
+
+header .navbar-mobile-search-close {
+	padding: 27px 0;
+	color: #adadad;
+	font-size: 160%;
+	float: left;
+	height: 80px;
+}
+
+header .navbar-mobile-search .navbar-search {
+	width: 100%;
+	margin-right: 0;
+}
+
+header .navbar-mobile-search-close:hover {
+	color: #333;
+}
+
+header .navbar-mobile-search-close span {
+	padding: 4.5px 0;
 }
 
 header .main-nav {
