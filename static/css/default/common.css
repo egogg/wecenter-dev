@@ -81,10 +81,24 @@ header .navbar-search-input {
 	padding: 22.5px 0;
 }
 
+header .navbar-search-input input {
+	border: 1px solid #e0e0e0;
+    padding: 0 35px 0 10px;
+    border-radius: 4px;
+}
+
 header .navbar-search-icon {
 	position: relative;
 	top: -50px;
-	left: 232px;
+	left: 222px;
+}
+
+header .navbar-search-icon a {
+	color: #adadad;
+}
+
+header .navbar-search-icon a:hover {
+	color: #000;
 }
 
 header .main-nav {
