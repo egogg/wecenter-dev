@@ -6,9 +6,10 @@
 			<?php echo $val['message']; ?>
 		</div>
 		<small class="lv-small">
-			<i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?><a class="pull-right read text-color-999" onclick="AWS.Message.read_notification($(this).parents('.notification'), <?php echo $val['notification_id']; ?>, false)">
+			<a class="pull-right read text-color-999" onclick="AWS.Message.read_notification($(this).parents('.notification'), <?php echo $val['notification_id']; ?>, false)">
 				标为已读
 			</a>
+			<i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?>
 		</small>
 	</div>
 	<?php } ?>
