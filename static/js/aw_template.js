@@ -392,7 +392,7 @@ var AW_TEMPLATE = {
 		'</div>',
 
 	'searchDropdownListQuestions' :
-		'<li class="{{active}} question clearfix"><i class="icon icon-bestbg pull-left"></i><a class="aw-hide-txt pull-left" href="{{url}}">{{content}} </a><span class="pull-right text-color-999">{{discuss_count}} ' + _t('个回复') + '</span></li>',
+		'<a class="lv-item {{active}} question clearfix" href="{{url}}"><span class="lv-title pull-left">{{content}} </span><span class="pull-right text-color-999">{{discuss_count}} ' + _t('个回复') + '</span></a>',
 	'searchDropdownListTopics' :
 		'<li class="topic clearfix"><span class="topic-tag" data-id="{{topic_id}}"><a href="{{url}}" class="text">{{name}}</a></span> <span class="pull-right text-color-999">{{discuss_count}} ' + _t('个讨论') + '</span></li>',
 	'searchDropdownListUsers' :

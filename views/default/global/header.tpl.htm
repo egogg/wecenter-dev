@@ -9,6 +9,9 @@
 					<ul class="navbar-user-actions">
 						<li class="dropdown">
 							<a href="#" class="navbar-user-menu tm-settings" data-toggle="dropdown" aria-expanded="false">
+								<?php $total_unread = $this->user_info['inbox_unread'] + $this->user_info['notification_unread']; if ($total_unread != 0) {?>
+									<span class="m-count unread-total-mobile"><?php echo $total_unread?></span>
+								<?php } ?>
 	                       		<span class="menu-bar"></span>
 	                       		<span class="menu-bar"></span>
 	                       		<span class="menu-bar"></span>
@@ -16,10 +19,10 @@
 	                    	<ul class="dropdown-menu dm-icon pull-right">
 		                    	<?php if($this->user_id) { ?>
 		                    		<li>
-										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><i class="md md-notifications"></i> 消息</a>
-										<span class="badge badge-important" style="display:none" id="notifications_unreadx"><?php echo $this->user_info['notification_unread']; ?></span>
+										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><span class="badge badge-important pull-right" style="display:none" id="notifications_unread_mobile"><?php echo $this->user_info['notification_unread']; ?></span><i class="md md-notifications"></i> 消息</a>
 									</li>
 									<li class="divider"></li>
+									<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread_mobile">0</span><i class="md md-mail"></i> 私信</a></li>
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 主页</a></li>
 									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出</a></li>
 		                        <?php } else { ?>
@@ -46,13 +49,13 @@
 									<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?>" />
 									<i class="caret"></i>
 									<?php if ($this->user_info['inbox_unread'] != 0) {?>
-										<span class="badge badge-important"><?php echo $this->user_info['inbox_unread']?></span>
+										<span class="m-count unread-mail"><?php echo $this->user_info['inbox_unread']?></span>
 									<?php } ?>
 
 								</a>
 								<ul class="dropdown-menu dm-icon pull-right">
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 主页</a></li>
-		                           <li><a href="inbox/"><i class="md md-mail"></i> 私信<span class="badge badge-important hide" id="inbox_unread">0</span></a></li>
+		                           	<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-mail"></i> 私信</a></li>
 									<li class="hidden-xs"><a href="account/setting/profile/"><i class="md md-settings"></i> 设置</a></li>
 									<?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
 									<li class="hidden-xs"><a href="admin/"><i class="md md-dashboard"></i> 管理</a></li>
@@ -64,7 +67,7 @@
 							<li class="navbar-user-notification dropdown">
 								<a class="tm-notification" href="notifications/" data-toggle="dropdown" aria-expanded="false">
 									<i class="md md-notifications"></i>
-									<span class="unread-notify" style="display:none" id="notifications_unread"><?php echo $this->user_info['notification_unread']; ?></span>
+									<span class="m-count unread-notify" style="display:none" id="notifications_unread"><?php echo $this->user_info['notification_unread']; ?></span>
 								</a>
 								
 								<div class="dropdown-menu dropdown-menu-lg pull-right">
@@ -99,28 +102,24 @@
 		            </ul>
 		        </div>
 				<form class="navbar-search hidden-xs" action="search/" id="global_search_form" method="post">
-					<div class="navbar-search-input">
+					<div class="navbar-search-input dropdown">
 						<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、话题或人'); ?>" autocomplete="off" name="q" id="aw-search-query" />
+						<div class="dropdown-menu dropdown-menu-lg pull-left">
+							<div class="mod-body listview">
+								<div class="title lv-header"><?php _e('输入关键字进行搜索'); ?></div>
+								<div class="aw-dropdown-list lv-body c-overflow" tabindex="1"></div>
+								<div class="search lv-footer"><span><?php _e('搜索'); ?>: </span><a onClick="$('#global_search_form').submit();"></a></div>
+							</div>
+						</div>
 					</div>
 					<span class="navbar-search-icon" title="<?php _e('搜索'); ?>" id="global_search_btns" onClick="$('#global_search_form').submit();"><a class="icon icon-search"></a></span>
-					
-					<div class="aw-dropdown">
-						<div class="mod-body">
-							<p class="title"><?php _e('输入关键字进行搜索'); ?></p>
-							<ul class="aw-dropdown-list hide"></ul>
-							<p class="search"><span><?php _e('搜索'); ?>:</span><a onClick="$('#global_search_form').submit();"></a></p>
-						</div>
-						<div class="mod-footer">
-							<a href="<?php if (get_setting('quick_publish') == 'Y' && $this->user_id) { ?>javascript:;<?php } else { ?>publish<?php } ?>" onClick="$('#header_publish').click();" class="pull-right btn btn-mini btn-success publish"><?php _e('发起问题'); ?></a>
-						</div>
-					</div>
 				</form>
 			</div>
 			<div class="navbar-mobile-search visible-xs">
 				<div class="navbar-mobile-search-form-wrap">
 					<form class="navbar-search" action="search/" id="navbar-mobile-search-form" method="post">
 						<div class="navbar-search-input">
-							<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、话题或人'); ?>" autocomplete="off" name="q" id="aw-search-query" />
+							<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、话题或人'); ?>" autocomplete="off" name="q" />
 						</div>
 						<span class="navbar-search-icon" title="<?php _e('搜索'); ?>" id="navbar-mobile-search-btns" onClick="$('#navbar-mobile-search-form').submit();"><a class="icon icon-search"></a></span>
 					</form>
@@ -149,10 +148,8 @@
 	</header>
 	
 	<?php if ($this->user_id AND $this->user_info['email'] AND !$this->user_info['valid_email'] AND get_setting('register_valid_type') != 'N') { ?>
-	<div class="aw-email-verify">
-		<div class="container text-center">
+		<div class="text-center alert alert-warning">
 			<?php _e('你的邮箱 %s 还未验证, <a onclick="AWS.ajax_request(G_BASE_URL + \'/account/ajax/send_valid_mail/\');">点击这里重新发送验证邮件</a>', $this->user_info['email']); ?>
 		</div>
-	</div>
 	<?php } ?>
 

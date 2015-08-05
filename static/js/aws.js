@@ -1991,7 +1991,8 @@ AWS.Dropdown =
 		{
 			$(selector).focus(function()
 			{
-				$(selector).parent().find('.aw-dropdown').show();
+				// $(selector).parent().find('.aw-dropdown').show();
+				$(selector).closest('.navbar-search-input').addClass('open');
 			});
 		}
 		$(selector).keyup(function(e)
@@ -1999,6 +2000,7 @@ AWS.Dropdown =
 			if (type == 'search')
 			{
 				$(selector).parent().find('.search').show().children('a').text($(selector).val());
+				$(selector).closest('.navbar-search-input').addClass('open');
 			}
 			if ($(selector).val().length >= 1)
 			{
@@ -2010,6 +2012,7 @@ AWS.Dropdown =
 			else
 			{
 			   $(selector).parent().find('.aw-dropdown').hide();
+			   $(selector).closest('.navbar-search-input').removeClass('open');
 			}
 
 			if (type == 'topic')
@@ -2102,6 +2105,7 @@ AWS.Dropdown =
 		$(selector).blur(function()
 		{
 			$(selector).parent().find('.aw-dropdown').delay(500).fadeOut(300);
+			// $(selector).closest('.navbar-search-input').removeClass('open');
 		});
 	},
 
@@ -2361,6 +2365,7 @@ AWS.Message =
 		$.get(G_BASE_URL + '/home/ajax/notifications/', function (result)
 		{
 			$('#inbox_unread').html(Number(result.rsm.inbox_num));
+			$('#inbox_unread_mobile').html(Number(result.rsm.inbox_num));
 
 			var last_unread_notification = G_UNREAD_NOTIFICATION;
 
@@ -2375,11 +2380,17 @@ AWS.Message =
 
 					// 给导航label添加未读消息数量
 					$('#notifications_unread').html(G_UNREAD_NOTIFICATION);
+
+					// 给移动版增加未读消息数量
+					$('#notifications_unread_mobile').html(G_UNREAD_NOTIFICATION);
 				}
 
-				document.title = '(' + (Number(result.rsm.notifications_num) + Number(result.rsm.inbox_num)) + ') ' + document_title;
+				var total_unreads = (Number(result.rsm.notifications_num) + Number(result.rsm.inbox_num));
+
+				document.title = '(' + total_unreads + ') ' + document_title;
 
 				$('#notifications_unread').show();
+				$('#notifications_unread_mobile').show();
 			}
 			else
 			{
@@ -2396,16 +2407,19 @@ AWS.Message =
 				document.title = document_title;
 
 				$('#notifications_unread').hide();
+				$('#notifications_unread_mobile').hide();
 			}
 
 			// 私信
 			if (Number(result.rsm.inbox_num) > 0)
 			{
-				$('#inbox_unread').show();
+				$('#inbox_unread').removeClass('hide');
+				$('#inbox_unread_mobile').removeClass('hide');
 			}
 			else
 			{
-				$('#inbox_unread').hide();
+				$('#inbox_unread').addClass('hide');
+				$('#inbox_unread_mobile').addClass('hide');
 			}
 
 		}, 'json');
