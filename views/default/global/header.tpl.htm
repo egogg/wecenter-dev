@@ -19,12 +19,12 @@
 	                    	<ul class="dropdown-menu dm-icon pull-right">
 		                    	<?php if($this->user_id) { ?>
 		                    		<li>
-										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><span class="badge badge-important pull-right" style="display:none" id="notifications_unread_mobile"><?php echo $this->user_info['notification_unread']; ?></span><i class="md md-notifications"></i> 消息</a>
+										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><span class="badge badge-important pull-right" style="display:none" id="notifications_unread_mobile"><?php echo $this->user_info['notification_unread']; ?></span><i class="md md-notifications"></i> 站内消息</a>
 									</li>
 									<li class="divider"></li>
-									<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread_mobile">0</span><i class="md md-mail"></i> 私信</a></li>
-									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 主页</a></li>
-									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出</a></li>
+									<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread_mobile">0</span><i class="md md-mail"></i> 我的私信</a></li>
+									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
+									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出登录</a></li>
 		                        <?php } else { ?>
 		                        	<li class="navbar-login">
 					                    <a href="account/login/">登录</a>
@@ -54,13 +54,13 @@
 
 								</a>
 								<ul class="dropdown-menu dm-icon pull-right">
-									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 主页</a></li>
-		                           	<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-mail"></i> 私信</a></li>
-									<li class="hidden-xs"><a href="account/setting/profile/"><i class="md md-settings"></i> 设置</a></li>
+									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
+		                           	<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-mail"></i> 我的私信</a></li>
+									<li class="hidden-xs"><a href="account/setting/profile/"><i class="md md-settings"></i> 我的设置</a></li>
 									<?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
-									<li class="hidden-xs"><a href="admin/"><i class="md md-dashboard"></i> 管理</a></li>
+									<li class="hidden-xs"><a href="admin/"><i class="md md-dashboard"></i> 后台管理</a></li>
 									<?php } ?>
-									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出</a></li>
+									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出登录</a></li>
 		                        </ul>
 							</li>
 

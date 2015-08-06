@@ -392,13 +392,13 @@ var AW_TEMPLATE = {
 		'</div>',
 
 	'searchDropdownListQuestions' :
-		'<a class="lv-item {{active}} question clearfix" href="{{url}}"><span class="lv-title pull-left">{{content}} </span><span class="pull-right text-color-999">{{discuss_count}} ' + _t('个回复') + '</span></a>',
+		'<a class="lv-item {{active}} question clearfix" href="{{url}}"><span class="lv-title pull-left">{{content}} </span><span class="pull-right text-color-999">{{discuss_count}} ' + _t('条评论') + '</span></a>',
 	'searchDropdownListTopics' :
-		'<li class="topic clearfix"><span class="topic-tag" data-id="{{topic_id}}"><a href="{{url}}" class="text">{{name}}</a></span> <span class="pull-right text-color-999">{{discuss_count}} ' + _t('个讨论') + '</span></li>',
+		'<a class="lv-item topic clearfix" href="{{url}}"><span class="pull-right text-color-999">{{discuss_count}} ' + _t('个讨论') + '</span><span class="topic-tag" data-id="{{topic_id}}"><span class="text">{{name}}</span></span> </a>',
 	'searchDropdownListUsers' :
-		'<li class="user clearfix"><a href="{{url}}"><img src="{{img}}" />{{name}}<span class="aw-hide-txt">{{intro}}</span></a></li>',
+		'<a class="lv-item user clearfix" href="{{url}}"><div class="media"><div class="pull-left"><img class="lv-img-sm" src="{{img}}" /></div><div class="media-body"><div class="lv-title">{{name}}</div><small class="lv-small">{{intro}}</small></div></div></a>',
 	'searchDropdownListArticles' :
-		'<li class="question clearfix"><a class="aw-hide-txt pull-left" href="{{url}}">{{content}} </a><span class="pull-right text-color-999">{{comments}} ' + _t('条评论') + '</span></li>',
+		'<a class="lv-item question clearfix" href="{{url}}"><span class="pull-right text-color-999">{{comments}} ' + _t('条评论') + '</span><div class="aw-hide-txt pull-left lv-title">{{content}} </div></a>',
 	'inviteDropdownList' :
 		'<li class="user"><a data-url="{{url}}" data-id="{{uid}}" data-actions="{{action}}" data-value="{{name}}"><img class="img" src="{{img}}" />{{name}}</a></li>',
 	'editTopicDorpdownList' :
