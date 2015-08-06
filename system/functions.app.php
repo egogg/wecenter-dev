@@ -297,3 +297,17 @@ function remove_assoc($from, $type, $id)
 
 	return $this->query('UPDATE ' . $this->get_table($from) . ' SET `' . $type . '_id` = NULL WHERE `' . $type . '_id` = ' . $id);
 }
+
+function get_slide_img_url($id, $size = 'max', $default = true)
+{
+	if (file_exists(get_setting('upload_dir') . '/slide/' . $id . '-' . $size . '.jpg'))
+	{
+		return get_setting('upload_url') . '/slide/' . $id . '-' . $size . '.jpg';
+	}
+	else if ($default)
+	{
+		return G_STATIC_URL . '/common/slide-' . $size . '-img.png';
+	}
+
+	return false;
+}
