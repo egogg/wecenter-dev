@@ -88,7 +88,7 @@ class slide_class extends AWS_MODEL
 
         $slide_info = array(
             'title' => htmlspecialchars($title),
-            'description' => htmlspecialchars($description),
+            'description' => $description,
             'link' => $link,
             'add_time' => time(),
         );
@@ -127,5 +127,10 @@ class slide_class extends AWS_MODEL
         return $this->update('slide', array(
             'order' => intval($order)
         ), 'id = ' . intval($id));
+    }
+
+    public function get_frontend_slides()
+    {
+        return $this->fetch_all('slide', '`order` > 0', 'order ASC');
     }
 }

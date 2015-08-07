@@ -30,13 +30,8 @@ header .navbar-user {
 	padding: 26px 0;
 }
 
-header .navbar-user .menu-bar {
-	display: block;
-    width: 22px;
-    height: 2px;
-    border-radius: 1px;
-    background-color: #1caaea;
-    margin-top: 4px;
+header .navbar-user .navbar-mobile-account {
+	font-size: 160%;
 }
 
 header .navbar-user .navbar-user-notification {
@@ -174,7 +169,7 @@ header .navbar-mobile-search-form-wrap {
 }
 
 header .navbar-mobile-search-close {
-	padding: 27px 0;
+	padding: 24.5px 0;
 	color: #adadad;
 	font-size: 140%;
 	float: left;
@@ -188,10 +183,6 @@ header .navbar-mobile-search .navbar-search {
 
 header .navbar-mobile-search-close:hover {
 	color: #333;
-}
-
-header .navbar-mobile-search-close span {
-	padding: 4.5px 0;
 }
 
 header .main-nav {

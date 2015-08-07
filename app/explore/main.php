@@ -90,6 +90,11 @@ class main extends AWS_CONTROLLER
 			TPL::set_meta('description', $meta_description);
 		}
 
+		// 首页幻灯片
+
+		$slides = $this->model('slide')->get_frontend_slides();
+		TPL::assign('slides', $slides);
+
 		// 导航
 		if (TPL::is_output('block/content_nav_menu.tpl.htm', 'explore/index'))
 		{
