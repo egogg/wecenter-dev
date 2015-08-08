@@ -213,15 +213,53 @@ header .main-nav ul li a.active {
 	background: #03A9F4;
 }
 
-/*header .listview img.lv-img-sm {
-	width: 24px;
-	height: 24px;
-}*/
+/*首页幻灯片区域*/
+
+@media (max-width: 767px) {
+	.carousel-inner, .carousel-inner .item, .carousel-inner a, .carousel-inner img {
+	    height: 150px!important;
+	}
+}
+
+
+/*问题筛选*/
+
+.question-filter-items {
+	display: inline-block;
+}
+.question-filter-items li {
+	display: inline-block;
+}
+.listview .lv-footer {
+	font-size: 100%;
+}
+
+/*问题列表*/
+
+p.question-content {
+	padding-top: 10px;
+} 
+
+.btn-answer-question, .btn-answer-question:link, .btn-answer-question:visited {
+    background-color: transparent;
+    border-radius: 1;
+    color: #03A9F4;
+    border: 1px solid #03A9F4;
+    display: inline-block;
+}
+.btn-answer-question:active, .btn-answer-question:hover {
+    background-color: #03A9F4;
+    color: #fff
+}
+
+.listview.lv-lg .lv-item:hover {
+	background-color: #ECF9FF;
+}
 
 body {
 	padding-top: 0;
 }
-.container{width: 1010px !important;}
+/*.container{width: 1010px !important;}*/
 
 
 /* 重载bootstrap */

@@ -84,8 +84,8 @@ $config['uc_avatar_thumbnail'] = array(
 
 $config['slide_thumbnail'] = array(
 	'min' => array(
-		"w" => 415,
-		"h" => 123
+		"w" => 540,
+		"h" => 316
 	),
 	'max' => array(
 		"w" => 1280,

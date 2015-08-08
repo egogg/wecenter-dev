@@ -13,7 +13,7 @@
 									<span class="m-count unread-total-mobile"><?php echo $total_unread?></span>
 								<?php } ?>
 	                       		
-	                       		<span class="navbar-mobile-account md md-account-circle"></span>
+	                       		<span class="navbar-mobile-account md md-person"></span>
 	                    	</a>
 	                    	<ul class="dropdown-menu dm-icon pull-right">
 		                    	<?php if($this->user_id) { ?>
@@ -131,16 +131,16 @@
         <nav class="main-nav">
         	<div class="container">
         		<ul>
-        			<li><a href="<?php echo base_url(); ?>">首页</a></li>
+        			<li><a href="<?php echo base_url(); ?>" class="<?php if ($_GET['app'] == 'explore') { ?>active<?php } ?>">首页</a></li>
         			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>"><?php _e('答题'); ?></a></li>
-
+					<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>"><?php _e('专题'); ?></a></li>
 					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>"><?php _e('知识'); ?></a></li>
-					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>"><?php _e('测试'); ?></a></li>
-					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>"><?php _e('排行'); ?></a></li>
+					<li><a href="help/" class="<?php if ($_GET['app'] == 'help') { ?>active<?php } ?>"><?php _e('测试'); ?></a></li>
+					<li class="hidden-xs"><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>"><?php _e('排行'); ?></a></li>
 				</ul>
 
 				<ul class="nav navbar-nav pull-right hidden-xs">
-					<li><a href="publish/"><i class="md md-edit"></i> 我要出题</a></li>
+					<!-- <li><a href="publish/"><i class="md md-edit"></i> 我要出题</a></li> -->
 				</ul>	
         	</div>
         </nav>
