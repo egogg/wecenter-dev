@@ -1,0 +1,56 @@
+<?php if($this->question_difficulty == 5) { ?>
+	<a href="#" class="label bgm-red question-tag">
+		<span class="hidden-xs">
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+		</span>
+		<span><?php _e('极难'); ?></span>
+	</a>
+<?php } elseif($this->question_difficulty == 4) { ?>
+	<a href="#" class="label bgm-orange question-tag">
+		<span class="hidden-xs">
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star-outline"></i>
+		</span>	
+		<span><?php _e('困难'); ?></span>
+	</a>
+<?php } elseif($this->question_difficulty == 3) { ?>
+	<a href="#" class="label bgm-blue question-tag">
+		<span class="hidden-xs">
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star-outline"></i>
+			<i class="md md-star-outline"></i>
+		</span>
+		<span><?php _e('中等'); ?></span>
+	</a>
+<?php } elseif($this->question_difficulty == 2) { ?>
+	<a href="#" class="label bgm-cyan question-tag">
+		<span class="hidden-xs">
+			<i class="md md-star"></i>
+			<i class="md md-star"></i>
+			<i class="md md-star-outline"></i>
+			<i class="md md-star-outline"></i>
+			<i class="md md-star-outline"></i>
+		</span>
+		<span><?php _e('简单'); ?></span>
+	</a>
+<?php } else { ?>
+	<a href="#" class="label bgm-green question-tag">
+		<span class="hidden-xs">
+			<i class="md md-star"></i>
+			<i class="md md-star-outline"></i>
+			<i class="md md-star-outline"></i>
+			<i class="md md-star-outline"></i>
+			<i class="md md-star-outline"></i>
+		</span>
+		<span><?php _e('休闲'); ?></span>
+	</a> 
+<?php } ?>

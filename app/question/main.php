@@ -543,11 +543,47 @@ class main extends AWS_CONTROLLER
 		if ($question_list)
 		{
 			foreach ($question_list AS $key => $val)
-			{
+			{	
+				// 获取问题评论
+
 				if ($val['answer_count'])
 				{
 					$question_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
 				}
+
+				// 获取答题选项信息
+
+				if($val['quiz_id'])
+				{
+					$question_list[$key]['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($val['quiz_id']);
+				
+					// 获取答题统计信息
+
+					$question_quiz_stats['total'] = 0;
+					$question_quiz_stats['passed'] = 0;
+					$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($val['question_id']);
+					if($question_quiz_record)
+					{
+						foreach ($question_quiz_record as $i => $v) {
+							if($v['passed'])
+							{
+								$question_quiz_stats['passed']++;
+							}
+
+							$question_quiz_stats['total']++;
+						}
+
+						if($question_quiz_stats['total'])
+						{
+							$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
+						}
+						else
+						{
+							$question_quiz_stats['rate'] = 0.0;
+						}
+					}
+					$question_list[$key]['quiz_stats'] = $question_quiz_stats;
+				}	
 			}
 		}
 
@@ -558,7 +594,7 @@ class main extends AWS_CONTROLLER
 		))->create_links());
 
 		TPL::assign('question_list', $question_list);
-		TPL::assign('question_list_bit', TPL::output('explore/ajax/list', false));
+		// TPL::assign('question_list_bit', TPL::output('explore/ajax/list', false));
 
 		TPL::output('question/square');
 	}

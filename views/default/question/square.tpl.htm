@@ -108,23 +108,61 @@
 									</div>
 							        <div class="media-body">
 							            <div class="lv-title">
-							            	<strong class="d-block"><a href="question/<?php echo $question['question_id']; ?>"><?php echo $question['question_content']; ?></a></strong>
+							            	<strong class="d-block">
+							            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
+							            			<a href="question/<?php echo $question['question_id']; ?>">
+							            				<i class="md md-visibility-off"></i> 该题为限时答题
+							            			</a>
+							            		<?php } else { ?>
+							            			<a href="question/<?php echo $question['question_id']; ?>"><?php echo $question['question_content']; ?>
+							            			</a>
+							            		<?php } ?>
+							            	</strong>
 							            	<small class="c-gray">
 							            		<?php _e('%s 条讨论', $question['answer_count']); ?> • <?php _e('%s 次浏览', $question['view_count']); ?> • <?php echo date_friendly($question['update_time']); ?>
 							            	</small>
-							            	<div class="c-gray">
-							            		<span class="label label-warning"><?php _e('%s 条讨论', $question['answer_count']); ?></span> <span class="label label-success">
-							            			<?php _e('%s 次浏览', $question['view_count']); ?></span> <span class="label label-danger"><?php echo date_friendly($question['update_time']); ?></span> 
+							            	<div class="question-tags">
+							            		<!-- 问题分类 -->
+							            		<?php if ($_GET['category'] != $question['category_id'] AND $question['category_info']['title']) { ?>
+													<a class="question-tag label bgm-bluegray" href="explore/category-<?php echo $question['category_info']['url_token']; ?>">
+														<span><?php echo $question['category_info']['title']; ?></span>
+													</a>
+												<?php } ?>
+							            		<!-- 问题难度 -->
+							            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
+							            		<?php TPL::output('question/ajax/question_difficulty'); ?>
+
+												<!-- 答题类型 -->
+												<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
+							            		<?php TPL::output('question/ajax/question_quiz_type'); ?> 
+
 							            	</div>
 							            </div>
-							            <p class="question-content"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace( '|[[\/\!]*?[^\[\]]*?]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?> <a href="question/<?php echo $question['question_id']; ?>" class="btn-answer-question btn-xs">开始答题</a>
-							            </p>
-
+							            <div class="question-content">
+							            	<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
+							            		<div class="alert alert-info" role="alert">
+							            			<p>
+							            				<i class="md md-access-alarm"></i>
+							            				<?php echo '您需要在规定的时间内完成答题 '; ?>
+							            				<a href="question/<?php echo $question['question_id']; ?>" class="answer-question-action btn-answer-question btn-xs">开始答题</a>
+							            			</p>
+							            		</div>
+							            		
+							            	<?php } else { ?>
+							            		<p>
+							            			<span class="question-excerpt"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?>
+							            			</span> 
+							            			<a href="question/<?php echo $question['question_id']; ?>" class="answer-question-action btn-answer-question btn-xs">开始答题</a>
+							            		</p>
+							            	<?php } ?>
+							            </div>
 							            <ul class="lv-attrs">
-		                                    <li>Date Created: 09/06/1988</li>
-		                                    <li>Members: 78954</li>
-		                                    <li>Published: No</li>
-		                                </ul>
+											<?php if($question['quiz_stats']) { ?>
+			                                    <li><i class="md md-trending-up"> </i><?php echo $question['quiz_stats']['total']; ?> <span class="hidden-xs">次答题</span></li>
+			                                    <li><i class="md md-flag"> </i><?php echo number_format($question['quiz_stats']['rate'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
+			                            	<?php } ?>
+			                            	<li><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
+			                            </ul>
 		                                <div class="lv-actions actions dropdown">
                                             <a href="#" data-toggle="dropdown" aria-expanded="false">
                                                 <i class="md md-more-vert"></i>
