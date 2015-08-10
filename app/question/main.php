@@ -551,6 +551,13 @@ class main extends AWS_CONTROLLER
 					$question_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
 				}
 
+				// 获取问题缩略图
+
+				if ($val['has_attach'])
+				{
+					$question_list[$key]['attachs'] = $this->model('publish')->get_attach('question', $val['question_id'], 'square');
+				}
+
 				// 获取答题选项信息
 
 				if($val['quiz_id'])

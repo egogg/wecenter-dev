@@ -221,7 +221,6 @@ header .main-nav ul li a.active {
 	}
 }
 
-
 /*问题筛选*/
 
 .question-filter-items {
@@ -236,20 +235,41 @@ header .main-nav ul li a.active {
 
 /*问题列表*/
 
-.question-content {
-	padding-top: 10px;
+.question-list {
+	padding-right: 0;
+	padding-left: 0;
+}
+
+.publisher-user-name {
+	font-size: 12px;
+}
+
+.question-list .publisher-img-sm {
+	height: 24px;
+	width: 24px;
+	border-radius: 50%;
 }
 
 .question-content .md {
 	font-size: 130%;
 }
 
-.question-excerpt {
-	margin-right: 1em;
+.question-feature-image {
+	border-radius: 4px;
+	border: 1px solid #eeeeee;
+    box-sizing: border-box;
 }
 
-.lv-attrs li i.md {
-	margin-right: 0.3em;
+.question-countdown-quiz-info {
+	display: inline-block;
+}
+
+.question-countdown-quiz-info span {
+	cursor: default;
+}
+
+.question-excerpt {
+	margin-right: 1em;
 }
 
 .btn-answer-question, .btn-answer-question:link, .btn-answer-question:visited {
@@ -264,12 +284,8 @@ header .main-nav ul li a.active {
     color: #fff
 }
 
-.listview.lv-lg .lv-item:hover {
-	background-color: transparent;
-}
-
 .question-tags {
-	padding-bottom: 5px;
+	overflow: hidden;
 }
 
 .question-tag {
@@ -282,11 +298,48 @@ header .main-nav ul li a.active {
 	vertical-align: baseline;
 }
 
+.question-stats i.md {
+	padding-right: 0.3em;
+}
+
+.question-stats li {
+	display: inline-block;
+	font-size: 12px;
+	color: #aaa;
+}
+
+.question-stats li:after {
+	content: ' •';
+}
+
+.question-stats li:last-child:after {
+	content: '';
+}
+
+.question-list small {
+	font-size: 12px;
+	color: #aaa;
+}
+
+.question-title {
+	font-size: 18px;
+}
+
+.lv-pagination {
+	border-top: none;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
 body {
 	padding-top: 0;
 }
 /*.container{width: 1010px !important;}*/
 
+.container {
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
 /* 重载bootstrap */
 
@@ -341,12 +394,12 @@ select{width: auto;}
 
 /* 公共部分 */
 html{height: 100%;}
-body{margin: 0;height: 100%;font-size:14px; color: #666;background-color:#f3f3f3;}
+body{margin: 0;height: 100%;font-size:14px; color: #333;background-color:#f3f3f3;}
 body, input, button, select, textarea, h1, h2, h3, h4, h5, h6{font-family:'Helvetica Neue', 'STHeiti', '微软雅黑', 'Microsoft YaHei', Helvetica,Arial,sans-serif;}
 ul, ol{margin:0;padding:0;list-style:none;}
 h1, h2, h3, h4, h5, h6{margin-top:0;font-size:100%;line-height: 1.7;}
 dd{margin-left: 10px;}
-a{cursor: pointer;color: #03A9F4;}
+a{cursor: pointer;color: #333;}
 a:hover{text-decoration: none;color: #2196F3;}
 a:focus{outline: none !important;}
 table td{vertical-align: middle !important;}

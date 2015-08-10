@@ -36,8 +36,8 @@ $config['attachment_thumbnail'] = array(
 		"h" => 110
 	),
 	'square' => array(
-		"w" => 90,
-		"h" => 90
+		"w" => 100,
+		"h" => 100
 	)
 );
 
