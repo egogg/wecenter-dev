@@ -457,10 +457,12 @@ class main extends AWS_CONTROLLER
 		$this->crumb(AWS_APP::lang()->_t('问题'), '/question/');
 
 		// 导航
-		if (TPL::is_output('block/content_nav_menu.tpl.htm', 'question/square'))
-		{
-			TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('question'));
-		}
+		// if (TPL::is_output('block/content_nav_menu.tpl.htm', 'question/square'))
+		// {
+		// 	TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('question'));
+		// }
+
+		TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('question'));
 
 		//边栏可能感兴趣的人
 		if (TPL::is_output('block/sidebar_recommend_users_topics.tpl.htm', 'question/square'))

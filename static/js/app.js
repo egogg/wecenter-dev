@@ -92,6 +92,40 @@ $(document).ready(function ()
         }, (z * 150) + 200);
     });
 
+    // 问题分类筛选
+
+    function getFilter(type) {
+        var filterItem = $('.question-filter-' + type + '.active');
+        if(filterItem.length != 1) {
+            return('');
+        }
+
+        var data_id = filterItem.attr('data-id');
+        if(data_id == -1) {
+            return('');
+        } else {
+            return(type + '-' + data_id);
+        }
+    }
+
+    $('.question-filters').on('click', '.question-filter-items li', function(e){
+        e.preventDefault();
+        $(this).addClass('active').siblings().removeClass('active');        
+
+        var filterTokens = '';
+        var filters = ['category', 'quiztype', 'difficulty', 'countdown'];
+        for (var i = 0; i < filters.length; i++) {
+            var token = getFilter(filters[i]);
+            if(token.length) {
+                filterTokens += (token + '__');
+            }
+        };
+        filterTokens = filterTokens.replace(/(__$)/g, '');
+
+        alert(filterTokens);
+        window.location.href = G_BASE_URL + '/question/' + filterTokens;
+    });
+
 
     // fix form bug...
     $("form[action='']").attr('action', window.location.href);

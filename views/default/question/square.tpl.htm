@@ -2,44 +2,56 @@
 
 <section id="content">
 	<div class="container">
-		<div class="card">
+		<div class="card question-filters">
 	        <div class="listview">
 	            <div class="lv-body">
-	            	<div class="lv-item"><span>分类：</span></div>
+	            	<div class="lv-item">
+	            		<span>分类：</span>
+	            		<ul class="question-filter-items">
+	            			<li><a class="question-filter-category" data-id="-1" href="javascript:;">全部</a></li>
+	            			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
+								<li class="question-filter-category" data-id="<?php echo $val['id']; ?>">
+									<a href="javascript:;"> 
+										<?php echo $val['title']; ?> 
+									</a>
+								</li>
+	            			<?php } ?>	
+	            		</ul>
+	            	</div>
 	            	<div class="lv-item">
 	            		<span>题型：</span>
 	            		<ul class="question-filter-items">
-	            			<li><a href="#">全部</a></li>
-	            			<li><a href="#">单选</a></li>
-	            			<li><a href="#">多选</a></li>
-	            			<li><a href="#">字谜</a></li>
-	            			<li><a href="#">填空</a></li>
-	            			<li><a href="#">开放</a></li>
+	            			<li class="question-filter-quiztype" data-id="-1"><a href="javascript:;">全部</a></li>
+	            			<li class="question-filter-quiztype" data-id="1"><a href="javascript:;">单选</a></li>
+	            			<li class="question-filter-quiztype" data-id="2"><a href="javascript:;">多选</a></li>
+	            			<li class="question-filter-quiztype" data-id="3"><a href="javascript:;">字谜</a></li>
+	            			<li class="question-filter-quiztype" data-id="4"><a href="javascript:;">填空</a></li>
+	            			<li class="question-filter-quiztype" data-id="5"><a href="javascript:;">开放</a></li>
 	            		</ul>
 	            	</div>
 	            	<div class="lv-item">
 	            		<span>难度：</span>
 	            		<ul class="question-filter-items">
-	            			<li><a href="#">全部</a></li>
-	            			<li><a href="#">休闲</a></li>
-	            			<li><a href="#">简单</a></li>
-	            			<li><a href="#">中等</a></li>
-	            			<li><a href="#">困难</a></li>
-	            			<li><a href="#">极难</a></li>
+	            			<li class="question-filter-difficulty" data-id="-1"><a  href="javascript:;">全部</a></li>
+	            			<li class="question-filter-difficulty" data-id="1"><a href="javascript:;">休闲</a></li>
+	            			<li class="question-filter-difficulty" data-id="2"><a href="javascript:;">简单</a></li>
+	            			<li class="question-filter-difficulty" data-id="3"><a href="javascript:;">中等</a></li>
+	            			<li class="question-filter-difficulty" data-id="4"><a href="javascript:;">困难</a></li>
+	            			<li class="question-filter-difficulty" data-id="5"><a href="javascript:;">极难</a></li>
 	            		</ul>
 	            	</div>
 	            	<div class="lv-item">
 	            		<span>时限：</span>
 	            		<ul class="question-filter-items">
-	            			<li><a href="#">全部</a></li>
-	            			<li><a href="#">限时答题</a></li>
-	            			<li><a href="#">非限时答题</a></li>
+	            			<li class="question-filter-countdown" data-id="-1"><a href="javascript:;">全部</a></li>
+	            			<li class="question-filter-countdown" data-id="1"><a href="javascript:;">限时答题</a></li>
+	            			<li class="question-filter-countdown" data-id="2"><a href="javascript:;">非限时答题</a></li>
 	            		</ul>
 	            	</div>
 	            </div>
 	            <div class="lv-footer">
-	                <h3>在脑壳网，我们不只是答题……</h3>
-	                <a href="publish/" class="btn btn-success"><i class="md md-create"></i> 出题考考别人</a>
+	               <!--  <h3>在脑壳网，我们不只是答题……</h3>
+	                <a href="publish/" class="btn btn-success"><i class="md md-create"></i> 出题考考别人</a> -->
 	            </div>
 	        </div>
 	    </div>
