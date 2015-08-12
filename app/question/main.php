@@ -528,19 +528,32 @@ class main extends AWS_CONTROLLER
 			$topic_ids = $this->model('feature')->get_topics_by_feature_id($feature_info['id']);
 		}
 
-		if (! $_GET['sort_type'])
+		if ($_GET['recommend'])
 		{
-			$_GET['sort_type'] = 'new';
+			$is_recommend = true;
 		}
 
-		if ($_GET['sort_type'] == 'hot')
-		{
-			$question_list = $this->model('posts')->get_hot_posts('question', $category_info['id'], $topic_ids, $_GET['day'], $_GET['page'], get_setting('contents_per_page'));
-		}
-		else
-		{
-			$question_list = $this->model('posts')->get_posts_list('question', $_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $topic_ids, $category_info['id'], $_GET['answer_count'], $_GET['day'], $_GET['is_recommend']);
-		}
+		// if ($_GET['sort_type'] == 'hot')
+		// {
+		// 	$question_list = $this->model('posts')->get_hot_posts('question', $category_info['id'], $topic_ids, $_GET['day'], $_GET['page'], get_setting('contents_per_page'));
+		// }
+		// else
+		// {
+		// 	$question_list = $this->model('posts')->get_posts_list('question', $_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $topic_ids, $category_info['id'], $_GET['answer_count'], $_GET['day'], $_GET['is_recommend']);
+		// }
+
+		$filter_info = array(
+			'sort_type' => $_GET['sort_type'],
+			'category_id' => $category_info['id'],
+			'difficulty' => intval($_GET['difficulty']),
+			'quiztype' => intval($_GET['quiztype']),
+			'countdown' => intval($_GET['countdown']),
+			'is_recommend' => $is_recommend
+		);
+
+		TPL::assign('filter_info', $filter_info);
+
+		$question_list = $this->model('question')->get_question_list($_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $category_info['id'], $_GET['difficulty'], $_GET['quiztype'], $_GET['countdown'], $is_recommend);
 
 		if ($question_list)
 		{
@@ -592,13 +605,13 @@ class main extends AWS_CONTROLLER
 						}
 					}
 					$question_list[$key]['quiz_stats'] = $question_quiz_stats;
-				}	
+				}
 			}
 		}
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
-			'base_url' => get_js_url('/question/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__day-' . intval($_GET['day']) . '__is_recommend-' . $_GET['is_recommend']) . '__feature_id-' . $feature_info['id'],
-			'total_rows' => $this->model('posts')->get_posts_list_total(),
+			'base_url' => get_js_url('/question/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__difficulty-' . $_GET['difficulty'] . '__quiztype-' . $_GET['quiztype'] . '__countdown-' . $_GET['countdown'] . '__is_recommend-' . $_GET['is_recommend']),
+			'total_rows' => $this->model('question')->get_question_list_total(),
 			'per_page' => get_setting('contents_per_page')
 		))->create_links());
 

@@ -101,7 +101,7 @@ $(document).ready(function ()
         }
 
         var data_id = filterItem.attr('data-id');
-        if(data_id == -1) {
+        if(typeof data_id == 'undefined') {
             return('');
         } else {
             return(type + '-' + data_id);

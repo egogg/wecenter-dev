@@ -8,9 +8,9 @@
 	            	<div class="lv-item">
 	            		<span>分类：</span>
 	            		<ul class="question-filter-items">
-	            			<li><a class="question-filter-category" data-id="-1" href="javascript:;">全部</a></li>
+	            			<li class="<?php if(!$this->filter_info OR !$this->filter_info['category_id']) { echo 'active'; } ?>"><a class="question-filter-category" href="javascript:;">全部</a></li>
 	            			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
-								<li class="question-filter-category" data-id="<?php echo $val['id']; ?>">
+								<li class="question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['id']) { echo 'active'; } ?>" data-id="<?php echo $val['id']; ?>">
 									<a href="javascript:;"> 
 										<?php echo $val['title']; ?> 
 									</a>
@@ -21,31 +21,31 @@
 	            	<div class="lv-item">
 	            		<span>题型：</span>
 	            		<ul class="question-filter-items">
-	            			<li class="question-filter-quiztype" data-id="-1"><a href="javascript:;">全部</a></li>
-	            			<li class="question-filter-quiztype" data-id="1"><a href="javascript:;">单选</a></li>
-	            			<li class="question-filter-quiztype" data-id="2"><a href="javascript:;">多选</a></li>
-	            			<li class="question-filter-quiztype" data-id="3"><a href="javascript:;">字谜</a></li>
-	            			<li class="question-filter-quiztype" data-id="4"><a href="javascript:;">填空</a></li>
-	            			<li class="question-filter-quiztype" data-id="5"><a href="javascript:;">开放</a></li>
+	            			<li class="question-filter-quiztype <?php if(!$this->filter_info OR !$this->filter_info['quiztype']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
+	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">单选</a></li>
+	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">多选</a></li>
+	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">字谜</a></li>
+	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">填空</a></li>
+	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">开放</a></li>
 	            		</ul>
 	            	</div>
 	            	<div class="lv-item">
 	            		<span>难度：</span>
 	            		<ul class="question-filter-items">
-	            			<li class="question-filter-difficulty" data-id="-1"><a  href="javascript:;">全部</a></li>
-	            			<li class="question-filter-difficulty" data-id="1"><a href="javascript:;">休闲</a></li>
-	            			<li class="question-filter-difficulty" data-id="2"><a href="javascript:;">简单</a></li>
-	            			<li class="question-filter-difficulty" data-id="3"><a href="javascript:;">中等</a></li>
-	            			<li class="question-filter-difficulty" data-id="4"><a href="javascript:;">困难</a></li>
-	            			<li class="question-filter-difficulty" data-id="5"><a href="javascript:;">极难</a></li>
+	            			<li class="question-filter-difficulty <?php if(!$this->filter_info OR !$this->filter_info['difficulty']) { echo 'active'; } ?>"><a  href="javascript:;">全部</a></li>
+	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">休闲</a></li>
+	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">简单</a></li>
+	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">中等</a></li>
+	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">困难</a></li>
+	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 5) { echo 'active'; } ?>" data-id="5"><a href="javascript:;">极难</a></li>
 	            		</ul>
 	            	</div>
 	            	<div class="lv-item">
 	            		<span>时限：</span>
 	            		<ul class="question-filter-items">
-	            			<li class="question-filter-countdown" data-id="-1"><a href="javascript:;">全部</a></li>
-	            			<li class="question-filter-countdown" data-id="1"><a href="javascript:;">限时答题</a></li>
-	            			<li class="question-filter-countdown" data-id="2"><a href="javascript:;">非限时答题</a></li>
+	            			<li class="question-filter-countdown <?php if(!$this->filter_info OR !$this->filter_info['countdown']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
+	            			<li class="question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] > 0) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">限时答题</a></li>
+	            			<li class="question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">非限时答题</a></li>
 	            		</ul>
 	            	</div>
 	            </div>
@@ -140,7 +140,7 @@
 						        </div>
 						    </div>
 						     <ul class="question-stats">
-				            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?><span class="hidden-xs">次浏览</span></li>
+				            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
 								<?php if($question['quiz_stats']) { ?>
 									
                                     <li class="question-stat"><i class="md md-trending-up"> </i><?php echo $question['quiz_stats']['total']; ?> <span class="hidden-xs">次答题</span></li>
@@ -154,11 +154,13 @@
 			<?php } ?>
 
             <!-- 分页 -->
-            <div class="card">
-            	<div class="card-body card-padding">
-            		<?php echo $this->pagination; ?>
-            	</div>
-            </div>
+			<?php if($this->pagination) { ?>
+	            <div class="card">
+		        	<div class="card-body card-padding">
+		        		<?php echo $this->pagination; ?>
+		        	</div>
+		        </div>
+	        <?php } ?>
 		</div>
 		<div class="col-sm-4">
 			<div class="card">

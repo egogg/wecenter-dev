@@ -1601,4 +1601,94 @@ class question_class extends AWS_MODEL
 		$questions = $this->fetch_all('question', 'question_id < ' . intval($question_id), 'question_id DESC', 1);
 		return reset($questions);
 	}
+
+
+	public function get_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null, $is_recommend = false)
+	{
+		$order_key = 'add_time DESC';
+
+		switch ($sort)
+		{
+			case 'difficulty':
+				$order_key = 'difficulty DESC';
+
+				break;
+
+			case 'hot':
+				$order_key = 'popular_value DESC';
+
+				break;
+
+			default:
+				$order_key = 'update_time DESC';
+		}
+
+		$where = array();
+
+		if ($is_recommend)
+		{
+			$where[] = 'is_recommend = 1';
+		}
+
+		if ($category_id)
+		{
+			$where[] = 'category_id IN(' . implode(',', $this->model('system')->get_category_with_child_ids('question', $category_id)) . ')';
+		}
+
+		if ($quiz_type)
+		{
+			if($quiz_type > 0)
+			{
+				$quiz_ids = $this->model('quiz')->get_quiz_ids_by_type($quiz_type);
+				if(!$quiz_ids)
+				{
+					return false;
+				}
+				$where[] = 'quiz_id IN(' . implode(',', $quiz_ids) . ')';
+			}
+			else
+			{
+				$where[] = 'quiz_id = 0';
+			}
+		}
+
+		if ($difficulty)
+		{
+			$where[] = 'difficulty = ' . intval($difficulty);
+		}
+
+		if ($countdown)
+		{
+			$is_countdown = ($countdown > 0);
+			$quiz_ids = $this->model('quiz')->get_quiz_ids_with_countdown($is_countdown);
+			if(!$quiz_ids)
+			{
+				return false;
+			}
+			if($countdown > 0)
+			{
+				$where[] = 'quiz_id IN(' . implode(',',  $quiz_ids) . ')';
+			}
+			else
+			{
+				$where[] = 'quiz_id = 0 OR quiz_id IN(' . implode(',', $quiz_ids) . ')';
+			}
+			
+		}
+
+		$questions = $this->fetch_page('question', implode(' AND ', $where), $order_key, $page, $per_page);
+		$this->question_list_total = $this->found_rows();
+
+		$question_list = array();
+		foreach ($questions as $key => $value) {
+			$question_list[$key] = $value;
+		}
+
+		return $question_list;
+	}
+
+	public function get_question_list_total()
+	{
+		return $this->question_list_total;
+	}
 }

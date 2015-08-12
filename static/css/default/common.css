@@ -7,6 +7,10 @@ header {
 	background: #fff;
 }
 
+header a {
+	color: #03A9F4;
+}
+
 .header .container {
 	height: 80px;
 	margin-left: auto;
@@ -226,9 +230,15 @@ header .main-nav ul li a.active {
 .question-filter-items {
 	display: inline-block;
 }
+
 .question-filter-items li {
 	display: inline-block;
 }
+
+.question-filter-items li.active a {
+	color: #03A9F4;
+}
+
 .listview .lv-footer {
 	font-size: 100%;
 }

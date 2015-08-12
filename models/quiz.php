@@ -175,4 +175,36 @@ class quiz_class extends AWS_MODEL
 			'end_time' => time()
 		), 'uid = ' . intval($user_id) . ' AND start_time = end_time AND time_spend > 0');
 	}
+
+	public function get_quiz_ids_by_type($quiz_type)
+	{
+		$quiz_ids = array();
+		$quizes = $this->fetch_all('question_quiz', 'type = ' . intval($quiz_type), ' id ASC');
+		foreach ($quizes as $key => $value) 
+		{
+			$quiz_ids[$value['id']] = $value['id'];	
+		}
+
+		return $quiz_ids;
+	}
+
+	public function get_quiz_ids_with_countdown($is_countdown)
+	{
+		$quiz_ids = array();
+		if($is_countdown)
+		{
+			$quizes = $this->fetch_all('question_quiz', 'countdown > 0', ' id ASC');
+		}
+		else
+		{
+			$quizes = $this->fetch_all('question_quiz', 'countdown = 0', ' id ASC');
+		}
+		
+		foreach ($quizes as $key => $value) {
+			$quiz_ids[$value['id']] = $value['id'];
+		}
+
+		return $quiz_ids;
+
+	}
 }
