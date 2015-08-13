@@ -1,12 +1,85 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<!-- 移动导航栏 -->
+<div class="m-question-list-heading visible-xs" data-spy="affix" data-offset-top="60" data-offset-bottom="118">
+	<div class="card">
+		<div class="card-body card-padding">
+			<ul class="m-question-filter clearfix">
+				<li><a href="#m-question-filter" data-toggle="modal"><i class="md md-filter-list"></i> 筛选</a></li>
+				<li class="dropdown">
+					<a href="#" data-toggle="dropdown">最新 <i class="caret"></i></a>
+					<ul class="dropdown-menu clearfix">
+                        <li><a href="javascript:;">最新</a></li>
+                        <li><a href="javascript:;">推荐</a></li>
+                        <li><a href="javascript:;">热门</a></li>
+                    </ul>
+				</li>
+				<li class="m-question-list-publish">
+					<a href="publish/"><i class="md md-create"></i> 出题</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="m-question-filter" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header ch-alt">
+                    <h2>Alternative Example <small>You can type anything here...</small></h2>
+
+                    <ul class="actions">
+                        <li>
+                            <a href="#">
+                                <i class="md md-cached"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="md md-file-download"></i>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" data-toggle="dropdown">
+                                <i class="md md-more-vert"></i>
+                            </a>
+                            
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="#">Change Date Range</a>
+                                </li>
+                                <li>
+                                    <a href="#">Change Graph Type</a>
+                                </li>
+                                <li>
+                                    <a href="#">Other Settings</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card-body card-padding">
+                    Cras leo sem, egestas a accumsan eget, euismod at nunc. Praesent vel mi blandit, tempus ex gravida, accumsan dui. Sed sed aliquam augue. Nullam vel suscipit purus, eu facilisis ante. Mauris nec commodo felis. 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect">Save changes</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <section id="content">
 	<div class="container">
-		<div class="card question-filters">
-	        <div class="listview">
-	            <div class="lv-body">
-	            	<div class="lv-item">
-	            		<span>分类：</span>
+		<!-- 分类筛选 -->
+		<div class="card hidden-xs">
+			<div class="card-body card-padding">
+				<ul class="question-filters">      
+	            	<li class="question-filter-row">
+	            		<h3>分类：</h3>
 	            		<ul class="question-filter-items">
 	            			<li class="<?php if(!$this->filter_info OR !$this->filter_info['category_id']) { echo 'active'; } ?>"><a class="question-filter-category" href="javascript:;">全部</a></li>
 	            			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
@@ -17,9 +90,9 @@
 								</li>
 	            			<?php } ?>	
 	            		</ul>
-	            	</div>
-	            	<div class="lv-item">
-	            		<span>题型：</span>
+	            	</li>
+	            	<li class="question-filter-row">
+	            		<h3>题型：</h3>
 	            		<ul class="question-filter-items">
 	            			<li class="question-filter-quiztype <?php if(!$this->filter_info OR !$this->filter_info['quiztype']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
 	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">单选</a></li>
@@ -28,9 +101,9 @@
 	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">填空</a></li>
 	            			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">开放</a></li>
 	            		</ul>
-	            	</div>
-	            	<div class="lv-item">
-	            		<span>难度：</span>
+	            	</li>
+	            	<li class="question-filter-row">
+	            		<h3>难度：</h3>
 	            		<ul class="question-filter-items">
 	            			<li class="question-filter-difficulty <?php if(!$this->filter_info OR !$this->filter_info['difficulty']) { echo 'active'; } ?>"><a  href="javascript:;">全部</a></li>
 	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">休闲</a></li>
@@ -39,107 +112,114 @@
 	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">困难</a></li>
 	            			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 5) { echo 'active'; } ?>" data-id="5"><a href="javascript:;">极难</a></li>
 	            		</ul>
-	            	</div>
-	            	<div class="lv-item">
-	            		<span>时限：</span>
+	            	</li>
+	            	<li class="question-filter-row">
+	            		<h3>时限：</h3>
 	            		<ul class="question-filter-items">
 	            			<li class="question-filter-countdown <?php if(!$this->filter_info OR !$this->filter_info['countdown']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
 	            			<li class="question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] > 0) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">限时答题</a></li>
 	            			<li class="question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">非限时答题</a></li>
 	            		</ul>
-	            	</div>
-	            </div>
-	            <div class="lv-footer">
-	               <!--  <h3>在脑壳网，我们不只是答题……</h3>
-	                <a href="publish/" class="btn btn-success"><i class="md md-create"></i> 出题考考别人</a> -->
-	            </div>
-	        </div>
+	            	</li>
+		        </ul>
+			</div>   
 	    </div>
+	    
+	    <!-- 排序 -->
+	    <div class="question-list-heading hidden-xs">
+	    	<div class="card" >
+	    		<div class="question-list-sort card-body card-padding">
+	            	<ul class="question-sort-items">
+	        			<li class="question-sort-item <?php if(!$this->filter_info OR !$this->filter_info['sort_type'] OR $this->filter_info['sort_type'] == 'new') { echo 'active';} ?>" data-sort="new"><a href="javascript:;">最新</a></li>
+	        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'recommend') { echo 'active';} ?>" data-sort="recommend"><a href="javascript:;">推荐</a></li>
+	        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'hot') { echo 'active';} ?>" data-sort="hot"><a href="javascript:;">热门</a></li>
+	        		</ul>
+	            </div>
+	            <div class="question-list-publish col-sm-4">
+					<a href="publish/"><i class="md md-create"></i> 我要出题</a>	
+				</div>
+	    	</div>
+	    </div>
+		
+		<!-- 问题列表 -->
     	<div class="question-list col-sm-8">
         	<?php if($this->question_list) { ?>
 				<?php foreach ($this->question_list as $index => $question) { ?>
 					<div class="card">
 						<div class="card-body card-padding">
-							<div class="publish-info">
-								<?php if ($question['anonymous'] == 0) { ?>
-									<a href="people/<?php echo $question['user_info']['url_token']; ?>" rel="nofollow">
-										<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-											<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-										<span class="publisher-user-name">
-											<?php echo $question['user_info']['user_name']; ?>
-										</span>
-									</a>
-								<?php } else { ?>
-									<a class="aw-user-name" href="javascript:;">
-										<img class="publisher-img-sm hidden-xs" src="<?php echo G_STATIC_URL; ?>/common/avatar-max-img.png" alt="<?php _e('匿名用户'); ?>" title="<?php _e('匿名用户'); ?>" />
-										<small class="publisher-user-name">
-											<?php _e('匿名用户'); ?>
-										</small>
-									</a>
-								<?php } ?>
-								<small>
-									• <?php echo date_friendly($question['update_time']); ?>
-								</small> 
-							</div>
-							<div class="question-heading">
-				            	<h4 class="question-title">
-				            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
-				            			<a href="question/<?php echo $question['question_id']; ?>">
-				            				<i class="md md-visibility-off"></i> 该题为限时答题
-				            			</a>
-				            		<?php } else { ?>
-				            			<a href="question/<?php echo $question['question_id']; ?>"><?php echo $question['question_content']; ?>
-				            			</a>
-				            		<?php } ?>
-				            	</h4>
-				            	<div class="question-tags">
-				            		<!-- 问题分类 -->
-				            		<?php if ($_GET['category'] != $question['category_id'] AND $question['category_info']['title']) { ?>
-										<a class="question-tag label bgm-bluegray" href="explore/category-<?php echo $question['category_info']['url_token']; ?>">
-											<span><?php echo $question['category_info']['title']; ?></span>
-										</a>
-									<?php } ?>
-				            		<!-- 问题难度 -->
-				            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
-				            		<?php TPL::output('question/ajax/question_difficulty'); ?>
-
-									<!-- 答题类型 -->
-									<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
-				            		<?php TPL::output('question/ajax/question_quiz_type'); ?>
-				            	</div>
-				            </div>
 	                		<div class="media">
 							    <div class="pull-right">
 							    	<?php if(!($question['quiz_info'] AND $question['quiz_info']['countdown']) AND $question['attachs']) { ?>		
 										<?php foreach ($question['attachs'] AS $attach) { ?>
 											<?php if ($attach['is_image']) { ?>
-												<a href="question/<?php echo $question['question_id']; ?>"><img class="question-feature-image" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
+												<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><img class="question-feature-image" target="_blank" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
 											<?php break; } ?>
 										<?php } ?>	
 							    	<?php } ?>
 								</div>
 						        <div class="media-body">
-						            <div class="question-content">
-						            	<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
-						            		<div class="alert alert-info question-countdown-quiz-info" role="alert">
-						            			<p>
-						            				<i class="md md-access-alarm"></i>
-						            				<span class="question-excerpt"><?php echo '您需要在规定的时间内完成答题 '; ?></span>	
-						            				<a href="question/<?php echo $question['question_id']; ?>" class="answer-question-action btn-answer-question btn-xs">开始答题</a>
-						            			</p>
-						            		</div>
-						            		
-						            	<?php } else { ?>
-						            		<p>
-						            			<span class="question-excerpt"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?>
-						            			</span> 
-						            			<a href="question/<?php echo $question['question_id']; ?>" class="answer-question-action btn-answer-question btn-xs">开始答题</a>
-						            		</p>
-						            	<?php } ?>
-						            </div>
+						        	<div class="publish-info">
+										<?php if ($question['user_info']) { ?>
+											<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
+												<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+													<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
+												<span class="publisher-user-name">
+													<?php echo $question['user_info']['user_name']; ?>
+												</span>
+											</a>
+										<?php } ?>
+										<small>
+											• <?php echo date_friendly($question['update_time']); ?>
+										</small>
+									</div>
+							        <div class="question-heading">
+						            	<h4 class="question-title">
+						            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
+						            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank">
+						            				<i class="md md-visibility-off"></i> 该题为限时答题
+						            			</a>
+						            		<?php } else { ?>
+						            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>
+						            			</a>
+						            		<?php } ?>
+						            	</h4>
+						            	<div class="question-tags">
+						            		<!-- 问题分类 -->
+						            		<?php if ($question['category_info']) { ?>
+												<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
+													<span><?php echo $question['category_info']['title']; ?></span>
+												</a>
+											<?php } ?>
+						            		<!-- 问题难度 -->
+						            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
+						            		<?php TPL::output('question/ajax/question_difficulty'); ?>
+
+											<!-- 答题类型 -->
+											<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
+						            		<?php TPL::output('question/ajax/question_quiz_type'); ?>
+						            	</div>
+					            	</div> 
 						        </div>
 						    </div>
-						     <ul class="question-stats">
+						    <div class="question-content">
+				            	<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
+				            		<div class="alert alert-info question-countdown-quiz-info" role="alert">
+				            			<p>
+				            				<i class="md md-access-alarm"></i>
+				            				<span class="question-excerpt"><?php echo '您需要在规定的时间内完成答题 '; ?></span>	
+				            				<a href="question/<?php echo $question['question_id']; ?>" class="answer-question-action btn-answer-question btn-xs" target="_blank">开始答题</a>
+				            			</p>
+				            		</div>
+				            		
+				            	<?php } else { ?>
+				            		<p>
+				            			<span class="question-excerpt"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?>
+				            			</span> 
+				            			<a href="question/<?php echo $question['question_id']; ?>" class="answer-question-action btn-answer-question btn-xs" target="_blank">开始答题</a>
+				            		</p>
+				            	<?php } ?>
+				            </div>
+						    <ul class="question-stats">
 				            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
 								<?php if($question['quiz_stats']) { ?>
 									
@@ -162,6 +242,7 @@
 		        </div>
 	        <?php } ?>
 		</div>
+		
 		<div class="col-sm-4">
 			<div class="card">
 	            <div class="listview">

@@ -108,10 +108,22 @@ $(document).ready(function ()
         }
     }
 
-    $('.question-filters').on('click', '.question-filter-items li', function(e){
-        e.preventDefault();
-        $(this).addClass('active').siblings().removeClass('active');        
 
+    function getSort() {
+        var sortItem = $('.question-sort-item.active');
+        if(sortItem.length != 1) {
+            return('');
+        }
+
+        var sort_type = sortItem.attr('data-sort');
+        if(typeof sort_type == 'undefined') {
+            return ('');
+        } else {
+            return('sort_type-' + sort_type);
+        }
+    }
+
+    function getFilterTokens() {
         var filterTokens = '';
         var filters = ['category', 'quiztype', 'difficulty', 'countdown'];
         for (var i = 0; i < filters.length; i++) {
@@ -120,12 +132,38 @@ $(document).ready(function ()
                 filterTokens += (token + '__');
             }
         };
+
+        filterTokens += getSort();
         filterTokens = filterTokens.replace(/(__$)/g, '');
 
-        alert(filterTokens);
-        window.location.href = G_BASE_URL + '/question/' + filterTokens;
+        return filterTokens;
+    }
+
+    function clearFilters() {
+        $('.question-filter-items li.active').removeClass('active');
+    }
+
+    $('.question-filters').on('click', '.question-filter-items li', function(e){
+        e.preventDefault();
+        $(this).addClass('active').siblings().removeClass('active');        
+
+        window.location.href = G_BASE_URL + '/question/' + getFilterTokens();
     });
 
+    $('.question-list-sort').on('click', '.question-sort-items li', function(e){
+        e.preventDefault();
+        $(this).addClass('active').siblings().removeClass('active');
+        
+        window.location.href = G_BASE_URL + '/question/' + getFilterTokens();
+    });
+
+    $('.question-list').on('click', '.question-tag', function(e){
+        var questionTag = $(this);
+        var targetFilter = $('.question-filters .question-filter-items li.question-filter-' + questionTag.attr('data-type') + '[data-id=' + questionTag.attr('data-id') + ']');
+
+        clearFilters();
+        targetFilter.click();
+    });
 
     // fix form bug...
     $("form[action='']").attr('action', window.location.href);

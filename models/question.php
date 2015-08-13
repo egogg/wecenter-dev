@@ -1603,7 +1603,7 @@ class question_class extends AWS_MODEL
 	}
 
 
-	public function get_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null, $is_recommend = false)
+	public function get_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null)
 	{
 		$order_key = 'add_time DESC';
 
@@ -1625,7 +1625,7 @@ class question_class extends AWS_MODEL
 
 		$where = array();
 
-		if ($is_recommend)
+		if ($sort == 'recommend')
 		{
 			$where[] = 'is_recommend = 1';
 		}
@@ -1659,8 +1659,7 @@ class question_class extends AWS_MODEL
 
 		if ($countdown)
 		{
-			$is_countdown = ($countdown > 0);
-			$quiz_ids = $this->model('quiz')->get_quiz_ids_with_countdown($is_countdown);
+			$quiz_ids = $this->model('quiz')->get_quiz_ids_with_countdown(true);
 			if(!$quiz_ids)
 			{
 				return false;
@@ -1671,9 +1670,8 @@ class question_class extends AWS_MODEL
 			}
 			else
 			{
-				$where[] = 'quiz_id = 0 OR quiz_id IN(' . implode(',', $quiz_ids) . ')';
+				$where[] = 'quiz_id NOT IN(' . implode(',', $quiz_ids) . ')';
 			}
-			
 		}
 
 		$questions = $this->fetch_page('question', implode(' AND ', $where), $order_key, $page, $per_page);
