@@ -234,6 +234,7 @@ class main extends AWS_CONTROLLER
 			HTTP::redirect('/m/topic/');
 		}
 
+		$per_page = 21;
 		if ($today_topics = rtrim(get_setting('today_topics'), ','))
 		{
 			if (!$today_topic = AWS_APP::cache()->get('square_today_topic_' . md5($today_topics)))
@@ -254,7 +255,7 @@ class main extends AWS_CONTROLLER
 		switch ($_GET['channel'])
 		{
 			case 'focus':
-				if ($topics_list = $this->model('topic')->get_focus_topic_list($this->user_id, calc_page_limit($_GET['page'], 20)))
+				if ($topics_list = $this->model('topic')->get_focus_topic_list($this->user_id, calc_page_limit($_GET['page'], $per_page)))
 				{
 					$topics_list_total_rows = $this->user_info['topic_focus_count'];
 				}
@@ -283,7 +284,7 @@ class main extends AWS_CONTROLLER
 
 				if (!$topics_list = AWS_APP::cache()->get($cache_key))
 				{
-					if ($topics_list = $this->model('topic')->get_topic_list(null, $order, 20, $_GET['page']))
+					if ($topics_list = $this->model('topic')->get_topic_list(null, $order, $per_page, $_GET['page']))
 					{
 						$topics_list_total_rows = $this->model('topic')->found_rows();
 
@@ -310,7 +311,7 @@ class main extends AWS_CONTROLLER
 						$topic_ids = array_merge($child_topic_ids, $topic_ids);
 					}
 
-					if ($topics_list = $this->model('topic')->get_topic_list('topic_id IN(' . implode(',', $topic_ids) . ') AND merged_id = 0', 'discuss_count DESC', 20, $_GET['page']))
+					if ($topics_list = $this->model('topic')->get_topic_list('topic_id IN(' . implode(',', $topic_ids) . ') AND merged_id = 0', 'discuss_count DESC', $per_page, $_GET['page']))
 					{
 						$topics_list_total_rows = $this->model('topic')->found_rows();
 
@@ -335,10 +336,10 @@ class main extends AWS_CONTROLLER
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/topic/channel-' . $_GET['channel'] . '__topic_id-' . $_GET['topic_id'] . '__day-' . $_GET['day']),
 			'total_rows' => $topics_list_total_rows,
-			'per_page' => 20
+			'per_page' => $per_page
 		))->create_links());
 
-		$this->crumb(AWS_APP::lang()->_t('话题广场'), '/topic/');
+		$this->crumb(AWS_APP::lang()->_t('专题目录'), '/topic/');
 
 		TPL::output('topic/square');
 	}

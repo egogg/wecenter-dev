@@ -6,10 +6,12 @@ $(document).ready(function ()
 
     $('#navbar-mobile-search-icon').on('click', function(e) {
         $('.navbar-mobile-search').addClass('open');
+        e.preventDefault();
     });
 
     $('.navbar-mobile-search-close').on('click', function(e) {
         $('.navbar-mobile-search').removeClass('open');
+        e.preventDefault();
     });
 
     // List view
@@ -153,7 +155,7 @@ $(document).ready(function ()
     $('.question-list-sort').on('click', '.question-sort-items li', function(e){
         e.preventDefault();
         $(this).addClass('active').siblings().removeClass('active');
-        
+
         window.location.href = G_BASE_URL + '/question/' + getFilterTokens();
     });
 
@@ -163,6 +165,69 @@ $(document).ready(function ()
 
         clearFilters();
         targetFilter.click();
+    });
+
+    // 筛选移动布局
+
+    function mGetFilter(type) {
+        var filterItem = $('.m-question-filter-' + type + '.active');
+        if(filterItem.length != 1) {
+            return('');
+        }
+
+        var data_id = filterItem.attr('data-id');
+        if(typeof data_id == 'undefined') {
+            return('');
+        } else {
+            return(type + '-' + data_id);
+        }
+    }
+
+
+    function mGetSort() {
+        var sortItem = $('.m-question-sort');
+
+        var sort_type = sortItem.attr('data-sort');
+        if(typeof sort_type == 'undefined') {
+            return ('');
+        } else {
+            return('sort_type-' + sort_type);
+        }
+    }
+
+    function mGetFilterTokens() {
+        var filterTokens = '';
+        var filters = ['category', 'quiztype', 'difficulty', 'countdown'];
+        for (var i = 0; i < filters.length; i++) {
+            var token = mGetFilter(filters[i]);
+            if(token.length) {
+                filterTokens += (token + '__');
+            }
+        };
+
+        filterTokens += mGetSort();
+        filterTokens = filterTokens.replace(/(__$)/g, '');
+
+        return filterTokens;
+    }
+
+    $('.m-question-filters').on('click', '.m-question-filter-items li', function(e){
+        e.preventDefault();
+        $(this).addClass('active').siblings().removeClass('active');
+    });
+
+    $('.m-question-sort-items').on('click', 'li', function(e){
+        e.preventDefault();
+
+        var currentSel = $(this);
+        var currentSelText = currentSel.find('a').text();
+        $('.m-question-sort').attr('data-sort', currentSel.attr('data-sort')).html(currentSelText + ' <i class="caret"></i>');
+
+        window.location.href = G_BASE_URL + '/question/' + mGetFilterTokens();
+    });
+
+    $('#m-question-filters-apply').on('click', function(e){
+        window.location.href = G_BASE_URL + '/question/' + mGetFilterTokens();
     });
 
     // fix form bug...

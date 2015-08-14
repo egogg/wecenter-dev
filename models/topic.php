@@ -30,6 +30,11 @@ class topic_class extends AWS_MODEL
 				{
 					$topic_list[$key]['url_token'] = rawurlencode($val['topic_title']);
 				}
+
+				// 获取问题个数
+
+				$count_query = $this->query_all('SELECT COUNT(*) AS `count` FROM ' . $this->get_table('topic_relation') . ' WHERE topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
+				$topic_list[$key]['question_count'] = reset($count_query)['count'];
 			}
 		}
 

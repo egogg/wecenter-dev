@@ -7,11 +7,12 @@
 			<ul class="m-question-filter clearfix">
 				<li><a href="#m-question-filter" data-toggle="modal"><i class="md md-filter-list"></i> 筛选</a></li>
 				<li class="dropdown">
-					<a href="#" data-toggle="dropdown">最新 <i class="caret"></i></a>
-					<ul class="dropdown-menu clearfix">
-                        <li><a href="javascript:;">最新</a></li>
-                        <li><a href="javascript:;">推荐</a></li>
-                        <li><a href="javascript:;">热门</a></li>
+					<?php if($this->filter_info AND $this->filter_info['sort_type'] == 'recommend') { $sort_type = 'recommend'; $sort_text = '推荐';} else if($this->filter_info AND $this->filter_info['sort_type'] == 'hot') { $sort_type = 'hot'; $sort_text = '热门';} else { $sort_type = 'new'; $sort_text = '最新';} ?>
+					<a class="m-question-sort" href="#" data-toggle="dropdown" data-sort="<?php echo $sort_type; ?>"><?php echo $sort_text; ?> <i class="caret"></i></a>
+					<ul class="dropdown-menu clearfix m-question-sort-items">
+                        <li class="m-question-sort-item" data-sort="new"><a href="#">最新</a></li>
+                        <li class="m-question-sort-item" data-sort="recommend"><a href="#">推荐</a></li>
+                        <li class="m-question-sort-item" data-sort="hot"><a href="#">热门</a></li>
                     </ul>
 				</li>
 				<li class="m-question-list-publish">
@@ -25,48 +26,64 @@
 <div class="modal fade" id="m-question-filter" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="card">
+            <div class="card m-question-filter-list">
                 <div class="card-header ch-alt">
-                    <h2>Alternative Example <small>You can type anything here...</small></h2>
-
-                    <ul class="actions">
-                        <li>
-                            <a href="#">
-                                <i class="md md-cached"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="md md-file-download"></i>
-                            </a>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown">
-                                <i class="md md-more-vert"></i>
-                            </a>
-                            
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li>
-                                    <a href="#">Change Date Range</a>
-                                </li>
-                                <li>
-                                    <a href="#">Change Graph Type</a>
-                                </li>
-                                <li>
-                                    <a href="#">Other Settings</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <h2><i class="md md-filter-list"></i>筛选</h2>
+                    <div class="actions">
+                    	<li>
+                    		<button type="button" id="m-question-filters-apply" class="btn btn-primary waves-effect" data-dismiss="modal">确定</button>
+                    	</li>
+                    </div>
                 </div>
-
                 <div class="card-body card-padding">
-                    Cras leo sem, egestas a accumsan eget, euismod at nunc. Praesent vel mi blandit, tempus ex gravida, accumsan dui. Sed sed aliquam augue. Nullam vel suscipit purus, eu facilisis ante. Mauris nec commodo felis. 
+                    <ul class="m-question-filters">      
+		            	<li class="m-question-filter-row">
+		            		<h3>分类：</h3>
+		            		<ul class="m-question-filter-items">
+		            			<li class="<?php if(!$this->filter_info OR !$this->filter_info['category_id']) { echo 'active'; } ?>"><a class="m-question-filter-category" href="javascript:;">全部</a></li>
+		            			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
+		            				<?php if($val['id']) { ?>
+										<li class="m-question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['id']) { echo 'active'; } ?>" data-id="<?php echo $val['id']; ?>">
+											<a href="javascript:;">
+												<?php echo $val['title']; ?> 
+											</a>
+										</li>
+									<?php } ?>
+		            			<?php } ?>	
+		            		</ul>
+		            	</li>
+		            	<li class="m-question-filter-row">
+		            		<h3>题型：</h3>
+		            		<ul class="m-question-filter-items">
+		            			<li class="m-question-filter-quiztype <?php if(!$this->filter_info OR !$this->filter_info['quiztype']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
+		            			<li class="m-question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">单选</a></li>
+		            			<li class="m-question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">多选</a></li>
+		            			<li class="m-question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">字谜</a></li>
+		            			<li class="m-question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">填空</a></li>
+		            			<li class="m-question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">开放</a></li>
+		            		</ul>
+		            	</li>
+		            	<li class="m-question-filter-row">
+		            		<h3>难度：</h3>
+		            		<ul class="m-question-filter-items">
+		            			<li class="m-question-filter-difficulty <?php if(!$this->filter_info OR !$this->filter_info['difficulty']) { echo 'active'; } ?>"><a  href="javascript:;">全部</a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">休闲</a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">简单</a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">中等</a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">困难</a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 5) { echo 'active'; } ?>" data-id="5"><a href="javascript:;">极难</a></li>
+		            		</ul>
+		            	</li>
+		            	<li class="m-question-filter-row">
+		            		<h3>时限：</h3>
+		            		<ul class="m-question-filter-items">
+		            			<li class="m-question-filter-countdown <?php if(!$this->filter_info OR !$this->filter_info['countdown']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
+		            			<li class="m-question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] > 0) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">限时答题</a></li>
+		            			<li class="m-question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">非限时答题</a></li>
+		            		</ul>
+		            	</li>
+			        </ul>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link waves-effect">Save changes</button>
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -83,11 +100,13 @@
 	            		<ul class="question-filter-items">
 	            			<li class="<?php if(!$this->filter_info OR !$this->filter_info['category_id']) { echo 'active'; } ?>"><a class="question-filter-category" href="javascript:;">全部</a></li>
 	            			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
-								<li class="question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['id']) { echo 'active'; } ?>" data-id="<?php echo $val['id']; ?>">
-									<a href="javascript:;"> 
-										<?php echo $val['title']; ?> 
-									</a>
-								</li>
+	            				<?php if($val['id']) { ?>
+									<li class="question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['id']) { echo 'active'; } ?>" data-id="<?php echo $val['id']; ?>">
+										<a href="javascript:;"> 
+											<?php echo $val['title']; ?> 
+										</a>
+									</li>
+								<?php } ?>
 	            			<?php } ?>	
 	            		</ul>
 	            	</li>
@@ -243,71 +262,37 @@
 	        <?php } ?>
 		</div>
 		
-		<div class="col-sm-4">
+		<!-- 热门专题 -->
+		<div class="sidebar-hot-topics col-sm-4 hidden-xs">
 			<div class="card">
-	            <div class="listview">
-	                <div class="lv-header">
-	                    Messages
-	                </div>
-	                <div class="lv-body">
-	                    <a class="lv-item" href="#">
-	                        <div class="media">
-	                            <div class="pull-left">
-	                                <img class="lv-img-sm" src="img/profile-pics/1.jpg" alt="">
-	                            </div>
-	                            <div class="media-body">
-	                                <div class="lv-title">David Belle</div>
-	                                <small class="lv-small">Cum sociis natoque penatibus et magnis dis parturient montes</small>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <a class="lv-item" href="#">
-	                        <div class="media">
-	                            <div class="pull-left">
-	                                <img class="lv-img-sm" src="img/profile-pics/2.jpg" alt="">
-	                            </div>
-	                            <div class="media-body">
-	                                <div class="lv-title">Jonathan Morris</div>
-	                                <small class="lv-small">Nunc quis diam diamurabitur at dolor elementum, dictum turpis vel</small>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <a class="lv-item" href="#">
-	                        <div class="media">
-	                            <div class="pull-left">
-	                                <img class="lv-img-sm" src="img/profile-pics/3.jpg" alt="">
-	                            </div>
-	                            <div class="media-body">
-	                                <div class="lv-title">Fredric Mitchell Jr.</div>
-	                                <small class="lv-small">Phasellus a ante et est ornare accumsan at vel magnauis blandit turpis at augue ultricies</small>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <a class="lv-item" href="#">
-	                        <div class="media">
-	                            <div class="pull-left">
-	                                <img class="lv-img-sm" src="img/profile-pics/4.jpg" alt="">
-	                            </div>
-	                            <div class="media-body">
-	                                <div class="lv-title">Glenn Jecobs</div>
-	                                <small class="lv-small">Ut vitae lacus sem ellentesque maximus, nunc sit amet varius dignissim, dui est consectetur neque</small>
-	                            </div>
-	                        </div>
-	                    </a>
-	                    <a class="lv-item" href="#">
-	                        <div class="media">
-	                            <div class="pull-left">
-	                                <img class="lv-img-sm" src="img/profile-pics/4.jpg" alt="">
-	                            </div>
-	                            <div class="media-body">
-	                                <div class="lv-title">Bill Phillips</div>
-	                                <small class="lv-small">Proin laoreet commodo eros id faucibus. Donec ligula quam, imperdiet vel ante placerat</small>
-	                            </div>
-	                        </div>
-	                    </a>
-	                </div>
-	                <a class="lv-footer" href="#">View All</a>
+				<div class="card-header">
+	                <h2>热门专题</h2>
+	                <ul class="actions">
+	                    <li>
+	                       <a href="topic/"><i class="md md-chevron-right"></i></a>
+	                    </li>
+	                </ul>
 	            </div>
+				<div class="card-body card-padding">
+					<?php TPL::output('block/sidebar_hot_topics.tpl.htm'); ?>
+				</div>
+	        </div>
+		</div>
+
+		<!-- 热门用户 -->
+		<div class="sidebar-hot-users col-sm-4 hidden-xs">
+			<div class="card">
+				<div class="card-header">
+	                <h2>热门用户</h2>
+	                <ul class="actions">
+	                    <li>
+	                       <a href="people/"><i class="md md-chevron-right"></i></a>
+	                    </li>
+	                </ul>
+	            </div>
+				<div class="card-body card-padding">
+					<?php TPL::output('block/sidebar_hot_users.tpl.htm'); ?>
+				</div>
 	        </div>
 		</div>
 	</div>

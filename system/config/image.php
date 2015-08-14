@@ -17,16 +17,16 @@ $config['avatar_thumbnail'] = array(
 
 $config['topic_thumbnail'] = array(
 	'min' => array(
-		"w" => 32,
-		"h" => 32
+		"w" => 220,
+		"h" => 94
 	),
 	'mid' => array(
-		"w" => 50,
-		"h" => 50
+		"w" => 251,
+		"h" => 107
 	),
 	'max' => array(
-		"w" => 100,
-		"h" => 100
+		"w" => 500,
+		"h" => 214
 	)
 );
 

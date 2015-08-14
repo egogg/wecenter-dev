@@ -482,6 +482,8 @@ class main extends AWS_CONTROLLER
 			TPL::assign('sidebar_hot_topics', $this->model('module')->sidebar_hot_topics($_GET['category']));
 		}
 
+		TPL::assign('sidebar_hot_topics', $this->model('topic')->get_hot_topics(0, 5));
+
 		//边栏专题
 		if (TPL::is_output('block/sidebar_feature.tpl.htm', 'question/square'))
 		{
