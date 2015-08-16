@@ -484,12 +484,50 @@ header .main-nav ul li a.active {
 
 /*侧边栏*/
 
-.sidebar-hot-topics {
+.sidebar {
 	padding-right: 0;
 }
 
-.sidebar-hot-users {
-	padding-right: 0;
+.sidebar-hot-topics .card-padding {
+	padding-top: 0!important;
+}
+
+.sidebar-topic-item {
+	padding-bottom: 15px;
+}
+
+.sidebar-topic-title {
+	position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+    margin-top: -24px;
+    font-size: 12px;
+    color: #fff;
+    line-height: 24px;
+}
+
+.sidebar-topic-title a {
+	color: #fff;
+	font-weight: bold;
+	margin-left: 6px;
+}
+
+.sidebar-topic-title a:hover {
+	color: #fff;
+}
+
+.sidebar-topic-tag {
+    display: inline-block;
+    padding: 0 10px;
+}
+
+.sidebar-hot-users .card-body {
+	padding-top: 0!important;
+}
+
+.sidebar-user-item {
+	display: inline-block;
+	padding: 4px;
 }
 
 /*话题分类*/
@@ -548,10 +586,49 @@ header .main-nav ul li a.active {
 
 .topic-description {
 	font-size: 12px;
+	height: 3em;
 }
 
 .topic-item .card-header {
 	padding-bottom: 0 !important;
+}
+
+/*话题详细列表*/
+
+.topic-details-info {
+	font-size: 12px;
+	margin-bottom: 10px;
+}
+
+.topic-details-info span {
+	color: #d9d9d9;
+}
+
+.topic-details-info a {
+	color: #03A9F4;
+}
+
+.topic-details-add-foucs {
+	margin: 15px 0 5px 0;
+}
+
+.topic-details-add-foucs a {
+	border-radius: 16px;
+	margin-left: 30px;
+}
+
+.topic-details-content {
+	min-width: 250px;
+	padding-right: 15px;
+}
+
+.topic-details-foucs-users {
+	margin-top: 15px;
+}
+
+.topic-details-foucs-users img {
+	width: 32px;
+	height: 32px;
 }
 
 body {

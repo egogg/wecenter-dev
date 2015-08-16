@@ -54,9 +54,9 @@ class module_class extends AWS_MODEL
 		return array_merge($recommend_users, $recommend_topics);
 	}
 
-	public function sidebar_hot_topics($category_id = 0)
+	public function sidebar_hot_topics($category_id = 0, $limit = 5)
 	{
-		return $this->model('topic')->get_hot_topics($category_id, 5, 'week');
+		return $this->model('topic')->get_hot_topics($category_id, $limit);
 	}
 
 	public function sidebar_hot_users($uid = 0, $limit = 5)

@@ -54,33 +54,33 @@ class main extends AWS_CONTROLLER
 
 		if (!$topic_info)
 		{
-			H::redirect_msg(AWS_APP::lang()->_t('话题不存在'), '/');
+			H::redirect_msg(AWS_APP::lang()->_t('专题题不存在'), '/');
 		}
 
-		if ($topic_info['merged_id'] AND $topic_info['merged_id'] != $topic_info['topic_id'])
-		{
-			if ($this->model('topic')->get_topic_by_id($topic_info['merged_id']))
-			{
-				HTTP::redirect('/topic/' . $topic_info['merged_id'] . '?rf=' . $topic_info['topic_id']);
-			}
-			else
-			{
-				$this->model('topic')->remove_merge_topic($topic_info['topic_id'], $topic_info['merged_id']);
-			}
-		}
+		// if ($topic_info['merged_id'] AND $topic_info['merged_id'] != $topic_info['topic_id'])
+		// {
+		// 	if ($this->model('topic')->get_topic_by_id($topic_info['merged_id']))
+		// 	{
+		// 		HTTP::redirect('/topic/' . $topic_info['merged_id'] . '?rf=' . $topic_info['topic_id']);
+		// 	}
+		// 	else
+		// 	{
+		// 		$this->model('topic')->remove_merge_topic($topic_info['topic_id'], $topic_info['merged_id']);
+		// 	}
+		// }
 
-		if (urldecode($topic_info['url_token']) != $_GET['id'])
-		{
-			HTTP::redirect('/topic/' . $topic_info['url_token'] . '?rf=' . $_GET['rf']);
-		}
+		// if (urldecode($topic_info['url_token']) != $_GET['id'])
+		// {
+		// 	HTTP::redirect('/topic/' . $topic_info['url_token'] . '?rf=' . $_GET['rf']);
+		// }
 
-		if (is_digits($_GET['rf']) and $_GET['rf'])
-		{
-			if ($from_topic = $this->model('topic')->get_topic_by_id($_GET['rf']))
-			{
-				$redirect_message[] = AWS_APP::lang()->_t('话题 (%s) 已与当前话题合并', $from_topic['topic_title']);
-			}
-		}
+		// if (is_digits($_GET['rf']) and $_GET['rf'])
+		// {
+		// 	if ($from_topic = $this->model('topic')->get_topic_by_id($_GET['rf']))
+		// 	{
+		// 		$redirect_message[] = AWS_APP::lang()->_t('话题 (%s) 已与当前话题合并', $from_topic['topic_title']);
+		// 	}
+		// }
 
 		if ($topic_info['seo_title'])
 		{
@@ -105,117 +105,198 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('topic_info', $topic_info);
 
-		TPL::assign('best_answer_users', $this->model('topic')->get_best_answer_users_by_topic_id($topic_info['topic_id'], 5));
+		// TPL::assign('best_answer_users', $this->model('topic')->get_best_answer_users_by_topic_id($topic_info['topic_id'], 5));
 
 		switch ($topic_info['model_type'])
 		{
 			default:
-				$related_topics_ids = array();
+				// $related_topics_ids = array();
 
-				if ($related_topics = $this->model('topic')->related_topics($topic_info['topic_id']))
+				// if ($related_topics = $this->model('topic')->related_topics($topic_info['topic_id']))
+				// {
+				// 	foreach ($related_topics AS $key => $val)
+				// 	{
+				// 		$related_topics_ids[$val['topic_id']] = $val['topic_id'];
+				// 	}
+				// }
+
+				// if ($child_topic_ids = $this->model('topic')->get_child_topic_ids($topic_info['topic_id']))
+				// {
+				// 	foreach ($child_topic_ids AS $key => $topic_id)
+				// 	{
+				// 		$related_topics_ids[$topic_id] = $topic_id;
+				// 	}
+				// }
+
+				// TPL::assign('related_topics', $related_topics);
+
+				// $log_list = ACTION_LOG::get_action_by_event_id($topic_info['topic_id'], 10, ACTION_LOG::CATEGORY_TOPIC, implode(',', array(
+				// 	ACTION_LOG::ADD_TOPIC,
+				// 	ACTION_LOG::MOD_TOPIC,
+				// 	ACTION_LOG::MOD_TOPIC_DESCRI,
+				// 	ACTION_LOG::MOD_TOPIC_PIC,
+				// 	ACTION_LOG::DELETE_TOPIC,
+				// 	ACTION_LOG::ADD_RELATED_TOPIC,
+				// 	ACTION_LOG::DELETE_RELATED_TOPIC
+				// )), -1);
+
+				// $log_list = $this->model('topic')->analysis_log($log_list);
+
+				// $contents_topic_id = $topic_info['topic_id'];
+				// $contents_topic_title = $topic_info['topic_title'];
+
+				// if ($merged_topics = $this->model('topic')->get_merged_topic_ids($topic_info['topic_id']))
+				// {
+				// 	foreach ($merged_topics AS $key => $val)
+				// 	{
+				// 		$merged_topic_ids[] = $val['source_id'];
+				// 	}
+
+				// 	$contents_topic_id .= ',' . implode(',', $merged_topic_ids);
+
+				// 	if ($merged_topics_info = $this->model('topic')->get_topics_by_ids($merged_topic_ids))
+				// 	{
+				// 		foreach($merged_topics_info AS $key => $val)
+				// 		{
+				// 			$merged_topic_title[] = $val['topic_title'];
+				// 		}
+				// 	}
+
+				// 	if ($merged_topic_title)
+				// 	{
+				// 		$contents_topic_title .= ',' . implode(',', $merged_topic_title);
+				// 	}
+				// }
+
+				// // $contents_related_topic_ids = array_merge($related_topics_ids, explode(',', $contents_topic_id));
+
+				// // TPL::assign('contents_related_topic_ids', implode(',', $contents_related_topic_ids));
+
+				// // if ($posts_list = $this->model('posts')->get_posts_list(null, 1, get_setting('contents_per_page'), 'new', $contents_related_topic_ids))
+				// // {
+				// // 	foreach ($posts_list AS $key => $val)
+				// // 	{
+				// // 		if ($val['answer_count'])
+				// // 		{
+				// // 			$posts_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
+				// // 		}
+				// // 	}
+				// // }
+
+				// // TPL::assign('posts_list', $posts_list);
+				// // TPL::assign('all_list_bit', TPL::output('explore/ajax/list', false));
+
+				// // if ($posts_list = $this->model('posts')->get_posts_list(null, 1, get_setting('contents_per_page'), null, $contents_related_topic_ids, null, null, 30, true))
+				// // {
+				// // 	foreach ($posts_list AS $key => $val)
+				// // 	{
+				// // 		if ($val['answer_count'])
+				// // 		{
+				// // 			$posts_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
+				// // 		}
+				// // 	}
+				// // }
+
+				// 问题列表
+
+				$question_list = $this->model('topic')->get_question_list_by_topic($topic_info['topic_id'], $_GET['page'], get_setting('contents_per_page'));
+
+				if ($question_list)
 				{
-					foreach ($related_topics AS $key => $val)
-					{
-						$related_topics_ids[$val['topic_id']] = $val['topic_id'];
-					}
-				}
+					foreach ($question_list AS $key => $val)
+					{	
+						// 获取发表问题用户信息
 
-				if ($child_topic_ids = $this->model('topic')->get_child_topic_ids($topic_info['topic_id']))
-				{
-					foreach ($child_topic_ids AS $key => $topic_id)
-					{
-						$related_topics_ids[$topic_id] = $topic_id;
-					}
-				}
+						$question_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($val['published_uid']);
 
-				TPL::assign('related_topics', $related_topics);
+						// 获取问题分类信息
 
-				$log_list = ACTION_LOG::get_action_by_event_id($topic_info['topic_id'], 10, ACTION_LOG::CATEGORY_TOPIC, implode(',', array(
-					ACTION_LOG::ADD_TOPIC,
-					ACTION_LOG::MOD_TOPIC,
-					ACTION_LOG::MOD_TOPIC_DESCRI,
-					ACTION_LOG::MOD_TOPIC_PIC,
-					ACTION_LOG::DELETE_TOPIC,
-					ACTION_LOG::ADD_RELATED_TOPIC,
-					ACTION_LOG::DELETE_RELATED_TOPIC
-				)), -1);
+						$question_list[$key]['category_info'] = $this->model('system')->get_category_info($val['category_id']);
 
-				$log_list = $this->model('topic')->analysis_log($log_list);
+						// 获取问题评论
 
-				$contents_topic_id = $topic_info['topic_id'];
-				$contents_topic_title = $topic_info['topic_title'];
-
-				if ($merged_topics = $this->model('topic')->get_merged_topic_ids($topic_info['topic_id']))
-				{
-					foreach ($merged_topics AS $key => $val)
-					{
-						$merged_topic_ids[] = $val['source_id'];
-					}
-
-					$contents_topic_id .= ',' . implode(',', $merged_topic_ids);
-
-					if ($merged_topics_info = $this->model('topic')->get_topics_by_ids($merged_topic_ids))
-					{
-						foreach($merged_topics_info AS $key => $val)
-						{
-							$merged_topic_title[] = $val['topic_title'];
-						}
-					}
-
-					if ($merged_topic_title)
-					{
-						$contents_topic_title .= ',' . implode(',', $merged_topic_title);
-					}
-				}
-
-				$contents_related_topic_ids = array_merge($related_topics_ids, explode(',', $contents_topic_id));
-
-				TPL::assign('contents_related_topic_ids', implode(',', $contents_related_topic_ids));
-
-				if ($posts_list = $this->model('posts')->get_posts_list(null, 1, get_setting('contents_per_page'), 'new', $contents_related_topic_ids))
-				{
-					foreach ($posts_list AS $key => $val)
-					{
 						if ($val['answer_count'])
 						{
-							$posts_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
+							$question_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
 						}
-					}
-				}
 
-				TPL::assign('posts_list', $posts_list);
-				TPL::assign('all_list_bit', TPL::output('explore/ajax/list', false));
+						// 获取问题缩略图
 
-				if ($posts_list = $this->model('posts')->get_posts_list(null, 1, get_setting('contents_per_page'), null, $contents_related_topic_ids, null, null, 30, true))
-				{
-					foreach ($posts_list AS $key => $val)
-					{
-						if ($val['answer_count'])
+						if ($val['has_attach'])
 						{
-							$posts_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
+							$question_list[$key]['attachs'] = $this->model('publish')->get_attach('question', $val['question_id'], 'square');
+						}
+
+						// 获取答题选项信息
+
+						if($val['quiz_id'])
+						{
+							$question_list[$key]['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($val['quiz_id']);
+						
+							// 获取答题统计信息
+
+							$question_quiz_stats['total'] = 0;
+							$question_quiz_stats['passed'] = 0;
+							$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($val['question_id']);
+							if($question_quiz_record)
+							{
+								foreach ($question_quiz_record as $i => $v) {
+									if($v['passed'])
+									{
+										$question_quiz_stats['passed']++;
+									}
+
+									$question_quiz_stats['total']++;
+								}
+
+								if($question_quiz_stats['total'])
+								{
+									$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
+								}
+								else
+								{
+									$question_quiz_stats['rate'] = 0.0;
+								}
+							}
+							$question_list[$key]['quiz_stats'] = $question_quiz_stats;
 						}
 					}
 				}
 
-				TPL::assign('topic_recommend_list', $posts_list);
-				TPL::assign('posts_list', $posts_list);
-				TPL::assign('recommend_list_bit', TPL::output('explore/ajax/list', false));
+				TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
+					'base_url' => get_js_url('/topic/id-' . $topic_info['topic_id'] . '__page-', $_GET['page']),
+					'total_rows' => $this->model('topic')->get_question_list_total(),
+					'per_page' => get_setting('contents_per_page'),
+					'num_links' => 2
+				))->create_links());
 
-				TPL::assign('list', $this->model('topic')->get_topic_best_answer_action_list($contents_topic_id, $this->user_id, get_setting('contents_per_page')));
-				TPL::assign('best_questions_list_bit', TPL::output('home/ajax/index_actions', false));
+				TPL::assign('question_list', $question_list);
 
-				TPL::assign('posts_list', $this->model('posts')->get_posts_list('question', 1, get_setting('contents_per_page'), 'new', explode(',', $contents_topic_id)));
-				TPL::assign('all_questions_list_bit', TPL::output('explore/ajax/list', false));
+				//边栏热门话题
+				if (TPL::is_output('block/sidebar_hot_topics.tpl.htm', 'question/square'))
+				{
+					TPL::assign('sidebar_hot_topics', $this->model('module')->sidebar_hot_topics($_GET['category'], 4));
+				}
 
-				TPL::assign('posts_list', $this->model('posts')->get_posts_list('article', 1, get_setting('contents_per_page'), 'new', explode(',', $contents_topic_id)));
-				TPL::assign('articles_list_bit', TPL::output('explore/ajax/list', false));
+				// TPL::assign('topic_recommend_list', $posts_list);
+				// TPL::assign('posts_list', $posts_list);
+				// TPL::assign('recommend_list_bit', TPL::output('explore/ajax/list', false));
 
-				TPL::assign('contents_topic_id', $contents_topic_id);
-				TPL::assign('contents_topic_title', $contents_topic_title);
+				// TPL::assign('list', $this->model('topic')->get_topic_best_answer_action_list($contents_topic_id, $this->user_id, get_setting('contents_per_page')));
+				// TPL::assign('best_questions_list_bit', TPL::output('home/ajax/index_actions', false));
 
-				TPL::assign('log_list', $log_list);
+				// TPL::assign('posts_list', $this->model('posts')->get_posts_list('question', 1, get_setting('contents_per_page'), 'new', explode(',', $contents_topic_id)));
+				// TPL::assign('all_questions_list_bit', TPL::output('explore/ajax/list', false));
 
-				TPL::assign('redirect_message', $redirect_message);
+				// TPL::assign('posts_list', $this->model('posts')->get_posts_list('article', 1, get_setting('contents_per_page'), 'new', explode(',', $contents_topic_id)));
+				// TPL::assign('articles_list_bit', TPL::output('explore/ajax/list', false));
+
+				// TPL::assign('contents_topic_id', $contents_topic_id);
+				// TPL::assign('contents_topic_title', $contents_topic_title);
+
+				// TPL::assign('log_list', $log_list);
+
+				// TPL::assign('redirect_message', $redirect_message);
 
 				if ($topic_info['parent_id'])
 				{
@@ -234,7 +315,7 @@ class main extends AWS_CONTROLLER
 			HTTP::redirect('/m/topic/');
 		}
 
-		$per_page = 21;
+		$per_page = 18; // 包含一个父目录
 		if ($today_topics = rtrim(get_setting('today_topics'), ','))
 		{
 			if (!$today_topic = AWS_APP::cache()->get('square_today_topic_' . md5($today_topics)))
@@ -284,7 +365,7 @@ class main extends AWS_CONTROLLER
 
 				if (!$topics_list = AWS_APP::cache()->get($cache_key))
 				{
-					if ($topics_list = $this->model('topic')->get_topic_list(null, $order, $per_page, $_GET['page']))
+					if ($topics_list = $this->model('topic')->get_child_topic_list(null, $order, $per_page, $_GET['page']))
 					{
 						$topics_list_total_rows = $this->model('topic')->found_rows();
 
@@ -311,7 +392,7 @@ class main extends AWS_CONTROLLER
 						$topic_ids = array_merge($child_topic_ids, $topic_ids);
 					}
 
-					if ($topics_list = $this->model('topic')->get_topic_list('topic_id IN(' . implode(',', $topic_ids) . ') AND merged_id = 0', 'discuss_count DESC', $per_page, $_GET['page']))
+					if ($topics_list = $this->model('topic')->get_child_topic_list('topic_id IN(' . implode(',', $topic_ids) . ') AND merged_id = 0', 'discuss_count DESC', $per_page, $_GET['page']))
 					{
 						$topics_list_total_rows = $this->model('topic')->found_rows();
 
@@ -331,7 +412,7 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('parent_topics', $this->model('topic')->get_parent_topics());
 
-		TPL::assign('new_topics', $this->model('topic')->get_topic_list(null, 'topic_id DESC', 10));
+		TPL::assign('new_topics', $this->model('topic')->get_child_topic_list(null, 'topic_id DESC', 10));
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/topic/channel-' . $_GET['channel'] . '__topic_id-' . $_GET['topic_id'] . '__day-' . $_GET['day']),

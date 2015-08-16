@@ -12,7 +12,7 @@
                             </li>
                             <?php foreach ($this->parent_topics AS $key => $val) { ?>
                                 <li class="topic-category-item">
-                                    <a <?php if ($_GET['topic_id'] == $val['topic_id']) { ?> class="active"<?php } ?> href="topic/channel-topic__topic_id-<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?></a>
+                                    <a <?php if ($_GET['topic_id'] == $val['topic_id']) { ?> class="active"<?php } ?> href="topic/channel-topic__topic_id-<?php echo $val['topic_id']; ?>"> <?php echo $val['topic_title']; ?></a>
                                 </li>
                             <?php } ?>
                         </ul>
@@ -27,10 +27,10 @@
                         <div class="topic-item col-sm-4">
                              <div class="card">
                                 <div class="card-header">
-                                    <h2><a target="_blank" href="topic/<?php echo $val['url_token']; ?>" data-id="<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?></a>
+                                    <h2><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?></a>
                                         <small><!-- 话题统计 -->
                                             <ul class="topic-stats">
-                                                <li class="topic-stats-item"><a target="_blank" href="topic/<?php echo $val['url_token']; ?>"><?php echo $val['question_count']; ?> 个问题</a> </li>
+                                                <li class="topic-stats-item"><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>"><?php echo $val['question_count']; ?> 个问题</a> </li>
                                                 <li class="topic-stats-item"><?php echo $val['discuss_count']; ?> 人关注</li>
                                             </ul>
                                         </small>
@@ -38,12 +38,12 @@
                                 </div>
                                 <div class="card-body card-padding">
                                     <!-- 话题图片 -->
-                                    <a class="topic-img" target="_blank" href="topic/<?php echo $val['url_token']; ?>" data-id="<?php echo $val['topic_id']; ?>">
+                                    <a class="topic-img" target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>">
                                         <img class="img-responsive m-b-15" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" alt="" />
                                     </a>
                                     
                                     <div class="topic-description">
-                                        <?php echo $val['topic_description']; ?> <a target="_blank" href="topic/<?php echo $val['url_token']; ?>">进入专题 <i class="md md-chevron-right"></i></a>
+                                        <?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['topic_description']))), 0, 28, 'UTF-8', '...'); ?> <a target="_blank" href="topic/<?php echo $val['topic_id']; ?>">进入专题 <i class="md md-chevron-right"></i></a>
                                     </div>
                                 </div>
                             </div>
