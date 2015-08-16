@@ -595,6 +595,23 @@ header .main-nav ul li a.active {
 
 /*话题详细列表*/
 
+.topic-details-img {
+	position: relative;
+}
+
+.topic-details-mark {
+	position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 0;
+    width: auto;
+    bottom: auto;
+    display: block;
+    z-index: 50;
+}
+
 .topic-details-info {
 	font-size: 12px;
 	margin-bottom: 10px;
@@ -609,12 +626,9 @@ header .main-nav ul li a.active {
 }
 
 .topic-details-add-foucs {
-	margin: 15px 0 5px 0;
-}
-
-.topic-details-add-foucs a {
-	border-radius: 16px;
-	margin-left: 30px;
+	line-height: 36px;
+	display: inline-block;
+	float: left;
 }
 
 .topic-details-content {
@@ -622,13 +636,29 @@ header .main-nav ul li a.active {
 	padding-right: 15px;
 }
 
+.topic-details-foucs {
+	display: block;
+    padding: 10px 10px 8px 0;
+    border-top: 1px solid #F0F0F0;
+    line-height: 100%;
+    margin-top: 20px;
+    text-align: right;
+}
+
+.topic-details-foucs-label {
+	line-height: 36px;
+    padding-bottom: 5px;
+}
+
 .topic-details-foucs-users {
-	margin-top: 15px;
+	margin-top: 5px;
 }
 
 .topic-details-foucs-users img {
 	width: 32px;
 	height: 32px;
+	margin-left: 5px;
+	margin-top: 5px;
 }
 
 body {
@@ -640,6 +670,30 @@ body {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
+.follow, .follow:active, .follow:focus {
+	padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 18px;
+}
+
+.follow:hover {
+	background-color: #8BC34A;
+	color: #fff;
+}
+
+.follow.following, .follow.following:active, .follow.following:focus{
+	background-color: #ccc;
+	color: #555;
+	border-color: #;
+}
+
+.follow.following:hover {
+	background-color: #eee;
+	color: #555;
+}
+
 
 /* 重载bootstrap */
 

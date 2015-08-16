@@ -1457,33 +1457,6 @@ AWS.User =
 	// 关注
 	follow: function(selector, type, data_id)
 	{
-		if (selector.html())
-		{
-			if (selector.hasClass('active'))
-			{
-				selector.find('span').html(_t('关注'));
-
-				selector.find('b').html(parseInt(selector.find('b').html()) - 1);
-			}
-			else
-			{
-				selector.find('span').html(_t('取消关注'));
-
-				selector.find('b').html(parseInt(selector.find('b').html()) + 1);
-			}
-		}
-		else
-		{
-			if (selector.hasClass('active'))
-			{
-				selector.attr('data-original-title', _t('关注'));
-			}
-			else
-			{
-				selector.attr('data-original-title', _t('取消关注'));
-			}
-		}
-
 		selector.addClass('disabled');
 
 		switch (type)
@@ -1522,11 +1495,11 @@ AWS.User =
 			{
 				if (result.rsm.type == 'add')
 				{
-					selector.addClass('active');
+					selector.addClass('following');
 				}
 				else
 				{
-					selector.removeClass('active');
+					selector.removeClass('following');
 				}
 			}
 			else
@@ -1543,6 +1516,33 @@ AWS.User =
 			}
 
 			selector.removeClass('disabled');
+
+			if (selector.html())
+			{
+				if (selector.hasClass('following'))
+				{
+					selector.find('span').html('<i class="md md-check"></i> 正在关注');
+
+					selector.find('b').html(parseInt(selector.find('b').html()) + 1);
+				}
+				else
+				{
+					selector.find('span').html('<i class="md md-add"></i> 添加关注');
+
+					selector.find('b').html(parseInt(selector.find('b').html()) - 1);
+				}
+			}
+			else
+			{
+				if (selector.hasClass('following'))
+				{
+					selector.attr('data-original-title', _t('正在关注'));
+				}
+				else
+				{
+					selector.attr('data-original-title', _t('添加关注'));
+				}
+			}
 
 		}, 'json');
 	},
