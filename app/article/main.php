@@ -160,7 +160,7 @@ class main extends AWS_CONTROLLER
 			HTTP::redirect('/m/article/');
 		}
 
-		$this->crumb(AWS_APP::lang()->_t('文章'), '/article/');
+		$this->crumb(AWS_APP::lang()->_t('知识'), '/article/');
 
 		if ($_GET['category'])
 		{
@@ -206,9 +206,17 @@ class main extends AWS_CONTROLLER
 			$article_topics = $this->model('topic')->get_topics_by_item_ids($article_ids, 'article');
 			$article_users_info = $this->model('account')->get_user_info_by_uids($article_uids);
 
+			// 获取文章缩略图
+
+			$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
+
 			foreach ($article_list AS $key => $val)
 			{
 				$article_list[$key]['user_info'] = $article_users_info[$val['uid']];
+				if ($val['has_attach'])
+				{
+					$article_list[$key]['attachs'] = $article_attachs[$val['id']];
+				}
 			}
 		}
 

@@ -694,6 +694,39 @@ body {
 	color: #555;
 }
 
+/*文章列表*/
+
+.article-feature-cover {
+	height: 180px;
+    overflow: hidden;
+}
+
+.article-feature-img {
+	width: 100%;
+}
+
+.article-title {
+	height: 2.5em;
+}
+
+.article-content {
+	height: 200px;
+}
+
+.article-content a {
+	color: #03A9F4;
+}
+
+.article-stats ul li {
+	display: inline-block;
+	float: left;
+	padding: 15px 20px;
+	color: #9e9e9e;
+}
+
+.article-stats ul li a {
+	color: #03A9F4;
+}
 
 /* 重载bootstrap */
 
