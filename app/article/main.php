@@ -251,7 +251,7 @@ class main extends AWS_CONTROLLER
 		TPL::assign('article_list', $article_list);
 		TPL::assign('article_topics', $article_topics);
 
-		TPL::assign('hot_articles', $this->model('article')->get_articles_list(null, 1, 10, 'votes DESC', 30));
+		TPL::assign('hot_articles', $this->model('article')->get_articles_list(null, 1, 4, 'votes DESC', 30));
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/article/category_id-' . $_GET['category_id'] . '__feature_id-' . $_GET['feature_id']),
