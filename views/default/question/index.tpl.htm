@@ -1,4 +1,118 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
+
+<div id="content">
+	<div class="container">
+		<div class="col-sm-8">
+			<!-- 出题者信息 -->
+			<div class="card">
+				<div class="card-header ch-alt question-publisher hidden-xs">
+					<div class="media">
+						<div class="pull-left">
+							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'mid'); ?>" /></a>
+						</div>
+						<div class="pull-right">
+							<a href="#" class="follow"><i class="md md-add"></i> <em>|</em> 添加关注</a>
+						</div>
+						<div class="media-body">
+	                        <div class="media-heading question-publisher-title">
+	                        	<span class="question-publisher-mark">出题</span>
+	                        	<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
+	                        	<span class="question-publish-time">
+	                        		<?php echo date_friendly($this->question_info['add_time'], 604800, 'Y-m-d'); ?>
+	                        	</span>
+	                        </div>
+	                        <div class="question-publisher-stats">
+	                        	<ul class="clearfix">
+	                        		<li>
+	                        			<a class="c-gray" href="javascript:void(0);">出题 <span>0</span></a>
+	                        		</li>
+	                        		<li>
+	                        			<a class="c-gray" href="javascript:void(0);">答题 <span>1</span></a>
+	                        		</li>
+	                        		<li>
+	                        			<a class="c-gray" href="javascript:void(0);">准确率 <span>25%</span></a>
+	                        		</li>
+	                        		<li>
+	                        			<a class="c-gray" href="javascript:void(0);">参与讨论 <span>15</span>次</a>
+	                        		</li>
+	                        	</ul>
+	                        </div>
+	                    </div>
+					</div>
+	            </div>
+	            <div class="card-header question-title">
+	                <h2>
+	                	<?php echo $this->question_info['question_content']; ?>
+	                	<small><?php echo $this->question_info['view_count']; ?></span> 次查看 · <?php echo $this->question_info['focus_count']; ?> </span>人关注 <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a></small>
+	                </h2>
+	                <ul class="actions">
+	                    <li class="dropdown">
+	                        <a href="#" data-toggle="dropdown" aria-expanded="false">
+	                            <i class="md md-more-vert"></i>
+	                        </a>
+	                        
+	                        <ul class="dropdown-menu dropdown-menu-right">
+	                            <li>
+	                                <a href="#">Refresh</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">Manage Widgets</a>
+	                            </li>
+	                            <li>
+	                                <a href="#">Widgets Settings</a>
+	                            </li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+				<div class="card-body card-padding question-body">
+					<div class="question-tags">
+		        		<!-- 问题分类 -->
+		        		<?php if ($this->question_info['category_info']) { ?>
+							<a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
+								<span><?php echo $this->question_info['category_info']['title']; ?></span>
+							</a>
+						<?php } ?>
+		        		<!-- 问题难度 -->
+		        		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
+		        		<?php TPL::output('question/ajax/question_difficulty'); ?>
+
+						<!-- 答题类型 -->
+						<?php TPL::assign('question_quiz_type', $this->question_info['quiz_info']['type']); ?>
+		        		<?php TPL::output('question/ajax/question_quiz_type'); ?>
+		        	</div>
+		        	<div class="question-content">
+					</div>
+					<div class="question-quiz-stats">
+						<ul class="question-stats-item">
+						<?php if($this->question_info['quiz_id'] > 0) { ?>
+							<li class="question-quiz-count bgm-blue">
+								<a href="javascript:void(0);" class="">
+									<i class="glyphicon glyphicon-stats"></i>
+									总答题：<span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 次
+								</a>
+							</li>
+							<li class="question-quiz-srate bgm-teal">
+								<a href="javascript:void(0);" class="">
+									<i class="glyphicon glyphicon-flag"></i>
+									准确率： <span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
+								</a>
+							</li>
+						<?php } ?>
+						<?php if($this->enable_comment) { ?>
+							<li class="question-comment-count bgm-amber">
+								<a href="#" class="comment-tool-toggle"><i class="glyphicon glyphicon-comment"></i> <?php _e('%s 条评论', $this->answer_count); ?></a>
+							</li>
+						<?php } ?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+			
+	</div>
+</div>
+
 <div class="aw-container-wrap">
 	<?php if ($this->redirect_message) { ?>
 	<div class="container">

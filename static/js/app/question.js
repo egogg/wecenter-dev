@@ -1,5 +1,12 @@
 $(function(){
 
+	// 问题标签
+
+	$('.question-body').on('click', '.question-tag',  function(e){
+		var tag = $(this);
+		window.location.href = G_BASE_URL + '/question/' + tag.attr('data-type') + '-' + tag.attr('data-id');
+	});
+
 	function showQuizContentOverlay()
 	{
 		$('.question-quiz-content').animate({opacity: 0}, 300);
