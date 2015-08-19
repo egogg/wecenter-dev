@@ -303,6 +303,13 @@ class main extends AWS_CONTROLLER
 
 		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
 
+		// 获取答题选项类型
+
+		if($question_info['quiz_id'])
+		{
+			$question_info['quiz_type'] = $this->model('quiz')->get_question_quiz_type($question_info['quiz_id']);
+		}
+		
 		TPL::assign('question_info', $question_info);
 		TPL::assign('question_focus', $this->model('question')->has_focus_question($question_info['question_id'], $this->user_id));
 

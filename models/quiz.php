@@ -207,4 +207,11 @@ class quiz_class extends AWS_MODEL
 		return $quiz_ids;
 
 	}
+
+	public function get_question_quiz_type($quiz_id)
+	{
+		$quiz = $this->fetch_row('question_quiz', 'id = ' . intval($quiz_id));
+
+		return $quiz['type'];
+	}
 }

@@ -78,38 +78,128 @@
 		        		<?php TPL::output('question/ajax/question_difficulty'); ?>
 
 						<!-- 答题类型 -->
-						<?php TPL::assign('question_quiz_type', $this->question_info['quiz_info']['type']); ?>
+						<?php TPL::assign('question_quiz_type', $this->question_info['quiz_type']); ?>
 		        		<?php TPL::output('question/ajax/question_quiz_type'); ?>
 		        	</div>
 		        	<div class="question-content">
 					</div>
 					<div class="question-quiz-stats">
 						<ul class="question-stats-item">
-						<?php if($this->question_info['quiz_id'] > 0) { ?>
-							<li class="question-quiz-count bgm-blue">
-								<a href="javascript:void(0);" class="">
-									<i class="glyphicon glyphicon-stats"></i>
-									总答题：<span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 次
-								</a>
-							</li>
-							<li class="question-quiz-srate bgm-teal">
-								<a href="javascript:void(0);" class="">
-									<i class="glyphicon glyphicon-flag"></i>
-									准确率： <span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></span> %
-								</a>
-							</li>
-						<?php } ?>
-						<?php if($this->enable_comment) { ?>
-							<li class="question-comment-count bgm-amber">
-								<a href="#" class="comment-tool-toggle"><i class="glyphicon glyphicon-comment"></i> <?php _e('%s 条评论', $this->answer_count); ?></a>
-							</li>
-						<?php } ?>
+							<?php if($this->question_info['quiz_id'] > 0) { ?>
+								<li class="question-quiz-count">
+									<a href="javascript:void(0);" class="c-cyan">
+										<i class="md md-trending-up"> </i>
+										<b class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></b> <span class="hidden-xs">人答题</span>
+									</a>
+								</li>
+								<li class="question-quiz-srate">
+									<a href="javascript:void(0);" class="c-lightgreen">
+										<i class="md md-flag"></i>
+										<b class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></b> %  <span class="hidden-xs">通过率</span>
+									</a>
+								</li>
+							<?php } ?>
+							<?php if($this->enable_comment) { ?>
+								<li class="question-quiz-comment">
+									<a href="#" class="comment-tool-toggle c-amber">
+										<i class="md md-comment"></i> <b><?php echo $this->answer_count; ?></b> <span class="hidden-xs"> 条讨论</span>
+									</a>
+								</li>
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
+				<div class="question-actions">
+					<ul class="question-action-items">
+						<li class="question-action-item view-solution"><a href="javascript:void(0);"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看标准</span>答案</a></li>
+						<li class="question-action-item write-comment"><a href="javascript:void(0);"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+						<li class="question-action-item email-invite"><a href="javascript:void(0);"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友挑战</span></a></li>
+						<li class="question-action-item publish-question"><a href="javascript:void(0);"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
+					</ul>
+				</div>
+				<!-- 回复内容 -->
+				<div class="card-body card-padding question-comment">
+					<div class="comment-list t-view">
+						<div class="tv-comments">
+	                        <ul class="tvc-lists">
+	                        	<?php if ($this->answers) { foreach ($this->answers AS $key => $val) { ?>
+									<li class="media" data-uninterested-count="<?php echo $val['uninterested_count']; ?>" data-force-fold="<?php if ($val['user_rated_uninterested']) { ?>1<?php } else { ?><?php echo $val['force_fold']; ?><?php } ?>" id="comment-id-<?php echo $val['answer_id']; ?>">
+										<a href="people/<?php echo $val['user_info']['url_token']; ?>" class="tvh-user pull-left">
+	                                    	<img class="img-responsive img-circle" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="" />
+	                                	</a>
+	                                	<div class="media-body">
+		                                    <div class="d-block">
+		                                    	<a class="user-name" href="people/<?php echo $val['user_info']['url_token']; ?>" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_info']['user_name']; ?>
+		                                    	</a>
+		                                    	<?php if ($val['user_info']['verified']) { ?>
+													<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+												<?php } ?>
+		                                    </div>
+		                                    <small class="c-gray"><?php echo date_friendly($val['add_time'], 604800, 'Y-m-d'); ?></small>
+		                                    <div class="m-t-10">
+		                                    	<?php echo $val['answer_content']; ?>
+		                                    </div>
+		                                </div>
+									</li>
+									<?php } ?>
+								<?php } ?>
+
+								<!-- 回复编辑器 -->
+								<li class="comment-box">
+									<a name="answer_form"></a>
+									<?php if ($this->question_info['lock']) { ?>
+									<p align="center"><?php _e('该问题目前已经被锁定，你无法参加讨论'); ?></p>
+									<?php } else if (!$this->user_id) { ?>
+									<div align="center">
+										<p><?php _e('你需要登录之后才能参与答题讨论哦！'); ?></p>
+										<a class="btn btn-primary" href="account/login/">登录</a>  <a href="account/register/">立即注册</a>
+									</div>
+									<?php } else if ($this->user_answered) { ?>
+									<p align="center"><?php _e('一个问题只能回复一次'); ?><?php if (get_setting('answer_edit_time')) { ?>, <?php _e('你可以在发言后 %s 分钟内编辑回复过的内容', get_setting('answer_edit_time')); ?><?php } ?></p>
+									<?php } else if ((get_setting('answer_self_question') == 'N') && ($this->user_id == $this->question_info['published_uid'])) { ?>
+									<p align="center"><?php _e('不能回复自己发布的问题, 你可以修改问题内容'); ?></p>
+									<?php } else { ?>
+									<form action="question/ajax/save_answer/" onsubmit="return false;" method="post" id="answer_form" class="question_answer_form">
+						        	<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+						        	<input type="hidden" name="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
+						        	<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
+						        	<input type="checkbox" checked="checked" value="1" name="auto_focus" style="display:none;" />
+									<div class="mod-body">
+										<div class="aw-mod aw-editor-box">
+											<div class="mod-head">
+												<div class="wmd-panel">
+										           <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="answer_content"><?php echo htmlspecialchars($this->draft_content['message']); ?></textarea>
+										        </div>
+											</div>
+											<div class="mod-body clearfix">
+												<?php if ($this->human_valid) { ?>
+												<div class="aw-auth-img clearfix">
+														<input class="pull-right form-control" type="text" name="seccode_verify" placeholder="<?php _e('验证码'); ?>" />
+														<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha" /></em>
+												</div>
+												<?php } ?>
+												<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-normal btn-success pull-right btn-reply"><?php _e('回复'); ?></a>
+												<span class="pull-right c-gray" id="answer_content_message">&nbsp;</span>
+												<?php if (get_setting('upload_enable') == 'Y') { ?>
+												<div class="aw-upload-box">
+													<a class="btn btn-default">上传附件</a>
+													<div class="upload-container"></div>
+													<span class="text-color-999 aw-upload-tips hidden-xs"><?php _e('允许'); ?> : <?php echo get_setting('allowed_upload_types'); ?></span>
+												</div>
+												<?php } ?>
+											</div>
+										</div>
+
+									</div>
+									</form>
+									<?php } ?>
+								</li>
+	                        </ul>
+	                    </div>
+					</div>
+				</div>
 			</div>
-		</div>
-			
+		</div>	
 	</div>
 </div>
 

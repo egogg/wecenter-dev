@@ -806,8 +806,98 @@ body {
     padding: 3px 8px;
     border: 1px solid #ccc;
     margin-right: 2px;
-    background-color: none;
     font-size: 12px;
+}
+
+.question-quiz-stats .question-quiz-count {
+	border-color: #00BCD4;
+    color: #00BCD4;
+}
+
+.question-quiz-stats .question-quiz-srate {
+	border-color: #8BC34A;
+    color: #8BC34A;
+}
+
+.question-quiz-stats .question-quiz-comment {
+	border-color: #FF9800;
+    color: #FF9800;
+}
+
+.question-actions {
+	background-color: #f7f7f7;
+}
+
+.question-action-items {
+	list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    overflow: hidden
+}
+
+.question-action-item {
+	display: table-cell;
+	border-right: 1px solid #eee;
+    *float: left;  improve IE7 
+    /*text-align: center;*/
+}
+
+.question-action-item:last-child {
+	border-right: none;
+	margin-right: -1px;
+}
+
+.question-action-item a {
+	width: 100%;
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    padding: 23px 25px;
+    color: #607D8B;
+}
+
+.question-action-item.view-solution a:hover {
+	background-color: #4CAF50;
+    color: #fff;
+}
+
+.question-action-item.write-comment a:hover {
+	background-color: #FFC107;
+	color: #fff;
+}
+
+.question-action-item.email-invite a:hover {
+	background-color: #F44336;
+	color: #fff;
+}
+
+.question-action-item.publish-question a:hover {
+	background-color: #2196F3;
+	color: #fff;
+}
+
+.question-comment {
+	padding: 0!important;
+}
+
+.comment-list {
+	border: none;
+}
+
+.comment-list ul li {
+	border-top: none !important;
+	border-bottom: 1px solid #eee;
+}
+
+.comment-list ul li:last-child {
+	border-bottom: none;
+}
+
+.comment-list ul li a.user-name {
+	color: #03A9F4;
 }
 
 /* 重载bootstrap */
@@ -1283,7 +1373,7 @@ a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radiu
 .cke_button__maximize_icon:before {content: "\e65d";}
 .cke_button__removeformat_icon:before {content: "\e65f";}
 
-.aw-editor-box .mod-head{border:1px solid #e6e6e6;border-radius: 4px;}
+.aw-editor-box .mod-head{border:1px solid #e6e6e6;}
 .aw-editor-box textarea{border: none;}
 .aw-editor-box .mod-body{position:relative;margin-top: 15px;line-height: 28px;}
 .aw-editor-box .mod-body #question_detail_message{line-height: 34px;}
