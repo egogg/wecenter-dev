@@ -883,22 +883,89 @@ body {
 	padding: 0!important;
 }
 
+.comment-user-info {
+	margin-bottom: 15px 0;
+}
+
+.comment-user-info .user-avatar {
+	width: 40px !important;
+	height: 40px !important;
+	margin-right: 15px;
+}
+
 .comment-list {
 	border: none;
 }
 
-.comment-list ul li {
+.comment-list>ul>li {
 	border-top: none !important;
 	border-bottom: 1px solid #eee;
 }
 
-.comment-list ul li:last-child {
+.comment-list>ul>li:last-child {
 	border-bottom: none;
 }
 
-.comment-list ul li a.user-name {
+.comment-list a.user-name {
 	color: #03A9F4;
 }
+
+.answer-actions {
+	margin: 10px 0;
+	padding-right: 15px;
+	font-size: 12px;
+}
+
+.sub-comment-item {
+	border-top: 1px dashed #eee !important;
+	border-left: 3px solid #eee;
+    padding-left: 5px !important;
+    padding-right: 0 !important;
+    margin-right: 15px !important;
+}
+
+.sub-comment-actions {
+	font-size: 12px;
+}
+
+.sub-comment-actions ul li {
+	display: inline-block;
+	float: left;
+	margin-left: 15px;
+}
+
+.sub-comment-item.new-sub-comment {
+	font-size: 12px;
+	border-left: none;
+}
+
+.sub-comment-item.sub-comment-box {
+	border-left: none;
+	padding-left: 0!important;
+	display: none;
+	border-top: none !important;
+	padding-top: 0 !important;
+}
+
+.sub-comment-input {
+	background-color: #f7f7f7;
+    border: 1px solid #f7f7f7;
+    width: 100%;
+    padding: 10px;
+    resize: none;
+    height: 120px!important;
+    border-radius: 3px;
+    -webkit-transition: all 1s ease;
+    transition: all 1s ease;
+    -webkit-appearance: none;
+}
+
+.sub-comment-input:active, .sub-comment-input:focus {
+	border-color: #f7f7f7;
+	background-color: transparent;
+}
+
+
 
 /* 重载bootstrap */
 
@@ -1385,7 +1452,7 @@ a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radiu
 .markitup-box em{font-style: italic;}
 .markitup-box img{max-width: 540px;}
 .markitup-box pre {margin:10px 0;padding: 16px;line-height: 20px;overflow: hidden; border: none; border-radius: 3px; background-color: #f7f7f7;font-size: 14px;font-family: monospace; white-space: pre-wrap;}
-blockquote {margin: 0 40px;padding: 0 15px;font-size: 14px;color: #777;border-left: 4px solid #ddd;}
+blockquote {padding: 0 15px;font-size: 14px;color: #777;border-left: 3px solid #ddd;}
 .markitup-box pre br, .markitup-box ul + br, .markitup-box ol + br {display: none;}
 .markitup-box b, .markitup-box strong {color: #333;}
 .markitup-box ol, .markitup-box ul, .markitup-box dl{padding: 0 40px;}

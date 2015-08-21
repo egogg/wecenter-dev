@@ -7,8 +7,26 @@ var EDITOR_CALLBACK;
 
 $(function()
 {
+
+	// 新增答案评论
+
+	$('.comment-list').on('click', '.new-sub-comment-action', function(e){
+		e.preventDefault();
+
+		var commentBox = $(this).closest('.sub-comment-item').siblings('.sub-comment-box');
+
+		if(commentBox.is(":visible")){
+			commentBox.hide();
+		} else {
+			var commentInput = commentBox.find('textarea');
+			commentBox.show();
+			commentInput.focus();
+			$.scrollTo(commentInput.offset()['top'] - 100, 600, {queue:true});
+		}
+	});
+
     //问题页添加评论
-    AWS.Init.init_comment_box('.aw-add-comment');
+    // AWS.Init.init_comment_box('.aw-add-comment');
 
 	if ($('#c_log_list').attr('id'))
 	{
@@ -28,7 +46,7 @@ $(function()
 				{
 					if (evt.editor.getData().length)
 					{
-						$.post(G_BASE_URL + '/account/ajax/save_draft/item_id-' + QUESTION_ID + '__type-' + ANSWER_TYPE, 'message=' + evt.editor.getData(), function (result) {
+						$.post(G_BASE_UkRL + '/account/ajax/save_draft/item_id-' + QUESTION_ID + '__type-' + ANSWER_TYPE, 'message=' + evt.editor.getData(), function (result) {
 							$('#answer_content_message').html(result.err + ' <a href="#" onclick="$(\'textarea#advanced_editor\').attr(\'value\', \'\'); AWS.User.delete_draft(QUESTION_ID, ANSWER_TYPE); $(this).parent().html(\' \'); return false;">' + _t('删除草稿') + '</a>');
 						}, 'json');
 					}

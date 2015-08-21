@@ -36,7 +36,6 @@ var AWS =
 			clearInterval(AWS.G.loading_timer);
 		}
 	},
-
 	loading_mini: function (selector, type)
 	{
 		if (!selector.find('#aw-loading-mini-box').length)
@@ -219,7 +218,7 @@ var AWS =
 				case 'reply_question':
 					AWS.alert(result.err);
 
-					$('.aw-comment-box-btn .btn-success, .btn-reply').removeClass('disabled');
+					$('.submit-comment-box, .btn-reply').removeClass('disabled');
 				break;
 
 				case 'ajax_post_alert':
@@ -260,7 +259,7 @@ var AWS =
 			{
 				AWS.reload_comments_list(result.rsm.item_id, result.rsm.item_id, result.rsm.type_name);
 				$('#aw-comment-box-' + result.rsm.type_name + '-' + result.rsm.item_id + ' form textarea').val('');
-				$('.aw-comment-box-btn .btn-success').removeClass('disabled');
+				$('.submit-comment-box').removeClass('disabled');
 			}
 
 			if (result.rsm && result.rsm.url)

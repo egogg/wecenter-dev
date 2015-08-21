@@ -124,21 +124,66 @@
 	                        <ul class="tvc-lists">
 	                        	<?php if ($this->answers) { foreach ($this->answers AS $key => $val) { ?>
 									<li class="media" data-uninterested-count="<?php echo $val['uninterested_count']; ?>" data-force-fold="<?php if ($val['user_rated_uninterested']) { ?>1<?php } else { ?><?php echo $val['force_fold']; ?><?php } ?>" id="comment-id-<?php echo $val['answer_id']; ?>">
-										<a href="people/<?php echo $val['user_info']['url_token']; ?>" class="tvh-user pull-left">
-	                                    	<img class="img-responsive img-circle" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="" />
-	                                	</a>
 	                                	<div class="media-body">
-		                                    <div class="d-block">
-		                                    	<a class="user-name" href="people/<?php echo $val['user_info']['url_token']; ?>" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_info']['user_name']; ?>
-		                                    	</a>
-		                                    	<?php if ($val['user_info']['verified']) { ?>
-													<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
-												<?php } ?>
-		                                    </div>
-		                                    <small class="c-gray"><?php echo date_friendly($val['add_time'], 604800, 'Y-m-d'); ?></small>
+	                                		<div class="comment-user-info">
+	                                			<a href="people/<?php echo $val['user_info']['url_token']; ?>" class="tvh-user pull-left">
+			                                    	<img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="" />
+			                                	</a>
+			                                    <div class="d-block">
+			                                    	<a class="user-name" href="people/<?php echo $val['user_info']['url_token']; ?>" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_info']['user_name']; ?>
+			                                    	</a>
+			                                    	<?php if ($val['user_info']['verified']) { ?>
+														<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+													<?php } ?>
+			                                    </div> 
+			                                    <small class="c-gray"><?php echo date_friendly($val['add_time'], 604800, 'Y-m-d'); ?></small>
+	                                		</div>
+		                                   
 		                                    <div class="m-t-10">
 		                                    	<?php echo $val['answer_content']; ?>
 		                                    </div>
+		                                    <div class="answer-actions clearfix">
+		                                    	<ul class="pull-left">
+		                                    		<li><a href="javascript:void(0);"><i class="md md-thumb-up"></i> 赞同(<?php echo $val['agree_count']; ?>)</a></li>
+		                                    	</ul>
+		                                    </div>
+		                                    <ul class="tvc-lists sub-comments">
+		                                    	<?php if (sizeof($this->comments[$val['answer_id']]) > 0) { ?>
+		                                    		<?php foreach ($this->comments[$val['answer_id']] as $key => $comment) { ?>
+		                                    			<li class="sub-comment-item">
+		                                    				<div>
+		                                    					<a href="people/<?php echo $comment['url_token']; ?>" class="user-name" data-id="<?php echo $comment['uid']; ?>"><?php echo $comment['user_name']; ?></a>: <?php echo $comment['message']; ?>
+		                                    				</div>
+		                                    				<div class="sub-comment-actions">
+		                                    					<small class="c-gray"><?php echo date_friendly($comment['time']); ?></small>
+		                                    					<ul class="pull-right">
+		                                    						<?php if (($val['uid'] == $this->user_id AND !$this->question['lock']) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+		                                    							<li><a href="javascript:;" onclick="AWS.User.remove_comment($(this).parent(), '<?php echo $answer['question_id'] > 0 ? 'question' : 'answer'; ?>', <?php echo $comment['id']; ?>);">删除</a>
+		                                    						<?php } ?>
+		                                    						<?php if ($this->user_id) { ?>
+		                                    							<li><a href="javascript:void(0);">回复</a></li>
+		                                    						<?php } ?>
+		                                    					</ul>
+		                                    				</div>
+		                                    			</li>
+		                                    		<?php } ?>
+			                                    <?php } ?>
+												
+												<?php if ($this->user_id) { ?>
+			                                    <li class="sub-comment-item new-sub-comment clearfix">
+			                                    	<div class="pull-right">
+			                                    		<a class="new-sub-comment-action" data-answer-id="<?php echo $val['answer_id']; ?>" href="javascript:void(0);"><i class="md md-edit"></i> 添加新回复</a>
+			                                    	</div>
+			                                    </li>
+			                                    <?php } ?>
+
+			                                    <li class="sub-comment-item sub-comment-box">
+			                                    	<form action="<?php echo 'question/ajax/save_answer_comment/answer_id-' . $val['answer_id']; ?>" method="post" onsubmit="return false">
+			                                    		<textarea class="form-control sub-comment-input" data-answer-id="<?php echo $val['answer_id']; ?>" row="5" placeholder="你对这种思路的看法" name="message"></textarea>
+	                                                	<button class="m-t-15 submit-comment-box btn btn-primary btn-sm waves-effect" onclick="AWS.User.save_comment($(this));">发表回复</button>
+	                                                </form>
+	                                            </li>
+		                                    </ul>
 		                                </div>
 									</li>
 									<?php } ?>

@@ -264,6 +264,21 @@ class main extends AWS_CONTROLLER
 				{
 					$answers[] = $answer;
 				}
+
+				// 获取回答评论列表
+
+				$comments = $this->model('answer')->get_answer_comments($answer['answer_id']);
+
+				$user_infos = $this->model('account')->get_user_info_by_uids(fetch_array_value($comments, 'uid'));
+
+				foreach ($comments as $key => $val)
+				{
+					$comments[$key]['message'] = FORMAT::parse_links($this->model('question')->parse_at_user($comments[$key]['message']));
+					$comments[$key]['user_name'] = $user_infos[$val['uid']]['user_name'];
+					$comments[$key]['url_token'] = $user_infos[$val['uid']]['url_token'];
+				}
+				
+				$answer_comments[$answer['answer_id']] = $comments;
 			}
 
 			if (! $answers[0])
@@ -284,6 +299,7 @@ class main extends AWS_CONTROLLER
 			}
 
 			TPL::assign('answers', $answers);
+			TPL::assign('comments', $answer_comments);
 			TPL::assign('answer_count', $answer_count);
 		}
 
