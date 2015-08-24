@@ -8,18 +8,38 @@ var EDITOR_CALLBACK;
 $(function()
 {
 
-	// 新增答案评论
+	// 答案评论
 
-	$('.comment-list').on('click', '.new-sub-comment-action', function(e){
+	$('.comment-list').on('click', '.sub-comment-reply', function(e) {
 		e.preventDefault();
 
-		var commentBox = $(this).closest('.sub-comment-item').siblings('.sub-comment-box');
+		var replyButton = $(this);
+		var targetUser = replyButton.attr('data-user-name');
+		var index = replyButton.attr('data-index');
+		var commentBox = replyButton.closest('.sub-comment-item').siblings('.sub-comment-box');
+		var commentInput = commentBox.find('textarea');
+		var currentIndex = commentInput.attr('data-index');
+
+		var atUser = '@' + targetUser + ' ';
+		if(typeof targetUser == 'undefined') {
+			atUser = '';
+		}
 
 		if(commentBox.is(":visible")){
-			commentBox.hide();
+			if(index != currentIndex) {
+				commentInput.attr('data-index', index);
+				commentInput.val(atUser);
+				commentInput.focus();
+			} else {
+				commentInput.removeAttr('data-index');
+				commentBox.hide();
+				commentInput.val('');
+			}
+			
 		} else {
-			var commentInput = commentBox.find('textarea');
 			commentBox.show();
+			commentInput.attr('data-index', index);
+			commentInput.insertAtCaret(atUser);
 			commentInput.focus();
 			$.scrollTo(commentInput.offset()['top'] - 100, 600, {queue:true});
 		}

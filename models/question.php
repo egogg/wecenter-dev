@@ -943,7 +943,7 @@ class question_class extends AWS_MODEL
 
 				if ($user_info)
 				{
-					$content = str_replace('@' . $user_name, '<a href="people/' . $user_info['url_token'] . '"' . (($popup) ? ' target="_blank"' : '') . ' class="aw-user-name" data-id="' . $user_info['uid'] . '">@' . $user_info['user_name'] . '</a>', $content);
+					$content = str_replace('@' . $user_name, '<a href="people/' . $user_info['url_token'] . '"' . (($popup) ? ' target="_blank"' : '') . ' class="user-name" data-id="' . $user_info['uid'] . '">@' . $user_info['user_name'] . '</a>', $content);
 
 					if ($to_uid)
 					{
