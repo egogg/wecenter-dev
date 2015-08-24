@@ -294,22 +294,25 @@ var AWS =
 
 						if (result.rsm.ajax_html)
 						{
-							$('.aw-feed-list').append(result.rsm.ajax_html);
+							$('#comment-items').append(result.rsm.ajax_html);
 
-							$('.aw-comment-box-btn .btn-success, .btn-reply').removeClass('disabled');
+							$('.comment-box .btn-reply').removeClass('disabled');
 
 							$.scrollTo($('#' + $(result.rsm.ajax_html).attr('id')), 600, {queue:true});
 
 							// 问题
-							$('.question_answer_form').detach();
-
-							if ($('.aw-replay-box.question').length)
-							{
-								if (USER_ANSWERED)
-								{
-									$('.aw-replay-box').append('<p align="center">一个问题只能回复一次, 你可以在发言后 ' + ANSWER_EDIT_TIME + ' 分钟内编辑回复过的内容</p>');
-								}
+							// $('.question_answer_form').detach();
+							if(EDITOR != 'undefined') {
+								EDITOR.setData('');
 							}
+
+							// if ($('.aw-replay-box.question').length)
+							// {
+							// 	if (USER_ANSWERED)
+							// 	{
+							// 		$('.aw-replay-box').append('<p align="center">一个问题只能回复一次, 你可以在发言后 ' + ANSWER_EDIT_TIME + ' 分钟内编辑回复过的内容</p>');
+							// 	}
+							// }
 						}
 						else if(result.rsm.url)
 						{
@@ -1600,60 +1603,79 @@ AWS.User =
 	// 赞成投票
 	agree_vote: function(selector, user_name, answer_id)
 	{
+		var $selector = $(selector);
 		$.post(G_BASE_URL + '/question/ajax/answer_vote/', 'answer_id=' + answer_id + '&value=1');
-
-		// 判断是否投票过
-		if ($(selector).parents('.aw-item').find('.aw-agree-by').text().match(user_name))
-		{
-			$.each($(selector).parents('.aw-item').find('.aw-user-name'), function (i, e)
-			{
-				if ($(e).html() == user_name)
-				{
-					if ($(e).prev())
-					{
-						$(e).prev().remove();
-					}
-					else
-					{
-						$(e).next().remove();
-					}
-
-					$(e).remove();
-				}
-			});
-
-			$(selector).removeClass('active');
-
-			if (parseInt($(selector).parents('.operate').find('.count').html()) != 0)
-			{
-				$(selector).parents('.operate').find('.count').html(parseInt($(selector).parents('.operate').find('.count').html()) - 1);
+		var countElement = $selector.find('.count');
+		var textElement = $selector.find('span');
+		var agreed = $selector.attr('data-agreed');
+		var currentCount = parseInt(countElement.html());
+		if(agreed > 0) {
+			if(currentCount > 0) {
+				countElement.html(currentCount - 1);
 			}
+			textElement.html('赞同');
+			$selector.removeClass('active');
+			$selector.attr('data-agreed', 0);
+		} else {
+			countElement.html(currentCount + 1);
+			textElement.html('已赞同');
+			$selector.addClass('active');
 
-			if ($(selector).parents('.aw-item').find('.aw-agree-by a').length == 0)
-			{
-				$(selector).parents('.aw-item').find('.aw-agree-by').hide();
-			}
+			$selector.attr('data-agreed', 1);
 		}
-		else
-		{
-			// 判断是否第一个投票
-			if ($(selector).parents('.aw-item').find('.aw-agree-by .aw-user-name').length == 0)
-			{
-				$(selector).parents('.aw-item').find('.aw-agree-by').append('<a class="aw-user-name">' + user_name + '</a>');
-			}
-			else
-			{
-				$(selector).parents('.aw-item').find('.aw-agree-by').append('<em>、</em><a class="aw-user-name">' + user_name + '</a>');
-			}
 
-			$(selector).parents('.operate').find('.count').html(parseInt($(selector).parents('.operate').find('.count').html()) + 1);
+		// // 判断是否投票过
+		// if ($(selector).parents('.aw-item').find('.aw-agree-by').text().match(user_name))
+		// {
+		// 	$.each($(selector).parents('.aw-item').find('.aw-user-name'), function (i, e)
+		// 	{
+		// 		if ($(e).html() == user_name)
+		// 		{
+		// 			if ($(e).prev())
+		// 			{
+		// 				$(e).prev().remove();
+		// 			}
+		// 			else
+		// 			{
+		// 				$(e).next().remove();
+		// 			}
 
-			$(selector).parents('.aw-item').find('.aw-agree-by').show();
+		// 			$(e).remove();
+		// 		}
+		// 	});
 
-			$(selector).parents('.operate').find('a.active').removeClass('active');
+		// 	$(selector).removeClass('active');
 
-			$(selector).addClass('active');
-		}
+		// 	if (parseInt($(selector).parents('.operate').find('.count').html()) != 0)
+		// 	{
+		// 		$(selector).parents('.operate').find('.count').html(parseInt($(selector).parents('.operate').find('.count').html()) - 1);
+		// 	}
+
+		// 	if ($(selector).parents('.aw-item').find('.aw-agree-by a').length == 0)
+		// 	{
+		// 		$(selector).parents('.aw-item').find('.aw-agree-by').hide();
+		// 	}
+		// }
+		// else
+		// {
+		// 	// 判断是否第一个投票
+		// 	if ($(selector).parents('.aw-item').find('.aw-agree-by .aw-user-name').length == 0)
+		// 	{
+		// 		$(selector).parents('.aw-item').find('.aw-agree-by').append('<a class="aw-user-name">' + user_name + '</a>');
+		// 	}
+		// 	else
+		// 	{
+		// 		$(selector).parents('.aw-item').find('.aw-agree-by').append('<em>、</em><a class="aw-user-name">' + user_name + '</a>');
+		// 	}
+
+		// 	$(selector).parents('.operate').find('.count').html(parseInt($(selector).parents('.operate').find('.count').html()) + 1);
+
+		// 	$(selector).parents('.aw-item').find('.aw-agree-by').show();
+
+		// 	$(selector).parents('.operate').find('a.active').removeClass('active');
+
+		// 	$(selector).addClass('active');
+		// }
 	},
 
 	// 反对投票

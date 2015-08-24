@@ -910,6 +910,10 @@ body {
 	color: #03A9F4;
 }
 
+.comment-box {
+	padding: 15px 35px 15px 20px;
+}
+
 .answer-actions {
 	margin: 10px 0;
 	padding-right: 15px;
@@ -934,6 +938,10 @@ body {
 
 .sub-comment-actions {
 	font-size: 12px;
+}
+
+.sub-comment-actions a {
+	color: #9e9e9e;
 }
 
 .sub-comment-actions ul li {
