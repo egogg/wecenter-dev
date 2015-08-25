@@ -1,4 +1,4 @@
-<li class="media" data-uninterested-count="<?php echo $this->answer_info['uninterested_count']; ?>" data-force-fold="<?php if ($this->answer_info['user_rated_uninterested']) { ?>1<?php } else { ?><?php echo $this->answer_info['force_fold']; ?><?php } ?>" id="comment-id-<?php echo $this->answer_info['answer_id']; ?>">
+<li class="media comment-item" data-uninterested-count="<?php echo $this->answer_info['uninterested_count']; ?>" data-force-fold="<?php if ($this->answer_info['user_rated_uninterested']) { ?>1<?php } else { ?><?php echo $this->answer_info['force_fold']; ?><?php } ?>" id="comment-id-<?php echo $this->answer_info['answer_id']; ?>">
 	<div class="media-body">
 		<div class="comment-user-info">
 			<a href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="tvh-user pull-left">
@@ -30,44 +30,28 @@
         	</ul>
         	<ul class="pull-right">
         		<?php if (($this->answer_info['uid'] == $this->user_id AND !$this->question['lock']) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
-        			<li><a href="javascript:void(0);">删除</a></li>
+        			<li><a href="javascript:void(0);" class="comment-remove" onclick="AWS.User.remove_answer($(this), <?php echo $this->answer_info['answer_id']; ?>);">删除</a></li>
         		<?php } ?>
         	</ul>
         </div>
-        <ul class="tvc-lists sub-comments">
-        	<?php if (sizeof($this->comments[$this->answer_info['answer_id']]) > 0) { ?>
-        		<?php foreach ($this->comments[$this->answer_info['answer_id']] as $key => $comment) { ?>
-        			<li class="sub-comment-item">
-        				<div>
-        					<a href="people/<?php echo $comment['url_token']; ?>" class="user-name" data-id="<?php echo $comment['uid']; ?>"><?php echo $comment['user_name']; ?></a>: <?php echo $comment['message']; ?>
-        				</div>
-        				<div class="sub-comment-actions">
-        					<small class="c-gray"><?php echo date_friendly($comment['time']); ?></small>
-        					<ul class="pull-right">
-        						<?php if (($this->answer_info['uid'] == $this->user_id AND !$this->question['lock']) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
-        							<li><a class="sub-comment-remove" href="javascript:;" onclick="AWS.User.remove_comment($(this).parent(), '<?php echo $answer['question_id'] > 0 ? 'question' : 'answer'; ?>', <?php echo $comment['id']; ?>);">删除</a>
-        						<?php } ?>
-        						<?php if ($this->user_id) { ?>
-        							<li><a class="sub-comment-reply" data-index="<?php echo $key; ?>" data-user-name="<?php echo $comment['user_name']; ?>" href="javascript:void(0);">回复</a></li>
-        						<?php } ?>
-        					</ul>
-        				</div>
-        			</li>
-        		<?php } ?>
-            <?php } ?>
-			
-			<?php if ($this->user_id) { ?>
+        <ul class="tvc-lists sub-comments" id="comment-list-answer-<?php echo $this->answer_info['answer_id']; ?>">
+            <?php TPL::assign('answer_comments', $this->comments[$this->answer_info['answer_id']]); ?>
+            <?php TPL::assign('answer_id', $this->answer_info['answer_id']); ?>
+            <?php TPL::output('question/ajax/comments'); ?>
+        </ul>
+        <ul class="tvc-lists sub-comments sub-comment-edit">
+            <?php if ($this->user_id) { ?>
             <li class="sub-comment-item new-sub-comment clearfix">
-            	<div class="pull-right">
-            		<a class="sub-comment-reply" data-index="-1" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" href="javascript:void(0);"><i class="md md-edit"></i> 添加新回复</a>
-            	</div>
+                <div class="pull-right">
+                    <a class="sub-comment-reply" data-index="-1" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" href="javascript:void(0);"><i class="md md-edit"></i> 添加新回复</a>
+                </div>
             </li>
             <?php } ?>
 
-            <li class="sub-comment-item sub-comment-box">
-            	<form action="<?php echo 'question/ajax/save_answer_comment/answer_id-' . $this->answer_info['answer_id']; ?>" method="post" onsubmit="return false">
-            		<textarea class="form-control sub-comment-input" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" row="5" placeholder="你对这种思路的看法" name="message"></textarea>
-                	<button class="m-t-15 submit-comment-box btn btn-primary btn-sm waves-effect" onclick="AWS.User.save_comment($(this));">发表回复</button>
+            <li class="sub-comment-item sub-comment-box" id="comment-box-answer-<?php echo $this->answer_info['answer_id']; ?>">
+                <form action="<?php echo 'question/ajax/save_answer_comment/answer_id-' . $this->answer_info['answer_id']; ?>" method="post" onsubmit="return false">
+                    <textarea class="form-control sub-comment-input" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" row="5" placeholder="你对这种思路的看法" name="message"></textarea>
+                    <button class="m-t-15 submit-comment-box btn btn-success btn-sm waves-effect" onclick="AWS.User.save_comment($(this));">发表回复</button>
                 </form>
             </li>
         </ul>

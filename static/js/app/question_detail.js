@@ -16,7 +16,7 @@ $(function()
 		var replyButton = $(this);
 		var targetUser = replyButton.attr('data-user-name');
 		var index = replyButton.attr('data-index');
-		var commentBox = replyButton.closest('.sub-comment-item').siblings('.sub-comment-box');
+		var commentBox = $('#comment-box-answer-' + replyButton.attr('data-answer-id'));
 		var commentInput = commentBox.find('textarea');
 		var currentIndex = commentInput.attr('data-index');
 

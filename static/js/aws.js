@@ -258,7 +258,8 @@ var AWS =
 			if (type == 'comments_form')
 			{
 				AWS.reload_comments_list(result.rsm.item_id, result.rsm.item_id, result.rsm.type_name);
-				$('#aw-comment-box-' + result.rsm.type_name + '-' + result.rsm.item_id + ' form textarea').val('');
+				$('#comment-box-' + result.rsm.type_name + '-' + result.rsm.item_id + ' form textarea').val('');
+				$('#comment-box-' + result.rsm.type_name + '-' + result.rsm.item_id).hide();
 				$('.submit-comment-box').removeClass('disabled');
 			}
 
@@ -298,7 +299,7 @@ var AWS =
 
 							$('.comment-box .btn-reply').removeClass('disabled');
 
-							$.scrollTo($('#' + $(result.rsm.ajax_html).attr('id')), 600, {queue:true});
+							// $.scrollTo($('#' + $(result.rsm.ajax_html).attr('id')), 600, {queue:true});
 
 							// 问题
 							// $('.question_answer_form').detach();
@@ -431,11 +432,11 @@ var AWS =
 	// 重新加载评论列表
 	reload_comments_list: function(item_id, element_id, type_name)
 	{
-		$('#aw-comment-box-' + type_name + '-' + element_id + ' .aw-comment-list').html('<p align="center" class="aw-padding10"><i class="aw-loading"></i></p>');
+		// $('#aw-comment-box-' + type_name + '-' + element_id + ' .aw-comment-list').html('<p align="center" class="aw-padding10"><i class="aw-loading"></i></p>');
 
 		$.get(G_BASE_URL + '/question/ajax/get_' + type_name + '_comments/' + type_name + '_id-' + item_id, function (data)
 		{
-			$('#aw-comment-box-' + type_name + '-' + element_id + ' .aw-comment-list').html(data);
+			$('#comment-list-' + type_name + '-' + element_id).html(data);
 		});
 	},
 
@@ -1892,6 +1893,13 @@ AWS.User =
 		}, 'json');
 	},
 
+	// 删除问题评论
+
+	remove_answer: function(selector, answer_id) {
+		$.get(G_BASE_URL + '/question/ajax/remove_answer/answer_id-' + answer_id);
+		selector.parents('li.comment-item[id=comment-id-' + answer_id + ']').fadeOut();
+	},
+
 	// 提交评论
 	save_comment: function(selector)
 	{
@@ -1905,7 +1913,7 @@ AWS.User =
 	{
 		$.get(G_BASE_URL + '/question/ajax/remove_comment/type-' + type + '__comment_id-' + comment_id);
 
-		selector.parents('.aw-comment-box li').fadeOut();
+		selector.parents('li.sub-comment-item').fadeOut();
 	},
 
 	// 文章赞同

@@ -31,6 +31,7 @@ class ajax extends AWS_CONTROLLER
 			'log',
 			'get_focus_users',
 			'get_answer_users',
+			'remove_answer',
 			'fetch_share_data',
 			'check_quiz_answer',
 			'init_question_content',
@@ -316,7 +317,7 @@ class ajax extends AWS_CONTROLLER
 
 		TPL::assign('question', $this->model('question')->get_question_info_by_id($answer_info['question_id']));
 
-		TPL::assign('comments', $comments);
+		TPL::assign('answer_comments', $comments);
 
 		if (is_mobile())
 		{
@@ -715,6 +716,33 @@ class ajax extends AWS_CONTROLLER
 			'target_id' => $_GET['target_id'],
 			'display_id' => $_GET['display_id']
 		), 1, null));
+	}
+
+	public function remove_answer_action()
+	{
+		if (! $answer_info = $this->model('answer')->get_answer_by_id($_GET['answer_id']))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('答案不存在')));
+		}
+
+		if ($answer_info['uid'] != $this->user_id and ! $this->user_info['permission']['is_administortar'] and ! $this->user_info['permission']['is_moderator'])
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('你没有权限进行此操作')));
+		}
+
+		$this->model('answer')->remove_answer_by_id($_GET['answer_id']);
+
+		// 通知回复的作者
+		if ($this->user_id != $answer_info['uid'])
+		{
+			$this->model('notify')->send($this->user_id, $answer_info['uid'], notify_class::TYPE_REMOVE_ANSWER, notify_class::CATEGORY_QUESTION, $answer_info['question_id'], array(
+				'from_uid' => $this->user_id,
+				'question_id' => $answer_info['question_id']
+			));
+		}
+
+		$this->model('question')->save_last_answer($answer_info['question_id']);
+		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
 
 	public function log_action()
