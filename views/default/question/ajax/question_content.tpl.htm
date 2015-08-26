@@ -8,53 +8,70 @@
 <!-- 答题选项 -->
 
 <?php if($this->question_quiz) { ?>
-
-<div class="question-quiz">
-	<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
-	<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
-	<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">
-	<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
-	<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
-
-	<div class="question-quiz-content"></div>
-	<div class="question-quiz-content-overlay panel panel-default">
-		<?php if($this->passed_quiz) { ?>
-			<button type="button" class="close close-question-quiz-content-overlay" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button>
-		<?php } ?>
-		<div class="question-quiz-answer-result">
-			<?php if($this->passed_quiz) { ?>
-				<div class="badge answer-success"><i class="glyphicon glyphicon-flag"></i> 答题成功</div>
-				<?php if($this->try_count > 1) { ?> 
-				<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
-				<?php } ?>
-			<?php } else { ?>
-				<div class="badge answer-failed"><i class="glyphicon glyphicon-remove"></i> 答题失败</div>
-				<?php if($this->try_count > 0) { ?> 
-				<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
-				<?php } ?>
-			<?php } ?>
-		</div>
-		<ul class="post-answer-actions">
-			<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
-				<li class="post-answer-action retry"><a href="" class="btn btn-danger btn-block" id="retry-question-quiz-normal"><i class="glyphicon glyphicon-repeat"></i> 再答一次试试</a></li>
-			<?php } ?>
-			<li class="post-answer-action action-view-solution"><a href="" class="btn btn-info btn-block"><i class="glyphicon glyphicon-eye-open"></i> 查看答案详解</a></li>
-			<li class="post-answer-action action-post-comment"><a href="" class="btn btn-default btn-block"><i class="glyphicon glyphicon-comment"></i> 参与答题讨论</a></li>
-			<li class="post-answer-action action-publish-question"><a href="" class="btn btn-success btn-block"><i class="glyphicon glyphicon-edit"></i> 出题考考别人</a></li>
-		</ul>
-	</div>
-</div>
-<?php } else { ?>
 	<div class="question-quiz">
-		<div class="question-quiz-content-overlay open panel panel-default">
+		<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
+		<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
+		<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">
+		<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
+		<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
+
+		<div class="question-quiz-content"></div>
+		<div class="question-quiz-content-overlay panel panel-default">
+			<?php if($this->passed_quiz) { ?>
+				<button type="button" class="close close-question-quiz-content-overlay" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			<?php } ?>
+			<div class="question-quiz-answer-result">
+				<?php if($this->passed_quiz) { ?>
+					<div class="badge answer-success"><i class="glyphicon glyphicon-flag"></i> 答题成功</div>
+					<?php if($this->try_count > 1) { ?> 
+					<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
+					<?php } ?>
+				<?php } else { ?>
+					<div class="badge answer-failed"><i class="glyphicon glyphicon-remove"></i> 答题失败</div>
+					<?php if($this->try_count > 0) { ?> 
+					<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
+					<?php } ?>
+				<?php } ?>
+			</div>
 			<ul class="post-answer-actions">
+				<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
+					<li class="post-answer-action retry"><a href="" class="btn btn-danger btn-block" id="retry-question-quiz-normal"><i class="glyphicon glyphicon-repeat"></i> 再答一次试试</a></li>
+				<?php } ?>
+				<li class="post-answer-action action-view-solution"><a href="" class="btn btn-info btn-block"><i class="glyphicon glyphicon-eye-open"></i> 查看答案详解</a></li>
 				<li class="post-answer-action action-post-comment"><a href="" class="btn btn-default btn-block"><i class="glyphicon glyphicon-comment"></i> 参与答题讨论</a></li>
-				<li class="post-answer-action action-view-solution"><a href="" class="btn btn-info btn-block"><i class="glyphicon glyphicon-repeat"></i> 查看答案详解</a></li>
 				<li class="post-answer-action action-publish-question"><a href="" class="btn btn-success btn-block"><i class="glyphicon glyphicon-edit"></i> 出题考考别人</a></li>
 			</ul>
+			
 		</div>
+			<div class="question-quiz-actions clearfix">
+				<ul class="question-quiz-action-items">
+					<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
+						<li class="question-quiz-action-item">
+							<a href="" class="btn btn-danger btn-block" id="retry-question-quiz-normal"><i class="glyphicon glyphicon-repeat"></i> 重新答题</a>
+						</li>
+					<?php } else { ?>
+						<li class="question-quiz-action-item question-quiz-success">
+							<div class="clearfix bgm-lightgreen">
+								<div class="user-quiz-state">
+									<i class="md md-flag"></i> 成功
+								</div>
+								<a class="user-quiz-action c-white" href="javascript:void(0);">答题尝试<span><?php echo $this->try_count; ?></span>次
+								</a>
+							</div>
+						</li>
+					<?php } ?>
+				</ul>
+			</div>
+	</div>
+<?php } else { ?>
+	<div class="question-quiz-actions">
+		<ul class="question-quiz-action-items">
+			<li class="question-quiz-item">
+				<a href="javascript:void(0);" class="question-quiz-action answer-question"><i class="md md-comment"></i> 我来回答 (<span><?php echo $this->question_info['answer_count']; ?></span>)</a>	
+			</li>
+		</ul>
 	</div>
 <?php } ?>
 

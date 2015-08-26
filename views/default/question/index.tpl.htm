@@ -83,7 +83,17 @@
 		        	</div>
 		        	<div class="question-content">
 					</div>
-					<div class="question-quiz-stats">
+				</div>
+				<div class="question-actions">
+					<ul class="question-action-items">
+						<li class="question-action-item view-solution"><a href="javascript:void(0);"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看标准</span>答案</a></li>
+						<li class="question-action-item email-invite"><a href="javascript:void(0);"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友挑战</span></a></li>
+						<li class="question-action-item publish-question"><a href="javascript:void(0);"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
+					</ul>
+				</div>
+				<!-- 回复内容 -->
+				<div class="card-body card-padding question-comment">
+					<div class="question-quiz-stats clearfix">
 						<ul class="question-stats-item">
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
 								<li class="question-quiz-count">
@@ -99,26 +109,14 @@
 									</a>
 								</li>
 							<?php } ?>
-							<?php if($this->enable_comment) { ?>
-								<li class="question-quiz-comment">
-									<a href="#" class="comment-tool-toggle c-amber">
-										<i class="md md-comment"></i> <b><?php echo $this->answer_count; ?></b> <span class="hidden-xs"> 条讨论</span>
-									</a>
-								</li>
-							<?php } ?>
+							<li class="question-quiz-comment pull-right">
+								<a href="javascript:void(0);" class="c-gray">
+									<i class="md md-comment"></i>
+									<span><?php echo $this->answer_count; ?></span> <span class="hidden-xs">条问题讨论</span>
+								</a>
+							</li>
 						</ul>
 					</div>
-				</div>
-				<div class="question-actions">
-					<ul class="question-action-items">
-						<li class="question-action-item view-solution"><a href="javascript:void(0);"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看标准</span>答案</a></li>
-						<li class="question-action-item write-comment"><a href="javascript:void(0);"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
-						<li class="question-action-item email-invite"><a href="javascript:void(0);"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友挑战</span></a></li>
-						<li class="question-action-item publish-question"><a href="javascript:void(0);"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
-					</ul>
-				</div>
-				<!-- 回复内容 -->
-				<div class="card-body card-padding question-comment">
 					<div class="comment-list t-view">
 						<div class="tv-comments">
 	                        <ul class="tvc-lists" id="comment-items">
