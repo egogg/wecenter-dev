@@ -1462,6 +1462,8 @@ class ajax extends AWS_CONTROLLER
 			$try_count = count($quiz_record);
 			$passed_quiz = $quiz_record[0]['passed'];
 		}
+
+		TPL::assign('quiz_record', $quiz_record);
 		TPL::assign('passed_quiz', $passed_quiz);
 		TPL::assign('try_count', $try_count);
 

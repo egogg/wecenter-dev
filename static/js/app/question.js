@@ -7,6 +7,23 @@ $(function(){
 		window.location.href = G_BASE_URL + '/question/' + tag.attr('data-type') + '-' + tag.attr('data-id');
 	});
 
+	// 答题记录
+
+	$('.question-body').on('click', '.user-quiz-record-message', function(e){
+		var icon = $(this).find('i');
+		var recordList = $(this).siblings('.user-quiz-record-items');
+
+		if(recordList.is(":visible")) {
+			recordList.slideUp();
+			icon.removeClass('md-expand-more').addClass('md-chevron-right');
+		} else {
+			recordList.slideDown();
+			icon.removeClass('md-chevron-right').addClass('md-expand-more');
+		}
+	});
+
+	// 问题内容
+
 	function showQuizContentOverlay()
 	{
 		$('.question-quiz-content').animate({opacity: 0}, 300);

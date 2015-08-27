@@ -45,25 +45,6 @@
 			</ul>
 			
 		</div>
-			<div class="question-quiz-actions clearfix">
-				<ul class="question-quiz-action-items">
-					<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
-						<li class="question-quiz-action-item">
-							<a href="" class="btn btn-danger btn-block" id="retry-question-quiz-normal"><i class="glyphicon glyphicon-repeat"></i> 重新答题</a>
-						</li>
-					<?php } else { ?>
-						<li class="question-quiz-action-item question-quiz-success">
-							<div class="clearfix bgm-lightgreen">
-								<div class="user-quiz-state">
-									<i class="md md-flag"></i> 成功
-								</div>
-								<a class="user-quiz-action c-white" href="javascript:void(0);">答题尝试<span><?php echo $this->try_count; ?></span>次
-								</a>
-							</div>
-						</li>
-					<?php } ?>
-				</ul>
-			</div>
 	</div>
 <?php } else { ?>
 	<div class="question-quiz-actions">
@@ -74,6 +55,57 @@
 		</ul>
 	</div>
 <?php } ?>
+
+<div class="question-quiz-results clearfix">
+	<?php if(!$this->passed_quiz) { ?>
+		<h3 class="question-quiz-result failed">
+			答题失败 <i class="md md-close"></i>
+		</h3>
+	<?php } else { ?>
+		<h3 class="question-quiz-result success">
+			<i class="md md-check"></i> 恭喜你，回答正确！
+		</h3>
+	<?php } ?>
+
+	<div class="question-quiz-actions">
+		<ul class="question-quiz-action-items">
+			<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="c-white  bgm-green"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看参考</span>答案</a></li>
+			<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-bluegray"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+			<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-lightblue"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
+			<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="c-white bgm-red"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
+		</ul>
+	</div>
+	
+	<div class="user-quiz-record">
+		<a href="javascript:void(0);" class="user-quiz-record-message c-gray"><i class="md md-chevron-right"></i>答题记录：<span><?php echo $this->try_count; ?></span> 次</a>
+		<ul class="user-quiz-record-items clearfix">
+			<?php foreach ($this->quiz_record as $key => $record) { ?>
+				<li class="user-quiz-record-item">
+					<?php if($record['passed']) { ?> 
+						<span class="quiz-record-mark success">答题成功</span> 
+					<?php } else if($this->question_quiz['countdown'] > 0 and $record['time_spend'] <= 0) { ?>
+						<span class="quiz-record-mark timeout">答题超时</span> 
+					<?php } else { ?>
+						<span class="quiz-record-mark failed">答题失败</span>
+					<?php } ?>
+					<?php if($record['time_spend'] > 0) { ?>
+						，用时 <?php $record['time_spend']; ?> 秒 
+					<?php } ?>
+					（<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>） 
+				</li>
+			<?php } ?>
+		</ul>
+	</div>
+
+	<ul class="question-quiz-result-items">
+		<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
+			<li class="question-quiz-result-item">
+				<a href="javascript:void(0);" class="btn btn-danger btn-block" id="retry-question-quiz-normal"><i class="glyphicon glyphicon-repeat"></i> 重新答题</a>
+			</li>
+		<?php } else { ?>
+		<?php } ?>
+	</ul>
+</div>
 
 <?php if ($this->question_info['attachs']) {  ?>
 <div class="aw-upload-img-list">

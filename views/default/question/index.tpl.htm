@@ -3,7 +3,7 @@
 <div id="content">
 	<div class="container">
 		<div class="col-sm-8">
-			<!-- 出题者信息 -->
+			<!-- 题目信息  -->
 			<div class="card">
 				<div class="card-header ch-alt question-publisher hidden-xs">
 					<div class="media">
@@ -84,39 +84,36 @@
 		        	<div class="question-content">
 					</div>
 				</div>
-				<div class="question-actions">
-					<ul class="question-action-items">
-						<li class="question-action-item view-solution"><a href="javascript:void(0);"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看标准</span>答案</a></li>
-						<li class="question-action-item email-invite"><a href="javascript:void(0);"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友挑战</span></a></li>
-						<li class="question-action-item publish-question"><a href="javascript:void(0);"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
-					</ul>
-				</div>
-				<!-- 回复内容 -->
-				<div class="card-body card-padding question-comment">
-					<div class="question-quiz-stats clearfix">
-						<ul class="question-stats-item">
-							<?php if($this->question_info['quiz_id'] > 0) { ?>
-								<li class="question-quiz-count">
-									<a href="javascript:void(0);" class="c-cyan">
-										<i class="md md-trending-up"> </i>
-										<b class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></b> <span class="hidden-xs">人答题</span>
-									</a>
-								</li>
-								<li class="question-quiz-srate">
-									<a href="javascript:void(0);" class="c-lightgreen">
-										<i class="md md-flag"></i>
-										<b class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></b> %  <span class="hidden-xs">通过率</span>
-									</a>
-								</li>
-							<?php } ?>
-							<li class="question-quiz-comment pull-right">
-								<a href="javascript:void(0);" class="c-gray">
-									<i class="md md-comment"></i>
-									<span><?php echo $this->answer_count; ?></span> <span class="hidden-xs">条问题讨论</span>
+				<div class="card-body card-padding question-quiz-stats clearfix">
+					<ul class="question-stats-item">
+						<?php if($this->question_info['quiz_id'] > 0) { ?>
+							<li class="question-quiz-count">
+								<a href="javascript:void(0);" class="c-cyan">
+									<i class="md md-trending-up"> </i>
+									<b class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></b> <span class="hidden-xs">人答题</span>
 								</a>
 							</li>
-						</ul>
-					</div>
+							<li class="question-quiz-srate">
+								<a href="javascript:void(0);" class="c-lightgreen">
+									<i class="md md-flag"></i>
+									<b class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></b> %  <span class="hidden-xs">通过率</span>
+								</a>
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- 答题讨论 -->
+			<div class="card question-comments">
+				<div class="card-body card-padding question-comment-stats clearfix">
+					<a href="javascript:void(0);" class="c-gray">
+						<i class="md md-comment"></i>
+						<span><?php echo $this->answer_count; ?></span> <span class="hidden-xs">条问题讨论</span>
+					</a>
+				</div>
+				<!-- 回复内容 -->
+				<div class="card-body card-padding question-comment">			
 					<div class="comment-list t-view">
 						<div class="tv-comments">
 	                        <ul class="tvc-lists" id="comment-items">
