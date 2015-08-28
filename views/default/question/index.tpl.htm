@@ -84,33 +84,64 @@
 		        	<div class="question-content">
 					</div>
 				</div>
-				<div class="card-body card-padding question-quiz-stats clearfix">
-					<ul class="question-stats-item">
-						<?php if($this->question_info['quiz_id'] > 0) { ?>
-							<li class="question-quiz-count">
-								<a href="javascript:void(0);" class="c-cyan">
-									<i class="md md-trending-up"> </i>
-									<b class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></b> <span class="hidden-xs">人答题</span>
-								</a>
+				<div class="card-body card-padding question-quiz-footer clearfix">
+					<div class="pull-left clearfix question-quiz-stats">
+						<ul class="question-quiz-stats-items">
+							<?php if($this->question_info['quiz_id'] > 0) { ?>
+								<li class="question-quiz-stats-item question-quiz-count">
+									<a href="javascript:void(0);">
+										<i class="md md-equalizer"> </i>
+										<span class="hidden-xs">总答题<em>|</em></span><span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 
+									</a>
+								</li>
+								<li class="question-quiz-stats-item question-quiz-srate">
+									<a href="javascript:void(0);">
+										<i class="md md-flag"></i>
+										<span class="hidden-xs">正确率<em>|</em></span><span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?>%</span>
+									</a>
+								</li>
+							<?php } ?>
+						</ul>
+					</div>
+
+					<div class="pull-right question-share clearfix">
+						<span class="c-gray">分享到</span>
+						<ul class="question-share-list">
+							<li class="question-share-item weibo">
+								<a onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});"><i class="icon icon-weibo"></i></a>
 							</li>
-							<li class="question-quiz-srate">
-								<a href="javascript:void(0);" class="c-lightgreen">
-									<i class="md md-flag"></i>
-									<b class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?></b> %  <span class="hidden-xs">通过率</span>
-								</a>
+							<li class="question-share-item qzone">
+								<a onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
 							</li>
-						<?php } ?>
-					</ul>
+							<li class="question-share-item wechat">
+								<a onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
+							</li>
+							<!-- <li class="question-share-item">
+								<a href="javascript:void(0);">
+									<i class="md md-more-horiz"></i>
+								</a>
+							</li> -->
+						</ul>
+					</div>
+					
 				</div>
 			</div>
 			
 			<!-- 答题讨论 -->
 			<div class="card question-comments">
-				<div class="card-body card-padding question-comment-stats clearfix">
-					<a href="javascript:void(0);" class="c-gray">
+				<div class="card-body card-padding question-comment-header clearfix">
+					<h3 href="javascript:void(0);">
 						<i class="md md-comment"></i>
-						<span><?php echo $this->answer_count; ?></span> <span class="hidden-xs">条问题讨论</span>
-					</a>
+						<span><?php echo $this->answer_count; ?></span> <span class="hidden-xs">条答题讨论</span>
+					</h3>
+
+					<?php if ($this->question_info['lock']) { ?>
+						<p class="question-comment-message"><?php _e('该题目被锁定，暂时无法参加讨论'); ?></p>
+					<?php } else if (!$this->user_id) { ?>
+						<p class="question-comment-message">
+							<a href="account/login/">登录</a>参与答题讨论
+						</p>
+					<?php } ?>
 				</div>
 				<!-- 回复内容 -->
 				<div class="card-body card-padding question-comment">			
@@ -127,18 +158,7 @@
 							<!-- 回复编辑器 -->
 							<div class="comment-box">
 								<a name="answer_form"></a>
-								<?php if ($this->question_info['lock']) { ?>
-								<p align="center"><?php _e('该问题目前已经被锁定，你无法参加讨论'); ?></p>
-								<?php } else if (!$this->user_id) { ?>
-								<div align="center">
-									<p><?php _e('你需要登录之后才能参与答题讨论哦！'); ?></p>
-									<a class="btn btn-primary" href="account/login/">登录</a>  <a href="account/register/">立即注册</a>
-								</div>
-								<?php } else if ($this->user_answered) { ?>
-								<p align="center"><?php _e('一个问题只能回复一次'); ?><?php if (get_setting('answer_edit_time')) { ?>, <?php _e('你可以在发言后 %s 分钟内编辑回复过的内容', get_setting('answer_edit_time')); ?><?php } ?></p>
-								<?php } else if ((get_setting('answer_self_question') == 'N') && ($this->user_id == $this->question_info['published_uid'])) { ?>
-								<p align="center"><?php _e('不能回复自己发布的问题, 你可以修改问题内容'); ?></p>
-								<?php } else { ?>
+								<?php if (!$this->question_info['lock'] and $this->user_id) { ?>
 								<form action="question/ajax/save_answer/" onsubmit="return false;" method="post" id="answer_form" class="question_answer_form">
 					        	<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
 					        	<input type="hidden" name="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
@@ -169,7 +189,6 @@
 											<?php } ?>
 										</div>
 									</div>
-
 								</div>
 								</form>
 								<?php } ?>

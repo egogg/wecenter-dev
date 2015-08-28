@@ -441,6 +441,7 @@ header .main-nav ul li a.active {
 
 .question-body {
 	padding-top: 0!important;
+	padding-bottom: 0!important;
 }
 
 .lv-pagination {
@@ -813,6 +814,10 @@ body {
 	font-size: 16px;
 }
 
+.question-quiz-results .md {
+	vertical-align: middle;
+}
+
 .question-quiz-result.success {
 	color: #4CAF50;
 }
@@ -849,9 +854,11 @@ body {
 
 .question-quiz-action-items {
 	padding-left: 10px;
+	margin: 15px 0;
 }
 
 .question-quiz-action-item {
+	display: inline-block;
 	margin: 5px 10px;
 }
 
@@ -861,120 +868,112 @@ body {
 	border-radius: 4px;
 }
 
+.question-quiz-action-item a:active {
+	opacity: 1.0 !important;
+}
+
 .question-quiz-action-item a:hover {
-	opacity: 0.9;
+	opacity: 0.5;
+}
+
+.question-quiz-stats {
+	margin: 5px 0;
 }
 
 .question-quiz-stats ul li {
 	display: inline-block;
-    padding: 3px 8px;
-    border: 1px solid #ccc;
-    margin-right: 2px;
-    font-size: 14px;
 }
 
-.question-quiz-stats .question-quiz-count {
-	border-color: #00BCD4;
-    color: #00BCD4;
-}
-
-.question-quiz-stats .question-quiz-srate {
-	border-color: #8BC34A;
-    color: #8BC34A;
-}
-
-.question-quiz-stats .question-quiz-comment {
-	border:none;
-}
-
-.question-quiz-actions {
-	margin: 15px 0;
-}
-
-.question-quiz-action.answer-question {
-	padding: 15px 20px;
-	border: 1px solid #FF9800;
-	color: #FF9800;
-}
-
-.question-quiz-action.answer-question:hover {
-	color: #fff;
-	background-color: #FF9800;
-}
-
-.question-quiz-action-item {
-	display: inline-block;
-}
-
-.question-quiz-action-item.question-quiz-success {
-	color: #fff;
-}
-
-.question-quiz-action-item .user-quiz-state,
-.question-quiz-action-item .user-quiz-action {
-	display: inline-block;
-	padding: 15px 20px;
-} 
-
-.question-quiz-action-item .user-quiz-state {
-	background-color: rgba(0, 0, 0, 0.05);
-}
-
-.question-actions {
-	padding-top: 0!important;
-}
-
-.question-action-items {
-	list-style: none;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    display: table;
-    table-layout: fixed;
-    overflow: hidden;
-    font-size: 16px;
-}
-
-.question-action-item {
-	float: left;
-	display: inline-block;
-	margin-right: 10px;
-	margin-top: 10px;
-	background-color: #f9f9f9;
-}
-
-.question-action-item:last-child {
-	border-right: none;
-	margin-right: -1px;
-}
-
-.question-action-item a {
-	width: 100%;
-    display: block;
-    height: 100%;
-    text-decoration: none;
-    padding: 23px 25px;
+.question-quiz-stats-item a {
+	display: block;
+    padding: 5px 10px;
     color: #607D8B;
+    margin-right: 10px;
+    font-size: 14px;
+    border-radius: 16px;
+    background-color: #eee;
 }
 
-.question-action-item.view-solution a:hover {
-	background-color: #4CAF50;
-    color: #fff;
-}
-
-.question-action-item.write-comment a:hover {
-	background-color: #FFC107;
+.question-quiz-stats-item a:hover {
 	color: #fff;
 }
 
-.question-action-item.email-invite a:hover {
+.question-quiz-stats-item.question-quiz-count a:hover {
+	background-color: #00bcd4;
+}
+
+.question-quiz-stats-item.question-quiz-srate a:hover {
+	background-color: #8bc34a;
+}
+
+.question-quiz-stats-item a em {
+	margin: 0 5px;
+}
+
+
+
+.question-share {
+	margin: 5px 0;
+}
+
+.question-share-list {
+	display: inline-block;
+}
+
+.question-share-item {
+	display: inline-block;
+	margin-left: 5px;
+}
+
+.question-share-item a {
+	width: 30px;
+    height: 30px;
+    line-height: 29px;
+    display: block;
+    text-align: center;
+    position: relative;
+    border-radius: 16px;
+    color: #607D8B;
+    background-color: #eee;
+}
+
+.question-share-item i {
+    color: #adadad;
+    font-size: 18px;
+    line-height: 30px;
+    vertical-align: baseline;
+}
+
+.question-share-item a:hover i {
+	color: #fff!important;
+}
+
+.question-share-item.weibo a:hover {
 	background-color: #F44336;
-	color: #fff;
 }
 
-.question-action-item.publish-question a:hover {
+.question-share-item.wechat a:hover {
+	background-color: #4CAF50;
+}
+
+.question-share-item.qzone a:hover {
 	background-color: #2196F3;
-	color: #fff;
+}
+
+/*comment section*/
+
+.question-comment-header h3 {
+	margin-bottom: 0!important;
+	font-size: 16px;
+}
+
+.question-comment-message {
+	margin: 0;
+	margin-top: 23px;
+}
+
+.question-comment-message a {
+	color: #03A9F4;
 }
 
 .question-comment {

@@ -59,7 +59,7 @@
 <div class="question-quiz-results clearfix">
 	<?php if(!$this->passed_quiz) { ?>
 		<h3 class="question-quiz-result failed">
-			答题失败 <i class="md md-close"></i>
+			<i class="md md-close"></i> 非常遗憾，回答错误！
 		</h3>
 	<?php } else { ?>
 		<h3 class="question-quiz-result success">
@@ -67,17 +67,12 @@
 		</h3>
 	<?php } ?>
 
-	<div class="question-quiz-actions">
-		<ul class="question-quiz-action-items">
-			<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="c-white  bgm-green"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看参考</span>答案</a></li>
-			<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-bluegray"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
-			<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-lightblue"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
-			<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="c-white bgm-red"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
-		</ul>
-	</div>
-	
 	<div class="user-quiz-record">
-		<a href="javascript:void(0);" class="user-quiz-record-message c-gray"><i class="md md-chevron-right"></i>答题记录：<span><?php echo $this->try_count; ?></span> 次</a>
+		
+		<?php if(!$this->passed_quiz) { ?>
+			<span class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-red"><i class="md  md-refresh hidden-xs"></i> 重<span class="hidden-xs">新答题试</span>试</a></span> 
+		<?php } ?>
+		<a href="javascript:void(0);" class="user-quiz-record-message c-bluegray"><i class="md md-chevron-right"></i>答题记录：<span><?php echo $this->try_count; ?></span> 次</a>
 		<ul class="user-quiz-record-items clearfix">
 			<?php foreach ($this->quiz_record as $key => $record) { ?>
 				<li class="user-quiz-record-item">
@@ -94,6 +89,15 @@
 					（<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>） 
 				</li>
 			<?php } ?>
+		</ul>
+	</div>
+
+	<div class="question-quiz-actions">
+		<ul class="question-quiz-action-items">
+			<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="c-white  bgm-green"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看参考</span>答案</a></li>
+			<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-bluegray"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+			<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-lightblue"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
+			<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="c-white bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
 		</ul>
 	</div>
 
