@@ -58,7 +58,8 @@ $(function(){
 			parseQuestionQuiz(!takenQuiz);
 
 			if(takenQuiz) {
-				showQuizContentOverlay();
+				// showQuizContentOverlay();
+				$('.question-quiz-content').hide();
 			}
 
 			// 提示添加答案解析
