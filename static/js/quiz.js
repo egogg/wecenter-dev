@@ -79,8 +79,12 @@
             element.append(quizContent);
             
             function updateSubmitButtonStatus(element) {
-                element.find('.quiz-submit-answer').prop('disabled', 
-                    element.find('.quiz-answer-board .quiz-answer-key.blank').length);
+                var submitButton = element.find('.quiz-submit-answer');
+                if(element.find('.quiz-answer-board .quiz-answer-key.blank').length) {
+                    submitButton.addClass('disabled');
+                } else {
+                    submitButton.removeClass('disabled');
+                }
             };
 
             var getQuizResult = function(element) {
@@ -165,17 +169,21 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionSingleSelection = function (element, quizOptions, settings) {
-            var quizContent = '<div class="quiz-options"><div class="list-group quiz-single-selection">'
+            var quizContent = '<div class="quiz-options"><ul class="quiz-single-selection">'
             for (var i = 0; i < quizOptions.length; i++) {
                 var indexTag = settings.alphabet[i % settings.alphabet.length];
-                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag"><em class="quiz-option-index">' + indexTag + '、</em><i class="quiz-option-mark glyphicon glyphicon-ok"></i></span><span>' + quizOptions[i].content + '</span></a>';
+                quizContent += '<li class="quiz-option" data-index="' + i + '"><span class="quiz-option-tag"><em class="quiz-option-index">' + indexTag + '</em><i class="quiz-option-mark md md-check"></i></span><span>' + quizOptions[i].content + '</span></li>';
             };
-            quizContent += '</div></div>';
+            quizContent += '</ul></div>';
             element.append(quizContent);
 
             function updateSubmitButtonStatus(element) {
-                element.find('.quiz-submit-answer').prop('disabled', 
-                    !element.find('.quiz-single-selection .quiz-option.checked').length);
+                var submitButton = element.find('.quiz-submit-answer');
+                if(!element.find('.quiz-single-selection .quiz-option.checked').length) {
+                    submitButton.addClass('disabled');
+                } else {
+                    submitButton.removeClass('disabled');
+                }
             };
 
             var getQuizResult = function(element) {
@@ -213,17 +221,21 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionMultipleSelection = function (element, quizOptions, settings) {
-            var quizContent = '<div class="quiz-options"><div class="list-group quiz-multiple-selection">'
+            var quizContent = '<div class="quiz-options"><ul class="quiz-multiple-selection">'
             for (var i = 0; i < quizOptions.length; i++) {
                 var indexTag = settings.alphabet[i % settings.alphabet.length];
-                quizContent += '<a class="list-group-item quiz-option" data-index="' + i + '"><span class="quiz-option-tag"><em class="quiz-option-index">' + indexTag + '、</em><i class="quiz-option-mark glyphicon glyphicon-check"></i></span><span>' + quizOptions[i].content + '</span></a>';;
+                quizContent += '<li class="quiz-option" data-index="' + i + '"><span class="quiz-option-tag"><em class="quiz-option-index">' + indexTag + '</em><i class="quiz-option-mark md md-check"></i></span><span>' + quizOptions[i].content + '</span></li>';;
             };
-            quizContent += '</div></div>';
+            quizContent += '</ul></div>';
             element.append(quizContent);
 
             function updateSubmitButtonStatus(element) {
-                element.find('.quiz-submit-answer').prop('disabled', 
-                    !element.find('.quiz-multiple-selection .quiz-option.checked').length);
+                var submitButton = element.find('.quiz-submit-answer');
+                if(!element.find('.quiz-multiple-selection .quiz-option.checked').length) {
+                    submitButton.addClass('disabled');
+                } else {
+                    submitButton.removeClass('disabled');
+                }
             };
 
             var getQuizResult = function(element) {
@@ -283,7 +295,12 @@
             }
 
             function updateSubmitButtonStatus(element) {
-                element.find('.quiz-submit-answer').prop('disabled', !isAllFieldsSet(element));
+                var submitButton = element.find('.quiz-submit-answer');
+                if(!isAllFieldsSet(element)) {
+                    submitButton.addClass('disabled');
+                } else {
+                    submitButton.removeClass('disabled');
+                }
             };
 
             var getQuizResult = function(element) {
@@ -403,8 +420,8 @@
 
                 if(typeof options.showSubmit != 'undefined' && options.showSubmit) {
                     quizContent = '<div class="quiz-submit">';
-                    quizContent += '<button class="btn btn-success btn-normal quiz-submit-answer" disabled>' 
-                        + options.submitAnswerText + '</button>';
+                    quizContent += '<a class="quiz-submit-answer disabled">' 
+                        + options.submitAnswerText + '</a>';
                     quizContent += '</div>';
                     this.$element.append(quizContent);
 

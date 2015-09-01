@@ -31,15 +31,6 @@
 	padding: 10px 0 10px 0;
 }
 
-.question-quiz {
-	margin-top: 15px;
-	position: relative;
-}
-
-.question-quiz em {
-	font-style: normal;
-}
-
 .question-quiz-info {
 	margin-bottom: 6px;
 }
@@ -49,10 +40,7 @@
 }
 
 .question-quiz-content {
-	overflow: hidden;
 	padding: 1px;
-	max-width: 316px;
-	position: relative;
 	display: inline-block;
 	width: 100%;
 }

@@ -4,21 +4,48 @@
 		<?php foreach ($this->question_list as $index => $question) { ?>
 			<div class="card">
 				<div class="card-body card-padding">
-					<div class="publish-info">
-						<?php if ($question['user_info']) { ?>
-							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
-								<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-									<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-								<span class="publisher-user-name">
-									<?php echo $question['user_info']['user_name']; ?>
-								</span>
-							</a>
-						<?php } ?>
-						<small>
-							• <?php echo date_friendly($question['update_time']); ?>
-						</small>
+					<div class="question-list-heading clearfix">
+						<div class="question-list-publish-info">
+							<?php if ($question['user_info']) { ?>
+								<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
+									<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+										<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
+									<span class="publisher-user-name">
+										<?php echo $question['user_info']['user_name']; ?>
+									</span>
+								</a>
+							<?php } ?>
+							<small>
+								• <?php echo date_friendly($question['update_time']); ?>
+							</small>
+						</div>
+						<div class="question-tags">
+		            		<ul class="question-tag-list">
+		            			<!-- 问题分类 -->
+			            		<?php if ($question['category_info']) { ?>
+			            			<li class="question-tag-item">
+										<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag bgm-bluegray" href="javascript:;">
+											<span><?php echo $question['category_info']['title']; ?></span>
+										</a>
+									</li>
+								<?php } ?>
+								
+			            		<!-- 问题难度 -->
+			            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
+			            		<li class="question-tag-item">
+			            			<?php TPL::output('question/ajax/question_difficulty'); ?>
+			            		</li>
+
+								<!-- 答题类型 -->
+								<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
+								<li class="question-tag-item">
+									<?php TPL::output('question/ajax/question_quiz_type'); ?>
+								</li>
+		            		</ul>
+		            	</div>
 					</div>
-            		<div class="media">
+					
+            		<div class="media question-list-body">
 					    <div class="pull-left">
 					    	<?php if(!($question['quiz_info'] AND $question['quiz_info']['countdown']) AND $question['attachs']) { ?>		
 								<?php foreach ($question['attachs'] AS $attach) { ?>
@@ -29,59 +56,32 @@
 					    	<?php } ?>
 						</div>
 				        <div class="media-body">
-						    <div class="question-heading">
-								<div class="question-list-title">
-									<h3>
-					            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
-					            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank">
-					            				<i class="md md-visibility-off"></i> 该题为限时答题
-					            			</a>
-					            		<?php } else { ?>
-					            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>
-					            			</a>
-					            		<?php } ?>
-					            	</h3>
-								</div>
-				            	
-				            	<div class="question-tags">
-				            		<ul class="question-tag-list">
-				            			<!-- 问题分类 -->
-					            		<?php if ($question['category_info']) { ?>
-					            			<li class="question-tag-item">
-												<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
-													<span><?php echo $question['category_info']['title']; ?></span>
-												</a>
-											</li>
-										<?php } ?>
-										
-					            		<!-- 问题难度 -->
-					            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
-					            		<li class="question-tag-item">
-					            			<?php TPL::output('question/ajax/question_difficulty'); ?>
-					            		</li>
-
-										<!-- 答题类型 -->
-										<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
-										<li class="question-tag-item">
-											<?php TPL::output('question/ajax/question_quiz_type'); ?>
-										</li>
-				            		</ul>
-				            	</div>
-			            	</div> 
+						    <div class="question-list-title">
+								<h3>
+				            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
+				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank">
+				            				<i class="md md-visibility-off"></i> 该题为限时答题
+				            			</a>
+				            		<?php } else { ?>
+				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>
+				            			</a>
+				            		<?php } ?>
+				            	</h3>
+							</div>
 						    <div class="question-list-content">
 				            	<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
 				            		<div class="question-countdown-quiz-info">
 				            			<p>
 				            				<i class="md md-access-alarm"></i>
-				            				<span class="question-excerpt"><?php echo '你需要在规定的时间内完成答题 '; ?></span>	
-				            				<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题</a>
+				            				<span class="question-excerpt hidden-xs"><?php echo '你需要在规定的时间内完成答题'; ?></span>	
+				            				<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题 <i class="md md-chevron-right"></i></a>
 				            			</p>
 				            		</div>
 				            		
 				            	<?php } else { ?>
 				            		<p>
-				            			<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?> 
-				            			<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题</a>
+				            			<span class="hidden-xs"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?></span>
+				            			<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题 <i class="md md-chevron-right"></i></a>
 				            		</p>
 				            	<?php } ?>
 				            </div>

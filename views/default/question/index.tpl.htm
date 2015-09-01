@@ -40,17 +40,40 @@
 	                    </div>
 					</div>
 	            </div>
-	            <div class="card-header question-title">
+	            
+	            <div class="card-header question-title clearfix">
 	                <h2>
 	                	<?php echo $this->question_info['question_content']; ?>
-	                	<small><?php echo $this->question_info['view_count']; ?></span> 次查看 · <?php echo $this->question_info['focus_count']; ?> </span>人关注 <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a></small>
-	                </h2>
+	                	<small>
+		                	<div class="question-tags">
+				        		<!-- 问题分类 -->
+				        		<?php if ($this->question_info['category_info']) { ?>
+					        		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
+											<span><?php echo $this->question_info['category_info']['title']; ?></span>
+										</a></li>
+								<?php } ?>
+
+				        		<!-- 问题难度 -->
+				        		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
+				        		<li class="question-tag-item">
+				        			<?php TPL::output('question/ajax/question_difficulty'); ?>
+				        		</li>
+
+								<!-- 答题类型 -->
+								<?php TPL::assign('question_quiz_type', $this->question_info['quiz_type']); ?>
+								<li class="question-tag-item">
+									<?php TPL::output('question/ajax/question_quiz_type'); ?>
+								</li>
+				        	</div>
+			        	</small>
+	                </h2> 
 	                <ul class="actions">
+	                	<li><a href="javascript:void(0);"><i class="md md-create"></i></a></li>
+	                	<li><a href="javascript:void(0);"><i class="md md-spellcheck"></i></a></li>
 	                    <li class="dropdown">
 	                        <a href="#" data-toggle="dropdown" aria-expanded="false">
 	                            <i class="md md-more-vert"></i>
 	                        </a>
-	                        
 	                        <ul class="dropdown-menu dropdown-menu-right">
 	                            <li>
 	                                <a href="#">Refresh</a>
@@ -63,30 +86,33 @@
 	                            </li>
 	                        </ul>
 	                    </li>
-	                </ul>
+	                </ul>  
 	            </div>
 				<div class="card-body card-padding question-body">
-					<div class="question-tags">
-		        		<!-- 问题分类 -->
-		        		<?php if ($this->question_info['category_info']) { ?>
-							<a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
-								<span><?php echo $this->question_info['category_info']['title']; ?></span>
-							</a>
-						<?php } ?>
-		        		<!-- 问题难度 -->
-		        		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
-		        		<?php TPL::output('question/ajax/question_difficulty'); ?>
-
-						<!-- 答题类型 -->
-						<?php TPL::assign('question_quiz_type', $this->question_info['quiz_type']); ?>
-		        		<?php TPL::output('question/ajax/question_quiz_type'); ?>
-		        	</div>
 		        	<div class="question-content">
 					</div>
+				</div>
+
+				<div class="question-quiz-actions card-body card-padding">
+					<ul class="question-quiz-action-items">
+						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="c-white  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看参考</span>答案</a></li>
+						<?php if($this->question_info['quiz_id']) { ?>
+							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-bluegray"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+						<?php } ?>
+						<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-lightblue"><i class="md md-create hidden-xs"></i> 出题<span class="hidden-xs">考考别人</span></a></li>
+						<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="c-white bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
+					</ul>
+				</div>
+
+				<div class="question-focus card-body card-padding">
+					<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a> 
 				</div>
 				<div class="card-body card-padding question-quiz-footer clearfix">
 					<div class="pull-left clearfix question-quiz-stats">
 						<ul class="question-quiz-stats-items">
+							<li class="question-quiz-stats-item question-quiz-view">
+								<a href="javascript:void(0);"></span><i class="md md-visibility"></i> <span class="hidden-xs">总查看<em>|</em></span><span class="quiz-stats-view"><?php echo $this->question_info['view_count']; ?></span></a>
+							</li>
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
 								<li class="question-quiz-stats-item question-quiz-count">
 									<a href="javascript:void(0);">
