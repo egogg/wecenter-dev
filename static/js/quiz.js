@@ -64,16 +64,16 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionCrossWord = function (element, quizOptions, settings) {
-            var quizContent = '<div class="quiz-options"><div class="quiz-word-board"><div class="btn-group quiz-word-group">';
+            var quizContent = '<div class="quiz-options"><div class="quiz-word-board"><div class="quiz-word-group">';
             for (var i = 0; i < quizOptions[0].content.length; i++) {
-                    quizContent += '<button type="button" class="btn btn-default quiz-word-key" data-index="' + i + '" data-word="' 
+                    quizContent += '<a href="javascript:void(0);" class="quiz-word-key" data-index="' + i + '" data-word="' 
                         + quizOptions[0].content[i] + '">' 
-                        + quizOptions[0].content[i] + '</button>';
+                        + quizOptions[0].content[i] + '</a>';
             }
 
-            quizContent += '</div><div class="quiz-answer-board"><div class="btn-group quiz-word-group">';
+            quizContent += '</div><div class="quiz-answer-board"><div class="quiz-word-group">';
             for (var i = 0; i < quizOptions[0].wordcount; i++) {
-                quizContent += '<button type="button" class="btn btn-default quiz-answer-key blank"></button>';
+                quizContent += '<a href="javascript:void(0);" class="quiz-answer-key blank"></a>';
             }
             quizContent += '</div></div></div>';
             element.append(quizContent);
@@ -355,6 +355,51 @@
                 element.append(quizContent);
             }
 
+            // countdown
+
+            if(typeof options.enableCountdown != 'undefined' && options.enableCountdown) {
+                if(quizItem.countdown > 0) {
+                    quizContent = '<div class="quiz-countdown">';
+                    quizContent += '<ul class="timer hidden"><li class="countdown-hour"><input type="text" value="75" class="dial hour"><span>时</span></li><li class="countdown-minute"><input type="text" value="75" class="dial minute"><span>分</span></li><li class="countdown-second"><input type="text" value="75" class="dial second"><span>秒</span></li></ul></div>';
+                    this.$element.append(quizContent);
+                    $('.dial').knob({
+                        'width' : 90,
+                        'height' : 90,
+                        'readOnly' : true,
+                        'min': 0,
+                        'max': 60,
+                        'fgColor': '#039AF4',
+                        'thickness': 0.1,
+
+                        format: function (v) {return 60 - v;}
+                    });
+
+                    // setup countdown timer
+
+                    var countdown = quizItem.countdown;
+                    var timerControl = this.$element.find('.quiz-countdown .timer');
+                    _updateTimer(timerControl, countdown);
+                    timerControl.removeClass('hidden');
+                    function countdownUpdate() {
+                        countdown--;
+                        _updateTimer(timerControl, countdown);
+                        timerControl.attr('data-time-spend', countdown);
+                        if(countdown == 0) {
+                            clearInterval(options.timer);
+                            if(typeof options.lockQuiz == 'function') {
+                                options.lockQuiz(element);
+                            }
+
+                            if(typeof options.onTimeout == 'function') {
+                                options.onTimeout();
+                            }
+                        }
+                    }
+
+                    options.timer = setInterval(countdownUpdate, 1000);
+                }
+            }
+
             // quiz options
 
             if(quizItem.type === 'crossword') {
@@ -381,39 +426,6 @@
                 if(typeof options.initAnswer != 'undefined' && 
                     typeof options.setupInitAnswer == 'function') {
                     options.setupInitAnswer(this.$element, initAnswer);
-                }
-
-                // countdown
-
-                if(typeof options.enableCountdown != 'undefined' && options.enableCountdown) {
-                    if(quizItem.countdown > 0) {
-                        quizContent = '<div class="quiz-countdown">';
-                        quizContent += '<div class="timer">' + 
-                            _timeFormat(quizItem.countdown) + '</div></div>';
-                        this.$element.append(quizContent);
-
-                        // setup countdown timer
-
-                        var countdown = quizItem.countdown;
-                        var timerControl = this.$element.find('.quiz-countdown .timer');
-                        function countdownUpdate() {
-                            countdown--;
-                            timerControl.html(_timeFormat(countdown));
-                            timerControl.attr('data-time-spend', countdown);
-                            if(countdown == 0) {
-                                clearInterval(options.timer);
-                                if(typeof options.lockQuiz == 'function') {
-                                    options.lockQuiz(element);
-                                }
-
-                                if(typeof options.onTimeout == 'function') {
-                                    options.onTimeout();
-                                }
-                            }
-                        }
-
-                        options.timer = setInterval(countdownUpdate, 1000);
-                    }
                 }
 
                 // submit button
@@ -578,33 +590,51 @@
     /**
      * private methods
      */
-    
-    _timeFormat = function(seconds) {
+
+    _updateTimer = function(timerElement, seconds) {
         var hour = parseInt(seconds / 3600);
         var minute = parseInt(seconds / 60);
         var second = parseInt(seconds % 60);
         var hasHour = false;
         var hasMinute = false;
+        var inAlarm = false;
 
-        var timeStr = '';
+        var hourDial = timerElement.find('.dial.hour');
+        var minuteDial = timerElement.find('.dial.minute');
+        var secondDial = timerElement.find('.dial.second');
+
+        var hourElement = timerElement.find('.countdown-hour');
+        var minuteElement = timerElement.find('.countdown-minute');
+
         if(hour > 0) {
-            timeStr += '<span class="hour well">' + ('00' + hour).slice(-2) + ' 时</span>';
+            hourDial.val(60 - hour).trigger('change');
+            // timeStr += '<span class="hour well">' + ('00' + hour).slice(-2) + ' 时</span>';
             hasHour = true;
+            hourElement.show();
+        } else {
+            hourElement.hide();
         }
 
-        if(minute > 0) {
-            timeStr += '<span class="minute well">' + ('00' + minute).slice(-2) + ' 分</span>';
+        if(minute >= 0) {
+            minuteDial.val(60 - minute).trigger('change');
             hasMinute = true;
+            minuteElement.show();
+        } else {
+            // minuteElement.hide();
         }
 
-        var alarmClass = '';
         if(!hasHour && !hasMinute && (second < 10)) {
-            alarmClass = ' alarm';
+            inAlarm = true;
+
+            secondDial.trigger(
+                'configure',
+                {
+                    'fgColor': '#F44336',
+                    'inputColor': '#F44336'
+                }
+            );
         }
-
-        timeStr += '<span class="second well' + alarmClass + '">' + (('00' + second).slice(-2) + ' 秒') + '</span>';
-
-        return timeStr;
+        secondDial.val(60 - second).trigger('change');
     }
 
     privateMethod = function () {

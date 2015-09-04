@@ -17,7 +17,7 @@
 			<?php } else if($this->question_quiz['type'] == '3') { ?>
 				<i class="md md-apps"></i> 该题为字谜题（请从字表中选择相应的字谜答案）
 			<?php } else if($this->question_quiz['type'] == '4') { ?>
-				<i class="md md-edit"></i> 该题为填空题（请在文字框中处填写答案）
+				<i class="md md-edit"></i> 该题为填空题（请根据填空描述填写答案）
 			<?php } else { ?>
 				<i class="md md-question-answer"></i> 该题为开放题（你可以写写对这道题目的思考）
 			<?php } ?>
@@ -32,6 +32,7 @@
 			<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
 
 			<div class="question-quiz-content"></div>
+			
 		</div>
 	<?php }  ?>
 </class>
