@@ -276,13 +276,13 @@
         };
 
         nkrQuiz.prototype.parseQuizOptionTextInput = function (element, quizOptions, settings) {
-            var quizContent = '<div class="quiz-options"><div class="quiz-text-input">'
+            var quizContent = '<div class="quiz-options"><ul class="quiz-text-inputs">'
             for (var i = 0; i < quizOptions.length; i++) {
-                quizContent += '<div class="form-group"><label>' + (i + 1) + '、' + quizOptions[i].content + '</label>' + 
-                    '<input type="text" class="quiz-input form-control" data-index="' + i + 
-                    '"></input></div>';
+                quizContent += '<li class="quiz-text-input"><label>' + (i + 1) + '</label>' + 
+                    '<input type="text" class="quiz-input" placeholder="' + quizOptions[i].content + '" data-index="' + i + 
+                    '"></input></li>';
             };
-            quizContent += '</div></div>';
+            quizContent += '</ul></div>';
             element.append(quizContent);
 
             function isAllFieldsSet(element) {
@@ -615,22 +615,33 @@
             hourElement.hide();
         }
 
-        if(minute >= 0) {
-            minuteDial.val(60 - minute).trigger('change');
+        if(minute > 0) {
             hasMinute = true;
             minuteElement.show();
         } else {
-            // minuteElement.hide();
-        }
-
-        if(!hasHour && !hasMinute && (second < 10)) {
-            inAlarm = true;
-
-            secondDial.trigger(
+            minuteDial.trigger(
                 'configure',
                 {
                     'fgColor': '#F44336',
                     'inputColor': '#F44336'
+                }
+            );
+            // minuteElement.hide();
+        }
+        minuteDial.val(60 - minute).trigger('change');
+
+        if(!hasHour && !hasMinute && (second < 10)) {
+            inAlarm = true;
+            var color = '#FF9800';
+            if(second == 0) {
+                var color = '#F44336';
+            }
+
+            secondDial.trigger(
+                'configure',
+                {
+                    'fgColor': color,
+                    'inputColor': color
                 }
             );
         }

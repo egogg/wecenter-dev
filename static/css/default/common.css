@@ -904,8 +904,14 @@ body {
 }
 
 .question-detail {
-	margin-bottom: 23px;
+	margin-bottom: 15px;
 	font-size: 16px;
+}
+
+.question-detail.countdown-info {
+	background-color: #f9f9f9;
+	border-left: 3px solid #FF9800;
+	padding: 15px 10px;
 }
 
 .user-quiz-record-item {

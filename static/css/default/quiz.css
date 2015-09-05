@@ -15,6 +15,7 @@
 }
 
 .quiz-option .quiz-option-tag {
+	display: table-cell;
 	text-align: center;
 	background-color: #eee;
 	width: 40px;
@@ -120,4 +121,31 @@
 
 .quiz-answer-board {
 	margin: 15px 0;
+}
+
+.quiz-text-input {
+	display: table;
+	border: 1px solid #eee;
+	margin: 15px 0;
+	border-radius: 4px;
+	width: 100%;
+	cursor: pointer;
+	background-color: #fff;
+}
+
+.quiz-text-input label {
+	display: table-cell;
+	text-align: center;
+	background-color: #eee;
+	width: 40px;
+	line-height: 28px;
+	padding: 10px;
+}
+
+.quiz-text-input .quiz-input {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 14px 20px;
+	width: 100%;
+	border: none;
 }

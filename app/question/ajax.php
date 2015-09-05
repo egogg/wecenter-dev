@@ -1467,43 +1467,39 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('passed_quiz', $passed_quiz);
 		TPL::assign('try_count', $try_count);
 
-		if($question_quiz && $question_quiz['countdown'] > 0)
-		{
-			// 限时答题
+		// if($question_quiz && $question_quiz['countdown'] > 0)
+		// {
+		// 	// 限时答题
 
-			if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
-			{
-				// 对于特殊用户，直接返回问题内容
+		// 	if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
+		// 	{
+		// 		// 对于特殊用户，直接返回问题内容
 
-				TPL::output('question/ajax/question_content');
-			}
-			else
-			{
-				// 对于普通用户
+		// 		TPL::output('question/ajax/question_content');
+		// 	}
+		// 	else
+		// 	{
+		// 		// 对于普通用户
 
-				if(!$quiz_record)
-				{
-					TPL::output('question/ajax/question_content_countdown');
-				}
-				else
-				{
-					if($quiz_record[0]['passed'])
-					{
-						TPL::output('question/ajax/question_content');
-					}
-					else
-					{
-						TPL::output('question/ajax/question_content_countdown');
-					}
-				}
-			}
-		}
-		else
-		{
-			// 非限时答题
+		// 		if(!$quiz_record)
+		// 		{
+		// 			TPL::output('question/ajax/question_content_countdown');
+		// 		}
+		// 		else
+		// 		{
+		// 			if($quiz_record[0]['passed'])
+		// 			{
+		// 				TPL::output('question/ajax/question_content');
+		// 			}
+		// 			else
+		// 			{
+		// 				TPL::output('question/ajax/question_content_countdown');
+		// 			}
+		// 		}
+		// 	}
+		// }
 
-			TPL::output('question/ajax/question_content');
-		}
+		TPL::output('question/ajax/question_content');
 	}
 
 	public function begin_question_quiz_countdown_action ()

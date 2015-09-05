@@ -43,7 +43,11 @@
 	            
 	            <div class="card-header question-title clearfix">
 	                <h2>
-	                	<?php echo $this->question_info['question_content']; ?>
+	                	<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?>
+	                		<i class="md md-visibility-off"></i> 该题为限时答题
+	                	<?php } else { ?>
+	                		<?php echo $this->question_info['question_content']; ?>
+	                	<?php } ?>
 	                	<small>
 		                	<div class="question-tags">
 				        		<!-- 问题分类 -->
@@ -60,7 +64,7 @@
 				        		</li>
 
 								<!-- 答题类型 -->
-								<?php TPL::assign('question_quiz_type', $this->question_info['quiz_type']); ?>
+								<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
 								<li class="question-tag-item">
 									<?php TPL::output('question/ajax/question_quiz_type'); ?>
 								</li>
@@ -158,7 +162,7 @@
 				<div class="card-body card-padding question-comment-header clearfix">
 					<h3 href="javascript:void(0);">
 						<i class="md md-comment"></i>
-						<span><?php echo $this->answer_count; ?></span> <span class="hidden-xs">条答题讨论</span>
+						<span><?php echo $this->answer_count; ?></span>条答题讨论
 					</h3>
 
 					<?php if ($this->question_info['lock']) { ?>

@@ -1,41 +1,82 @@
 
 <!-- 问题详细描述 -->
 
-<div class="question-detail">
-	<?php echo $this->question_info['question_detail']; ?>	
-</div>
+<?php if(!$this->question_quiz) { ?>
+	<!-- 开放讨论题 -->
+	<div class="question-detail">
+		<?php echo $this->question_info['question_detail']; ?>	
+	</div>
+<?php } else { ?>
+	<!-- 非开放讨论题 -->
+	<?php if($this->question_quiz['countdown'] > 0) {?>
+		<!-- 限时答题 -->
+		<div class="question-detail countdown-info">
+			<div class="coundown-info">
+				<i class="md md-schedule"></i>
+				<p>答题时限：<span class="countdown-time"><?php if(intval($this->question_quiz['countdown'] / 3600) > 0) { echo intval(($this->question_quiz['countdown'] / 3600)) . ' 时 '; } ?><?php if(intval($this->question_quiz['countdown'] / 60) > 0) { echo intval(($this->question_quiz['countdown'] / 60)) . ' 分 '; } ?><?php echo $this->question_quiz['countdown'] % 60 . ' 秒'; ?></span></p>
+			</div>
+			<div class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-green">开始答题</a></div>
+		</div>
+	<?php } else { ?>
+		<!-- 非限时答题 -->
+		<div class="question-detail">
+			<?php echo $this->question_info['question_detail']; ?>
+		</div>
+	<?php } ?>
+<?php } ?>
+
 
 <!-- 答题选项 -->
 
-<class class="question-quiz clearfix">
-	<?php if(!$this->user_id or !$this->try_count) { ?>
-		<h3 class="question-quiz-title info">
-			<?php if($this->question_quiz['type'] == '1') { ?>
-				<i class="md md-radio-button-on"></i> 该题为单选题（请选择唯一的答案）
-			<?php } else if($this->question_quiz['type'] == '2') { ?>
-				<i class="md md-check-box"></i> 该题为多选题（你可以选择一个或者多个答案）
-			<?php } else if($this->question_quiz['type'] == '3') { ?>
-				<i class="md md-apps"></i> 该题为字谜题（请从字表中选择相应的字谜答案）
-			<?php } else if($this->question_quiz['type'] == '4') { ?>
-				<i class="md md-edit"></i> 该题为填空题（请根据填空描述填写答案）
-			<?php } else { ?>
-				<i class="md md-question-answer"></i> 该题为开放题（你可以写写对这道题目的思考）
-			<?php } ?>
-		</h3>
-	<?php } ?>
-	<?php if($this->question_quiz) { ?>
-		<div class="question-quiz-body">
-			<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
-			<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
-			<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">
-			<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
-			<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
+<?php $this->show_question_quiz = true; ?>
+<?php if($this->question_quiz and $this->question_quiz['countdown'] > 0) { ?>
+	<!-- 对特殊用户开放内容 -->
+	<?php if($this->user_id > 0 and $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid']) { $this->show_question_quiz = true; } else { $this->show_question_quiz = false; } ?>
+<?php } ?>
 
-			<div class="question-quiz-content"></div>
-			
-		</div>
-	<?php }  ?>
-</class>
+<?php if($this->show_question_quiz) { ?>
+	<div class="question-quiz clearfix">
+		<?php if(!$this->user_id or !$this->try_count) { ?>
+			<h3 class="question-quiz-title info">
+				<?php if($this->question_quiz['type'] == '1') { ?>
+					<i class="md md-radio-button-on"></i> 该题为单选题（请选择唯一的答案）
+				<?php } else if($this->question_quiz['type'] == '2') { ?>
+					<i class="md md-check-box"></i> 该题为多选题（你可以选择一个或者多个答案）
+				<?php } else if($this->question_quiz['type'] == '3') { ?>
+					<i class="md md-apps"></i> 该题为字谜题（请从字表中选择相应的字谜答案）
+				<?php } else if($this->question_quiz['type'] == '4') { ?>
+					<i class="md md-edit"></i> 该题为填空题（请根据填空描述填写答案）
+				<?php } else { ?>
+					<i class="md md-question-answer"></i> 该题为开放题（你可以写写对这道题目的思考）
+				<?php } ?>
+			</h3>
+		<?php } ?>
+		<?php if($this->question_quiz) { ?>
+			<!-- 有答题选项 -->
+			<div class="question-quiz-body">
+				<?php if($this->question_quiz['countdown'] > 0) { ?>
+					<!-- 限时答题 -->
+				<?php } else { ?>
+					<!-- 非限时答题 -->
+					<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
+					<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
+					<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">
+					<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
+					<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
+
+					<div class="question-quiz-content"></div>
+				<?php } ?>
+			</div>
+		<?php } else {  ?>
+			<!-- 无答题选项 -->
+			<div class="question-quiz-body">
+				<div class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-bluegray"><i class="md  md-comment hidden-xs"></i> 我来回答 (<?php echo $this->question_info['answer_count']; ?>)</a></div>
+			</div>
+		<?php } ?>
+	</div>
+<?php } ?>
+
+<!-- 答题状态及答题记录 -->
 
 <?php if($this->user_id and $this->try_count and $this->question_quiz) { ?>
 	<div class="question-quiz-result clearfix">
@@ -80,10 +121,7 @@
 			</ul>
 		</div>
 	</div>
-<?php } else if(!$this->question_quiz) { ?>
-	<li class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-bluegray"><i class="md  md-comment hidden-xs"></i> 我来回答 (<?php echo $this->question_info['answer_count']; ?>)</a></li>
 <?php } ?>
-
 
 <!-- 答题选项 -->
 
