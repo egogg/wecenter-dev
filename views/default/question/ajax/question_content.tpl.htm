@@ -6,17 +6,38 @@
 	<div class="question-detail">
 		<?php echo $this->question_info['question_detail']; ?>	
 	</div>
+	<div class="question-actions">
+		<div class="question-quiz-action-item">我知道答案 <a href="javascript:void(0);" class="c-white  bgm-green">我来回答 <em>|</em>	<?php echo $this->question_info['answer_count']; ?></a></div>
+	</div>
 <?php } else { ?>
 	<!-- 非开放讨论题 -->
 	<?php if($this->question_quiz['countdown'] > 0) {?>
-		<!-- 限时答题 -->
-		<div class="question-detail countdown-info">
-			<div class="coundown-info">
-				<i class="md md-schedule"></i>
-				<p>答题时限：<span class="countdown-time"><?php if(intval($this->question_quiz['countdown'] / 3600) > 0) { echo intval(($this->question_quiz['countdown'] / 3600)) . ' 时 '; } ?><?php if(intval($this->question_quiz['countdown'] / 60) > 0) { echo intval(($this->question_quiz['countdown'] / 60)) . ' 分 '; } ?><?php echo $this->question_quiz['countdown'] % 60 . ' 秒'; ?></span></p>
+		<?php if(!$this->passed_quiz) { ?>
+			<!-- 限时答题 -->
+			<h3 class="question-quiz-title info">
+				<i class="md md-alarm"></i> 该题为限时答题，你需要在以下的时间内完成答题
+			</h3>
+			<div class="question-detail">
+				<div class="countdown-value" data-countdown="<?php echo $this->question_quiz['countdown']; ?>">
+					<ul>
+						<li class="countdown-hour">
+							<input type="text" value="0" class="dial hour"><span>时</span>
+						</li>
+						<li class="countdown-minute">
+							<input type="text" value="0" class="dial minute"><span>分</span>
+						</li>
+						<li class="countdown-second">
+							<input type="text" value="0" class="dial second"><span>秒</span>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-green">开始答题</a></div>
-		</div>
+			<?php if(!$this->try_count) { ?>
+				<div class="question-actions">
+					<div class="question-quiz-action-item">我准备好了 <a href="javascript:void(0);" class="c-white  bgm-green">开始答题</a></div>
+				</div>
+			<?php } ?>
+		<?php } ?>
 	<?php } else { ?>
 		<!-- 非限时答题 -->
 		<div class="question-detail">
@@ -27,12 +48,6 @@
 
 
 <!-- 答题选项 -->
-
-<?php $this->show_question_quiz = true; ?>
-<?php if($this->question_quiz and $this->question_quiz['countdown'] > 0) { ?>
-	<!-- 对特殊用户开放内容 -->
-	<?php if($this->user_id > 0 and $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid']) { $this->show_question_quiz = true; } else { $this->show_question_quiz = false; } ?>
-<?php } ?>
 
 <?php if($this->show_question_quiz) { ?>
 	<div class="question-quiz clearfix">
@@ -46,8 +61,6 @@
 					<i class="md md-apps"></i> 该题为字谜题（请从字表中选择相应的字谜答案）
 				<?php } else if($this->question_quiz['type'] == '4') { ?>
 					<i class="md md-edit"></i> 该题为填空题（请根据填空描述填写答案）
-				<?php } else { ?>
-					<i class="md md-question-answer"></i> 该题为开放题（你可以写写对这道题目的思考）
 				<?php } ?>
 			</h3>
 		<?php } ?>
@@ -66,11 +79,6 @@
 
 					<div class="question-quiz-content"></div>
 				<?php } ?>
-			</div>
-		<?php } else {  ?>
-			<!-- 无答题选项 -->
-			<div class="question-quiz-body">
-				<div class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-bluegray"><i class="md  md-comment hidden-xs"></i> 我来回答 (<?php echo $this->question_info['answer_count']; ?>)</a></div>
 			</div>
 		<?php } ?>
 	</div>
@@ -96,7 +104,6 @@
 					<li class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-red"><i class="md  md-refresh hidden-xs"></i> 重新答题</a></li>
 				<?php } ?>
 			</ul>
-			
 			
 			<div class="user-quiz-record-message">
 				你进行了<b><?php echo $this->try_count; ?></b> 次答题尝试 <a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i>答题记录</a>
@@ -126,7 +133,7 @@
 <!-- 答题选项 -->
 
 <?php if($this->question_quiz) { ?>
-	<div class="question-quizx">
+	<div class="question-quizxxxxxxxxxxxxxxxxxxxx">
 		<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
 		<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
 		<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">

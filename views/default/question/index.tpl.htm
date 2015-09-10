@@ -48,28 +48,6 @@
 	                	<?php } else { ?>
 	                		<?php echo $this->question_info['question_content']; ?>
 	                	<?php } ?>
-	                	<small>
-		                	<div class="question-tags">
-				        		<!-- 问题分类 -->
-				        		<?php if ($this->question_info['category_info']) { ?>
-					        		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
-											<span><?php echo $this->question_info['category_info']['title']; ?></span>
-										</a></li>
-								<?php } ?>
-
-				        		<!-- 问题难度 -->
-				        		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
-				        		<li class="question-tag-item">
-				        			<?php TPL::output('question/ajax/question_difficulty'); ?>
-				        		</li>
-
-								<!-- 答题类型 -->
-								<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
-								<li class="question-tag-item">
-									<?php TPL::output('question/ajax/question_quiz_type'); ?>
-								</li>
-				        	</div>
-			        	</small>
 	                </h2> 
 	                <ul class="actions">
 	                	<li><a href="javascript:void(0);"><i class="md md-create"></i></a></li>
@@ -93,6 +71,29 @@
 	                </ul>  
 	            </div>
 				<div class="card-body card-padding question-body">
+					<div class="question-content-header clearfix">
+						<div class="question-tags">
+			        		<!-- 问题分类 -->
+			        		<?php if ($this->question_info['category_info']) { ?>
+				        		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
+										<span><?php echo $this->question_info['category_info']['title']; ?></span>
+									</a></li>
+							<?php } ?>
+
+			        		<!-- 问题难度 -->
+			        		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
+			        		<li class="question-tag-item">
+			        			<?php TPL::output('question/ajax/question_difficulty'); ?>
+			        		</li>
+
+							<!-- 答题类型 -->
+							<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
+							<li class="question-tag-item">
+								<?php TPL::output('question/ajax/question_quiz_type'); ?>
+							</li>
+			        	</div>
+					</div>
+						
 		        	<div class="question-content">
 					</div>
 				</div>
@@ -108,10 +109,10 @@
 					</ul>
 				</div>
 
-				<div class="question-focus card-body card-padding">
-					<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a> 
-				</div>
 				<div class="card-body card-padding question-quiz-footer clearfix">
+					<div class="question-focus">
+						<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a> 
+					</div>
 					<div class="pull-left clearfix question-quiz-stats">
 						<ul class="question-quiz-stats-items">
 							<li class="question-quiz-stats-item question-quiz-view">
@@ -133,7 +134,6 @@
 							<?php } ?>
 						</ul>
 					</div>
-
 					<div class="pull-right question-share clearfix">
 						<span class="c-gray">分享到</span>
 						<ul class="question-share-list">
@@ -153,7 +153,6 @@
 							</li> -->
 						</ul>
 					</div>
-					
 				</div>
 			</div>
 			

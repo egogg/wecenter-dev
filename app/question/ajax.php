@@ -1467,6 +1467,24 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('passed_quiz', $passed_quiz);
 		TPL::assign('try_count', $try_count);
 
+		$show_question_quiz = false;
+		if($question_quiz) 
+		{
+			$show_question_quiz = true;
+			if($question_quiz['countdown'] > 0)
+			{
+				if($this->user_id > 0 and $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid'])
+				{
+					$show_question_quiz = true;
+				}
+				else
+				{
+					$show_question_quiz = $passed_quiz;
+				}
+			}
+		}
+		TPL::assign('show_question_quiz', $show_question_quiz);
+
 		// if($question_quiz && $question_quiz['countdown'] > 0)
 		// {
 		// 	// 限时答题
