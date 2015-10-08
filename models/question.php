@@ -646,7 +646,7 @@ class question_class extends AWS_MODEL
 		), 'question_id = ' . intval($question_id));
 	}
 
-	public function get_related_question_list($question_id, $question_content, $limit = 10)
+	public function get_related_question_list($question_id, $question_content, $limit = 5)
 	{
 		$cache_key = 'question_related_list_' . md5($question_content) . '_' . $limit;
 
@@ -695,7 +695,10 @@ class question_class extends AWS_MODEL
 				$question_related_list[] = array(
 					'question_id' => $key,
 					'question_content' => $question_content,
-					'answer_count' => $question_info[$key]['answer_count']
+					'answer_count' => $question_info[$key]['answer_count'],
+					'published_uid' => $question_info[$key]['published_uid'],
+					'quiz_id' => $question_info[$key]['quiz_id'],
+					'update_time' => $question_info[$key]['update_time']
 				);
 			}
 		}

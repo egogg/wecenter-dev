@@ -114,7 +114,7 @@ class quiz_class extends AWS_MODEL
 
 	public function get_question_quiz_record_by_question($question_id)
 	{
-		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id));
+		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id), ' start_time DESC');
 	}
 
 	public function get_question_quiz_record_by_id($record_id)
@@ -213,5 +213,21 @@ class quiz_class extends AWS_MODEL
 		$quiz = $this->fetch_row('question_quiz', 'id = ' . intval($quiz_id));
 
 		return $quiz['type'];
+	}
+
+	public function get_question_quiz_user_record_count($question_id, $uid)
+	{
+		$records = $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC');
+		$record_count = 0;
+		if($records)
+		{
+			$record_count = count($records);
+			if(!$records[0]['passed'])
+			{
+				$record_count = -$record_count;
+			}
+		}
+
+		return $record_count;
 	}
 }

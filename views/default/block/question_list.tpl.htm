@@ -58,9 +58,16 @@
 				        <div class="media-body">
 						    <div class="question-list-title">
 								<h3>
+									<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
+										<?php if($question['user_record_count'] > 0) { ?>
+											<span class="user-passed-quiz passed">通过</span>
+										<?php } else { ?>
+											<span class="user-passed-quiz failed">失败</span>
+										<?php } ?>
+			            			<?php } ?>
 				            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
-				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank">
-				            				<i class="md md-visibility-off"></i> 该题为限时答题
+				            			<a class="countdown-question-title" href="question/<?php echo $question['question_id']; ?>" target="_blank">
+				            				<i class="md md-visibility-off"></i> 第<?php echo $question['question_id']; ?>题，该题为限时答题
 				            			</a>
 				            		<?php } else { ?>
 				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>

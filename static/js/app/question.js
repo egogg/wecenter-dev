@@ -2,14 +2,14 @@ $(function(){
 
 	// 问题标签
 
-	$('.question-body').on('click', '.question-tag',  function(e){
+	$('.question-loader').on('click', '.question-tag',  function(e){
 		var tag = $(this);
 		window.location.href = G_BASE_URL + '/question/' + tag.attr('data-type') + '-' + tag.attr('data-id');
 	});
 
 	// 答题记录
 
-	$('.question-body').on('click', '.user-quiz-record-message', function(e){
+	$('.question-loader').on('click', '.user-quiz-record-message', function(e){
 		var icon = $(this).find('i');
 		var recordList = $(this).siblings('.user-quiz-record-items');
 
@@ -119,7 +119,7 @@ $(function(){
 
 	function initQuestionContent() {
 		$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
-			$('.question-content').html(response);
+			$('.question-loader').html(response);
 
 			var QUIZ_RETRY_COUNT = $('input[name=question-quiz-record-try-count]').val();
 			var PASSED_QUIZ = $('input[name=question-quiz-record-passed]').val();
@@ -128,10 +128,10 @@ $(function(){
 			formatCountdownInfo();
 			parseQuestionQuiz(!takenQuiz);
 
-			if(takenQuiz) {
-				// showQuizContentOverlay();
-				$('.question-quiz-content').hide();
-			}
+			// if(takenQuiz) {
+			// 	// showQuizContentOverlay();
+			// 	$('.question-quiz-content').hide();
+			// }
 
 			// 提示添加答案解析
 
@@ -157,8 +157,7 @@ $(function(){
 		// 倒计时问题开始答题
 
 		$.get(G_BASE_URL + '/question/ajax/begin_question_quiz_countdown/id-' + QUESTION_ID, function (response) {
-			$('.countdown-question-welcome').animate({opacity:1}, 300);
-			$('.question-content').html(response).css('opacity',0).animate({opacity:1}, 300);
+			$('.question-loader').html(response).css('opacity',0).animate({opacity:1}, 300);
 			parseQuestionQuiz();
 		});
 	}
@@ -379,22 +378,43 @@ $(function(){
 		}, 'json');
 	}
 
-	// 限时答题开始
+	//////////////////////////////////////////
+	// 答题操作
+	//////////////////////////////////////////
 
-	$('.question-content').on('click', '#begin-question-quiz-countdown', function (e) {
+	// 限时答题：开始答题
+
+	$('.question-loader').on('click', '#question-action-countdown-start', function(e) {
 		e.preventDefault();
-
 		beginCountdownQuestion();
 	});
 
 	// 限时答题：重新答题
 
-	$('.question-content').on('click', '#retry-question-quiz-countdown', function (e) {
+	$('.question-loader').on('click', '#question-action-countdown-retry', function(e) {
 		e.preventDefault();
+
 		retryQuizIntegralAction(function(){
 			beginCountdownQuestion();
 		});
 	});
+
+	// // 限时答题开始
+
+	// $('.question-content').on('click', '#begin-question-quiz-countdown', function (e) {
+	// 	e.preventDefault();
+
+	// 	beginCountdownQuestion();
+	// });
+
+	// // 限时答题：重新答题
+
+	// $('.question-content').on('click', '#retry-question-quiz-countdown', function (e) {
+	// 	e.preventDefault();
+	// 	retryQuizIntegralAction(function(){
+	// 		beginCountdownQuestion();
+	// 	});
+	// });
 
 	// 普通答题： 重新答题
 

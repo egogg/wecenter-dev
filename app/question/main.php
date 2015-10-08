@@ -340,7 +340,28 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('question_topics', $question_topics);
 
-		TPL::assign('question_related_list', $this->model('question')->get_related_question_list($question_info['question_id'], $question_info['question_content']));
+		$related_questions = $this->model('question')->get_related_question_list($question_info['question_id'], $question_info['question_content']);
+		if ($related_questions)
+		{
+			foreach ($related_questions as $key => $value)
+			{
+				// 获取相关问题的用户信息
+
+				$related_questions[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['published_uid'], true);
+
+				// 获取是否为限时答题信息
+
+				$is_countdown = false;
+				if($value['quiz_id'])
+				{
+					$quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+					$is_countdown = ($quiz_info['countdown'] > 0);
+				}
+				$related_questions[$key]['is_countdown'] = $is_countdown;
+			}
+
+			TPL::assign('question_related_list', $related_questions);
+		}
 		TPL::assign('question_related_links', $this->model('related')->get_related_links('question', $question_info['question_id']));
 
 		if ($this->user_id)
@@ -428,7 +449,7 @@ class main extends AWS_CONTROLLER
 			TPL::assign('recommend_posts', $recommend_posts);
 		}
 
-		// 获取问题答题记录信息
+		// 获取问题答题动态及统计
 
 		$question_quiz_stats['total'] = 0;
 		$question_quiz_stats['passed'] = 0;
@@ -436,6 +457,8 @@ class main extends AWS_CONTROLLER
 		if($question_quiz_record)
 		{
 			foreach ($question_quiz_record as $key => $value) {
+				$question_quiz_record[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['uid'], true);
+
 				if($value['passed'])
 				{
 					$question_quiz_stats['passed']++;
@@ -444,26 +467,27 @@ class main extends AWS_CONTROLLER
 				$question_quiz_stats['total']++;
 			}
 		}
+		TPL::assign('question_quiz_record', $question_quiz_record);
 		TPL::assign('question_quiz_stats', $question_quiz_stats);
 
 		// 获取是否显示评论区
 
 		$enable_comment = (!$question_info['quiz_id'] OR $question_quiz_stats > 0);
 		TPL::assign('enable_comment', $enable_comment);
+		
+		// // 添加题目解析提示提示
 
-		// 添加题目解析提示提示
-
-		if($this->user_id == $question_info['published_uid'] AND !$question_info['solution_id'])
-		{
-			TPL::assign('show_add_solution_hint', true);
-		}
+		// if($this->user_id == $question_info['published_uid'] AND !$question_info['solution_id'])
+		// {
+		// 	TPL::assign('show_add_solution_hint', true);
+		// }
 
 		// 获取上一道题目和下一道题目的信息
 
-		$question_info_next = $this->model('question')->get_next_question_info($question_info['question_id']);
-		$question_info_previous = $this->model('question')->get_previous_question_info($question_info['question_id']);
-		TPL::assign('question_info_next', $question_info_next);
-		TPL::assign('question_info_previous', $question_info_previous);
+		// $question_info_next = $this->model('question')->get_next_question_info($question_info['question_id']);
+		// $question_info_previous = $this->model('question')->get_previous_question_info($question_info['question_id']);
+		// TPL::assign('question_info_next', $question_info_next);
+		// TPL::assign('question_info_previous', $question_info_previous);
 
 		TPL::import_js('js/app/question.js');
 		TPL::import_css('css/question.css');
@@ -604,6 +628,13 @@ class main extends AWS_CONTROLLER
 				if($val['quiz_id'])
 				{
 					$question_list[$key]['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($val['quiz_id']);
+
+					// 获取当前用户答题信息
+
+					if($this->user_id > 0) 
+					{
+						$question_list[$key]['user_record_count'] = $this->model('quiz')->get_question_quiz_user_record_count($val['question_id'], $this->user_id);
+					}
 				
 					// 获取答题统计信息
 
@@ -680,5 +711,47 @@ class main extends AWS_CONTROLLER
 		$this->model('question')->verify_modify($_GET['question_id'], $_GET['log_id']);
 
 		H::redirect_msg(AWS_APP::lang()->_t('确认修改成功, 正在返回...'), '/question/id-' . $_GET['question_id'] . '__column-log__rf-false');
+	}
+
+	public function record_action()
+	{
+		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
+		{
+			H::redirect_msg(AWS_APP::lang()->_t('问题不存在或已被删除'), '/question/');
+		}
+
+		if($question_info['quiz_id'])
+		{
+			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+		}
+		TPL::assign('question_info', $question_info);
+
+		// 获取问题答题纪录及统计
+
+		$question_quiz_stats['total'] = 0;
+		$question_quiz_stats['passed'] = 0;
+		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
+		if($question_quiz_record)
+		{
+			foreach ($question_quiz_record as $key => $value) {
+				$question_quiz_record[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['uid'], true);
+
+				if($value['passed'])
+				{
+					$question_quiz_stats['passed']++;
+				}
+
+				$question_quiz_stats['total']++;
+			}
+		}
+
+		TPL::assign('question_quiz_record', $question_quiz_record);
+		TPL::assign('question_quiz_stats', $question_quiz_stats);
+		TPL::assign('question_quiz_record', $question_quiz_record);
+
+		TPL::import_js('js/flot/jquery.flot.js');
+		TPL::import_js('js/flot/jquery.flot.pie.js');
+		TPL::import_js('js/flot/jquery.flot.resize.js');
+		TPL::output('question/record');
 	}
 }

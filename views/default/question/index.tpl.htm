@@ -5,7 +5,7 @@
 		<div class="col-sm-8">
 			<!-- 题目信息  -->
 			<div class="card">
-				<div class="card-header ch-alt question-publisher hidden-xs">
+				<div class="card-header question-publisher hidden-xs">
 					<div class="media">
 						<div class="pull-left">
 							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'mid'); ?>" /></a>
@@ -40,67 +40,15 @@
 	                    </div>
 					</div>
 	            </div>
-	            
-	            <div class="card-header question-title clearfix">
-	                <h2>
-	                	<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?>
-	                		<i class="md md-visibility-off"></i> 该题为限时答题
-	                	<?php } else { ?>
-	                		<?php echo $this->question_info['question_content']; ?>
-	                	<?php } ?>
-	                </h2> 
-	                <ul class="actions">
-	                	<li><a href="javascript:void(0);"><i class="md md-create"></i></a></li>
-	                	<li><a href="javascript:void(0);"><i class="md md-spellcheck"></i></a></li>
-	                    <li class="dropdown">
-	                        <a href="#" data-toggle="dropdown" aria-expanded="false">
-	                            <i class="md md-more-vert"></i>
-	                        </a>
-	                        <ul class="dropdown-menu dropdown-menu-right">
-	                            <li>
-	                                <a href="#">Refresh</a>
-	                            </li>
-	                            <li>
-	                                <a href="#">Manage Widgets</a>
-	                            </li>
-	                            <li>
-	                                <a href="#">Widgets Settings</a>
-	                            </li>
-	                        </ul>
-	                    </li>
-	                </ul>  
-	            </div>
-				<div class="card-body card-padding question-body">
-					<div class="question-content-header clearfix">
-						<div class="question-tags">
-			        		<!-- 问题分类 -->
-			        		<?php if ($this->question_info['category_info']) { ?>
-				        		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
-										<span><?php echo $this->question_info['category_info']['title']; ?></span>
-									</a></li>
-							<?php } ?>
-
-			        		<!-- 问题难度 -->
-			        		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
-			        		<li class="question-tag-item">
-			        			<?php TPL::output('question/ajax/question_difficulty'); ?>
-			        		</li>
-
-							<!-- 答题类型 -->
-							<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
-							<li class="question-tag-item">
-								<?php TPL::output('question/ajax/question_quiz_type'); ?>
-							</li>
-			        	</div>
-					</div>
-						
-		        	<div class="question-content">
-					</div>
+				
+				<!-- 问题内容 -->
+				<div class="question-loader">
+					
 				</div>
 
 				<div class="question-quiz-actions card-body card-padding">
 					<ul class="question-quiz-action-items">
-						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="c-white  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看参考</span>答案</a></li>
+						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="c-white  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
 						<?php if($this->question_info['quiz_id']) { ?>
 							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="c-white bgm-bluegray"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
 						<?php } ?>
@@ -116,19 +64,19 @@
 					<div class="pull-left clearfix question-quiz-stats">
 						<ul class="question-quiz-stats-items">
 							<li class="question-quiz-stats-item question-quiz-view">
-								<a href="javascript:void(0);"></span><i class="md md-visibility"></i> <span class="hidden-xs">总查看<em>|</em></span><span class="quiz-stats-view"><?php echo $this->question_info['view_count']; ?></span></a>
+								<a href="question/record/<?php echo $this->question_info['question_id']; ?>"></span><i class="md md-visibility"></i> <span class="hidden-xs">查看<em>|</em></span><span class="quiz-stats-view"><?php echo $this->question_info['view_count']; ?></span></a>
 							</li>
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
 								<li class="question-quiz-stats-item question-quiz-count">
-									<a href="javascript:void(0);">
+									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 										<i class="md md-equalizer"> </i>
-										<span class="hidden-xs">总答题<em>|</em></span><span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 
+										<span class="hidden-xs">答题<em>|</em></span><span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 
 									</a>
 								</li>
 								<li class="question-quiz-stats-item question-quiz-srate">
-									<a href="javascript:void(0);">
+									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 										<i class="md md-flag"></i>
-										<span class="hidden-xs">正确率<em>|</em></span><span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?>%</span>
+										<span class="hidden-xs">通过<em>|</em></span><span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?>%</span>
 									</a>
 								</li>
 							<?php } ?>
@@ -226,7 +174,97 @@
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
+		<div class="col-sm-4">
+			<!-- 侧边栏 -->
+			<!-- 我要出题 -->
+			<div class="card">
+				<a href="publish/" class="question-content-publish"><i class="md md-create"></i> 我要出题</a>
+			</div>
+			<!-- 答题动态 -->
+			<?php if ($this->question_quiz_record) { ?>
+				<div class="card">
+					<div class="card-header question-sidebar-title">
+						<h2>答题动态</h2>
+						<ul class="actions">
+		                    <li>
+		                       <a href="question/record/<?php echo $this->question_info['question_id']; ?>"><i class="md md-chevron-right"></i></a>
+		                    </li>
+		                </ul>
+					</div>
+					<div class="listview">
+	            		<div class="lv-body">
+	            			<?php foreach($this->question_quiz_record AS $key => $val) { ?>
+	            				<?php if($key < 5) { ?>
+								<a class="lv-item" href="people/<?php echo $val['user_info']['url_token']; ?>">
+									<div class="media">
+                                        <div class="pull-left">
+                                            <img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+										<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
+                                        </div>
+                                        <div class="media-body">
+                                            <div class="lv-title">
+			                                    <?php if($val['passed']) { ?>
+													<div class="c-green">
+														答题通过<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?>，用时<?php echo $val['time_spend']; ?>秒 <?php } ?>
+													</div>
+												<?php } else if($this->question_info['question_quiz']['countdown'] > 0 and $val['time_spend'] <= 0) { ?>
+													<div class="c-amber">
+														答题超时
+													</div>
+												<?php } else { ?>
+													<div class="c-red">
+														答题失败<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?>，用时<?php echo $val['time_spend']; ?>秒 <?php } ?>
+													</div>
+												<?php } ?>
+                                            </div>
+                                            <small class="lv-small"><?php echo $val['user_info']['user_name']; ?> • <?php echo date_friendly($val['start_time']); ?></small>
+                                        </div>
+                                    </div>
+								</a>
+								<?php } ?>
+							<?php } ?>
+	            		</div>
+	            	</div>
+				</div>
+			<?php } ?>
+
+			<!-- 相关问题 -->
+			<?php if ($this->question_related_list) { ?>
+				<div class="card hidden-xs">
+					<div class="card-header question-sidebar-title">
+						<h2>相关问题</h2>
+					</div>
+					<div class="listview">
+	            		<div class="lv-body">
+	            			<?php foreach($this->question_related_list AS $key => $val) { ?>
+								<a class="lv-item" href="question/<?php echo $val['question_id']; ?>">
+									<div class="related-question-publish-info">
+										<img class="publisher-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+										<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
+										<span class="publisher-user-name c-gray">
+											<?php echo $val['user_info']['user_name']; ?>
+										</span>
+										<small class="c-gray">
+											• <?php echo date_friendly($val['update_time']); ?>
+										</small>
+									</div>
+									<?php if($val['is_countdown']) { ?>
+										<div class="countdown-question-title">
+											<i class="md md-visibility-off"></i> 第<?php echo $val['question_id']; ?>题，该题为限时答题
+										</div>
+									<?php } else { ?>
+										<div>
+											<?php echo $val['question_content']; ?>
+										</div>
+									<?php } ?>
+								</a>
+							<?php } ?>
+	            		</div>
+	            	</div>
+				</div>
+			<?php } ?>
+		</div>
 	</div>
 </div>
 

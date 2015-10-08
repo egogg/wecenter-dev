@@ -1430,6 +1430,11 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
 		}
 
+		if ($question_info['category_id'] AND get_setting('category_enable') == 'Y')
+		{
+			$question_info['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
+		}
+
 		if ($question_info['has_attach'])
 		{
 			$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'min');
@@ -1443,9 +1448,7 @@ class ajax extends AWS_CONTROLLER
 
 		if(intval($question_info['quiz_id']) > 0) 
 		{
-			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
-
-			TPL::assign('question_quiz', $question_quiz);
+			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 		}
 		TPL::assign('question_info', $question_info);
 
@@ -1467,55 +1470,31 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('passed_quiz', $passed_quiz);
 		TPL::assign('try_count', $try_count);
 
+		// 是否显示答题选项
+
+		$show_question_title = true;
 		$show_question_quiz = false;
-		if($question_quiz) 
+		if($question_info['question_quiz']) 
 		{
 			$show_question_quiz = true;
-			if($question_quiz['countdown'] > 0)
+			if($question_info['question_quiz']['countdown'] > 0)
 			{
-				if($this->user_id > 0 and $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid'])
-				{
-					$show_question_quiz = true;
+
+				$show_question_title = false;
+				if($this->user_id > 0)
+				{	
+					$show_question_quiz = $passed_quiz OR ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid']);
+					$show_question_title = $show_question_quiz;
 				}
 				else
 				{
 					$show_question_quiz = $passed_quiz;
+					$show_question_title = $show_question_quiz;
 				}
 			}
 		}
 		TPL::assign('show_question_quiz', $show_question_quiz);
-
-		// if($question_quiz && $question_quiz['countdown'] > 0)
-		// {
-		// 	// 限时答题
-
-		// 	if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
-		// 	{
-		// 		// 对于特殊用户，直接返回问题内容
-
-		// 		TPL::output('question/ajax/question_content');
-		// 	}
-		// 	else
-		// 	{
-		// 		// 对于普通用户
-
-		// 		if(!$quiz_record)
-		// 		{
-		// 			TPL::output('question/ajax/question_content_countdown');
-		// 		}
-		// 		else
-		// 		{
-		// 			if($quiz_record[0]['passed'])
-		// 			{
-		// 				TPL::output('question/ajax/question_content');
-		// 			}
-		// 			else
-		// 			{
-		// 				TPL::output('question/ajax/question_content_countdown');
-		// 			}
-		// 		}
-		// 	}
-		// }
+		TPL::assign('show_question_title', $show_question_title);
 
 		TPL::output('question/ajax/question_content');
 	}
@@ -1540,9 +1519,7 @@ class ajax extends AWS_CONTROLLER
 
 		if(intval($question_info['quiz_id']) > 0) 
 		{
-			$question_quiz = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
-
-			TPL::assign('question_quiz', $question_quiz);
+			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 		}
 		TPL::assign('question_info', $question_info);
 
@@ -1555,6 +1532,9 @@ class ajax extends AWS_CONTROLLER
 		}
 		TPL::assign('question_quiz_record_id', $record_id);
 		
+		TPL::assign('show_question_quiz', true);
+		TPL::assign('show_question_title', true);
+
 		TPL::output('question/ajax/question_content');
 	}
 

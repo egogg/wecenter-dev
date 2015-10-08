@@ -478,6 +478,28 @@ header .main-nav ul li a.active {
 	line-height: 19px;
 }
 
+.question-list-title .user-passed-quiz{
+	display: inline-block;
+    vertical-align: middle;
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-right: 4px;
+    font-size: 12px;
+    line-height: 15px;
+    margin-top: -4px;
+}
+
+.question-list-title .user-passed-quiz.passed {
+	color: #fff;
+	background-color: #4CAF50;
+}
+
+.question-list-title .user-passed-quiz.failed {
+	color: #fff;
+	background-color: #F44336;
+}
+
+
 .question-list-body {
 	margin-top: 0;
 }
@@ -794,6 +816,14 @@ body {
 
 /*文章内容*/
 
+.countdown-question-title {
+	color: #ff9800;
+}
+
+.question-publisher {
+	border-bottom: 1px solid #f0f0f0;
+}
+
 .question-publisher-mark {
 	border-radius: 4px;
 	border: 1px solid #FF9800;
@@ -963,6 +993,10 @@ body {
 	margin: 5px 10px 5px 0;
 }
 
+.question-quiz-action-item span.action-message {
+	margin-right: 15px;
+}
+
 .question-quiz-action-item a {
 	display: inline-block;
 	padding: 4px 12px;
@@ -983,6 +1017,7 @@ body {
 }
 
 .question-focus-message {
+	margin-right: 15px;
 	margin-bottom: 0;
 	display: inline-block;
 	line-height: 24px;
@@ -1196,7 +1231,43 @@ body {
 	background-color: transparent;
 }
 
+/* 问题页面：侧边栏 */
 
+.question-content-publish {
+	padding: 23px 26px;
+    line-height: 40px;
+    display: block;
+    font-size: 17px;
+    color: #03A9F4;
+}
+
+.question-content-publish:hover {
+	background-color: #03A9F4;
+	color: #fff;
+}
+
+.question-sidebar-title {
+	padding: 23px 15px !important;
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.related-question-publish-info {
+	margin-bottom: 10px;
+}
+
+.related-question-publish-info .publisher-img-sm {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+}
+
+/* 答题统计详细信息页面 */
+
+#question-quiz-stats-chart {
+	height: 300px;
+	width: 100%;
+	display: block;
+}
 
 /* 重载bootstrap */
 

@@ -1,186 +1,180 @@
 
-<!-- 问题详细描述 -->
+<div class="card-header question-title clearfix">
+    <h2>
+    	<?php if(!$this->show_question_title) { ?>
+    		<i class="md md-visibility-off"></i> 第<?php echo $this->question_info['question_id']; ?>题，该题为限时答题
+    	<?php } else { ?>
+    		<?php echo $this->question_info['question_content']; ?>
+    	<?php } ?>
+    </h2> 
+    <ul class="actions">
+    	<li><a href="javascript:void(0);"><i class="md md-create"></i></a></li>
+    	<li><a href="javascript:void(0);"><i class="md md-spellcheck"></i></a></li>
+        <li class="dropdown">
+            <a href="#" data-toggle="dropdown" aria-expanded="false">
+                <i class="md md-more-vert"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+                <li>
+                    <a href="#">Refresh</a>
+                </li>
+                <li>
+                    <a href="#">Manage Widgets</a>
+                </li>
+                <li>
+                    <a href="#">Widgets Settings</a>
+                </li>
+            </ul>
+        </li>
+    </ul>  
+</div>
+<div class="card-body card-padding question-body">
+	<div class="question-content-header clearfix">
+		<div class="question-tags">
+    		<!-- 问题分类 -->
+    		<?php if ($this->question_info['category_info']) { ?>
+        		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag label bgm-bluegray" href="javascript:;">
+						<span><?php echo $this->question_info['category_info']['title']; ?></span>
+					</a></li>
+			<?php } ?>
 
-<?php if(!$this->question_quiz) { ?>
-	<!-- 开放讨论题 -->
-	<div class="question-detail">
-		<?php echo $this->question_info['question_detail']; ?>	
+    		<!-- 问题难度 -->
+    		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
+    		<li class="question-tag-item">
+    			<?php TPL::output('question/ajax/question_difficulty'); ?>
+    		</li>
+			
+			<!-- 答题类型 -->
+			<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
+			<li class="question-tag-item">
+				<?php TPL::output('question/ajax/question_quiz_type'); ?>
+			</li>
+    	</div>
 	</div>
-	<div class="question-actions">
-		<div class="question-quiz-action-item">我知道答案 <a href="javascript:void(0);" class="c-white  bgm-green">我来回答 <em>|</em>	<?php echo $this->question_info['answer_count']; ?></a></div>
-	</div>
-<?php } else { ?>
-	<!-- 非开放讨论题 -->
-	<?php if($this->question_quiz['countdown'] > 0) {?>
-		<?php if(!$this->passed_quiz) { ?>
-			<!-- 限时答题 -->
-			<h3 class="question-quiz-title info">
-				<i class="md md-alarm"></i> 该题为限时答题，你需要在以下的时间内完成答题
-			</h3>
+		
+	<div class="question-content">
+		<!-- 问题详细描述 -->
+
+		<?php if(!$this->question_info['question_quiz']) { ?>
+			<!-- 开放讨论题 -->
 			<div class="question-detail">
-				<div class="countdown-value" data-countdown="<?php echo $this->question_quiz['countdown']; ?>">
-					<ul>
-						<li class="countdown-hour">
-							<input type="text" value="0" class="dial hour"><span>时</span>
-						</li>
-						<li class="countdown-minute">
-							<input type="text" value="0" class="dial minute"><span>分</span>
-						</li>
-						<li class="countdown-second">
-							<input type="text" value="0" class="dial second"><span>秒</span>
-						</li>
-					</ul>
-				</div>
+				<?php echo $this->question_info['question_detail']; ?>	
 			</div>
-			<?php if(!$this->try_count) { ?>
-				<div class="question-actions">
-					<div class="question-quiz-action-item">我准备好了 <a href="javascript:void(0);" class="c-white  bgm-green">开始答题</a></div>
+			<div class="question-actions">
+				<div class="question-quiz-action-item"><span class="action-message">我知道答案</span> <a href="javascript:void(0);" class="c-white  bgm-green">我来回答 <em>|</em>	<?php echo $this->question_info['answer_count']; ?></a></div>
+			</div>
+		<?php } else { ?>
+			<!-- 非开放讨论题 -->
+			<?php if($this->question_info['question_quiz']['countdown'] > 0) {?>
+				<?php if(!$this->show_question_quiz) { ?>
+					<!-- 限时答题 -->
+					<h3 class="question-quiz-title info">
+						<i class="md md-alarm"></i> 该题为限时答题，你需要在以下的时间内完成答题
+					</h3>
+					<div class="question-detail">
+						<div class="countdown-value" data-countdown="<?php echo $this->question_info['question_quiz']['countdown']; ?>">
+							<ul>
+								<li class="countdown-hour">
+									<input type="text" value="0" class="dial hour"><span>时</span>
+								</li>
+								<li class="countdown-minute">
+									<input type="text" value="0" class="dial minute"><span>分</span>
+								</li>
+								<li class="countdown-second">
+									<input type="text" value="0" class="dial second"><span>秒</span>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<?php if(!$this->try_count) { ?>
+						<div class="question-actions">
+							<div class="question-quiz-action-item"><span class="action-message">我准备好了</span><a id="question-action-countdown-start" href="javascript:void(0);" class="c-white  bgm-green">开始答题</a></div>
+						</div>
+					<?php } ?>
+				<?php } else { ?>
+					<div class="question-detail">
+						<?php echo $this->question_info['question_detail']; ?>
+					</div>
+				<?php } ?>
+			<?php } else { ?>
+				<!-- 非限时答题 -->
+				<div class="question-detail">
+					<?php echo $this->question_info['question_detail']; ?>
 				</div>
 			<?php } ?>
 		<?php } ?>
-	<?php } else { ?>
-		<!-- 非限时答题 -->
-		<div class="question-detail">
-			<?php echo $this->question_info['question_detail']; ?>
-		</div>
-	<?php } ?>
-<?php } ?>
 
+		<!-- 答题选项 -->
 
-<!-- 答题选项 -->
-
-<?php if($this->show_question_quiz) { ?>
-	<div class="question-quiz clearfix">
-		<?php if(!$this->user_id or !$this->try_count) { ?>
-			<h3 class="question-quiz-title info">
-				<?php if($this->question_quiz['type'] == '1') { ?>
-					<i class="md md-radio-button-on"></i> 该题为单选题（请选择唯一的答案）
-				<?php } else if($this->question_quiz['type'] == '2') { ?>
-					<i class="md md-check-box"></i> 该题为多选题（你可以选择一个或者多个答案）
-				<?php } else if($this->question_quiz['type'] == '3') { ?>
-					<i class="md md-apps"></i> 该题为字谜题（请从字表中选择相应的字谜答案）
-				<?php } else if($this->question_quiz['type'] == '4') { ?>
-					<i class="md md-edit"></i> 该题为填空题（请根据填空描述填写答案）
-				<?php } ?>
-			</h3>
-		<?php } ?>
-		<?php if($this->question_quiz) { ?>
-			<!-- 有答题选项 -->
-			<div class="question-quiz-body">
-				<?php if($this->question_quiz['countdown'] > 0) { ?>
-					<!-- 限时答题 -->
-				<?php } else { ?>
-					<!-- 非限时答题 -->
-					<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
-					<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
+		<?php if($this->show_question_quiz) { ?>
+			<div class="question-quiz clearfix">
+				<h3 class="question-quiz-title info">
+					<?php if($this->question_info['question_quiz']['type'] == '1') { ?>
+						<i class="md md-radio-button-on"></i> 该题为单选题（请选择唯一的答案）
+					<?php } else if($this->question_info['question_quiz']['type'] == '2') { ?>
+						<i class="md md-check-box"></i> 该题为多选题（你可以选择一个或者多个答案）
+					<?php } else if($this->question_info['question_quiz']['type'] == '3') { ?>
+						<i class="md md-apps"></i> 该题为字谜题（请从字表中选择相应的字谜答案）
+					<?php } else if($this->question_info['question_quiz']['type'] == '4') { ?>
+						<i class="md md-edit"></i> 该题为填空题（请根据填空描述填写答案）
+					<?php } ?>
+				</h3>
+				<div class="question-quiz-body">
+					<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_info['question_quiz']['id']; ?>">
+					<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_info['question_quiz']['content']; ?>'>
 					<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">
 					<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
 					<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
 
 					<div class="question-quiz-content"></div>
-				<?php } ?>
+				</div>
 			</div>
 		<?php } ?>
-	</div>
-<?php } ?>
 
-<!-- 答题状态及答题记录 -->
+		<!-- 答题状态及答题记录 -->
 
-<?php if($this->user_id and $this->try_count and $this->question_quiz) { ?>
-	<div class="question-quiz-result clearfix">
-		<?php if(!$this->passed_quiz) { ?>
-			<h3 class="question-quiz-title failed">
-				<i class="md md-close"></i> 非常遗憾，回答错误！
-			</h3>
-		<?php } else { ?>
-			<h3 class="question-quiz-title success">
-				<i class="md md-check"></i> 恭喜你，回答正确！
-			</h3>
-		<?php } ?>
-
-		<div class="user-quiz-record">
-			<ul class="question-quiz-instant-action">
+		<?php if($this->user_id and $this->try_count and $this->question_info['question_quiz']) { ?>
+			<div class="question-quiz-result clearfix">
 				<?php if(!$this->passed_quiz) { ?>
-					<li class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-red"><i class="md  md-refresh hidden-xs"></i> 重新答题</a></li>
-				<?php } ?>
-			</ul>
-			
-			<div class="user-quiz-record-message">
-				你进行了<b><?php echo $this->try_count; ?></b> 次答题尝试 <a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i>答题记录</a>
-			</div>
-			
-			<ul class="user-quiz-record-items clearfix">
-				<?php foreach ($this->quiz_record as $key => $record) { ?>
-					<li class="user-quiz-record-item">
-						<?php if($record['passed']) { ?> 
-							<span class="quiz-record-mark success">答题成功</span> 
-						<?php } else if($this->question_quiz['countdown'] > 0 and $record['time_spend'] <= 0) { ?>
-							<span class="quiz-record-mark timeout">答题超时</span> 
-						<?php } else { ?>
-							<span class="quiz-record-mark failed">答题失败</span>
-						<?php } ?>
-						<?php if($record['time_spend'] > 0) { ?>
-							，用时 <?php $record['time_spend']; ?> 秒 
-						<?php } ?>
-						（<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>） 
-					</li>
-				<?php } ?>
-			</ul>
-		</div>
-	</div>
-<?php } ?>
-
-<!-- 答题选项 -->
-
-<?php if($this->question_quiz) { ?>
-	<div class="question-quizxxxxxxxxxxxxxxxxxxxx">
-		<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_quiz['id']; ?>">
-		<input type="hidden" name="question-quiz-content" value='<?php echo $this->question_quiz['content']; ?>'>
-		<input type="hidden" name="question-quiz-record-id" value="<?php echo $this->question_quiz_record_id; ?>">
-		<input type="hidden" name="question-quiz-record-try-count" value="<?php echo $this->try_count; ?>">
-		<input type="hidden" name="question-quiz-record-passed" value="<?php echo $this->passed_quiz; ?>">
-
-		<div class="question-quiz-contentx"></div>
-		<div class="question-quiz-content-overlay panel panel-default">
-			<?php if($this->passed_quiz) { ?>
-				<button type="button" class="close close-question-quiz-content-overlay" aria-label="Close">
-				  <span aria-hidden="true">&times;</span>
-				</button>
-			<?php } ?>
-			<div class="question-quiz-answer-result">
-				<?php if($this->passed_quiz) { ?>
-					<div class="badge answer-success"><i class="glyphicon glyphicon-flag"></i> 答题成功</div>
-					<?php if($this->try_count > 1) { ?> 
-					<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
-					<?php } ?>
+					<h3 class="question-quiz-title failed">
+						<i class="md md-close"></i> 非常遗憾，回答错误！
+					</h3>
 				<?php } else { ?>
-					<div class="badge answer-failed"><i class="glyphicon glyphicon-remove"></i> 答题失败</div>
-					<?php if($this->try_count > 0) { ?> 
-					<div class="badge">尝试次数：<span class="retry-count"><?php echo $this->try_count; ?></span></div> 
-					<?php } ?>
+					<h3 class="question-quiz-title success">
+						<i class="md md-check"></i> 恭喜你，回答正确！
+					</h3>
 				<?php } ?>
+
+				<div class="user-quiz-record">
+					<ul class="question-quiz-instant-action">
+						<?php if(!$this->passed_quiz) { ?>
+							<li class="question-quiz-action-item"><a href="javascript:void(0);" class="c-white  bgm-red" id="<?php if($this->question_info['question_quiz']['countdown'] > 0){echo 'question-action-countdown-retry'; } else {echo 'question-action-retry';} ?>"><i class="md  md-refresh hidden-xs"></i> 重新答题</a></li>
+						<?php } ?>
+					</ul>
+					
+					<div class="user-quiz-record-message">
+						你进行了<b><?php echo $this->try_count; ?></b> 次答题尝试 <a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i>答题记录</a>
+					</div>
+					
+					<ul class="user-quiz-record-items clearfix">
+						<?php foreach ($this->quiz_record as $key => $record) { ?>
+							<li class="user-quiz-record-item">
+								<?php if($record['passed']) { ?> 
+									<span class="quiz-record-mark success">答题成功</span> 
+								<?php } else if($this->question_info['question_quiz']['countdown'] > 0 and $record['time_spend'] <= 0) { ?>
+									<span class="quiz-record-mark timeout">答题超时</span> 
+								<?php } else { ?>
+									<span class="quiz-record-mark failed">答题失败</span>
+								<?php } ?>
+								<?php if($record['time_spend'] > 0) { ?>
+									，用时 <?php echo $record['time_spend']; ?> 秒 
+								<?php } ?>
+								（<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>） 
+							</li>
+						<?php } ?>
+					</ul>
+				</div>
 			</div>
-			<ul class="post-answer-actions">
-				<?php if($this->try_count > 0 && !$this->passed_quiz) { ?>
-					<li class="post-answer-action retry"><a href="" class="btn btn-danger btn-block" id="retry-question-quiz-normal"><i class="glyphicon glyphicon-repeat"></i> 再答一次试试</a></li>
-				<?php } ?>
-				<li class="post-answer-action action-view-solution"><a href="" class="btn btn-info btn-block"><i class="glyphicon glyphicon-eye-open"></i> 查看答案详解</a></li>
-				<li class="post-answer-action action-post-comment"><a href="" class="btn btn-default btn-block"><i class="glyphicon glyphicon-comment"></i> 参与答题讨论</a></li>
-				<li class="post-answer-action action-publish-question"><a href="" class="btn btn-success btn-block"><i class="glyphicon glyphicon-edit"></i> 出题考考别人</a></li>
-			</ul>
-			
-		</div>
+		<?php } ?>
 	</div>
-<?php } else { ?>
-<?php } ?>
-
-
-<?php if ($this->question_info['attachs']) {  ?>
-<div class="aw-upload-img-list">
-<?php foreach ($this->question_info['attachs'] AS $attach) { ?>
-<?php if ($attach['is_image'] AND (!$this->question_info['attachs_ids'] OR !in_array($attach['id'], $this->question_info['attachs_ids']))) { ?>
-	<a href="<?php echo $attach['attachment']; ?>" target="_blank" data-fancybox-group="thumb" rel="lightbox"><img src="<?php echo $attach['attachment']; ?>" class="img-thumbnail" alt="<?php echo $attach['file_name']; ?>" /></a>
-<?php } ?>
-<?php } ?>
 </div>
-<?php } ?>

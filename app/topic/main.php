@@ -209,6 +209,13 @@ class main extends AWS_CONTROLLER
 
 						$question_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($val['published_uid']);
 
+						// 获取当前用户答题信息
+
+						if($this->user_id > 0) 
+						{
+							$question_list[$key]['user_record_count'] = $this->model('quiz')->get_question_quiz_user_record_count($val['question_id'], $this->user_id);
+						}
+
 						// 获取问题分类信息
 
 						$question_list[$key]['category_info'] = $this->model('system')->get_category_info($val['category_id']);
