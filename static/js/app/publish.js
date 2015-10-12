@@ -108,15 +108,32 @@ $(function()
 		}
 	});
 
+	// 分类选择
+
+	$('.question-category-items').on('click', '.question-category-item', function(e) {
+		$(this).addClass('active').siblings().removeClass('active');
+	});
+
 	// 难度控件
 
-	$('#question-difficulty-control').barrating('show', {
-        wrapperClass: 'br-wrapper',
-        initialRating: $('#question_difficulty').val(),
-        showSelectedRating: true,
-        onSelect: function(value, text) {
-            $('#question_difficulty').val(value);
-        }
+	$('#question_difficulty').rating({
+		showClear:false, 
+		size: 'sm',
+		clearCaption : '',
+		starCaptions:{
+		    1: '休闲',
+		    2: '简单',
+		    3: '中等',
+		    4: '困难',
+		    5: '超难'
+		},
+		starCaptionClasses : {
+		    1: 'label label-success',
+		    2: 'label label-info',
+		    3: 'label label-primary',
+		    4: 'label label-warning',
+		    5: 'label label-danger'
+		}
 	});
 
 	// 解析答案
@@ -316,7 +333,7 @@ $(function()
 		var selText = sel.text();
 		var quizType = sel.attr('data-quiz-type');
   		
-  		sel.parents('.btn-group').find('.dropdown-toggle span.quiz-type-select').text(selText);
+  		sel.parents('').find('.quiz-type-select span').text(selText);
   		$('#quiz-type').attr('data-quiz-type', quizType);
 
   		var optionPage = $('.quiz-option-pages li.quiz-option-page[data-quiz-type="' + quizType + '"]');
@@ -332,7 +349,7 @@ $(function()
 				.siblings('.quiz-option-page').addClass('hidden');  			
   		}
 
-  		e.preventDefault();
+  		sel.parents('').find('.dropdown').removeClass('open');
 	});
 
 	// 单项选择题

@@ -81,6 +81,7 @@ class main extends AWS_CONTROLLER
 		if (get_setting('category_enable') == 'Y')
 		{
 			TPL::assign('question_category_list', $this->model('system')->build_category_html('question', 0, $question_info['category_id']));
+			TPL::assign('question_category_items', $this->model('system')->fetch_category('question', 0));
 		}
 
 		if ($modify_reason = $this->model('question')->get_modify_reason())
@@ -91,7 +92,8 @@ class main extends AWS_CONTROLLER
 		TPL::assign('human_valid', human_valid('question_valid_hour'));
 
 		TPL::import_js('js/app/publish.js');
-		TPL::import_js('js/jquery.barrating.min.js');
+		TPL::import_css('css/star-rating.min.css');
+		TPL::import_js('js/star-rating.min.js');
 		TPL::import_css('css/publish.css');
 		TPL::import_js('js/icheck.min.js');
 		TPL::import_css('css/icheck/square/blue.css');

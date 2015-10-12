@@ -1,31 +1,5 @@
 /* 题目难度控件 */
 
-.br-wrapper .br-widget a {
-  display: block;
-  width: 40px;
-  padding: 5px 0;
-  height: 8px;
-  float: left;
-  background-color: #fbedd9;
-  margin: 1px;
-  text-align: center;
-}
-.br-wrapper .br-widget a.br-active,
-.br-wrapper .br-widget a.br-selected {
-  background-color: #edb867;
-}
-.br-wrapper .br-widget .br-current-rating {
-  display: inline-block;
-  padding: 0 0 0 15px;
-  color: #edb867;
-  position: relative;
-  top: -4px;
-}
-
-.question-difficulty {
-  overflow: hidden;
-}
-
 #delete-quiz-options {
   margin-left: 15px;
   border: none !important;
@@ -85,10 +59,6 @@
 
 .dlg-control {
   padding: 6px;
-}
-
-.quiz-option-pages {
-  min-height: 250px;
 }
 
 .quiz-option-page .btn.delete {
