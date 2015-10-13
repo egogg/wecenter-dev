@@ -19,10 +19,6 @@
   margin-bottom: 15px;
 }
 
-#quiz-summary i {
-  margin-right: 6px;
-}
-
 .quiz-option-common {
   height: 40px;
   margin-bottom: 10px;
@@ -49,12 +45,25 @@
 
 #enable-quiz-countdown {
   display: inline-block;
+  margin-bottom: 0;
 }
 
 .quiz-countdown-input {
   display: inline-block;
-  float: right;
-  width: 30%;
+  margin-left: 15px;
+  max-width: 50%;
+}
+
+#quiz-countdown-input {
+   margin-bottom: 0 !important;
+}
+
+.column-answer {
+  width: 10px;
+}
+
+.column-action {
+  width: 20px;
 }
 
 .dlg-control {
@@ -65,8 +74,17 @@
   border: none !important;
 }
 
+.quiz-option-page table tr td {
+  border-top: none;
+}
+
 .quiz-option-page table tr th {
-  border-bottom: none;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.quiz-option-single-add td,
+.quiz-option-multiple-add td {
+  border-top: 1px solid #f0f0f0 !important;
 }
 
 .quiz-option-page table input {
@@ -97,6 +115,8 @@
 
 #quiz-option-crossword-words {
   margin-bottom: 0;
+  padding: 10px;
+  resize: none;
 }
 
 #quiz-option-crossword-words-hint .match {
@@ -113,7 +133,6 @@
   margin-top: 10px;
 }
 
-#quiz-option-crossword-auto, #quiz-option-crossword-shuffle {
-  float: right;
-  margin-left: 15px;
+.quiz-option-crossword-toolbar button {
+  margin-right: 15px;
 }

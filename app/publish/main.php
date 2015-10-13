@@ -92,6 +92,7 @@ class main extends AWS_CONTROLLER
 		TPL::assign('human_valid', human_valid('question_valid_hour'));
 
 		TPL::import_js('js/app/publish.js');
+		TPL::import_js('js/bootstrap-growl.min.js');
 		TPL::import_css('css/star-rating.min.css');
 		TPL::import_js('js/star-rating.min.js');
 		TPL::import_css('css/publish.css');

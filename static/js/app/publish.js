@@ -138,12 +138,6 @@ $(function()
 
 	// 解析答案
 
-	var icheckOption = {
-		checkboxClass: 'icheckbox_square-blue',
-		radioClass: 'iradio_square-blue',
-		increaseArea: '20%'
-	};
-
 	var IS_JSON = true;
 	try {
 		var quizContent = $.parseJSON($('#quiz_content').val());	
@@ -183,8 +177,30 @@ $(function()
 		});
 	}
 
+	function SetQuizPage(quizTypeId) {
+		var quizTypeControl = $('#quiz-type');
+
+		if(quizTypeId <= 0) {
+			quizTypeId = 1;
+		}
+		
+		quizTypeControl.attr('data-quiz-type', quizTypeId);
+		quizTypeControl.find('.quiz-type-select span')
+			.text(quizTypeControl.find('.dropdown-menu li a[data-quiz-type="' + quizTypeId + '"]').text());
+		var optionPage = $('.quiz-option-pages li.quiz-option-page[data-quiz-type="' + quizTypeId + '"]');
+		if(optionPage.length) {
+  			$(optionPage)
+  				.removeClass('hidden')
+  				.siblings('.quiz-option-page').addClass('hidden');
+  		}
+  		else {
+			$('.quiz-option-pages li.quiz-option-page[data-quiz-type="1"]')
+				.removeClass('hidden')
+				.siblings('.quiz-option-page').addClass('hidden');  			
+  		}
+	}
+
 	$('#edit-quiz-options').on('click', function(e) {
-		DismissErrorMessage();
 		
 		var IS_JSON = true;
 		try {
@@ -200,7 +216,6 @@ $(function()
 
 			if(quizContent.countdown > 0) {
 				$('#enable-quiz-countdown input[name="enable-quiz-countdown"]').prop('checked', true);
-				$('#enable-quiz-countdown').iCheck('update');
 
 				$('#quiz-countdown-input').val(quizContent.countdown);
 				$('#quiz-countdown-input').show();
@@ -218,13 +233,11 @@ $(function()
 						quizOptions += '<tr class="quiz-option-single">' + 
 							'<td><input type="text" class="form-control" placeholder="输入答题选项" value="' + 
 							quizContent.options[i].content + '"></td>' +
-							'<td><input class="dlg-control" type="radio" name="quiz-option-single-answer"' + 
-							(quizContent.answers[i].answer ? 'checked' : '') + '></td>' +
+							'<td><label class="radio radio-inline m-r-20"><input type="radio" name="quiz-option-single-answer" '+ (quizContent.answers[i].answer ? 'checked' : '') + '><i class="input-helper"></i></label></td>' +
 							'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
 							'</tr>';
 					};
 					$(quizOptions).insertBefore('.quiz-option-single-list .quiz-option-single-add');
-					$('.quiz-option-single-list').iCheck(icheckOption);
 				}
 			}
 			else if(quizContent.type == 'multipleSelection') {
@@ -243,7 +256,6 @@ $(function()
 							'</tr>';
 					};
 					$(quizOptions).insertBefore('.quiz-option-multiple-list .quiz-option-multiple-add');
-					$('.quiz-option-multiple-list').iCheck(icheckOption);
 				}
 			}
 			else if(quizContent.type == 'crossword') {
@@ -275,23 +287,12 @@ $(function()
 				$(quizOptions).insertBefore('.quiz-option-textinput-list .quiz-option-textinput-add');
 			}
 
-			if(quizTypeId > 0) {
-				quizTypeControl.attr('data-quiz-type', quizTypeId);
-				quizTypeControl.find('.quiz-type-select')
-					.text(quizTypeControl.find('.dropdown-menu li a[data-quiz-type="' + quizTypeId + '"]').text());
-				var optionPage = $('.quiz-option-pages li.quiz-option-page[data-quiz-type="' + quizTypeId + '"]');
-				if(optionPage.length) {
-		  			$(optionPage)
-		  				.removeClass('hidden')
-		  				.siblings('.quiz-option-page').addClass('hidden');
-		  		}
-		  		else
-		  		{
-					$('.quiz-option-pages li.quiz-option-page.default-page')
-						.removeClass('hidden')
-						.siblings('.quiz-option-page').addClass('hidden');  			
-		  		}
-			}
+			SetQuizPage(quizTypeId);
+		} else {
+			
+			// 设置默认页面为单选页面
+
+			SetQuizPage(1);
 		}
 	});
 
@@ -304,29 +305,55 @@ $(function()
 
 	// 答题选项编辑对话框
 
+	function notify(msg){
+        $.growl({
+            icon: 'md md-error',
+            title: '',
+            message: msg,
+            url: ''
+        },{
+                element: '#dlg-quiz-options .modal-content',
+                type: 'danger',
+                allow_dismiss: true,
+                placement: {
+                        from: 'bottom',
+                        align: 'left'
+                },
+                offset: {
+                    x: 20,
+                    y: 85
+                },
+                spacing: 10,
+                z_index: 1031,
+                delay: 2500,
+                timer: 1000,
+                url_target: '_blank',
+                mouse_over: false,
+                animate: {
+                        enter: 'animated fadeInDown',
+                        exit: 'animated fadeOutDown'
+                },
+                icon_type: 'class',
+                template: '<div data-growl="container" class="alert" role="alert">' +
+                                '<button type="button" class="close c-white" data-growl="dismiss">' +
+                                    '<span aria-hidden="true">&times;</span>' +
+                                    '<span class="sr-only">Close</span>' +
+                                '</button>' +
+                                '<span data-growl="icon" class="c-white"></span> ' +
+                                '<span data-growl="title"></span>' +
+                                '<span data-growl="message" class="c-white"></span>' +
+                                '<a href="#" data-growl="url"></a>' +
+                            '</div>'
+        });
+    };
+
 	function ShowErrorMessage(msg) {
-		$('#quiz-option-error-message')
-			.removeClass('hidden')
-			.fadeIn()
-			.find('em').text(msg);
+		notify(msg);
 	}
 
-	function DismissErrorMessage() {
-		$('#quiz-option-error-message')
-			.fadeOut()
-			.addClass('hidden')
-			.find('em').text('');
-	}
-
-	$('input.dlg-control').iCheck(icheckOption);
-
-	$('#enable-quiz-countdown').on('ifChecked', function(){
-		$('#quiz-countdown-input').show().find('input').focus();
+	$('#enable-quiz-countdown').on('click', function(){
+		$('#quiz-countdown-input').toggle($(this).find('input').is(':checked'));
 	});
-
-	$('#enable-quiz-countdown').on('ifUnchecked', function(){
-		$('#quiz-countdown-input').hide();
-	});	
 
 	$('#quiz-type .dropdown-menu li a').on('click', function(e){
 		var sel = $(this);
@@ -360,11 +387,9 @@ $(function()
 		if(optionCount <= 15) {
 			$('<tr class="quiz-option-single">' +
 				'<td><input type="text" class="form-control" placeholder="输入答题选项"></td>' +
-				'<td><input class="dlg-control" type="radio" name="quiz-option-single-answer"></td>' +
+				'<td><label class="radio radio-inline m-r-20"><input type="radio" name="quiz-option-single-answer"><i class="input-helper"></i></label></td>' +
 				'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
-				'</tr>')
-				.insertAfter(options[optionCount - 1])
-				.iCheck(icheckOption);
+				'</tr>').insertAfter(options[optionCount - 1]);
 		}
 
 		e.preventDefault();
@@ -388,11 +413,9 @@ $(function()
 		if(optionCount < 15) {
 			$('<tr class="quiz-option-multiple">' +
 				'<td><input type="text" class="form-control" placeholder="输入答题选项"></td>' +
-				'<td><input class="dlg-control" type="checkbox" name="quiz-option-multiple-answer"></td>' +
+				'<td><label class="checkbox checkbox-inline m-r-20"><input type="checkbox" name="quiz-option-multiple-answer"><i class="input-helper"></i></label>' +
 				'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
-				'</tr>')
-				.insertAfter(options[optionCount - 1])
-				.iCheck(icheckOption);
+				'</tr>').insertAfter(options[optionCount - 1]);
 		}
 
 		e.preventDefault();
@@ -455,7 +478,7 @@ $(function()
 			$('.quiz-option-crossword-words textarea[name="quiz-option-crossword-words"]').val(words.shuffle());
 			UpdateCrosswordWordsHint();
 
-			DismissErrorMessage();
+
 		} else {
 			ShowErrorMessage('请先输入字谜答案');
 		}
@@ -523,10 +546,10 @@ $(function()
 			if(Math.floor(countdownInput) == countdownInput && $.isNumeric(countdownInput)) {
 				countdown = countdownInput;
 				if(countdown < 10) {
-					ShowErrorMessage('答题时间不能少于10秒');
+					ShowErrorMessage('答题时限不能少于10秒');
 					return;
 				} else if(countdown > 3600) {
-					ShowErrorMessage('答题时间不能超过1个小时');
+					ShowErrorMessage('答题时限不能超过1个小时');
 					return;
 				}
 			}
@@ -538,9 +561,17 @@ $(function()
 			}
 		}
 
-		var quizType = '';
 		var quizSummary = '';
+
+		if(countdown > 0) {
+			quizSummary += '<div><i class="md md-access-time"></i> 限时：' + countdown + ' 秒</div>';
+		} else {
+			quizSummary += '<div><i class="md md-access-time"></i> 限时：不限 </div>';
+		}
+
+		var quizType = '';
 		var isValidOption = true;
+		var hasDumpOptions = false;
 		var hasAnswer = false;
 		var options = [];
 		var answers = [];
@@ -553,7 +584,6 @@ $(function()
 				
 				if(!optionValue.length) {
 					optionInput.focus();
-					ShowErrorMessage('请输入答题选项');
 
 					isValidOption = false;
 					return;
@@ -564,32 +594,37 @@ $(function()
 				for (var i = 0; i < options.length; i++) {
 					if(optionValue == options[i]['content']) {
 						optionInput.focus();
-						ShowErrorMessage('请不要输入重复的答题选项');
 
-						isValidOption = false;
+						hasDumpOptions = true;
 						return;
 					}
 				};
 
 				options = options.concat({'content' : optionValue});
 
-				var isAnswer = $($elements[1]).find('.iradio_square-blue').hasClass('checked');
+				var isAnswer = $($elements[1]).find('input[name="quiz-option-single-answer"]').is(':checked');
 				answers = answers.concat({'answer':isAnswer, 'score' : isAnswer ? 10 : 0});
 
 				hasAnswer |= isAnswer;
 			});
 
 			if(!isValidOption) {
+				ShowErrorMessage('答题选项不能为空<span class="hidden-xs">，请设置至少两个选项</span>');
+				return;
+			}
+
+			if(hasDumpOptions) {
+				ShowErrorMessage('答题选项不能重复<span class="hidden-xs">，请不要设置相同的答题选项</span>');
 				return;
 			}
 
 			if(!hasAnswer) {
 
-				ShowErrorMessage('请设置一个答案');
+				ShowErrorMessage('<span class="hidden-xs">答案不能为空，</span>请设置一个答案');
 				return;
 			}
 
-			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">单选</span></div>';
+			quizSummary  += '<div><i class="md  md-local-offer"></i> 题型：<span class="question-tag bgm-lightgreen"><i class="md md-radio-button-on"></i> 单项选择</span></div>';
 
 			quizType = 'singleSelection';
 
@@ -638,7 +673,7 @@ $(function()
 				return;
 			}
 
-			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">多选</span></div>';
+			quizSummary  += '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">多选</span></div>';
 			quizType = 'multipleSelection';
 		} else if(quizTypeId == 3) {
 			// 成语字谜
@@ -670,7 +705,7 @@ $(function()
 
 			options = [{'content' : crosswordWords, 'wordcount' : crosswordAnswer.length}];
 			answers = [{'answer' : crosswordAnswer, 'score' : 10}];
-			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">字谜</span></div>';
+			quizSummary  += '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">字谜</span></div>';
 			quizType = 'crossword';
 
 		} else if(quizTypeId == 4) {
@@ -719,19 +754,13 @@ $(function()
 				return;
 			}
 
-			quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">填空</span></div>';
+			quizSummary  += '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">填空</span></div>';
 			quizType = 'textInput';
 
 		} else {
 			ShowErrorMessage('请选择答题类型');
 
 			return;
-		}
-
-		DismissErrorMessage();
-
-		if(countdown > 0) {
-			quizSummary += '<div><i class="glyphicon glyphicon-time"></i>限时：<strong>' + countdown + '</strong> 秒</div>';
 		}
 
 		var quizItem = {
