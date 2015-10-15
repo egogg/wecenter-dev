@@ -96,8 +96,6 @@ class main extends AWS_CONTROLLER
 		TPL::import_css('css/star-rating.min.css');
 		TPL::import_js('js/star-rating.min.js');
 		TPL::import_css('css/publish.css');
-		TPL::import_js('js/icheck.min.js');
-		TPL::import_css('css/icheck/square/blue.css');
 		TPL::import_js('js/quiz.js');
 		TPL::import_css('css/quiz.css');
 

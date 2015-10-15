@@ -5,6 +5,14 @@
   border: none !important;
 }
 
+.rating-container .rating-stars {
+  color: #ff9800;
+}
+
+.rating-container {
+  color: #e0e0e0;
+}
+
 /* 题目选项编辑对话框 */
 
 #quiz-option-error-message i {
@@ -13,6 +21,10 @@
 
 .quiz-preview {
   max-width: 316px;
+}
+
+.quiz-preview .quiz-options {
+  margin-bottom: 23px;
 }
 
 #quiz-summary div {

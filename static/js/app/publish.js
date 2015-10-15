@@ -118,7 +118,8 @@ $(function()
 
 	$('#question_difficulty').rating({
 		showClear:false, 
-		size: 'sm',
+		ratingClass: ' md md-star',
+		size: 'xs',
 		clearCaption : '',
 		starCaptions:{
 		    1: '休闲',
@@ -233,7 +234,7 @@ $(function()
 						quizOptions += '<tr class="quiz-option-single">' + 
 							'<td><input type="text" class="form-control" placeholder="输入答题选项" value="' + 
 							quizContent.options[i].content + '"></td>' +
-							'<td><label class="radio radio-inline m-r-20"><input type="radio" name="quiz-option-single-answer" '+ (quizContent.answers[i].answer ? 'checked' : '') + '><i class="input-helper"></i></label></td>' +
+							'<td><label class="radio radio-inline m-r-20"><input type="radio" name="quiz-option-single-answer" '+ (quizContent.answers[i].answer ? "checked" : "") + '><i class="input-helper"></i></label></td>' +
 							'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
 							'</tr>';
 					};
@@ -250,8 +251,7 @@ $(function()
 						quizOptions += '<tr class="quiz-option-multiple">' + 
 							'<td><input type="text" class="form-control" placeholder="输入答题选项" value="' + 
 							quizContent.options[i].content + '"></td>' +
-							'<td><input class="dlg-control" type="checkbox" name="quiz-option-single-answer"' + 
-							(quizContent.answers[i].answer ? 'checked' : '') + '></td>' +
+							'<td><label class="checkbox checkbox-inline m-r-20"><input type="checkbox" name="quiz-option-multiple-answer" ' + (quizContent.answers[i].answer ? 'checked' : '') + '><i class="input-helper"></i></label></td>' +
 							'<td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>' +
 							'</tr>';
 					};
@@ -299,7 +299,7 @@ $(function()
 	$('#delete-quiz-options').on('click', function(e) {
 		$('#quiz_content').val('');
 		$('#quiz-summary').html('');
-		$(this).closest('.panel-body').find('.quiz-preview').html('');
+		$(this).closest('.question-quiz-panel').find('.quiz-preview').html('');
 		e.preventDefault();
 	});
 
@@ -637,7 +637,6 @@ $(function()
 				
 				if(!optionValue.length) {
 					optionInput.focus();
-					ShowErrorMessage('请输入答题选项');
 
 					isValidOption = false;
 					return;
@@ -648,32 +647,38 @@ $(function()
 				for (var i = 0; i < options.length; i++) {
 					if(optionValue == options[i]['content']) {
 						optionInput.focus();
-						ShowErrorMessage('请不要输入重复的答题选项');
+						hasDumpOptions = true;
 
-						isValidOption = false;
 						return;
 					}
 				};
 
 				options = options.concat({'content' : optionValue});
 
-				var isAnswer = $($elements[1]).find('.icheckbox_square-blue').hasClass('checked');
+				var isAnswer = $($elements[1]).find('input[name="quiz-option-multiple-answer"]').is(':checked');
 				answers = answers.concat({'answer':isAnswer, 'score' : isAnswer ? 10 : 0});
 
 				hasAnswer |= isAnswer;
 			});
 
 			if(!isValidOption) {
+				ShowErrorMessage('答题选项不能为空<span class="hidden-xs">，请设置至少两个选项</span>');
+				return;
+			}
+
+			if(hasDumpOptions) {
+				ShowErrorMessage('答题选项不能重复<span class="hidden-xs">，请不要设置相同的答题选项</span>');
 				return;
 			}
 
 			if(!hasAnswer) {
 
-				ShowErrorMessage('请至少设置一个答案');
+				ShowErrorMessage('<span class="hidden-xs">答案不能为空，</span>请设置至少一个答案');
 				return;
 			}
 
-			quizSummary  += '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">多选</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-indigo"><i class="md md-check-box"></i> 多项选择</span></div>';
+
 			quizType = 'multipleSelection';
 		} else if(quizTypeId == 3) {
 			// 成语字谜
@@ -682,13 +687,13 @@ $(function()
 			if(!crosswordAnswer.length) {
 				crosswordAnswerInput.val(crosswordAnswer);
 				crosswordAnswerInput.focus();
-				ShowErrorMessage('请输入字谜答案');
+				ShowErrorMessage('<span class="hidden-xs">字谜答案不能为空，</span>请输入字谜答案');
 
 				return;
-			} else if(crosswordAnswer.length > 5) {
+			} else if(crosswordAnswer.length > 20) {
 				crosswordAnswerInput.focus();
 				crosswordAnswerInput.val(crosswordAnswer);
-				ShowErrorMessage('字谜长度请不要超过5');
+				ShowErrorMessage('<span class="hidden-xs">谜底过长，</span>字谜长度请不要超过20');
 
 				return;
 			}
@@ -698,18 +703,19 @@ $(function()
 			if(crosswordWords.length != crosswordAnswer.length * 8) {
 				crosswordWordsInput.val(crosswordWords);
 				crosswordWordsInput.focus();
-				ShowErrorMessage('可选汉字长度必须为：' + crosswordAnswer.length + ' × 8 = ' + crosswordAnswer.length * 8);
+				ShowErrorMessage('<span class="hidden-xs">可选汉字长度错误，</span>可选汉字个数必须为' + crosswordAnswer.length * 8 + '（谜底长度的8倍）' );
 
 				return;
 			}
 
 			options = [{'content' : crosswordWords, 'wordcount' : crosswordAnswer.length}];
 			answers = [{'answer' : crosswordAnswer, 'score' : 10}];
-			quizSummary  += '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">字谜</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
 			quizType = 'crossword';
 
 		} else if(quizTypeId == 4) {
 			// 完形填空
+			var isValidAnswer = true;
 			$('.quiz-option-textinput').each(function(i, element){
 				var $elements = $(element).children();
 				var optionLabelInput = $($elements[0]).find('input');
@@ -717,7 +723,6 @@ $(function()
 				
 				if(!optionLabelValue.length) {
 					optionLabelInput.focus();
-					ShowErrorMessage('请输入填空的说明文字');
 
 					isValidOption = false;
 					return;
@@ -728,9 +733,8 @@ $(function()
 
 				if(!optionAnswerValue.length) {
 					optionAnswerInput.focus();
-					ShowErrorMessage('请输入相应的答案');
 
-					isValidOption = false;
+					isValidAnswer = false;
 					return;
 				}
 
@@ -739,9 +743,8 @@ $(function()
 				for (var i = 0; i < options.length; i++) {
 					if(optionLabelValue == options[i]['content']) {
 						optionLabelInput.focus();
-						ShowErrorMessage('请不要输入重复的答题选项');
 
-						isValidOption = false;
+						hasDumpOptions = true;
 						return;
 					}
 				};
@@ -751,14 +754,28 @@ $(function()
 			});
 
 			if(!isValidOption) {
+				ShowErrorMessage('填空标签文字不能为空<span class="hidden-xs">，请输入填空标签</span>');
+
 				return;
 			}
 
-			quizSummary  += '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">填空</span></div>';
+			if(!isValidAnswer) {
+				ShowErrorMessage('填空答案不能为空<span class="hidden-xs">，请输入相应的答案</span>');
+
+				return;
+			}
+
+			if(hasDumpOptions) {
+				ShowErrorMessage('填空标签文字不能重复<span class="hidden-xs">，请不要设置相同的填空标签</span>');
+
+				return;
+			}
+
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
 			quizType = 'textInput';
 
 		} else {
-			ShowErrorMessage('请选择答题类型');
+			ShowErrorMessage('<span class="hidden-xs">错误的答题类型，</span>请选择答题类型');
 
 			return;
 		}
