@@ -11,6 +11,7 @@
 
 .rating-container {
   color: #e0e0e0;
+  font-size: 24px;
 }
 
 /* 题目选项编辑对话框 */
@@ -20,7 +21,7 @@
 }
 
 .quiz-preview {
-  max-width: 316px;
+  /*max-width: 316px;*/
 }
 
 .quiz-preview .quiz-options {

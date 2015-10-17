@@ -460,11 +460,6 @@ class ajax extends AWS_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你没有权限发布问题')));
         }
 
-        if (!$_POST['question_content'])
-        {
-            H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('请输入问题标题')));
-        }
-
         if (get_setting('category_enable') == 'N')
         {
             $_POST['category_id'] = 1;
@@ -473,6 +468,11 @@ class ajax extends AWS_CONTROLLER
         if (!$_POST['category_id'])
         {
             H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请选择问题分类')));
+        }
+
+        if (!$_POST['question_content'])
+        {
+            H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('请输入问题标题')));
         }
 
         if (cjk_strlen($_POST['question_content']) < 5)

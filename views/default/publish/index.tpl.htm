@@ -29,7 +29,7 @@
 								<?php if($this->question_category_items) { ?>
 									<ul class="question-category-items">
 										<?php foreach ($this->question_category_items as $key => $value) { ?>
-											<li class="question-category-item">
+											<li class="question-category-item <?php if($this->question_info['category_id'] == $key) { ?>active<?php } ?>" data-value="<?php echo $key; ?>">
 												<a href="javascript:void(0);"><?php echo $value['title']; ?></a>
 											</li>
 										<?php } ?>
@@ -75,8 +75,8 @@
 						<div class="question-publish-group">
 							<p class="f-500 m-b-5 c-black">问题难度 <small class="c-gray">估计一下问题的难度</small></p>
 							
-							<div class="question-publish-item">
-								<input id="question_difficulty" name="question_difficulty" type="number" class="rating" min=0 max=5 step=1 >
+							<div>
+								<input id="question_difficulty" name="question_difficulty" type="number" class="rating" min=0 max=5 step=1 value = "<?php if($this->question_info['difficulty']) {echo $this->question_info['difficulty'];}else{ echo '2';} ?>">
 							</div>
 						</div>
 						<div class="question-publish-group">

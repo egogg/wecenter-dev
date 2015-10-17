@@ -39,7 +39,7 @@ $(function()
     {
         if ($(".aw-upload-box .upload-list").length) {
             $.post(G_BASE_URL + '/publish/ajax/' + PUBLISH_TYPE + '_attach_edit_list/', PUBLISH_TYPE + '_id=' + ITEM_ID, function (data) {
-                if (data['err']) {
+                if (data['err'] || !data['rsm']['attachs']) {
                     return false;
                 } else {
                     $.each(data['rsm']['attachs'], function (i, v) {
@@ -111,7 +111,9 @@ $(function()
 	// 分类选择
 
 	$('.question-category-items').on('click', '.question-category-item', function(e) {
-		$(this).addClass('active').siblings().removeClass('active');
+		var elmCategory = $(this);
+		elmCategory.addClass('active').siblings().removeClass('active');
+		$('#category_id').val(elmCategory.attr('data-value'));
 	});
 
 	// 难度控件
@@ -148,24 +150,24 @@ $(function()
 	}
 
 	if(IS_JSON) {
-		var quizType = '';
-		if(quizContent.type == 'singleSelection') {
-			quizType = '单选';
-		}
-		else if(quizContent.type == 'multipleSelection') {
-			quizType = '多选';
-		}
-		else if(quizContent.type == 'crossword') {
-			quizType = '字谜';
-		}
-		else if(quizContent.type == 'textInput') {
-			quizType = '填空';
+		var quizSummary = '';
+		if(quizContent.countdown > 0) {
+			quizSummary += '<div><i class="md md-access-time"></i> 限时：' + quizContent.countdown + ' 秒</div>';
+		} else {
+			quizSummary += '<div><i class="md md-access-time"></i> 限时：不限 </div>';
 		}
 
-		quizSummary  = '<div><i class="glyphicon glyphicon-tags"></i>题型：<span class="label label-info">' + 
-			quizType + '</span></div>';
-		if(quizContent.countdown > 0) {
-			quizSummary += '<div><i class="glyphicon glyphicon-time"></i>限时：<strong>' + quizContent.countdown + '</strong> 秒</div>';
+		if(quizContent.type == 'singleSelection') {
+			quizSummary  += '<div><i class="md  md-local-offer"></i> 题型：<span class="question-tag bgm-lightgreen"><i class="md md-radio-button-on"></i> 单项选择</span></div>';
+		}
+		else if(quizContent.type == 'multipleSelection') {
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-indigo"><i class="md md-check-box"></i> 多项选择</span></div>';
+		}
+		else if(quizContent.type == 'crossword') {
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
+		}
+		else if(quizContent.type == 'textInput') {
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
 		}
 
 		$('#quiz-summary').html(quizSummary);
@@ -216,7 +218,7 @@ $(function()
 			// countdown
 
 			if(quizContent.countdown > 0) {
-				$('#enable-quiz-countdown input[name="enable-quiz-countdown"]').prop('checked', true);
+				$('#enable-quiz-countdown input').prop('checked', true);
 
 				$('#quiz-countdown-input').val(quizContent.countdown);
 				$('#quiz-countdown-input').show();
@@ -305,50 +307,47 @@ $(function()
 
 	// 答题选项编辑对话框
 
-	function notify(msg){
-        $.growl({
+	function ShowErrorMessage(msg) {
+		$.growl({
             icon: 'md md-error',
             title: '',
             message: msg,
             url: ''
-        },{
-                element: '#dlg-quiz-options .modal-content',
-                type: 'danger',
-                allow_dismiss: true,
-                placement: {
-                        from: 'bottom',
-                        align: 'left'
-                },
-                offset: {
-                    x: 20,
-                    y: 85
-                },
-                spacing: 10,
-                z_index: 1031,
-                delay: 2500,
-                timer: 1000,
-                url_target: '_blank',
-                mouse_over: false,
-                animate: {
-                        enter: 'animated fadeInDown',
-                        exit: 'animated fadeOutDown'
-                },
-                icon_type: 'class',
-                template: '<div data-growl="container" class="alert" role="alert">' +
-                                '<button type="button" class="close c-white" data-growl="dismiss">' +
-                                    '<span aria-hidden="true">&times;</span>' +
-                                    '<span class="sr-only">Close</span>' +
-                                '</button>' +
-                                '<span data-growl="icon" class="c-white"></span> ' +
-                                '<span data-growl="title"></span>' +
-                                '<span data-growl="message" class="c-white"></span>' +
-                                '<a href="#" data-growl="url"></a>' +
-                            '</div>'
+        },
+        {
+            element: '#dlg-quiz-options .modal-content',
+            type: 'danger',
+            allow_dismiss: true,
+            placement: {
+                    from: 'bottom',
+                    align: 'left'
+            },
+            offset: {
+                x: 20,
+                y: 85
+            },
+            spacing: 10,
+            z_index: 1031,
+            delay: 2500,
+            timer: 1000,
+            url_target: '_blank',
+            mouse_over: false,
+            animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutDown'
+            },
+            icon_type: 'class',
+            template: '<div data-growl="container" class="alert" role="alert">' +
+                            '<button type="button" class="close c-white" data-growl="dismiss">' +
+                                '<span aria-hidden="true">&times;</span>' +
+                                '<span class="sr-only">Close</span>' +
+                            '</button>' +
+                            '<span data-growl="icon" class="c-white"></span> ' +
+                            '<span data-growl="title"></span>' +
+                            '<span data-growl="message" class="c-white"></span>' +
+                            '<a href="#" data-growl="url"></a>' +
+                        '</div>'
         });
-    };
-
-	function ShowErrorMessage(msg) {
-		notify(msg);
 	}
 
 	$('#enable-quiz-countdown').on('click', function(){

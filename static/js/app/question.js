@@ -1,5 +1,9 @@
 $(function(){
 
+	if ($('[data-toggle="tooltip"]')[0]) {
+        $('[data-toggle="tooltip"]').tooltip();
+    }
+
 	// 问题标签
 
 	$('.question-loader').on('click', '.question-tag',  function(e){
@@ -127,6 +131,12 @@ $(function(){
 
 			formatCountdownInfo();
 			parseQuestionQuiz(!takenQuiz);
+
+			// 提示信息
+
+			if ($('[data-toggle="tooltip"]')[0]) {
+		        $('[data-toggle="tooltip"]').tooltip();
+		    }
 
 			// if(takenQuiz) {
 			// 	// showQuizContentOverlay();
