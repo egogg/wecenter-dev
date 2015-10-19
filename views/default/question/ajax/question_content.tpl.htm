@@ -11,7 +11,7 @@
     <?php if ((!$this->question_info['lock'] AND ($this->question_info['published_uid'] == $this->user_id OR $this->user_info['permission']['edit_question'])) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
 	    <ul class="actions">
 	    	<li data-tigger="hover" data-toggle="tooltip" data-placement="bottom" data-content="编辑问题" title data-original-title="编辑问题"><a href="publish/<?php echo $this->question_info['question_id']; ?>"><i class="md md-create"></i></a></li>
-	    	<li data-tigger="hover" data-toggle="tooltip" data-placement="bottom" data-content="编写答案解析" title data-original-title="编写答案解析"><a href="javascript:void(0);"><i class="md md-spellcheck"></i></a></li>
+	    	<li data-tigger="hover" data-toggle="tooltip" data-placement="bottom" data-content="编写答案解析" title data-original-title="编写答案解析"><a href="javascript:void(0);" onclick="AWS.dialog('solutionEdit', {question_id:<?php echo $this->question_info['question_id']; ?>,solution_id:<?php echo $this->question_info['solution_id']; ?>,attach_access_key:'<?php echo $this->attach_access_key; ?>'});"><i class="md md-spellcheck"></i></a></li>
 	        <li class="dropdown">
 	            <a href="#" data-toggle="dropdown" aria-expanded="false">
 	                <i class="md md-more-vert"></i>

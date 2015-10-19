@@ -105,24 +105,32 @@ var AW_TEMPLATE = {
 				'<div class="modal-dialog">'+
 					'<div class="modal-content">'+
 						'<div class="modal-header">'+
-							'<a type="button" class="close icon icon-delete" data-dismiss="modal" aria-hidden="true"></a>'+
-							'<h3 class="modal-title" id="myModalLabel">' + _t('编辑答案解析') + '</h3>'+
 						'</div>'+
 						'<form action="' + G_BASE_URL + '/question/ajax/save_question_solution/question_id-{{question_id}}__solution_id-{{solution_id}}" method="post" onsubmit="return false" id="solution_edit">'+
+						'<input type="hidden" name="attach_access_key" value="{{attach_access_key}}" />'+
 						'<div class="modal-body">'+
 							'<div class="alert alert-danger hide error_message"><i class="icon icon-delete"></i> <em></em></div>'+
-							'<input type="hidden" name="attach_access_key" value="{{attach_access_key}}" />'+
-							'<textarea name="solution_content" id="editor_solution" class="form-control" rows="10"></textarea>'+
-							'<div class="aw-file-upload-box">'+
-								'<div class="aw-upload-box">'+
-									'<a class="btn btn-default">上传附件</a>'+
-									'<div class="upload-container"></div>'+
-								'</div>'+
-							'</div>'+
+							'<div class="question-publish-group">' +
+								'<p class="f-500 m-b-5 c-black">编辑答案解析 <small class="c-gray">参考答案的详细解答分析</small></p>' +
+								'<div class="question-publish-item">' +
+									'<textarea name="solution_content" id="editor_solution" class="form-control" rows="10"></textarea>'+
+									'<p></p>' +
+									'<div class="aw-file-upload-box">'+
+										'<div class="aw-upload-box">'+
+											'<a class="btn btn-success btn-sm">上传附件</a>'+
+											'<div class="upload-container"></div>'+
+										'</div>'+
+									'</div>' +
+								'</div>' +
+							'</div>' +
+							'<div class="question-publish-group">' +
+								'<p class="f-500 m-b-5 c-black">删除答案解析 <small class="c-gray">删除答案解析内容</small></p>' +
+								'<div class="checkbox"><label><input id="aw-do-delete" type="checkbox" value="1" name="do_delete" /><i class="input-helper"></i>' + _t('删除解析') + '</label></div>'+
+							'</div>' +
 						'</div>'+
 						'<div class="modal-footer">'+
-							'<span><input id="aw-do-delete" type="checkbox" value="1" name="do_delete" /><label for="aw-do-delete">' + _t('删除解析') + '</label></span>'+
-							'<button class="btn btn-large btn-success" onclick="AWS.ajax_post($(\'#solution_edit\'), AWS.ajax_processer, \'ajax_post_alert\');return false;">' + _t('确定') + '</button>'+
+							'<button class="btn btn-primary" onclick="AWS.ajax_post($(\'#solution_edit\'), AWS.ajax_processer, \'ajax_post_alert\');return false;">' + _t('确定保存') + '</button>'+
+							'<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>' +
 						'</div>'+
 						'</form>'+
 					'</div>'+

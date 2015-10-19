@@ -67,6 +67,50 @@ var AWS =
 		}
 	},
 
+	ajax_error_msg: function(msg)
+	{
+		$.growl({
+            icon: 'md md-error',
+            title: '',
+            message: msg,
+            url: ''
+        },
+        {
+            element: 'body',
+            type: 'danger',
+            allow_dismiss: true,
+            placement: {
+                    from: 'top',
+                    align: 'center'
+            },
+            offset: {
+                x: 20,
+                y: 85
+            },
+            spacing: 10,
+            z_index: 99999,
+            delay: 2500,
+            timer: 1000,
+            url_target: '_blank',
+            mouse_over: false,
+            animate: {
+                    enter: 'animated fadeInDown',
+                    exit: 'animated fadeOutDown'
+            },
+            icon_type: 'class',
+            template: '<div data-growl="container" class="alert" role="alert">' +
+                            '<button type="button" class="close c-white" data-growl="dismiss">' +
+                                '<span aria-hidden="true">&times;</span>' +
+                                '<span class="sr-only">Close</span>' +
+                            '</button>' +
+                            '<span data-growl="icon" class="c-white"></span> ' +
+                            '<span data-growl="title"></span>' +
+                            '<span data-growl="message" class="c-white"></span>' +
+                            '<a href="#" data-growl="url"></a>' +
+                        '</div>'
+        });
+	},
+
 	ajax_request: function(url, params)
 	{
 		AWS.loading('show');
@@ -224,27 +268,28 @@ var AWS =
 				case 'ajax_post_alert':
 				case 'ajax_post_modal':
 				case 'error_message':
-					if (!$('.error_message').length)
-					{
-						alert(result.err);
-					}
-					else if ($('.error_message em').length)
-					{
-						$('.error_message em').html(result.err);
-					}
-					else
-					{
-						 $('.error_message').html(result.err);
-					}
+					// if (!$('.error_message').length)
+					// {
+					// 	alert(result.err);
+					// }
+					// else if ($('.error_message em').length)
+					// {
+					// 	$('.error_message em').html(result.err);
+					// }
+					// else
+					// {
+					// 	 $('.error_message').html(result.err);
+					// }
 
-					if ($('.error_message').css('display') != 'none')
-					{
-						AWS.shake($('.error_message'));
-					}
-					else
-					{
-						$('.error_message').fadeIn();
-					}
+					// if ($('.error_message').css('display') != 'none')
+					// {
+					// 	AWS.shake($('.error_message'));
+					// }
+					// else
+					// {
+					// 	$('.error_message').fadeIn();
+					// }
+					AWS.ajax_error_msg(result.err);
 
 					if ($('#captcha').length)
 					{
@@ -822,13 +867,14 @@ var AWS =
 						$('#editor_solution').html(result.content.replace('&amp;', '&'));
 
 						var editor = CKEDITOR.replace( 'editor_solution' );
+						var attachAccessKey = $('#solution_edit input[name=attach_access_key]').val();
 
 						if (UPLOAD_ENABLE == 'Y')
 						{
-							var fileupload = new FileUpload('file', '.aw-edit-solution-box .aw-upload-box .btn', '.aw-edit-solution-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-solution__attach_access_key-' + ATTACH_ACCESS_KEY, {'insertTextarea': '.aw-edit-solution-box #editor_solution', 'editor' : editor});
+							var fileupload = new FileUpload('file', '.aw-edit-solution-box .aw-upload-box .btn', '.aw-edit-solution-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-solution__attach_access_key-' + attachAccessKey, {'insertTextarea': '.aw-edit-solution-box #editor_solution', 'editor' : editor});
 
 							$.post(G_BASE_URL + '/publish/ajax/solution_attach_edit_list/', 'solution_id=' + data.solution_id, function (data) {
-								if (data['err']) {
+								if (data['err'] || !data['rsm']['attachs']) {
 									return false;
 								} else {
 									$.each(data['rsm']['attachs'], function (i, v) {

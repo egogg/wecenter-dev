@@ -490,6 +490,7 @@ class main extends AWS_CONTROLLER
 		// TPL::assign('question_info_previous', $question_info_previous);
 
 		TPL::import_js('js/app/question.js');
+		TPL::import_js('js/bootstrap-growl.min.js');
 		TPL::import_css('css/question.css');
 		TPL::import_js('js/quiz.js');
 		TPL::import_css('css/quiz.css');

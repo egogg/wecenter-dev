@@ -1123,7 +1123,7 @@ class ajax extends AWS_CONTROLLER
 
 		if (!$solution_content)
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入详细答案解析')));
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('<span class="hidden-xs">答案解析不能为空，</span>请输入详细答案解析')));
 		}
 
 		if (!$this->model('publish')->insert_attach_is_self_upload($solution_content, $_POST['attach_ids']))
@@ -1495,7 +1495,8 @@ class ajax extends AWS_CONTROLLER
 		}
 		TPL::assign('show_question_quiz', $show_question_quiz);
 		TPL::assign('show_question_title', $show_question_title);
-
+		
+		TPL::assign('attach_access_key', md5($this->user_id . time()));
 		TPL::output('question/ajax/question_content');
 	}
 

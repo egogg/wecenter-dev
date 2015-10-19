@@ -73,7 +73,9 @@ $(function()
 				}
 
 				// 自动保存草稿
-				EDITOR.on( 'blur', EDITOR_CALLBACK);
+				if(EDITOR) {
+					EDITOR.on( 'blur', EDITOR_CALLBACK);
+				}
 			}
 			
 		}
