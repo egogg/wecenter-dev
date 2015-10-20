@@ -1495,7 +1495,7 @@ class ajax extends AWS_CONTROLLER
 		}
 		TPL::assign('show_question_quiz', $show_question_quiz);
 		TPL::assign('show_question_title', $show_question_title);
-		
+
 		TPL::assign('attach_access_key', md5($this->user_id . time()));
 		TPL::output('question/ajax/question_content');
 	}
@@ -1595,7 +1595,7 @@ class ajax extends AWS_CONTROLLER
 					{
 						if($answer['answer'])
 					 	{
-					 		if($i >= count($answer_alphabet))
+					 		if($i >= $answer_max_index)
 					 		{
 					 			return;
 					 		}
@@ -1603,7 +1603,7 @@ class ajax extends AWS_CONTROLLER
 					 		$quiz_answer .= '<p>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</p>'; 
 					 	}
 					}
-
+					
 					break;
 				case 'crossword':
 					$quiz_answer = '<p>' . $quiz['answers'][0]['answer'] . '</p>';

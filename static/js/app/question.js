@@ -440,33 +440,28 @@ $(function(){
 	// 关闭选项框
 
 	$('.question-content').on('click', '.close-question-quiz-content-overlay', function (e) {
-		showQuizContent();
+		// showQuizContent();
 		e.preventDefault();
 	});
 
-	// 查看问题解析
+	// 查看答案解析
 
 	function getQuestionSolution() {
 		$.get(G_BASE_URL + '/question/ajax/get_question_solution/question_id-' + QUESTION_ID, function (response) {
 			if (!response)
 			{
-				AWS.alert('查看答案解析失败，您没有足够的权限！');
+				AWS.alert('获取答案解析失败！');
 
 				return;
 			}
 
-			var countdown_question = $('.countdown-question-welcome');
-			if(countdown_question.length) {
-				countdown_question.hide();
-			} else {
-				showQuizContent();
-			}
-			
+			$('.question-quiz-result').hide();
+			$('.question-actions').hide();
 			$('.question-solution').html(response).fadeIn();
 		});
 	}
 
-	$('.question-content').on('click', '.action-view-solution', function (e) {
+	$('.question-quiz-actions').on('click', 'li.question-quiz-action-item.view-solution a', function (e) {
 		e.preventDefault();
 		// 检查用户是否登录
 
@@ -588,15 +583,10 @@ $(function(){
 
 	// 关闭答案解析
 
-	$('.question-solution').on('click', '.close-question-solution', function (e) {
+	$('.question-loader').on('click', '.question-solution .close-question-solution', function (e) {
 		$('.question-solution').hide();
-		var countdown_question = $('.countdown-question-welcome');
-		if(countdown_question.length)
-		{
-			countdown_question.fadeIn();
-		} else {
-			showQuizContentOverlay();
-		}
+		$('.question-quiz-result').fadeIn();
+		$('.question-actions').fadeIn();
 		
 		e.preventDefault();
 	});

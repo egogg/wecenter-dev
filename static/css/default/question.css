@@ -127,6 +127,8 @@
 
 .question-solution {
 	display: none;
+	border: 1px solid #00bcd4;
+	border-radius: 4px;
 }
 
 .quiz-answer blockquote {

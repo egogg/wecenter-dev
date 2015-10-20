@@ -1,7 +1,18 @@
-<div class="panel panel-success">
-  <div class="panel-heading"><span>问题答案详细解析</span><a type="button" class="close-question-solution close icon icon-delete" aria-hidden="true"></a></div>
-  <div class="panel-body">
-  	<div class="quiz-answer">
+
+<div class="card-header bgm-cyan">
+	<h2>
+		<i class="md md-spellcheck m-r-5"></i> 答案及解析
+	</h2>
+	<ul class="actions actions-alt">
+        <li>
+            <a href="javascript:void(0);" class="close-question-solution">
+                <i class="md md-close"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="card-body card-padding">
+	<div class="quiz-answer">
 		<?php if ($this->quiz_answer) { ?>
 			<div><h3>正确答案为：</h3><blockquote><?php echo $this->quiz_answer; ?></blockquote></div>
 		<?php } ?>
@@ -14,5 +25,4 @@
 			</div>
 		<?php } ?>
 	</div>
-  </div>
 </div>
