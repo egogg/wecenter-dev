@@ -14,15 +14,25 @@
 <div class="card-body card-padding">
 	<div class="quiz-answer">
 		<?php if ($this->quiz_answer) { ?>
-			<div><h3>正确答案为：</h3><blockquote><?php echo $this->quiz_answer; ?></blockquote></div>
+			<p class="c-black m-t-20 question-solution-title">【正确答案】</p>
+			<section class="question-solution-body">
+				<ul class="c-green">
+					<?php echo $this->quiz_answer; ?>
+				</ul>
+			</section>
+				
 		<?php } ?>
 	</div>
 	<div class="question-answer">
-		<?php if($this->question_solution) { ?>
-			<div>
-				<h3>详细分析：</h3>
-				<?php echo $this->question_solution; ?>
+		<section>
+			<p class="c-black m-t-20 question-solution-title">【详细分析】</p>
+			<div class="question-solution-body">
+				<?php if($this->question_solution) { ?>
+					<?php echo $this->question_solution; ?>
+				<?php } else { ?>
+					<p class="c-gray">:-( 暂时没有该问题的详细分析</p>
+				<?php } ?>
 			</div>
-		<?php } ?>
+		</section>
 	</div>
 </div>

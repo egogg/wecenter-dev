@@ -135,10 +135,14 @@
 	margin: 0 0 20px;
 }
 
-.add-solution-popover-close {
-	float: right;
+.question-solution-title {
+	/*border-left: 3px solid #2196F3;
+    padding-left: 10px;*/
 }
 
+.question-solution-body {
+	padding-left: 0.5em;
+}
 
 .question-pager-nav {
 	padding: 0 20px;

@@ -1583,7 +1583,7 @@ class ajax extends AWS_CONTROLLER
 					 			return;
 					 		}
 
-					 		$quiz_answer = '<p>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</p>';
+					 		$quiz_answer .= '<li>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</li>';
 
 					 		break;
 					 	}
@@ -1600,19 +1600,19 @@ class ajax extends AWS_CONTROLLER
 					 			return;
 					 		}
 
-					 		$quiz_answer .= '<p>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</p>'; 
+					 		$quiz_answer .= '<li>' . $answer_alphabet[$i] . '、' . $quiz['options'][$i]['content'] . '</li>'; 
 					 	}
 					}
 					
 					break;
 				case 'crossword':
-					$quiz_answer = '<p>' . $quiz['answers'][0]['answer'] . '</p>';
+					$quiz_answer = '<li>' . $quiz['answers'][0]['answer'] . '</li>';
 					
 					break;
 				case 'textInput':
 					foreach ($quiz['answers'] as $i => $answer) 
 					{
-						$quiz_answer .= '<p>' . ($i + 1) . '、' . $quiz['options'][$i]['content'] . '：<strong>' . $answer['answer'] . '</strong></p>';
+						$quiz_answer .= '<li>' . ($i + 1) . '、' . $quiz['options'][$i]['content'] . '：<strong>' . $answer['answer'] . '</strong></li>';
 					}
 
 					break;
@@ -1644,21 +1644,18 @@ class ajax extends AWS_CONTROLLER
 
 		// 获取用户最后一次答题的状态信息
 
-		$passed_quiz = false;
-		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
-		{
-			$passed_quiz = $quiz_record[0]['passed'];
-		}
+		// $passed_quiz = false;
+		// if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
+		// {
+		// 	$passed_quiz = $quiz_record[0]['passed'];
+		// }
 
-		$solution_not_exist = !$question_info['solution_id'] AND (!$question_info['quiz_id'] OR $pass_quiz);
+		$solution_not_exist = !($question_info['solution_id'] OR $question_info['quiz_id']);
 		if($solution_not_exist) 
 		{
-			if(!$question_info['solution_id'])
-			{
-				H::ajax_json_output(array(
-					'solution_not_exist' => true 
-				));
-			}
+			H::ajax_json_output(array(
+				'solution_not_exist' => true 
+			));
 		}
 
 		// 获取用户答题购买答案记录信息
