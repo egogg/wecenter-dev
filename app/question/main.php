@@ -345,16 +345,19 @@ class main extends AWS_CONTROLLER
 		{
 			foreach ($related_questions as $key => $value)
 			{
-				// 获取相关问题的用户信息
+				// 获取相关问题的附加图片
 
-				$related_questions[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['published_uid'], true);
+				if ($value['has_attach'])
+				{
+					$related_questions[$key]['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
+				}
 
 				// 获取是否为限时答题信息
 
 				$is_countdown = false;
 				if($value['quiz_id'])
 				{
-					$quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+					$quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($value['quiz_id']);
 					$is_countdown = ($quiz_info['countdown'] > 0);
 				}
 				$related_questions[$key]['is_countdown'] = $is_countdown;

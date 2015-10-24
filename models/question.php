@@ -693,11 +693,12 @@ class question_class extends AWS_MODEL
 			foreach ($question_related as $key => $question_content)
 			{
 				$question_related_list[] = array(
-					'question_id' => $key,
+					'question_id' => $question_info[$key]['question_id'],
 					'question_content' => $question_content,
 					'answer_count' => $question_info[$key]['answer_count'],
 					'published_uid' => $question_info[$key]['published_uid'],
 					'quiz_id' => $question_info[$key]['quiz_id'],
+					'has_attach' => $question_info[$key]['has_attach'],
 					'update_time' => $question_info[$key]['update_time']
 				);
 			}

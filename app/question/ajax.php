@@ -1430,6 +1430,8 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
 		}
 
+		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
+
 		if ($question_info['category_id'] AND get_setting('category_enable') == 'Y')
 		{
 			$question_info['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
@@ -1654,7 +1656,7 @@ class ajax extends AWS_CONTROLLER
 		if($solution_not_exist) 
 		{
 			H::ajax_json_output(array(
-				'solution_not_exist' => true 
+				'solution_not_exist' => true
 			));
 		}
 

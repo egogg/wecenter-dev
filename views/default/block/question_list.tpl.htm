@@ -5,20 +5,7 @@
 			<div class="card">
 				<div class="card-body card-padding">
 					<div class="question-list-heading clearfix">
-						<div class="question-list-publish-info">
-							<?php if ($question['user_info']) { ?>
-								<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
-									<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-										<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-									<span class="publisher-user-name">
-										<?php echo $question['user_info']['user_name']; ?>
-									</span>
-								</a>
-							<?php } ?>
-							<small>
-								• <?php echo date_friendly($question['update_time']); ?>
-							</small>
-						</div>
+						
 						<div class="question-tags">
 		            		<ul class="question-tag-list">
 		            			<!-- 问题分类 -->
@@ -46,7 +33,7 @@
 					</div>
 					
             		<div class="media question-list-body">
-					    <div class="pull-left">
+					    <div class="pull-right">
 					    	<?php if(!($question['quiz_info'] AND $question['quiz_info']['countdown']) AND $question['attachs']) { ?>		
 								<?php foreach ($question['attachs'] AS $attach) { ?>
 									<?php if ($attach['is_image']) { ?>
@@ -73,6 +60,19 @@
 				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>
 				            			</a>
 				            		<?php } ?>
+				            		
+									<div class="question-publish-info m-t-5 m-b-5">
+										<?php if ($question['user_info']) { ?>
+											<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
+												<small class="c-lightblue">
+													<?php echo $question['user_info']['user_name']; ?>
+												</small>
+											</a>
+										<?php } ?>
+										<small class="c-gray">
+											• <?php echo date_friendly($question['update_time']); ?>
+										</small>
+									</div>
 				            	</h3>
 							</div>
 						    <div class="question-list-content">
@@ -91,16 +91,18 @@
 				            		</p>
 				            	<?php } ?>
 				            </div>
-						    <ul class="question-stats">
-				            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
-								<?php if($question['quiz_stats']) { ?>
-									
-		                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['quiz_stats']['total']; ?> <span class="hidden-xs">次答题</span></li>
-		                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['quiz_stats']['rate'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
-		                    	<?php } ?>
-		                    	<li class="question-stat"><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
-		                    </ul>
 				        </div>
+				    </div>
+				    <div>
+				    	<ul class="question-stats">
+			            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
+							<?php if($question['quiz_stats']) { ?>
+								
+	                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['quiz_stats']['total']; ?> <span class="hidden-xs">次答题</span></li>
+	                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['quiz_stats']['rate'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
+	                    	<?php } ?>
+	                    	<li class="question-stat"><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
+	                    </ul>
 				    </div>
                 </div>
 			</div> 

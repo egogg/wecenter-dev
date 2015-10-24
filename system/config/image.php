@@ -32,12 +32,16 @@ $config['topic_thumbnail'] = array(
 
 $config['attachment_thumbnail'] = array(
 	'min' => array(
-		"w" => 170,
-		"h" => 110
+		"w" => 80,
+		"h" => 50
 	),
 	'square' => array(
-		"w" => 100,
+		"w" => 162,
 		"h" => 100
+	),
+	'mid' => array(
+		"w" => 130,
+		"h" => 80
 	)
 );
 

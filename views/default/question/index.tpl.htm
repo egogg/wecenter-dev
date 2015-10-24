@@ -5,42 +5,6 @@
 		<div class="col-sm-8">
 			<!-- 题目信息  -->
 			<div class="card">
-				<div class="card-header question-publisher hidden-xs">
-					<div class="media">
-						<div class="pull-left">
-							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'mid'); ?>" /></a>
-						</div>
-						<div class="pull-right">
-							<a href="#" class="follow"><i class="md md-add"></i> <em>|</em> 添加关注</a>
-						</div>
-						<div class="media-body">
-	                        <div class="media-heading question-publisher-title">
-	                        	<span class="question-publisher-mark">出题</span>
-	                        	<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
-	                        	<span class="question-publish-time">
-	                        		<?php echo date_friendly($this->question_info['add_time'], 604800, 'Y-m-d'); ?>
-	                        	</span>
-	                        </div>
-	                        <div class="question-publisher-stats">
-	                        	<ul class="clearfix">
-	                        		<li>
-	                        			<a class="c-gray" href="javascript:void(0);">出题 <span>0</span></a>
-	                        		</li>
-	                        		<li>
-	                        			<a class="c-gray" href="javascript:void(0);">答题 <span>1</span></a>
-	                        		</li>
-	                        		<li>
-	                        			<a class="c-gray" href="javascript:void(0);">准确率 <span>25%</span></a>
-	                        		</li>
-	                        		<li>
-	                        			<a class="c-gray" href="javascript:void(0);">参与讨论 <span>15</span>次</a>
-	                        		</li>
-	                        	</ul>
-	                        </div>
-	                    </div>
-					</div>
-	            </div>
-				
 				<!-- 问题内容 -->
 				<div class="question-loader">
 					
@@ -177,14 +141,60 @@
 		</div>
 		<div class="col-sm-4">
 			<!-- 侧边栏 -->
-			<!-- 我要出题 -->
-			<div class="card">
-				<a href="publish/" class="question-content-publish"><i class="md md-create"></i> 我要出题</a>
+			<!-- 发起人卡片 -->
+			<div class="card hidden-xs">
+				<div class="card-header card-padding p-b-0 question-publisher">
+					<div class="media">
+						<div class="pull-left">
+							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
+						</div>
+						<div class="media-body">
+	                        <div class="media-heading publisher-title">
+	                        	<h4>
+	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
+	                        		<span class="question-publisher-mark">出题</span>
+	                        	</h4>
+	                        	<div class="question-publisher-stats">
+		                        	<ul class="clearfix">
+		                        		<li>
+		                        			<a class="c-gray" href="javascript:void(0);">出题 <span>0</span></a>
+		                        		</li>
+		                        		<li>
+		                        			<a class="c-gray" href="javascript:void(0);">答题 <span>1</span></a>
+		                        		</li>
+		                        		<li>
+		                        			<a class="c-gray" href="javascript:void(0);">讨论 <span>15</span></a>
+		                        		</li>
+		                        		<li>
+		                        			<a class="c-gray" href="javascript:void(0);">正确率 <span>25%</span></a>
+		                        		</li>
+		                        	</ul>
+		                        </div>
+	                        </div>
+	                    </div>
+					</div>
+	            </div>
+	            <div class="card-body card-padding">
+					<div class="m-b-10">
+						<?php echo $this->question_info['user_info']['signature']; ?>
+					</div>
+					<div class="clearfix">
+						<span class="c-gray question-publisher-followers">共有 3 人关注该用户</span> 
+						<span class="pull-right">
+							<a href="#" class="follow question-publisher"><i class="md md-add"></i> <em>|</em> 添加关注</a>
+						</span>
+					</div>
+                    
+				</div>
 			</div>
+			<!-- 我要出题 -->
+			<!-- <div class="card  hidden-xs">
+				<a href="publish/" class="question-content-publish"><i class="md md-create"></i> 我要出题</a>
+			</div> -->
 			<!-- 答题动态 -->
 			<?php if ($this->question_quiz_record) { ?>
 				<div class="card">
-					<div class="card-header question-sidebar-title">
+					<div class="card-header">
 						<h2>答题动态</h2>
 						<ul class="actions">
 		                    <li>
@@ -218,12 +228,13 @@
 													</div>
 												<?php } ?>
                                             </div>
-                                            <small class="lv-small"><?php echo $val['user_info']['user_name']; ?> • <?php echo date_friendly($val['start_time']); ?></small>
+                                            <small class="lv-small"><span class="c-lightblue"><?php echo $val['user_info']['user_name']; ?></span> • <?php echo date_friendly($val['start_time']); ?></small>
                                         </div>
                                     </div>
 								</a>
 								<?php } ?>
 							<?php } ?>
+							<div class="lv-footer"></div>
 	            		</div>
 	            	</div>
 				</div>
@@ -232,34 +243,38 @@
 			<!-- 相关问题 -->
 			<?php if ($this->question_related_list) { ?>
 				<div class="card hidden-xs">
-					<div class="card-header question-sidebar-title">
+					<div class="card-header">
 						<h2>你可能喜欢的问题</h2>
 					</div>
 					<div class="listview">
 	            		<div class="lv-body">
 	            			<?php foreach($this->question_related_list AS $key => $val) { ?>
-								<a class="lv-item" href="question/<?php echo $val['question_id']; ?>">
-									<div class="related-question-publish-info">
-										<img class="publisher-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-										<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-										<span class="publisher-user-name c-gray">
-											<?php echo $val['user_info']['user_name']; ?>
-										</span>
-										<small class="c-gray">
-											• <?php echo date_friendly($val['update_time']); ?>
-										</small>
+								<a class="lv-item related-question-info" href="question/<?php echo $val['question_id']; ?>">
+									<div class="media">
+										<div class="pull-left">
+											<?php if(!$val['is_countdown'] AND $val['attachs']) { ?>
+												<?php foreach ($val['attachs'] AS $attach) { ?>
+													<?php if ($attach['is_image']) { ?>
+														<img class="question-feature-image" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>">
+													<?php break; } ?>
+												<?php } ?>	
+									    	<?php } ?>
+										</div>
+										<div class="media-body">
+											<?php if($val['is_countdown']) { ?>
+												<div class="countdown-question-title">
+													<i class="md md-visibility-off"></i> 第<?php echo $val['question_id']; ?>题，该题为限时答题
+												</div>
+											<?php } else { ?>
+												<div class="c-black">
+													<?php echo $val['question_content']; ?>
+												</div>
+											<?php } ?>
+										</div>
 									</div>
-									<?php if($val['is_countdown']) { ?>
-										<div class="countdown-question-title">
-											<i class="md md-visibility-off"></i> 第<?php echo $val['question_id']; ?>题，该题为限时答题
-										</div>
-									<?php } else { ?>
-										<div>
-											<?php echo $val['question_content']; ?>
-										</div>
-									<?php } ?>
 								</a>
 							<?php } ?>
+							<div class="lv-footer"></div>
 	            		</div>
 	            	</div>
 				</div>
@@ -562,7 +577,6 @@
 					</div>
 						
 					<!-- end 答题导航 -->
-
 
 					<?php if ($_GET['column'] == 'log') { ?>
 					<div class="aw-mod aw-question-edit">
