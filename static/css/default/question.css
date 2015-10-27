@@ -9,12 +9,6 @@
 	float: left;
 }
 
-.question-title .question-tags {
-	display: inline-block;
-	line-height: 24px;
-	float: right;
-}
-
 .question-header {
 	height: 40px;
 }

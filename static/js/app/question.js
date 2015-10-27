@@ -75,10 +75,17 @@ $(function(){
 
 	            minuteDial.val(60 - minute).trigger('change');
 	        } else {
-	        	minuteElement.hide();
+	        	if(!hasHour) {
+	        		minuteDial.trigger(
+		                'configure',
+		                {
+		                    'fgColor': '#F44336',
+		                    'inputColor': '#F44336'
+		                }
+		            );
+	        	}
 	        }
 	        
-
 	        if(!hasHour && !hasMinute && (second < 10)) {
 	            inAlarm = true;
 	            var color = '#FF9800';
@@ -437,13 +444,6 @@ $(function(){
 		});
 	});
 	
-	// 关闭选项框
-
-	$('.question-content').on('click', '.close-question-quiz-content-overlay', function (e) {
-		// showQuizContent();
-		e.preventDefault();
-	});
-
 	// 查看答案解析
 
 	function getQuestionSolution() {
@@ -455,8 +455,7 @@ $(function(){
 				return;
 			}
 
-			$('.question-quiz-result').hide();
-			$('.question-actions').hide();
+			$('.question-quiz-board').hide();
 			$('.question-solution').html(response).fadeIn();
 		});
 	}
@@ -585,8 +584,7 @@ $(function(){
 
 	$('.question-loader').on('click', '.question-solution .close-question-solution', function (e) {
 		$('.question-solution').hide();
-		$('.question-quiz-result').fadeIn();
-		$('.question-actions').fadeIn();
+		$('.question-quiz-board').fadeIn();
 		
 		e.preventDefault();
 	});

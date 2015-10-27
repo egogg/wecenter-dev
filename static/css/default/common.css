@@ -408,11 +408,6 @@ header .main-nav ul li a.active {
     color: #fff
 }
 
-.question-tags {
-	display: inline-block;
-	line-height: 26px;
-}
-
 .question-tag-item {
 	display: inline-block;
 	margin-left: 5px;
@@ -423,18 +418,14 @@ header .main-nav ul li a.active {
 }
 
 .question-tag {
-	font-size: 10px;
-	padding: 2px 5px;
-	color: #fff;
-	border-radius: 2px;
+	font-size: 12px;
+	padding: 0.1em 0.3em;
+	border-radius: 1px;
+	border: 1px solid #e0e0e0;
 }
 
 .question-tag:hover {
 	color: #fff;
-}
-
-.question-tag i.md {
-	vertical-align: baseline;
 }
 
 .question-stats i.md {
@@ -460,37 +451,14 @@ header .main-nav ul li a.active {
 	color: #aaa;
 }
 
-.question-list-heading {
-	margin-bottom: 15px;
-}
-
 .question-list-title h3 {
-	font-size: 16px;
+	font-size: 18px;
 	margin-bottom: 0;
-	line-height: 19px;
 }
 
-.question-list-title .user-passed-quiz{
-	display: inline-block;
-    vertical-align: middle;
-    padding: 2px 8px;
-    border-radius: 2px;
-    margin-right: 4px;
-    font-size: 12px;
-    line-height: 15px;
-    margin-top: -4px;
+.user-passed-quiz{
+    padding: 0.2em 0.3em;
 }
-
-.question-list-title .user-passed-quiz.passed {
-	color: #fff;
-	background-color: #4CAF50;
-}
-
-.question-list-title .user-passed-quiz.failed {
-	color: #fff;
-	background-color: #F44336;
-}
-
 
 .question-list-body {
 	margin-top: 0;
@@ -861,14 +829,10 @@ body {
     line-height: 24px;
 }
 
-.question-quiz-result {
-	border-left: 3px solid #eee;
+.question-quiz-board {
+	border-left: 3px solid #ff9800;
     background-color: #f9f9f9;
-    padding: 15px;
-}
-
-.question-quiz-result .md {
-	vertical-align: middle;
+    padding: 25px;
 }
 
 .countdown-value li {
@@ -886,17 +850,8 @@ body {
 }
 
 .question-quiz-title.info {
-	color: #9e9e9e;
 	font-size: 14px;
 	margin-bottom: 10px;
-}
-
-.question-quiz-title.success {
-	color: #4CAF50;
-}
-
-.question-quiz-title.failed {
-	color: #F44336;
 }
 
 .question-quiz-instant-action {
@@ -927,11 +882,6 @@ body {
 	right: 0!important;
 }
 
-.question-title .question-tags {
-	line-height: normal;
-	float: none;
-}
-
 .question-content-header {
 	display: inline-block;
 	margin: 5px 0 15px 0;
@@ -948,15 +898,15 @@ body {
 	font-size: 16px;
 }
 
-.question-content .question-actions {
+.answer-question-actions {
 	background-color: #f9f9f9;
 	border-left: 3px solid #FF9800;
-	padding: 15px 10px;
+	padding: 25px;
 }
 
 .user-quiz-record-item {
 	font-size: 12px;
-    margin: 5px 0;
+    padding: 5px 40px 0;
 }
 
 .user-quiz-record-message {
@@ -967,40 +917,28 @@ body {
 	display: none;
 }
 
-.quiz-record-mark.success {
+.user-quiz-record-item {
+	/*color: #9e9e9e;*/
+}
+
+li.user-quiz-record-item.success:before {
+	content: '\f299';
 	color: #4CAF50;
 }
 
-.quiz-record-mark.failed {
+li.user-quiz-record-item.failed:before {
+	content: '\f102';
 	color: #F44336;
 }
 
-.quiz-record-mark.timeout {
+li.user-quiz-record-item.timeout:before {
+	content: '\f252';
 	color: #FF5722;
 }
 
 .question-quiz-action-item {
 	display: inline-block;
-	margin: 5px 10px 5px 0;
-}
-
-.question-quiz-action-item span.action-message {
-	margin-right: 15px;
-}
-
-.question-quiz-action-item a {
-	display: inline-block;
-	padding: 4px 12px;
-	border-radius: 4px;
-	font-size: 14px;
-}
-
-.question-quiz-action-item a:active {
-	opacity: 1.0 !important;
-}
-
-.question-quiz-action-item a:hover {
-	opacity: 0.5;
+	margin-right: 20px;
 }
 
 .question-focus {
@@ -1304,6 +1242,90 @@ body {
 }
 
 /* 重载material design 部分 */
+
+.b-white {
+  border-color: #ffffff !important;
+}
+
+.b-black {
+  border-color: #000000 !important;
+}
+
+.b-brown {
+  border-color: #795548 !important;
+}
+
+.b-pink {
+  border-color: #e91e63 !important;
+}
+
+.b-red {
+  border-color: #f44336 !important;
+}
+
+.b-blue {
+  border-color: #2196f3 !important;
+}
+
+.b-purple {
+  border-color: #9c27b0 !important;
+}
+
+.b-deeppurple {
+  border-color: #673ab7 !important;
+}
+
+.b-lightblue {
+  border-color: #03a9f4 !important;
+}
+
+.b-cyan {
+  border-color: #00bcd4 !important;
+}
+
+.b-teal {
+  border-color: #009688 !important;
+}
+
+.b-green {
+  border-color: #4caf50 !important;
+}
+
+.b-lightgreen {
+  border-color: #8bc34a !important;
+}
+
+.b-lime {
+  border-color: #cddc39 !important;
+}
+
+.b-yellow {
+  border-color: #ffeb3b !important;
+}
+
+.b-amber {
+  border-color: #ffc107 !important;
+}
+
+.b-orange {
+  border-color: #ff9800 !important;
+}
+
+.b-deeporange {
+  border-color: #ff5722 !important;
+}
+
+.b-gray {
+  border-color: #9e9e9e !important;
+}
+
+.b-bluegray {
+  border-color: #607d8b !important;
+}
+
+.b-indigo {
+  border-color: #3f51b5 !important;
+}
 
 .listview .lv-footer {
 	border: none;

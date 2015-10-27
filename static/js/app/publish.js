@@ -158,16 +158,16 @@ $(function()
 		}
 
 		if(quizContent.type == 'singleSelection') {
-			quizSummary  += '<div><i class="md  md-local-offer"></i> 题型：<span class="question-tag bgm-lightgreen"><i class="md md-radio-button-on"></i> 单项选择</span></div>';
+			quizSummary  += '<div><i class="md  md-local-offer"></i> 题型：<span class="question-tag c-lightgreen b-lightgreen"><i class="md md-radio-button-on"></i> 单项选择</span></div>';
 		}
 		else if(quizContent.type == 'multipleSelection') {
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-indigo"><i class="md md-check-box"></i> 多项选择</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-indigo b-indigo"><i class="md md-check-box"></i> 多项选择</span></div>';
 		}
 		else if(quizContent.type == 'crossword') {
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-teal b-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
 		}
 		else if(quizContent.type == 'textInput') {
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-deeporange b-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
 		}
 
 		$('#quiz-summary').html(quizSummary);
@@ -623,7 +623,7 @@ $(function()
 				return;
 			}
 
-			quizSummary  += '<div><i class="md  md-local-offer"></i> 题型：<span class="question-tag bgm-lightgreen"><i class="md md-radio-button-on"></i> 单项选择</span></div>';
+			quizSummary  += '<div><i class="md  md-local-offer"></i> 题型：<span class="question-tag c-lightgreen b-lightgreen"><i class="md md-radio-button-on"></i> 单项选择</span></div>';
 
 			quizType = 'singleSelection';
 
@@ -676,7 +676,7 @@ $(function()
 				return;
 			}
 
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-indigo"><i class="md md-check-box"></i> 多项选择</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-indigo b-indigo"><i class="md md-check-box"></i> 多项选择</span></div>';
 
 			quizType = 'multipleSelection';
 		} else if(quizTypeId == 3) {
@@ -709,7 +709,7 @@ $(function()
 
 			options = [{'content' : crosswordWords, 'wordcount' : crosswordAnswer.length}];
 			answers = [{'answer' : crosswordAnswer, 'score' : 10}];
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-teal b-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
 			quizType = 'crossword';
 
 		} else if(quizTypeId == 4) {
@@ -770,7 +770,7 @@ $(function()
 				return;
 			}
 
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag bgm-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-deeporange b-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
 			quizType = 'textInput';
 
 		} else {

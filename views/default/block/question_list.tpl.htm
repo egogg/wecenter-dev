@@ -3,33 +3,31 @@
 	<?php if($this->question_list) { ?>
 		<?php foreach ($this->question_list as $index => $question) { ?>
 			<div class="card">
+				<div class="user-passed-quiz-mark">
+					<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
+						<?php if($question['user_record_count'] > 0) { ?>
+							<span class="user-passed-quiz bgm-green c-white">答题通过</span>
+						<?php } else { ?>
+							<span class="user-passed-quiz bgm-red c-white">答题失败</span>
+						<?php } ?>
+        			<?php } ?>
+				</div>
 				<div class="card-body card-padding">
-					<div class="question-list-heading clearfix">
-						
-						<div class="question-tags">
-		            		<ul class="question-tag-list">
-		            			<!-- 问题分类 -->
-			            		<?php if ($question['category_info']) { ?>
-			            			<li class="question-tag-item">
-										<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag bgm-bluegray" href="javascript:;">
-											<span><?php echo $question['category_info']['title']; ?></span>
-										</a>
-									</li>
-								<?php } ?>
-								
-			            		<!-- 问题难度 -->
-			            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
-			            		<li class="question-tag-item">
-			            			<?php TPL::output('question/ajax/question_difficulty'); ?>
-			            		</li>
-
-								<!-- 答题类型 -->
-								<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
-								<li class="question-tag-item">
-									<?php TPL::output('question/ajax/question_quiz_type'); ?>
-								</li>
-		            		</ul>
-		            	</div>
+					<div class="question-list-heading m-b-10 clearfix">
+						<div class="question-publish-info m-t-5 m-b-5">
+							<?php if ($question['user_info']) { ?>
+								<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
+									<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+									<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
+									<small class="c-lightblue">
+										<?php echo $question['user_info']['user_name']; ?>
+									</small>
+								</a>
+							<?php } ?>
+							<small class="c-gray">
+								• <?php echo date_friendly($question['update_time']); ?>
+							</small>
+						</div>
 					</div>
 					
             		<div class="media question-list-body">
@@ -45,41 +43,44 @@
 				        <div class="media-body">
 						    <div class="question-list-title">
 								<h3>
-									<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
-										<?php if($question['user_record_count'] > 0) { ?>
-											<span class="user-passed-quiz passed">通过</span>
-										<?php } else { ?>
-											<span class="user-passed-quiz failed">失败</span>
-										<?php } ?>
-			            			<?php } ?>
 				            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
 				            			<a class="countdown-question-title" href="question/<?php echo $question['question_id']; ?>" target="_blank">
-				            				<i class="md md-visibility-off"></i> 第<?php echo $question['question_id']; ?>题，该题为限时答题
+				            				<i class="md md-access-alarm"></i> 第<?php echo $question['question_id']; ?>题，该题为限时答题
 				            			</a>
 				            		<?php } else { ?>
 				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>
 				            			</a>
 				            		<?php } ?>
-				            		
-									<div class="question-publish-info m-t-5 m-b-5">
-										<?php if ($question['user_info']) { ?>
-											<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
-												<small class="c-lightblue">
-													<?php echo $question['user_info']['user_name']; ?>
-												</small>
-											</a>
-										<?php } ?>
-										<small class="c-gray">
-											• <?php echo date_friendly($question['update_time']); ?>
-										</small>
-									</div>
 				            	</h3>
+				            	<div class="question-tags m-t-5 m-b-5">
+					            		<ul class="question-tag-list">
+					            			<!-- 问题分类 -->
+						            		<?php if ($question['category_info']) { ?>
+						            			<li class="question-tag-item">
+													<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
+														<span><?php echo $question['category_info']['title']; ?></span>
+													</a>
+												</li>
+											<?php } ?>
+											
+						            		<!-- 问题难度 -->
+						            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
+						            		<li class="question-tag-item">
+						            			<?php TPL::output('question/ajax/question_difficulty'); ?>
+						            		</li>
+
+											<!-- 答题类型 -->
+											<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
+											<li class="question-tag-item">
+												<?php TPL::output('question/ajax/question_quiz_type'); ?>
+											</li>
+					            		</ul>
+					            	</div>
 							</div>
 						    <div class="question-list-content">
 				            	<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
 				            		<div class="question-countdown-quiz-info">
 				            			<p>
-				            				<i class="md md-access-alarm"></i>
 				            				<span class="question-excerpt hidden-xs"><?php echo '你需要在规定的时间内完成答题'; ?></span>	
 				            				<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题 <i class="md md-chevron-right"></i></a>
 				            			</p>

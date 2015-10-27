@@ -1423,7 +1423,7 @@ class ajax extends AWS_CONTROLLER
 		}
 	}
 
-	public function init_question_content_action ()
+	public function get_question_content()
 	{
 		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
 		{
@@ -1452,11 +1452,18 @@ class ajax extends AWS_CONTROLLER
 		{
 			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 		}
-		TPL::assign('question_info', $question_info);
 
 		// 清算该用户的所有超时答题记录
 
 		$this->complete_unfinished_question_quiz_record();
+
+		return $question_info;
+	}
+
+	public function init_question_content_action ()
+	{
+		$question_info = $this->get_question_content();
+		TPL::assign('question_info', $question_info);
 
 		// 用户答题记录
 
@@ -1474,29 +1481,16 @@ class ajax extends AWS_CONTROLLER
 
 		// 是否显示答题选项
 
-		$show_question_title = true;
-		$show_question_quiz = false;
-		if($question_info['question_quiz']) 
-		{
-			$show_question_quiz = true;
-			if($question_info['question_quiz']['countdown'] > 0)
-			{
+		$has_quiz_options = ($question_info['quiz_id'] > 0);
+		$is_countdown = ($question_info['question_quiz']['countdown'] > 0);
 
-				$show_question_title = false;
-				if($this->user_id > 0)
-				{	
-					$show_question_quiz = $passed_quiz OR ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $this->question_info['published_uid']);
-					$show_question_title = $show_question_quiz;
-				}
-				else
-				{
-					$show_question_quiz = $passed_quiz;
-					$show_question_title = $show_question_quiz;
-				}
-			}
-		}
+		$show_question_content = (!$has_quiz_options OR ($has_quiz_options AND !$is_countdown) OR ($is_countdown AND $passed_quiz));
+		$show_question_quiz = (($has_quiz_options AND !$is_countdown) OR ($is_countdown AND $passed_quiz));
+		$answer_question_mode = (!$this->user_id AND $has_quiz_options AND !$is_countdown);
+
+		TPL::assign('show_question_content', $show_question_content);
 		TPL::assign('show_question_quiz', $show_question_quiz);
-		TPL::assign('show_question_title', $show_question_title);
+		TPL::assign('answer_question_mode', $answer_question_mode);
 
 		TPL::assign('attach_access_key', md5($this->user_id . time()));
 		TPL::output('question/ajax/question_content');
@@ -1504,26 +1498,7 @@ class ajax extends AWS_CONTROLLER
 
 	public function begin_question_quiz_countdown_action ()
 	{
-		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
-		}
-
-		if ($question_info['has_attach'])
-		{
-			$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'min');
-
-			$question_info['attachs_ids'] = FORMAT::parse_attachs($question_info['question_detail'], true);
-		}
-
-		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
-		
-		// 答题选项
-
-		if(intval($question_info['quiz_id']) > 0) 
-		{
-			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
-		}
+		$question_info = $this->get_question_content();
 		TPL::assign('question_info', $question_info);
 
 		// 添加临时答题记录
@@ -1535,8 +1510,9 @@ class ajax extends AWS_CONTROLLER
 		}
 		TPL::assign('question_quiz_record_id', $record_id);
 		
+		TPL::assign('show_question_content', true);
 		TPL::assign('show_question_quiz', true);
-		TPL::assign('show_question_title', true);
+		TPL::assign('answer_question_mode', true);
 
 		TPL::output('question/ajax/question_content');
 	}
@@ -1550,10 +1526,12 @@ class ajax extends AWS_CONTROLLER
 
 		// 检测用户权限
 
-		$question_solution_record = $this->model('solution')->get_question_solution_record($_GET['question_id'], $this->user_id);
-		if(!$this->user_info['permission']['is_administortar'] AND !$this->user_info['permission']['is_moderator'] AND $this->user_id != $question_info['published_uid'] AND !$question_solution_record)
+		if(!($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid']))
 		{
-			return;
+			if(!$this->model('solution')->get_question_solution_record($_GET['question_id'], $this->user_id))
+			{
+				return;
+			}
 		}
 
 		// 获取答题选项答案
@@ -1663,7 +1641,7 @@ class ajax extends AWS_CONTROLLER
 		// 获取用户答题购买答案记录信息
 
 		$solution_record = $this->model('solution')->get_question_solution_record($_GET['question_id'], $this->user_id);
-		if($solution_record)
+		if($solution_record OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $question_info['published_uid'])
 		{
 			H::ajax_json_output(array(
 				'record_exist' => true 
