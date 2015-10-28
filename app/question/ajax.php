@@ -1486,7 +1486,7 @@ class ajax extends AWS_CONTROLLER
 
 		$show_question_content = (!$has_quiz_options OR ($has_quiz_options AND !$is_countdown) OR ($is_countdown AND $passed_quiz));
 		$show_question_quiz = (($has_quiz_options AND !$is_countdown) OR ($is_countdown AND $passed_quiz));
-		$answer_question_mode = (!$this->user_id AND $has_quiz_options AND !$is_countdown);
+		$answer_question_mode = ($has_quiz_options AND !$is_countdown AND !$try_count);
 
 		TPL::assign('show_question_content', $show_question_content);
 		TPL::assign('show_question_quiz', $show_question_quiz);

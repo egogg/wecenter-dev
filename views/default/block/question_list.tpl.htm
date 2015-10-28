@@ -28,8 +28,32 @@
 								• <?php echo date_friendly($question['update_time']); ?>
 							</small>
 						</div>
+						<div class="question-tags m-t-5 m-b-5">
+		            		<ul class="question-tag-list">
+		            			<!-- 问题分类 -->
+			            		<?php if ($question['category_info']) { ?>
+			            			<li class="question-tag-item">
+										<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
+											<span><?php echo $question['category_info']['title']; ?></span>
+										</a>
+									</li>
+								<?php } ?>
+								
+			            		<!-- 问题难度 -->
+			            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
+			            		<li class="question-tag-item">
+			            			<?php TPL::output('question/ajax/question_difficulty'); ?>
+			            		</li>
+
+								<!-- 答题类型 -->
+								<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
+								<li class="question-tag-item">
+									<?php TPL::output('question/ajax/question_quiz_type'); ?>
+								</li>
+		            		</ul>
+		            	</div>
 					</div>
-					
+						
             		<div class="media question-list-body">
 					    <div class="pull-right">
 					    	<?php if(!($question['quiz_info'] AND $question['quiz_info']['countdown']) AND $question['attachs']) { ?>		
@@ -52,30 +76,6 @@
 				            			</a>
 				            		<?php } ?>
 				            	</h3>
-				            	<div class="question-tags m-t-5 m-b-5">
-					            		<ul class="question-tag-list">
-					            			<!-- 问题分类 -->
-						            		<?php if ($question['category_info']) { ?>
-						            			<li class="question-tag-item">
-													<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
-														<span><?php echo $question['category_info']['title']; ?></span>
-													</a>
-												</li>
-											<?php } ?>
-											
-						            		<!-- 问题难度 -->
-						            		<?php TPL::assign('question_difficulty', $question['difficulty']); ?>
-						            		<li class="question-tag-item">
-						            			<?php TPL::output('question/ajax/question_difficulty'); ?>
-						            		</li>
-
-											<!-- 答题类型 -->
-											<?php TPL::assign('question_quiz_type', $question['quiz_info']['type']); ?>
-											<li class="question-tag-item">
-												<?php TPL::output('question/ajax/question_quiz_type'); ?>
-											</li>
-					            		</ul>
-					            	</div>
 							</div>
 						    <div class="question-list-content">
 				            	<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
@@ -87,14 +87,14 @@
 				            		</div>
 				            	<?php } else { ?>
 				            		<p>
-				            			<span class="hidden-xs"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 80, 'UTF-8', '...'); ?></span>
+				            			<span class="hidden-xs"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 120, 'UTF-8', '...'); ?></span>
 				            			<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题 <i class="md md-chevron-right"></i></a>
 				            		</p>
 				            	<?php } ?>
 				            </div>
 				        </div>
 				    </div>
-				    <div>
+				    <div class="m-t-10">
 				    	<ul class="question-stats">
 			            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
 							<?php if($question['quiz_stats']) { ?>

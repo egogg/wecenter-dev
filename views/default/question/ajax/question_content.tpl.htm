@@ -15,6 +15,28 @@
 		</span>
 	</div>
 
+	<!-- 题目标签 -->
+	<div class="question-tags m-t-10">
+		<!-- 问题分类 -->
+		<?php if ($this->question_info['category_info']) { ?>
+    		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
+					<span><?php echo $this->question_info['category_info']['title']; ?></span>
+				</a></li>
+		<?php } ?>
+
+		<!-- 问题难度 -->
+		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
+		<li class="question-tag-item">
+			<?php TPL::output('question/ajax/question_difficulty'); ?>
+		</li>
+		
+		<!-- 答题类型 -->
+		<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
+		<li class="question-tag-item">
+			<?php TPL::output('question/ajax/question_quiz_type'); ?>
+		</li>
+	</div>
+
 	 <!-- 管理选项 -->
     <?php if ((!$this->question_info['lock'] AND ($this->question_info['published_uid'] == $this->user_id OR $this->user_info['permission']['edit_question'])) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
 	    <ul class="actions">
@@ -40,7 +62,7 @@
     <?php } ?>
 </div>
 
-<div class="card-header question-title clearfix">
+<div class="card-header question-title m-b-15 clearfix">
     <h2>
     	<?php if(!$this->show_question_content) { ?>
     		<i class="md md-access-alarm"></i> 第<?php echo $this->question_info['question_id']; ?>题，该题为限时答题
@@ -48,27 +70,7 @@
     		<?php echo $this->question_info['question_content']; ?>
     	<?php } ?>
     </h2>
-    <!-- 题目标签 -->
-	<div class="question-tags m-t-10 m-b-25">
-		<!-- 问题分类 -->
-		<?php if ($this->question_info['category_info']) { ?>
-    		<li class="question-tag-item"><a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
-					<span><?php echo $this->question_info['category_info']['title']; ?></span>
-				</a></li>
-		<?php } ?>
-
-		<!-- 问题难度 -->
-		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
-		<li class="question-tag-item">
-			<?php TPL::output('question/ajax/question_difficulty'); ?>
-		</li>
-		
-		<!-- 答题类型 -->
-		<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
-		<li class="question-tag-item">
-			<?php TPL::output('question/ajax/question_quiz_type'); ?>
-		</li>
-	</div>
+   
 </div>
 
 <div class="card-body card-padding question-body">		
@@ -150,7 +152,7 @@
 
 				<div class="user-quiz-record">
 					<div class="user-quiz-record-message">
-						<a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i> 答题记录（<span class="hidden-xs">你进行了</span><b><?php echo $this->try_count; ?></b><span class="hidden-xs">次答题尝试</span>）</a> 
+						<a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i> 答题记录：<span class="hidden-xs">你进行了</span><b><?php echo $this->try_count; ?></b><span class="hidden-xs">次答题尝试</span></a> 
 					</div>
 					
 					<ul class="user-quiz-record-items clist clist-star clearfix">

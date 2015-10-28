@@ -369,6 +369,7 @@
                         'min': 0,
                         'max': 60,
                         'fgColor': '#039AF4',
+                        'bgColor': '#e0e0e0',
                         'thickness': 0.1,
 
                         format: function (v) {return 60 - v;}

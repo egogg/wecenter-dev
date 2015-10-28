@@ -21,8 +21,8 @@ $(function(){
 			recordList.slideUp();
 			icon.removeClass('md-expand-more').addClass('md-chevron-right');
 		} else {
-			recordList.slideDown();
 			icon.removeClass('md-chevron-right').addClass('md-expand-more');
+			recordList.slideDown();
 		}
 	});
 
@@ -38,70 +38,70 @@ $(function(){
 			var hour = parseInt(seconds / 3600);
 	        var minute = parseInt(seconds / 60);
 	        var second = parseInt(seconds % 60);
-	        var hasHour = false;
-	        var hasMinute = false;
-	        var inAlarm = false;
 
 	        var hourDial = countdownElement.find('.dial.hour');
 	        var minuteDial = countdownElement.find('.dial.minute');
 	        var secondDial = countdownElement.find('.dial.second');
 
 	        var hourElement = countdownElement.find('.countdown-hour');
-	        var minuteElement = countdownElement.find('.countdown-minute');
 
 	        countdownElement.find('.dial').knob({
 		        'width' : 90,
 		        'height' : 90,
+		        'min' : 0,
+		        'max' : 60,
 		        'readOnly' : true,
-		        'min': 0,
-		        'max': 60,
 		        'fgColor': '#039AF4',
+		        'bgColor': '#e0e0e0',
+		        'inputColor': '#039AF4',
 		        'thickness': 0.1,
 
-		        format: function (v) {return 60 - v;}
+		        format: function (v) {return (60 - v) % 60;}
 		    });
 
+	       
+            hourDial.trigger(
+                'configure',
+                {
+                    'max': hour
+                }
+            );
+            hourDial.val(hour).trigger('change');
 	        if(hour > 0) {
-	            hourDial.val(60 - hour).trigger('change');
-	            hasHour = true;
 	            hourElement.show();
 	        } else {
 	            hourElement.hide();
 	        }
 
-	        if(minute > 0) {
-	            hasMinute = true;
-	            minuteElement.show();
-
-	            minuteDial.val(60 - minute).trigger('change');
-	        } else {
-	        	if(!hasHour) {
-	        		minuteDial.trigger(
-		                'configure',
-		                {
-		                    'fgColor': '#F44336',
-		                    'inputColor': '#F44336'
-		                }
-		            );
-	        	}
-	        }
-	        
-	        if(!hasHour && !hasMinute && (second < 10)) {
-	            inAlarm = true;
-	            var color = '#FF9800';
-	            if(second == 0) {
-	                var color = '#F44336';
-	            }
-
-	            secondDial.trigger(
+            minuteDial.val((60 - minute) % 60).trigger('change');
+            if(minute == 0) {
+            	minuteDial.trigger(
 	                'configure',
 	                {
-	                    'fgColor': color,
-	                    'inputColor': color
+	                    'fgColor': '#f44336',
+		        		'bgColor': '#f44336',
+		        		'inputColor': '#f44336'
 	                }
 	            );
-	        }
-	        secondDial.val(60 - second).trigger('change');
+            }
+            
+            secondDial.trigger(
+                'configure',
+                {
+                    'max': 60
+                }
+            );
+            secondDial.val((60 - second) % 60).trigger('change');
+            if(second == 0) {
+            	secondDial.trigger(
+	                'configure',
+	                {
+	                    'fgColor': '#039AF4',
+		        		'bgColor': '#039AF4',
+		        		'inputColor': '#039AF4'
+	                }
+	            );
+            }
 		});
 	}
 
