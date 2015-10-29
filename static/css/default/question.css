@@ -146,13 +146,13 @@
 	margin: 0 0 20px;
 }
 
-.question-solution-title {
-	/*border-left: 3px solid #2196F3;
-    padding-left: 10px;*/
-}
-
 .question-solution-body {
 	padding-left: 0.5em;
+}
+
+.text-input-answer {
+	padding: 0 10px;
+	border-bottom: 1px solid;
 }
 
 .question-pager-nav {

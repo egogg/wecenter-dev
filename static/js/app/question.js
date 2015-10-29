@@ -105,27 +105,6 @@ $(function(){
 		});
 	}
 
-	function showQuizContentOverlay()
-	{
-		$('.question-quiz-content').animate({opacity: 0}, 300);
-		question_quiz_container = $('.question-quiz-content');
-		if(question_quiz_container.height() < 200) {
-			question_quiz_container.height(200);
-		}
-		
-		$('.question-quiz-content-overlay').animate({opacity:1}, 300).show();
-	}
-
-	function showQuizContent()
-	{
-		$('.question-quiz-content-overlay')
-	    	.animate({opacity:0}, 300).hide();
-	    $('.question-quiz-content')
-	    	.animate({opacity:1}, 300);
-
-	    $('.question-quiz-content').removeAttr('style');
-	}
-
 	// 加载问题内容
 
 	function initQuestionContent() {
@@ -144,11 +123,6 @@ $(function(){
 			if ($('[data-toggle="tooltip"]')[0]) {
 		        $('[data-toggle="tooltip"]').tooltip();
 		    }
-
-			// if(takenQuiz) {
-			// 	// showQuizContentOverlay();
-			// 	$('.question-quiz-content').hide();
-			// }
 
 			// 提示添加答案解析
 
@@ -416,31 +390,15 @@ $(function(){
 		});
 	});
 
-	// // 限时答题开始
-
-	// $('.question-content').on('click', '#begin-question-quiz-countdown', function (e) {
-	// 	e.preventDefault();
-
-	// 	beginCountdownQuestion();
-	// });
-
-	// // 限时答题：重新答题
-
-	// $('.question-content').on('click', '#retry-question-quiz-countdown', function (e) {
-	// 	e.preventDefault();
-	// 	retryQuizIntegralAction(function(){
-	// 		beginCountdownQuestion();
-	// 	});
-	// });
-
 	// 普通答题： 重新答题
 
-	$('.question-content').on('click', '#retry-question-quiz-normal', function (e) {
+	$('.question-loader').on('click', '#question-action-retry', function (e) {
 		e.preventDefault();
 
 		retryQuizIntegralAction(function(){
+			$('.question-quiz-board').hide();
 			parseQuestionQuiz();
-		    showQuizContent();
+			// $('.question-quiz-content').fadeIn();
 		});
 	});
 	

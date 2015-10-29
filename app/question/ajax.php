@@ -1592,7 +1592,7 @@ class ajax extends AWS_CONTROLLER
 				case 'textInput':
 					foreach ($quiz['answers'] as $i => $answer) 
 					{
-						$quiz_answer .= '<li>' . ($i + 1) . '、' . $quiz['options'][$i]['content'] . '：<strong>' . $answer['answer'] . '</strong></li>';
+						$quiz_answer .= '<li>' . ($i + 1) . '、' . $quiz['options'][$i]['content'] . '：<span class="text-input-answer">' . $answer['answer'] . '</span></li>';
 					}
 
 					break;
