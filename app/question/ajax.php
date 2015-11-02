@@ -26,6 +26,7 @@ class ajax extends AWS_CONTROLLER
 		$rule_action['rule_type'] = 'white';
 
 		$rule_action['actions'] = array(
+			'load_answers',
 			'get_question_comments',
 			'get_answer_comments',
 			'log',

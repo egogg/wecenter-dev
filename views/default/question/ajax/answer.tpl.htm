@@ -1,6 +1,6 @@
 <li class="media comment-item" data-uninterested-count="<?php echo $this->answer_info['uninterested_count']; ?>" data-force-fold="<?php if ($this->answer_info['user_rated_uninterested']) { ?>1<?php } else { ?><?php echo $this->answer_info['force_fold']; ?><?php } ?>" id="comment-id-<?php echo $this->answer_info['answer_id']; ?>">
 	<div class="media-body">
-		<div class="comment-user-info">
+		<div class="comment-user-info clearfix">
 			<a href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="tvh-user pull-left">
             	<img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($this->answer_info['uid'], 'mid'); ?>" alt="" />
         	</a>
@@ -9,14 +9,15 @@
             	</a>
             	<?php if ($this->answer_info['user_info']['verified']) { ?>
 					<i class="icon-v<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
-				<?php } ?>
-            </div> 
-            <small class="c-gray"><?php echo date_friendly($this->answer_info['add_time'], 604800, 'Y-m-d'); ?></small>
+				<?php } ?> 
+                 · <small class="c-gray"><?php echo date_friendly($this->answer_info['add_time'], 604800, 'Y-m-d'); ?></small>
+            </div>
 		</div>
        
         <div class="m-t-10">
-        	<?php echo $this->answer_info['answer_content']; ?>
+            <?php echo $this->answer_info['answer_content']; ?>
         </div>
+        
         <div class="answer-actions clearfix">
         	<ul class="pull-left">
         		<li>
@@ -28,10 +29,15 @@
         			</a>
         		</li>
         	</ul>
-        	<ul class="pull-right">
+        	<ul class="answer-actions-right pull-right">
         		<?php if (($this->answer_info['uid'] == $this->user_id AND !$this->question['lock']) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
         			<li><a href="javascript:void(0);" class="comment-remove" onclick="AWS.User.remove_answer($(this), <?php echo $this->answer_info['answer_id']; ?>);">删除</a></li>
         		<?php } ?>
+                <?php if ($this->user_id) { ?>
+                    <li class="new-sub-comment clearfix">
+                        <a class="sub-comment-reply c-lightblue" data-index="-1" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" href="javascript:void(0);">回复</a>
+                    </li>
+                <?php } ?>
         	</ul>
         </div>
         <ul class="tvc-lists sub-comments" id="comment-list-answer-<?php echo $this->answer_info['answer_id']; ?>">
@@ -39,15 +45,7 @@
             <?php TPL::assign('answer_id', $this->answer_info['answer_id']); ?>
             <?php TPL::output('question/ajax/comments'); ?>
         </ul>
-        <ul class="tvc-lists sub-comments sub-comment-edit">
-            <?php if ($this->user_id) { ?>
-            <li class="sub-comment-item new-sub-comment clearfix">
-                <div class="pull-right">
-                    <a class="sub-comment-reply" data-index="-1" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" href="javascript:void(0);"><i class="md md-edit"></i> 添加新回复</a>
-                </div>
-            </li>
-            <?php } ?>
-
+        <ul class="tvc-lists sub-comments sub-comment-edit m-t-15">
             <li class="sub-comment-item sub-comment-box" id="comment-box-answer-<?php echo $this->answer_info['answer_id']; ?>">
                 <form action="<?php echo 'question/ajax/save_answer_comment/answer_id-' . $this->answer_info['answer_id']; ?>" method="post" onsubmit="return false">
                     <textarea class="form-control sub-comment-input" data-answer-id="<?php echo $this->answer_info['answer_id']; ?>" row="5" placeholder="你对这种思路的看法" name="message"></textarea>

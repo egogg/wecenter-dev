@@ -286,18 +286,27 @@ class main extends AWS_CONTROLLER
 				unset($answers[0]);
 			}
 
-			if (get_setting('answer_unique') == 'Y')
+			// if (get_setting('answer_unique') == 'Y')
+			// {
+				// if ($this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
+				// {
+				// 	TPL::assign('user_answered', 1);
+				// }
+				// else
+				// {
+				// 	TPL::assign('user_answered', 0);
+				// }
+			// }
+			if ($this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
 			{
-				if ($this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
-				{
-					TPL::assign('user_answered', 1);
-				}
-				else
-				{
-					TPL::assign('user_answered', 0);
-				}
+				$user_answered = true;
+			}
+			else
+			{
+				$user_answered = false;
 			}
 
+			TPL::assign('user_answered', $user_answered);
 			TPL::assign('answers', $answers);
 			TPL::assign('comments', $answer_comments);
 			TPL::assign('answer_count', $answer_count);

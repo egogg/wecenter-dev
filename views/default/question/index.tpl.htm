@@ -14,7 +14,7 @@
 					<ul class="question-quiz-action-items">
 						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
 						<?php if($this->question_info['quiz_id']) { ?>
-							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="btn bgm-bluegray"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="btn bgm-amber"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
 						<?php } ?>
 						<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
 					</ul>
@@ -27,36 +27,49 @@
 				<div class="card-body card-padding question-quiz-footer clearfix">
 					<div class="pull-left clearfix question-quiz-stats">
 						<ul class="question-quiz-stats-items">
-							<li class="question-quiz-stats-item question-quiz-view">
-								<a href="question/record/<?php echo $this->question_info['question_id']; ?>"></span><i class="md md-visibility"></i> <span class="hidden-xs">查看<em>|</em></span><span class="quiz-stats-view"><?php echo $this->question_info['view_count']; ?></span></a>
+							<li class="question-quiz-stats-item">
+								<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
+									<i class="md md-visibility"></i> 
+									<span class="quiz-stats-text">
+										<span class="hidden-xs">查看</span>
+										<?php echo $this->question_info['view_count']; ?>
+									</span>
+								</a>
 							</li>
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
-								<li class="question-quiz-stats-item question-quiz-count">
+								<li class="question-quiz-stats-item">
 									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 										<i class="md md-equalizer"> </i>
-										<span class="hidden-xs">答题<em>|</em></span><span class="quiz-stats-count"><?php echo $this->question_quiz_stats['total']; ?></span> 
+										<span class="quiz-stats-text">
+											<span class="hidden-xs">答题</span>
+											<?php echo $this->question_quiz_stats['total']; ?>
+										</span> 
 									</a>
 								</li>
-								<li class="question-quiz-stats-item question-quiz-srate">
+								<li class="question-quiz-stats-item">
 									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 										<i class="md md-flag"></i>
-										<span class="hidden-xs">通过<em>|</em></span><span class="quiz-stats-rate"><?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?>%</span>
+										<span class="quiz-stats-text">
+											<span class="hidden-xs">正确率</span>
+											<?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?>%
+										</span>
 									</a>
 								</li>
 							<?php } ?>
 						</ul>
 					</div>
-					<div class="pull-right question-share clearfix">
-						<span class="c-gray">分享到</span>
+					<div class="pull-right question-share">
+						<span class="question-share-title">分享到</span>
 						<ul class="question-share-list">
 							<li class="question-share-item weibo">
-								<a onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});"><i class="icon icon-weibo"></i></a>
+								<a class="bgm-red" onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});">	<i class="icon icon-weibo"></i>
+								</a>
 							</li>
 							<li class="question-share-item qzone">
-								<a onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
+								<a class="bgm-indigo" onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
 							</li>
 							<li class="question-share-item wechat">
-								<a onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
+								<a class="bgm-green" onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
 							</li>
 							<!-- <li class="question-share-item">
 								<a href="javascript:void(0);">
@@ -91,17 +104,24 @@
 					<?php } ?>
 				</div>
 				<!-- 回复内容 -->
-				<div class="card-body card-padding question-comment">			
+				<div class="card-header card-padding question-comment p-t-0">			
 					<div class="comment-list t-view">
 						<div class="tv-comments">
-	                        <ul class="tvc-lists" id="comment-items">
-	                        	<?php if ($this->answers) { ?>
-	                        		<?php foreach ($this->answers AS $key => $val) { ?>
-										<?php TPL::assign('answer_info', $val); ?>
-										<?php TPL::output('question/ajax/answer'); ?>
+							<div class="<?php if(!$this->user_answered) { ?>hidden <?php } ?>">
+		                        <ul class="tvc-lists" id="comment-items">
+		                        	<?php if ($this->answers) { ?>
+		                        		<?php foreach ($this->answers AS $key => $val) { ?>
+											<?php TPL::assign('answer_info', $val); ?>
+											<?php TPL::output('question/ajax/answer'); ?>
+										<?php } ?>
 									<?php } ?>
-								<?php } ?>
-							</ul>
+								</ul>
+							</div>	
+
+							<div class="<?php if($this->user_answered) { ?> hidden <?php } ?> load-question-answers-board">
+								<a class="btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论...</a>
+							</div>
+
 							<!-- 回复编辑器 -->
 							<div class="comment-box">
 								<a name="answer_form"></a>
