@@ -1,0 +1,10 @@
+<div>
+    <ul class="tvc-lists" id="comment-items">
+    	<?php if ($this->answers) { ?>
+    		<?php foreach ($this->answers AS $key => $val) { ?>
+				<?php TPL::assign('answer_info', $val); ?>
+				<?php TPL::output('question/ajax/answer'); ?>
+			<?php } ?>
+		<?php } ?>
+	</ul>
+</div>

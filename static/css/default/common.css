@@ -1122,6 +1122,13 @@ li.user-quiz-record-item.timeout:before {
 	color: #03A9F4;
 }
 
+.load-question-answers-board {
+	padding: 15px 20px;
+    border-left: 3px solid #eee;
+    border-top: 1px dashed #eee;
+    border-bottom: 1px dashed #eee;
+}
+
 .answer-actions {
 	margin: 10px 0;
 	padding-right: 15px;

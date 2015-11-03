@@ -604,10 +604,28 @@ $(function(){
 
 	// 展开评论框
 
-	$('.comment-tool-toggle').on('click', function (e){
+	function reloadAnswers() {
+		$.get(G_BASE_URL + '/question/ajax/load_answers/question_id-' + QUESTION_ID, function (response) {
+			$('.answer-items').hide().html(response).fadeIn();
+		});
+	}
+
+	if($('.answer-items').attr('data-load-answer') == 1) {
+		reloadAnswers();
+
+	}
+
+	$('.load-question-answers').on('click', function (e){
 		e.preventDefault();
 
-		toggleComment();
-			
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		reloadAnswers();
+		$('.load-question-answers-board').hide();
 	});
 });

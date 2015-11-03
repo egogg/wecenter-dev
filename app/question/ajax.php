@@ -1814,4 +1814,193 @@ class ajax extends AWS_CONTROLLER
 
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
+
+	function load_answers_action()
+	{
+		// 获取问题
+
+		if (!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
+		{
+			return;
+		}
+
+		$this->model('question')->calc_popular_value($question_info['question_id']);
+		$this->model('question')->update_views($question_info['question_id']);
+
+		if (! $_GET['sort'] or $_GET['sort'] != 'ASC')
+		{
+			$_GET['sort'] = 'DESC';
+		}
+		else
+		{
+			$_GET['sort'] = 'ASC';
+		}
+
+		if (is_digits($_GET['uid']))
+		{
+			$answer_list_where[] = 'uid = ' . intval($_GET['uid']);
+			$answer_count_where = 'uid = ' . intval($_GET['uid']);
+		}
+		else if ($_GET['uid'] == 'focus' and $this->user_id)
+		{
+			if ($friends = $this->model('follow')->get_user_friends($this->user_id, false))
+			{
+				foreach ($friends as $key => $val)
+				{
+					$follow_uids[] = $val['uid'];
+				}
+			}
+			else
+			{
+				$follow_uids[] = 0;
+			}
+
+			$answer_list_where[] = 'uid IN(' . implode($follow_uids, ',') . ')';
+			$answer_count_where = 'uid IN(' . implode($follow_uids, ',') . ')';
+			$answer_order_by = 'add_time ASC';
+		}
+		else if ($_GET['sort_key'] == 'add_time')
+		{
+			$answer_order_by = $_GET['sort_key'] . " " . $_GET['sort'];
+		}
+		else
+		{
+			$answer_order_by = "agree_count " . $_GET['sort'] . ", against_count ASC, add_time ASC";
+		}
+
+		if ($answer_count_where)
+		{
+			$answer_count = $this->model('answer')->get_answer_count_by_question_id($question_info['question_id'], $answer_count_where);
+		}
+		else
+		{
+			$answer_count = $question_info['answer_count'];
+		}
+
+		if (isset($_GET['answer_id']) and (! $this->user_id OR $_GET['single']))
+		{
+			$answer_list = $this->model('answer')->get_answer_list_by_question_id($question_info['question_id'], 1, 'answer_id = ' . intval($_GET['answer_id']));
+		}
+		else if (! $this->user_id AND !$this->user_info['permission']['answer_show'])
+		{
+			if ($question_info['best_answer'])
+			{
+				$answer_list = $this->model('answer')->get_answer_list_by_question_id($question_info['question_id'], 1, 'answer_id = ' . intval($question_info['best_answer']));
+			}
+			else
+			{
+				$answer_list = $this->model('answer')->get_answer_list_by_question_id($question_info['question_id'], 1, null, 'agree_count DESC');
+			}
+		}
+		else
+		{
+			if ($answer_list_where)
+			{
+				$answer_list_where = implode(' AND ', $answer_list_where);
+			}
+
+			$answer_list = $this->model('answer')->get_answer_list_by_question_id($question_info['question_id'], calc_page_limit($_GET['page'], 100), $answer_list_where, $answer_order_by);
+		}
+
+		// 最佳回复预留
+		$answers[0] = '';
+
+		if (! is_array($answer_list))
+		{
+			$answer_list = array();
+		}
+
+		$answer_ids = array();
+		$answer_uids = array();
+
+		foreach ($answer_list as $answer)
+		{
+			$answer_ids[] = $answer['answer_id'];
+			$answer_uids[] = $answer['uid'];
+
+			if ($answer['has_attach'])
+			{
+				$has_attach_answer_ids[] = $answer['answer_id'];
+			}
+		}
+
+		if (!in_array($question_info['best_answer'], $answer_ids) AND intval($_GET['page']) < 2)
+		{
+			$answer_list = array_merge($this->model('answer')->get_answer_list_by_question_id($question_info['question_id'], 1, 'answer_id = ' . $question_info['best_answer']), $answer_list);
+		}
+
+		if ($answer_ids)
+		{
+			$answer_agree_users = $this->model('answer')->get_vote_user_by_answer_ids($answer_ids);
+
+			$answer_vote_status = $this->model('answer')->get_answer_vote_status($answer_ids, $this->user_id);
+
+			$answer_users_rated_thanks = $this->model('answer')->users_rated('thanks', $answer_ids, $this->user_id);
+			$answer_users_rated_uninterested = $this->model('answer')->users_rated('uninterested', $answer_ids, $this->user_id);
+			$answer_attachs = $this->model('publish')->get_attachs('answer', $has_attach_answer_ids, 'min');
+		}
+
+		foreach ($answer_list as $answer)
+		{
+			if ($answer['has_attach'])
+			{
+				$answer['attachs'] = $answer_attachs[$answer['answer_id']];
+
+				$answer['insert_attach_ids'] = FORMAT::parse_attachs($answer['answer_content'], true);
+			}
+
+			$answer['user_rated_thanks'] = $answer_users_rated_thanks[$answer['answer_id']];
+			$answer['user_rated_uninterested'] = $answer_users_rated_uninterested[$answer['answer_id']];
+
+			$answer['answer_content'] = $this->model('question')->parse_at_user(FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($answer['answer_content']))));
+
+			$answer['agree_users'] = $answer_agree_users[$answer['answer_id']];
+			$answer['agree_status'] = $answer_vote_status[$answer['answer_id']];
+
+			if ($question_info['best_answer'] == $answer['answer_id'] AND intval($_GET['page']) < 2)
+			{
+				$answers[0] = $answer;
+			}
+			else
+			{
+				$answers[] = $answer;
+			}
+
+			// 获取回答评论列表
+
+			$comments = $this->model('answer')->get_answer_comments($answer['answer_id']);
+
+			$user_infos = $this->model('account')->get_user_info_by_uids(fetch_array_value($comments, 'uid'));
+
+			foreach ($comments as $key => $val)
+			{
+				$comments[$key]['message'] = FORMAT::parse_links($this->model('question')->parse_at_user($comments[$key]['message']));
+				$comments[$key]['user_name'] = $user_infos[$val['uid']]['user_name'];
+				$comments[$key]['url_token'] = $user_infos[$val['uid']]['url_token'];
+			}
+			
+			$answer_comments[$answer['answer_id']] = $comments;
+		}
+
+		if (!$answers[0])
+		{
+			unset($answers[0]);
+		}
+
+		if ($this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
+		{
+			$user_answered = true;
+		}
+		else
+		{
+			$user_answered = false;
+		}
+
+		TPL::assign('user_answered', $user_answered);
+		TPL::assign('answers', $answers);
+		TPL::assign('comments', $answer_comments);
+		TPL::assign('answer_count', $answer_count);
+
+		TPL::output('question/ajax/answer_list');
+	}
 }

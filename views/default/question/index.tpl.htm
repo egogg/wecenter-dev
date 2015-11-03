@@ -14,7 +14,7 @@
 					<ul class="question-quiz-action-items">
 						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
 						<?php if($this->question_info['quiz_id']) { ?>
-							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="btn bgm-amber"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
 						<?php } ?>
 						<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
 					</ul>
@@ -89,41 +89,29 @@
 			
 			<!-- 答题讨论 -->
 			<div class="card question-comments">
-				<div class="card-body card-padding question-comment-header clearfix">
+				<div class="card-header card-padding question-comment-header clearfix">
 					<h3 href="javascript:void(0);">
 						<i class="md md-comment"></i>
 						<span><?php echo $this->answer_count; ?></span>条答题讨论
 					</h3>
-
-					<?php if ($this->question_info['lock']) { ?>
-						<p class="question-comment-message"><?php _e('该题目被锁定，暂时无法参加讨论'); ?></p>
-					<?php } else if (!$this->user_id) { ?>
-						<p class="question-comment-message">
-							<a href="account/login/">登录</a>参与答题讨论
-						</p>
-					<?php } ?>
 				</div>
 				<!-- 回复内容 -->
-				<div class="card-header card-padding question-comment p-t-0">			
+				<div class="card-body card-padding question-comment p-t-0">			
 					<div class="comment-list t-view">
 						<div class="tv-comments">
-							<div class="<?php if(!$this->user_answered) { ?>hidden <?php } ?>">
-		                        <ul class="tvc-lists" id="comment-items">
-		                        	<?php if ($this->answers) { ?>
-		                        		<?php foreach ($this->answers AS $key => $val) { ?>
-											<?php TPL::assign('answer_info', $val); ?>
-											<?php TPL::output('question/ajax/answer'); ?>
-										<?php } ?>
-									<?php } ?>
-								</ul>
-							</div>	
-
-							<div class="<?php if($this->user_answered) { ?> hidden <?php } ?> load-question-answers-board">
-								<a class="btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论...</a>
+							<div class="answer-items" data-load-answer="<?php if($this->show_answers) { ?>1<?php } else { ?>0<?php }?>">
+		                        
 							</div>
+							
+							
+							<div class="<?php if(($this->answer_count <= 0) or $this->show_answers) { ?>hidden<?php } ?> load-question-answers-board m-b-20 m-t-20">
+								<p>答题讨论中可能包含答案信息，是否再继续思考一下？</p>
+								<a class="load-question-answers btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论</a>
+							</div>
+							
 
 							<!-- 回复编辑器 -->
-							<div class="comment-box">
+							<div class="comment-box m-t-15">
 								<a name="answer_form"></a>
 								<?php if (!$this->question_info['lock'] and $this->user_id) { ?>
 								<form action="question/ajax/save_answer/" onsubmit="return false;" method="post" id="answer_form" class="question_answer_form">
@@ -145,7 +133,7 @@
 													<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha" /></em>
 											</div>
 											<?php } ?>
-											<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-primary pull-right btn-reply"><?php _e('回复'); ?></a>
+											<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-primary pull-right btn-reply">提交讨论</a>
 											<span class="pull-right c-gray" id="answer_content_message">&nbsp;</span>
 											<?php if (get_setting('upload_enable') == 'Y') { ?>
 											<div class="aw-upload-box">
@@ -162,6 +150,14 @@
 							</div>
 	                    </div>
 					</div>
+
+					<?php if ($this->question_info['lock']) { ?>
+						<p class="question-comment-message"><?php _e('该题目被锁定，暂时无法参加讨论'); ?></p>
+					<?php } else if (!$this->user_id) { ?>
+						<p class="question-comment-message">
+							<a href="account/login/">登录</a>后参与答题讨论
+						</p>
+					<?php } ?>
 				</div>
 			</div>
 		</div>

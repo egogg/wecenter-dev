@@ -263,6 +263,7 @@ var AWS =
 					AWS.alert(result.err);
 
 					$('.submit-comment-box, .btn-reply').removeClass('disabled');
+					$('.load-question-answers').click();
 				break;
 
 				case 'ajax_post_alert':
