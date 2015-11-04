@@ -1350,6 +1350,7 @@ class ajax extends AWS_CONTROLLER
         	'user_answer' => $user_answer,
         	'spend_time' => $spend_time,
         	'correct' => $is_correct_answer,
+        	'user_integral' => $this->user_info['integral'],
         	'integral' => $required_integral,
         	'try_count' => $try_count,
         	'passed_quiz' => $passed_quiz,
