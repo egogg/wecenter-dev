@@ -401,6 +401,38 @@ $(function(){
 			// $('.question-quiz-content').fadeIn();
 		});
 	});
+
+	// 开放答题：答题讨论
+
+	function QuestionDiscuss() {
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		// 滚动到回复框
+
+		$('html, body').animate({
+			scrollTop: $('.comment-box').offset().top - 150
+		}, {
+			duration: 600,
+			queue: true
+		});
+
+		//获取焦点
+
+		EDITOR.focus();
+	}
+
+	// 我要回答问题／继续参与讨论
+
+	$('.question-loader').on('click', '.question-action-discuss', function (e) {
+		e.preventDefault();
+
+		QuestionDiscuss();
+	});
 	
 	// 查看答案解析
 
@@ -529,14 +561,6 @@ $(function(){
 			}
 		}, 'json');
 	});
-		
-	// 参与答题讨论
-
-	$('.question-content').on('click', '.action-post-comment', function (e) {
-		e.preventDefault();
-		toggleComment();
-
-	});
 
 	// 关闭答案解析
 
@@ -545,6 +569,13 @@ $(function(){
 		$('.question-quiz-board').fadeIn();
 		
 		e.preventDefault();
+	});
+
+	// 参与答题讨论
+
+	$('.question-quiz-actions').on('click', 'li.question-quiz-action-item.question-discuss a', function(e) {
+		e.preventDefault();
+		QuestionDiscuss();
 	});
 
 	// 出题
@@ -563,45 +594,6 @@ $(function(){
 		$('.add-question-solution').popover('hide').popover('destroy');
 	});
 
-	function toggleComment() {
-		var commentSection = $('.question-comment-section');
-		var commentInput = $('.aw-replay-box.question');
-
-		if(!commentSection.is(':visible'))
-		{
-			// 获取答题结论和讨论数
-
-			if(ANSWER_COUNT > 0){
-				swal({
-					title: '友情提示',
-		        	text: '评论中可能透露答案信息，不再思考思考？',
-		        	html: true,
-		        	confirmButtonText: "继续查看",
-		        	showCancelButton: true,
-					cancelButtonText: "我再想想",
-		        	type: 'info'
-		        	},
-		        	function() {
-		        		commentSection.slideDown();
-					    $('html, body').animate({
-					        scrollTop: commentInput.position().top
-					    }, 300);
-		        	}
-		        );
-			} else {
-				commentSection.slideDown();
-				$('html, body').animate({
-			        scrollTop: commentSection.position().top
-			    }, 300);
-			}
-		} else {
-			// commentSection.slideUp();
-			$('html, body').animate({
-		        scrollTop: commentInput.position().top
-		    }, 300);
-		}
-	}
-
 	// 展开评论框
 
 	function reloadAnswers() {
@@ -612,7 +604,6 @@ $(function(){
 
 	if($('.answer-items').attr('data-load-answer') == 1) {
 		reloadAnswers();
-
 	}
 
 	$('.load-question-answers').on('click', function (e){

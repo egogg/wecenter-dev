@@ -297,15 +297,8 @@ class main extends AWS_CONTROLLER
 				// 	TPL::assign('user_answered', 0);
 				// }
 			// }
-		if ($this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
-		{
-			$user_answered = true;
-		}
-		else
-		{
-			$user_answered = false;
-		}
-
+		
+		$user_answered = $this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id);
 		$answer_count = $question_info['answer_count'];
 
 		TPL::assign('user_answered', $user_answered);
@@ -316,11 +309,14 @@ class main extends AWS_CONTROLLER
 
 		// 用户是否通过答题
 		$passed_quiz = false;
-		if($this->user_id > 0) 
+		if($this->user_id > 0)
 		{
 			$passed_quiz = ($this->model('quiz')->get_question_quiz_user_record_count($question_info['question_id'], $this->user_id) > 0);
 		}
-		TPL::assign('show_answers', ($user_answered or $passed_quiz));
+
+		$show_answers = ((($question_info['published_uid'] == $this->user_id) or $this->user_info['permission']['is_administortar'] or $this->user_info['permission']['is_moderator']) or ($user_answered) or ($passed_quiz));
+
+		TPL::assign('show_answers', $show_answers);
 
 		if ($this->user_id)
 		{

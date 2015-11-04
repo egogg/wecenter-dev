@@ -14,14 +14,14 @@
 					<ul class="question-quiz-action-items">
 						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
 						<?php if($this->question_info['quiz_id']) { ?>
-							<li class="question-quiz-action-item publish-question"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+							<li class="question-quiz-action-item question-discuss"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
 						<?php } ?>
 						<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
 					</ul>
 				</div>
 
 				<div class="card-body card-padding question-focus">
-					<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a> 
+					<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a>
 				</div>
 
 				<div class="card-body card-padding question-quiz-footer clearfix">
@@ -103,12 +103,10 @@
 		                        
 							</div>
 							
-							
 							<div class="<?php if(($this->answer_count <= 0) or $this->show_answers) { ?>hidden<?php } ?> load-question-answers-board m-b-20 m-t-20">
-								<p>答题讨论中可能包含答案信息，是否再继续思考一下？</p>
+								<p>答题讨论包含答题线索，继续独立思考一下？</p>
 								<a class="load-question-answers btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论</a>
 							</div>
-							
 
 							<!-- 回复编辑器 -->
 							<div class="comment-box m-t-15">
@@ -214,7 +212,7 @@
 			</div> -->
 			<!-- 答题动态 -->
 			<?php if ($this->question_quiz_record) { ?>
-				<div class="card">
+				<div class="card hidden-xs">
 					<div class="card-header">
 						<h2>答题动态</h2>
 						<ul class="actions">

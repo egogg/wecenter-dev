@@ -575,7 +575,25 @@ class answer_class extends AWS_MODEL
 
 	public function has_answer_by_uid($question_id, $uid)
 	{
-		return $this->fetch_one('answer', 'answer_id', "question_id = " . intval($question_id) . " AND uid = " . intval($uid));
+		# return $this->fetch_one('answer', 'answer_id', "question_id = " . intval($question_id) . " AND uid = " . intval($uid));
+
+		if ($answers = $this->fetch_all('answer', 'question_id = ' . intval($question_id)))
+		{
+			foreach ($answers AS $key => $answer)
+			{
+				if($answer['uid'] == intval($uid))
+				{
+					return true;
+				}
+
+				if($this->fetch_one('answer_comments', 'id', 'answer_id = ' . intval($answer['answer_id']) . ' AND uid = ' . intval($uid)))
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 	public function get_last_answer($question_id)

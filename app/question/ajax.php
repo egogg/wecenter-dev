@@ -1493,6 +1493,9 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('show_question_quiz', $show_question_quiz);
 		TPL::assign('answer_question_mode', $answer_question_mode);
 
+		$user_answered = $this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id);
+		TPL::assign('user_answered', $user_answered);
+
 		TPL::assign('attach_access_key', md5($this->user_id . time()));
 		TPL::output('question/ajax/question_content');
 	}

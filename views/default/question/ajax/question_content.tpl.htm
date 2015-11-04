@@ -70,7 +70,6 @@
     		<?php echo $this->question_info['question_content']; ?>
     	<?php } ?>
     </h2>
-   
 </div>
 
 <div class="card-body card-padding question-body">		
@@ -180,8 +179,13 @@
 				
 				<?php if(!$this->question_info['question_quiz']) { ?>
 					<!-- 开放讨论题 -->
-					<p class="action-message m-b-10"><strong>这道题目我有些思路</strong></p>
-					<a href="javascript:void(0);" class="btn bgm-green">我来回答 <em>|</em>	<?php echo $this->question_info['answer_count']; ?></a>
+					<?php if(!$this->user_answered) { ?>
+						<p class="action-message m-b-10"><strong>这道题目我有些思路</strong></p>
+						<a href="javascript:void(0);" class="question-action-discuss btn bgm-orange">发表我的看法</a>
+					<?php } else { ?>
+						<p class="action-message m-b-10"><strong>你已经对这个问题发表了一下看法</strong></p>
+						<a href="javascript:void(0);" class="question-action-discuss btn bgm-orange">继续参与讨论</a>
+					<?php } ?>
 				<?php } else if($this->question_info['question_quiz']['countdown'] > 0) { ?>
 					<!-- 限时答题 -->
 					<p class="action-message m-b-10"><strong>你需要在规定的时间内完成答题</strong></p>
