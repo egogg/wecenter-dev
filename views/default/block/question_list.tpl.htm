@@ -7,8 +7,14 @@
 					<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
 						<?php if($question['user_record_count'] > 0) { ?>
 							<span class="user-passed-quiz bgm-green c-white">答题通过</span>
+							<?php if($question['user_record_count'] == 1) { ?>
+								<span class="user-passed-quiz bgm-lightgreen c-white m-l-10"><i class="md md-flag"></i>	一次通过</span>
+							<?php } else { ?>
+								<span class="user-passed-quiz bgm-indigo c-white m-l-10">尝试 <?php echo $question['user_record_count']; ?> 次</span>
+							<?php } ?>
 						<?php } else { ?>
 							<span class="user-passed-quiz bgm-red c-white">答题失败</span>
+							<span class="user-passed-quiz bgm-gray c-white m-l-10">尝试 <?php echo -$question['user_record_count']; ?> 次 </span>
 						<?php } ?>
         			<?php } ?>
 				</div>

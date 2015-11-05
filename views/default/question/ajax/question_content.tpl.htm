@@ -151,7 +151,7 @@
 
 				<div class="user-quiz-record">
 					<div class="user-quiz-record-message">
-						<a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i> 答题记录：<span class="hidden-xs">你进行了</span><b><?php echo $this->try_count; ?></b><span class="hidden-xs">次答题尝试</span></a> 
+						<a href="javascript:void(0);" class="c-lightblue"><i class="md md-chevron-right"></i> 我的答题记录（<span class="hidden-xs">你进行了</span><b><?php echo $this->try_count; ?></b><span class="hidden-xs">次尝试</span>）</a> 
 					</div>
 					
 					<ul class="user-quiz-record-items clist clist-star clearfix">
@@ -166,10 +166,13 @@
 								<li class="user-quiz-record-item failed">
 									<span class="quiz-record-mark c-red">答题失败</span>
 							<?php } ?>
+								
 								<?php if($record['time_spend'] > 0) { ?>
 									，用时 <?php echo $record['time_spend']; ?> 秒 
 								<?php } ?>
-								（<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>） 
+								<small class="c-gray user-quiz-record-time">
+									（<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>）
+								</small>
 								</li>
 						<?php } ?>
 					</ul>

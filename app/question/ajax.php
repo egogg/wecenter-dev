@@ -1387,7 +1387,8 @@ class ajax extends AWS_CONTROLLER
 			}
 
 			H::ajax_json_output(array(
-				'required_integral' => $required_integral
+				'required_integral' => $required_integral,
+				'user_integral' => $this->user_info['integral']
 			));
 		}
 

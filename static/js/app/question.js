@@ -217,7 +217,7 @@ $(function(){
 		                	if(quiz_result.integral)
 							{
 								textInfo += '<p><span class="c-green"> +' + quiz_result.integral + '</span> 积分</p>';
-								textInfo += '<p>当前剩余 <span class="c-green"><strong>' + (quiz_result.user_integral + quiz_result.integral) + '</strong></span> 积分</p>';
+								textInfo += '<p>你当前剩余 <span class="c-green"><strong>' + (quiz_result.user_integral + quiz_result.integral) + '</strong></span> 积分</p>';
 							}
 
 		                    swal({   
@@ -236,7 +236,7 @@ $(function(){
 		                	if(quiz_result.integral)
 							{
 								textInfo += '<p><span class="c-red"> -' + quiz_result.integral + '</span> 积分</p>';
-								textInfo += '<p>当前剩余 <span class="c-green"><strong>' + (quiz_result.user_integral - quiz_result.integral) + '</strong></span> 积分</p>';
+								textInfo += '<p>你当前剩余 <span class="c-green"><strong>' + (quiz_result.user_integral - quiz_result.integral) + '</strong></span> 积分</p>';
 							}
 							swal({   
 		                    	title: '回答错误',   
@@ -273,14 +273,15 @@ $(function(){
 						
 						// 超时提示
 
-						textInfo = '<p>答题失败！</p>';
+						textInfo = '<p class="c-deeporange"><i class="md md-timer-off"></i> 答题超时</p>';
 						if(result.required_integral)
 						{
-							textInfo += '<p><span style="color:#F27474">-' + result.required_integral + '<span> 积分</p>';
+							textInfo += '<p><span class="c-red"> -' + result.required_integral + '</span> 积分</p>';
+							textInfo += '<p>你当前剩余 <span class="c-green"><strong>' + (result.user_integral - result.required_integral) + '</strong></span> 积分</p>';
 						}
 
 						swal({
-	                    	title: '时间到',
+	                    	title: '答题失败',
 	                    	text: textInfo,   
 	                    	html: true,
 	                    	confirmButtonText: "确定",
@@ -321,9 +322,11 @@ $(function(){
 
 			if(result.not_enough_integral)
 			{
+				textInfo = '<p>你当前剩余 <strong class="user_integral">' + result.user_integral + '</strong> 积分</p>' + '<p>重新答题需要 <span class="c-red">' + result.required_integral + '</span> 积分</p>';
+				textInfo += '<div class="m-t-20 alert-get-integral"><i class="md md-help"></i> 你可以通过<a class="c-lightblue" href="' + G_BASE_URL + '/publish/' + '">分享题目</a>来获取额外积分，更多获取积分的方式可以查看<a class="c-lightblue" href="' + G_BASE_URL + '/integral/rule/' + '">积分规则</a></div>';
 				swal({
 					title: '积分不足',
-		        	text: '<p>当前剩余 <span class="user_integral">' + result.user_integral + '</span> 积分</p>' + '<p>重新答题需要 <span class="required_integral">' + result.required_integral + '</span> 积分</p>',
+		        	text: textInfo,
 		        	html: true,
 		        	confirmButtonText: "获取积分",
 		        	showCancelButton: true,
@@ -343,7 +346,7 @@ $(function(){
 			{
 				swal({   
 		        	title: '积分提示',
-		        	text: '<p>当前剩余 <strong class="user_integral c-green">' + result.user_integral + '</strong> 积分</p>' + '<p>重新答题需要 <span class="c-red">' + result.required_integral + '</span> 积分</p>',   
+		        	text: '<p>你当前剩余 <strong class="user_integral c-green">' + result.user_integral + '</strong> 积分</p>' + '<p>重新答题需要 <span class="c-red">' + result.required_integral + '</span> 积分</p>',   
 		        	html: true,
 		        	confirmButtonText: "继续",
 		        	showCancelButton: true,
@@ -502,9 +505,11 @@ $(function(){
 
 					if(result.not_enough_integral)
 					{
+						textInfo =  '<p>你当前剩余 <strong class="user-integral">' + result.user_integral + '</strong> 积分</p>' + '<p>查看答案解析需要 <span class="required-integral c-red">' + result.required_integral + '</span> 积分</p>'; 
+						textInfo += '<div class="m-t-20 alert-get-integral"><i class="md md-help"></i> 你可以通过<a class="c-lightblue" href="' + G_BASE_URL + '/publish/' + '">分享题目</a>来获取额外积分，更多获取积分的方式可以查看<a class="c-lightblue" href="' + G_BASE_URL + '/integral/rule/' + '">积分规则</a></div>';
 						swal({
 							title: '积分不足',
-				        	text: '<p>您拥有 <span class="user-integral">' + result.user_integral + '</span> 积分</p>' + '<p>查看答案解析需要 <span class="required-integral">' + result.required_integral + '</span> 积分</p>',
+				        	text: textInfo,
 				        	html: true,
 				        	confirmButtonText: "获取积分",
 				        	showCancelButton: true,
@@ -526,7 +531,7 @@ $(function(){
 					{
 						swal({   
 				        	title: '积分提示',
-				        	text: '<p>您拥有 <span class="user_integral">' + result.user_integral + '</span> 积分</p>' + '<p>查看答案解析需要消耗您 <span style="color:#F27474">' + result.required_integral + '<span> 积分</p>',
+				        	text: '<p>你当前剩余 <strong class="user_integral c-green">' + result.user_integral + '</strong> 积分</p>' + '<p>查看答案解析需要 <span class="c-red">' + result.required_integral + '</span> 积分</p>',
 				        	html: true,
 				        	confirmButtonText: "继续",
 				        	showCancelButton: true,

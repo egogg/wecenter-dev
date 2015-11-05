@@ -907,7 +907,12 @@ body {
 
 .user-quiz-record-item {
 	font-size: 12px;
-    padding: 5px 40px 0;
+    padding: 5px 0 0 40px;
+    margin-bottom: 5px;
+}
+
+.user-quiz-record-time {
+	display: inline-block;
 }
 
 .user-quiz-record-message {

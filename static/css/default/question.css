@@ -182,6 +182,12 @@
 	display: none;
 }
 
+.alert-get-integral {
+	padding: 25px;
+	border-left: 3px solid #e0e0e0;
+	background-color: #f9f9f9;
+}
+
 .aw-edit-solution-box .cke_inner {
     border: 1px solid #e0e0e0;
 }
