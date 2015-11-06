@@ -319,6 +319,14 @@ var AWS =
 				{
 					window.location = decodeURIComponent(result.rsm.url);
 				}
+
+				if(result.rsm.publish && result.rsm.success) 
+				{
+					// 保存发表问题成功消息
+					
+					var integral = {'added_integral' : result.rsm.added_integral, 'user_integral' : result.rsm.user_integral};
+					localStorage.setItem('publish_success_' + result.rsm.uid + '_' + result.rsm.qid, JSON.stringify(integral));
+				}
 			}
 			else
 			{

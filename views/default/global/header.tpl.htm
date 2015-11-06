@@ -17,10 +17,11 @@
 	                    	</a>
 	                    	<ul class="dropdown-menu dm-icon pull-right">
 		                    	<?php if($this->user_id) { ?>
+		                    		<li><a href="publish/"><i class="md md-create"></i> 发表问题</a></li>
+		                    		<li class="divider"></li>
 		                    		<li>
 										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><span class="badge badge-important pull-right" style="display:none" id="notifications_unread_mobile"><?php echo $this->user_info['notification_unread']; ?></span><i class="md md-notifications"></i> 站内消息</a>
 									</li>
-									<li class="divider"></li>
 									<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread_mobile">0</span><i class="md md-mail"></i> 我的私信</a></li>
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
 									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出登录</a></li>
@@ -53,6 +54,8 @@
 
 								</a>
 								<ul class="dropdown-menu dm-icon pull-right">
+									<li><a href="publish/"><i class="md md-create"></i> 发表问题</a></li>
+									<li class="divider"></li>
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
 		                           	<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-mail"></i> 我的私信</a></li>
 									<li class="hidden-xs"><a href="account/setting/profile/"><i class="md md-settings"></i> 我的设置</a></li>

@@ -1,5 +1,25 @@
 $(function(){
 
+	// 发表问题成功检测 
+
+	var key = 'publish_success_' + G_USER_ID + '_' + QUESTION_ID;
+	integral = JSON.parse(localStorage.getItem(key));
+	if(integral) {
+		swal({   
+        	title: '发表问题成功',
+        	text: '+ ' + integral.added_integral + ' 积分，当前剩余 ' + (integral.user_integral + integral.added_integral) + ' 积分',   
+        	html: true,
+        	confirmButtonText: "确定",
+        	type: 'success'
+        	},
+        	function() {
+        		localStorage.removeItem(key);
+        	}
+        );
+	}
+
+	// 提示框
+
 	if ($('[data-toggle="tooltip"]')[0]) {
         $('[data-toggle="tooltip"]').tooltip();
     }

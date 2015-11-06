@@ -1111,6 +1111,7 @@ li.user-quiz-record-item.timeout:before {
 
 .comment-list {
 	border: none;
+	box-shadow: none;
 }
 
 .comment-list>ul>li {
@@ -1230,6 +1231,11 @@ ul.answer-actions-right li {
 
 .publish-question-footer {
 	border-top: 1px solid #e0e0e0 !important;
+}
+
+.publish-question-footer-item {
+    display: inline-block;
+    float: left;
 }
 
 .question-category-item {
@@ -1406,6 +1412,25 @@ input.form-control {
 .table > tbody > tr > td:last-child,
 .table > tfoot > tr > td:last-child {
   padding-right: 0;
+}
+
+/*移动版*/
+
+@media (max-width: 767px) {
+	.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
+	.col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, 
+	.col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, 
+	.col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, 
+	.col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, 
+	.col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, 
+	.col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, 
+	.col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, 
+	.col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, 
+	.col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, 
+	.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
+	.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+	    padding: 0;
+	}
 }
 
 /* 重载bootstrap部分 */
@@ -1843,10 +1868,10 @@ a.aw-load-more-content{display: block;}
 
 /* 新编辑器 */
 .cke_editable a{color: #666 !important;}
-.cke_chrome{padding:0 !important;}
+.cke_chrome{padding:0 !important; border:1px solid #e0e0e0 !important; border-radius: 0 !important;}
 .cke_top{position: relative !important;}
-.cke_chrome, .cke_toolgroup{background: none !important;border:none !important;}
-.cke_contents{border:none !important;border-radius: 0px;}
+.cke_toolgroup{background: none !important;border:none !important;}
+.cke_contents{border:none !important;border-radius: 0px!important;}
 .cke_top{padding-top:0 !important;background-color:#fff !important;border-bottom: 1px solid #e0e0e0 !important;}
 a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radius: 0px !important;}
 .cke_button_on, a.cke_button_disabled:active, a.cke_button_disabled:focus, a.cke_button_disabled:hover, a.cke_button_off:active, a.cke_button_off:focus, a.cke_button_off:hover{background-color: #f0f0f0 !important;}
@@ -1875,7 +1900,7 @@ a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radiu
 .cke_button__maximize_icon:before {content: "\e65d";}
 .cke_button__removeformat_icon:before {content: "\e65f";}
 
-.aw-editor-box .mod-head{border:1px solid #e0e0e0;}
+/*.aw-editor-box .mod-head{border:1px solid #e0e0e0;}*/
 .aw-editor-box textarea{border: none;}
 .aw-editor-box .mod-body{position:relative;margin-top: 15px;line-height: 28px;}
 .aw-editor-box .mod-body #question_detail_message{line-height: 34px;}

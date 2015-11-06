@@ -267,8 +267,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="card-body card-padding publish-question-footer">
-						<a class="btn btn-large btn-primary btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
+					<div class="card-body card-padding publish-question-footer clearfix">
+						<?php if ($this->human_valid) { ?>
+							<div class="aw-auth-img publish-question-footer-item m-r-25">
+								<input class="form-control pull-right" type="text" name="seccode_verify" placeholder="验证码" />
+								<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha"  /></em>
+							</div>
+						<?php } ?>
+						<div class="publish-question-footer-item">
+							<a class="btn btn-large btn-primary btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
+						</div>
 					</div>
 				</div>
 			</form>
