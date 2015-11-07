@@ -104,7 +104,7 @@
 							</div>
 							
 							<div class="<?php if(($this->answer_count <= 0) or $this->show_answers) { ?>hidden<?php } ?> load-question-answers-board m-b-20 m-t-20">
-								<p>答题讨论包含答题线索，继续独立思考一下？</p>
+								<p>答题讨论中可能包含答题线索，是否再继续独立思考一下？</p>
 								<a class="load-question-answers btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论</a>
 							</div>
 
@@ -973,6 +973,10 @@
 	
 	var QUESTION_QUIZ_STATS_TOTAL = '<?php echo $this->question_quiz_stats['total']; ?>';
 	var QUESTION_QUIZ_STATS_PASSED = '<?php echo $this->question_quiz_stats['passed']; ?>';
+
+	var PUBLISH_SUCCESS_HINT = '<?php echo $this->is_first_visited; ?>';
+	var PUBLISH_SUCCESS_INTEGRAL = '<?php echo $this->publish_integral; ?>' ;
+	var USER_INTEGRAL = '<?php echo $this->user_integral; ?>';
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>

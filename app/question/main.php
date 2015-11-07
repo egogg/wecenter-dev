@@ -487,6 +487,17 @@ class main extends AWS_CONTROLLER
 		}
 		TPL::assign('question_quiz_record', $question_quiz_record);
 		TPL::assign('question_quiz_stats', $question_quiz_stats);
+
+		// 是否进行出题成功提示
+
+		if(($this->user_id  == $question_info['published_uid']) and $question_info['is_first'])
+		{
+			TPL::assign('is_first_visited', true);
+			TPL::assign('publish_integral', get_setting('integral_system_config_new_question'));
+			TPL::assign('user_integral', $this->user_info['integral']);
+
+			$this->model('question')->set_is_first_visited($question_info['question_id'], 1);
+		}
 		
 		// // 添加题目解析提示提示
 

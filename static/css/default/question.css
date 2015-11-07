@@ -188,6 +188,24 @@
 	background-color: #f9f9f9;
 }
 
+.alert-edit-solution {
+	border-left: 3px solid #e0e0e0;
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.help-button {
+	width: 30px;
+    height: 30px;
+    line-height: 29px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 0 5px;
+}
+
 .aw-edit-solution-box .cke_inner {
     border: 1px solid #e0e0e0;
 }

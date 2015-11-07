@@ -1693,4 +1693,11 @@ class question_class extends AWS_MODEL
 	{
 		return $this->question_list_total;
 	}
+
+	public function set_is_first_visited($question_id, $code)
+	{
+		$this->update('question', array(
+			'is_first' => intval($code)
+		), 'question_id = ' . intval($question_id));
+	}
 }

@@ -297,7 +297,12 @@ class publish_class extends AWS_MODEL
 			// 记录日志
 			ACTION_LOG::save_action($uid, $question_id, ACTION_LOG::CATEGORY_QUESTION, ACTION_LOG::ADD_QUESTION, $question_content, $question_detail, 0, intval($anonymous));
 
+			// 积分操作
 			$this->model('integral')->process($uid, 'NEW_QUESTION', get_setting('integral_system_config_new_question'), '发起问题 #' . $question_id, $question_id);
+
+			// 第一次回访纪录
+
+			$this->model('question')->set_is_first_visited($question_id, 1);
 
 			$this->model('posts')->set_posts_index($question_id, 'question');
 

@@ -669,13 +669,7 @@ class ajax extends AWS_CONTROLLER
             }
 
             H::ajax_json_output(AWS_APP::RSM(array(
-                'url' => $url,
-                'publish' => true,
-                'success' => true,
-                'uid' => $this->user_id,
-                'qid' => $question_id,
-                'added_integral' => 100,
-                'user_integral' => $this->user_info['integral']
+                'url' => $url
             ), 1, null));
         }
     }
