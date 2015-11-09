@@ -1,5 +1,156 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<div id="content">
+    <div class="container">
+        <div class="integral-rule-title text-center m-b-10 clearfix">
+            <h2 class="m-b-0">积分规则</h2>
+            <p>注册默认拥有 <span class="c-green"><?php echo get_setting('integral_system_config_register'); ?> 积分</span></p>
+        </div>
+        
+        <div class="col-sm-6">
+            <div class="card integral-rule-header"> 
+                <div class="card-body card-padding bgm-green c-white text-center m-b-25">
+                    <h3 class="c-white"><i class="md md-add"></i> 获取积分</h3>
+                </div> 
+            </div>
+
+            <!-- 分享问题 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <a href="publish/">
+                                <i class="integral-rule-type-icon get md md-create"></i>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a class="c-lightblue" href="publish/">分享题目</a> <span class="c-green">＋ <?php echo get_setting('integral_system_config_new_question'); ?> 积分</span></h4>
+                            当你分享的题目被审核通过之后，你将获取相应的奖励积分
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- 答题正确 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <a href="question/">
+                                <i class="integral-rule-type-icon get md md-check"></i>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a class="c-lightblue" href="question/">答题正确</a> <span class="c-green">＋问题基础分 * 1</span></h4>
+                            当你回答并且正确回答问题时，你将获取<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 1
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- 邀请注册 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <a href="invitation/">
+                                <i class="integral-rule-type-icon get md md-quick-contacts-mail"></i>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a class="c-lightblue" href="invitation/">邀请注册</a> <span class="c-green">＋<?php echo get_setting('integral_system_config_invite'); ?> 积分</span></h4>
+                            当你邀请他人注册且被邀请人成功注册时，你将获取相应的积分
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- 完善资料 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <a href="account/setting/profile/">
+                                <i class="integral-rule-type-icon get md md-contacts"></i>
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading"><a class="c-lightblue" href="account/setting/profile/">完善资料</a> <span class="c-green">＋<?php echo get_setting('integral_system_config_profile'); ?> 积分</span></h4>
+                            当你完善个人资料（头像、一句话介绍等）时，你将获取相应的积分
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card integral-rule-header"> 
+                <div class="card-body card-padding bgm-red c-white text-center m-b-25">
+                    <h3 class="c-white"><i class="md md-remove"></i> 扣除积分</h3>
+                </div> 
+            </div>
+            <!-- 查看答案 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="integral-rule-type-icon lose md md-spellcheck"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">查看答案 <span class="c-red">- 问题基础分 * 2</span></h4>
+                            当你查看问题的答案解析时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 2
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- 答题错误 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="integral-rule-type-icon lose md md-clear"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">答题错误 <span class="c-red">- 问题基础分 * 1</span></h4>
+                            当你回答问题失败时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 1
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- 答题超时 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="integral-rule-type-icon lose md md-timer-off"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">答题超时 <span class="c-red">- 问题基础分 * 2</span></h4>
+                            当你回答问题超时时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 2
+                        </div>
+                    </div>
+                </div> 
+            </div>
+
+            <!-- 重新答题 -->
+            <div class="card"> 
+                <div class="card-body card-padding">
+                    <div class="media">
+                        <div class="pull-left">
+                            <i class="integral-rule-type-icon lose md md-replay"></i>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">重新答题 <span class="c-red">- 问题基础分 * 1.5</span></h4>
+                            当你想重新尝试回答失败的题目时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 1.5
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="aw-container-wrap">
     <div class="container aw-custom-page">
         <div class="row">
