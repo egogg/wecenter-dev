@@ -41,8 +41,8 @@
                             </a>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading"><a class="c-lightblue" href="question/">答题正确</a> <span class="c-green">＋问题基础分 * 1</span></h4>
-                            当你回答并且正确回答问题时，你将获取<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 1
+                            <h4 class="media-heading"><a class="c-lightblue" href="question/">答题正确</a> <span class="c-green">＋问题基础分 * <?php echo abs(get_setting('question_quiz_correct_integral_coeffcient'));?></span></h4>
+                            当你回答并且正确回答问题时，你将获取<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_correct_integral_coeffcient'));?>
                         </div>
                     </div>
                 </div> 
@@ -96,8 +96,8 @@
                             <i class="integral-rule-type-icon lose md md-spellcheck"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">查看答案 <span class="c-red">- 问题基础分 * 2</span></h4>
-                            当你查看问题的答案解析时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 2
+                            <h4 class="media-heading">查看答案 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_solution_integral_coeffcient')); ?></span></h4>
+                            当你查看问题的答案解析时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_solution_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -111,8 +111,8 @@
                             <i class="integral-rule-type-icon lose md md-clear"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">答题错误 <span class="c-red">- 问题基础分 * 1</span></h4>
-                            当你回答问题失败时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 1
+                            <h4 class="media-heading">答题错误 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_wrong_integral_coeffcient')); ?></span></h4>
+                            当你回答问题失败时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_wrong_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -126,8 +126,8 @@
                             <i class="integral-rule-type-icon lose md md-timer-off"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">答题超时 <span class="c-red">- 问题基础分 * 2</span></h4>
-                            当你回答问题超时时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 2
+                            <h4 class="media-heading">答题超时 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_timeout_integral_coeffcient')); ?></span></h4>
+                            当你回答问题超时时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_timeout_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -141,8 +141,8 @@
                             <i class="integral-rule-type-icon lose md md-replay"></i>
                         </div>
                         <div class="media-body">
-                            <h4 class="media-heading">重新答题 <span class="c-red">- 问题基础分 * 1.5</span></h4>
-                            当你想重新尝试回答失败的题目时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * 1.5
+                            <h4 class="media-heading">重新答题 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_retry_integral_coeffcient')); ?></span></h4>
+                            当你想重新尝试回答失败的题目时，将被扣除<abbr class="base-question-score" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="<?php TPL::output('block/question_integral_rule'); ?>" data-original-title="问题基础分规则" title="">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_retry_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -151,67 +151,12 @@
     </div>
 </div>
 
-<div class="aw-container-wrap">
-    <div class="container aw-custom-page">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="aw-point-rule">
-                    <h1><?php _e('%s 积分规则', get_setting('site_name')); ?></h1>
-
-                    <dl>
-                        <dt><?php _e('新用户注册默认拥有积分'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_register') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_register')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('用户完善资料获得积分（包括头像，一句话介绍，履历等资料）'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_profile') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_profile')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('用户邀请他人注册且被邀请人成功注册'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_invite') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_invite')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('发起问题'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_new_question') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_new_question')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('回复问题'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_new_answer') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_new_answer')); ?></span></dd>
-                    </dl>
-                    <?php if (get_setting('integral_system_config_answer_change_source') == 'Y' AND get_setting('integral_system_config_new_answer') <= 0) { ?>
-                    <dl>
-                        <dt><?php _e('问题被回复'); ?></dt>
-                        <dd><span class="green"><?php _e('%s 分', -get_setting('integral_system_config_new_answer')); ?></span></dd>
-                    </dl>
-                    <?php } ?>
-                    <dl>
-                        <dt><?php _e('回复被评为最佳回复'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_best_answer') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_best_answer')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('感谢回复'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_thanks') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_thanks')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('回复被感谢'); ?></dt>
-                        <dd><span class="<?php if (-get_setting('integral_system_config_thanks') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', -get_setting('integral_system_config_thanks')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('回复被折叠'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_answer_fold') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_answer_fold')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('发起者邀请用户回答问题且收到答案'); ?></dt>
-                        <dd><span class="<?php if (get_setting('integral_system_config_invite_answer') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', get_setting('integral_system_config_invite_answer')); ?></span></dd>
-                    </dl>
-                    <dl>
-                        <dt><?php _e('回复问题发起者的邀请'); ?></dt>
-                        <dd><span class="<?php if (-get_setting('integral_system_config_invite_answer') >= 0) { ?>green<?php } else { ?>red<?php } ?>"><?php _e('%s 分', -get_setting('integral_system_config_invite_answer')); ?></span></dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<script type="text/javascript">
+    $(function(){
+        if ($('[data-toggle="popover"]')[0]) {
+            $('[data-toggle="popover"]').popover();
+        }
+    });
+</script>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>

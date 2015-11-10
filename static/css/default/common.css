@@ -1332,6 +1332,11 @@ ul.answer-actions-right li {
 
 /* 重载material design 部分 */
 
+.popover-title {
+	font-size: 13px;
+	font-weight: 500 !important;
+}
+
 .b-white {
   border-color: #ffffff !important;
 }

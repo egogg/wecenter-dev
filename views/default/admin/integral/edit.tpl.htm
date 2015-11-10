@@ -1,0 +1,142 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap">
+	<form action="admin/ajax/save_settings/" id="settings_form" method="post" onsubmit="return false">
+	    <div class="mod">
+	        <div class="mod-head">
+	            <h3>
+	                <span class="pull-left"><?php _e('问题难度及积分设置'); ?></span>
+
+	                <span class="pull-right"><a href="javascript:;" onclick="AWS.ajax_post($('#settings_form'));" class="btn btn-xs btn-primary mod-site-save"><?php _e('快速保存'); ?></a></span>
+	            </h3>
+	        </div>
+	        <div class="tab-content mod-content">
+	            <table class="table table-striped">
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('难度等级 1'); ?>:</span>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_1_text" type="text" class="form-control" placeholder="难度标签" value="<?php echo $this->setting['difficulty_level_1_text']; ?>"/>
+	                            </div>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_1_integral" type="text" class="form-control" placeholder="难度积分" value="<?php echo $this->setting['difficulty_level_1_integral']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('难度等级 2'); ?>:</span>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_2_text" type="text" class="form-control" placeholder="难度标签" value="<?php echo $this->setting['difficulty_level_2_text']; ?>"/>
+	                            </div>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_2_integral" type="text" class="form-control" placeholder="难度积分" value="<?php echo $this->setting['difficulty_level_2_integral']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+					<tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('难度等级 3'); ?>:</span>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_3_text" type="text" class="form-control" placeholder="难度标签" value="<?php echo $this->setting['difficulty_level_3_text']; ?>"/>
+	                            </div>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_3_integral" type="text" class="form-control" placeholder="难度积分" value="<?php echo $this->setting['difficulty_level_3_integral']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+					<tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('难度等级 4'); ?>:</span>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_4_text" type="text" class="form-control" placeholder="难度标签" value="<?php echo $this->setting['difficulty_level_4_text']; ?>"/>
+	                            </div>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_4_integral" type="text" class="form-control" placeholder="难度积分" value="<?php echo $this->setting['difficulty_level_4_integral']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('难度等级 5'); ?>:</span>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_5_text" type="text" class="form-control" placeholder="难度标签" value="<?php echo $this->setting['difficulty_level_5_text']; ?>"/>
+	                            </div>
+	                            <div class="col-sm-4 col-xs-4">
+	                                <input name="difficulty_level_5_integral" type="text" class="form-control" placeholder="难度积分" value="<?php echo $this->setting['difficulty_level_5_integral']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('答题成功积分系数'); ?>:</span>
+	                            <div class="col-sm-5 col-xs-8">
+	                                <input name="question_quiz_correct_integral_coeffcient" type="text" class="form-control" value="<?php echo $this->setting['question_quiz_correct_integral_coeffcient']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+					<tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('答题失败积分系数'); ?>:</span>
+	                            <div class="col-sm-5 col-xs-8">
+	                                <input name="question_quiz_wrong_integral_coeffcient" type="text" class="form-control" value="<?php echo $this->setting['question_quiz_wrong_integral_coeffcient']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('答题超时积分系数'); ?>:</span>
+	                            <div class="col-sm-5 col-xs-8">
+	                                <input name="question_quiz_timeout_integral_coeffcient" type="text" class="form-control" value="<?php echo $this->setting['question_quiz_timeout_integral_coeffcient']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('查看答案积分系数'); ?>:</span>
+	                            <div class="col-sm-5 col-xs-8">
+	                                <input name="question_quiz_solution_integral_coeffcient" type="text" class="form-control" value="<?php echo $this->setting['question_quiz_solution_integral_coeffcient']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td>
+	                        <div class="form-group">
+	                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('重新答题积分系数'); ?>:</span>
+	                            <div class="col-sm-5 col-xs-8">
+	                                <input name="question_quiz_retry_integral_coeffcient" type="text" class="form-control" value="<?php echo $this->setting['question_quiz_retry_integral_coeffcient']; ?>"/>
+	                            </div>
+	                        </div>
+	                    </td>
+	                </tr>
+	            </table>
+	        </div> 
+		    <div class="tab-content mod-content mod-one-btn">
+	            <div class="center-block">
+	                <input type="button" value="<?php _e('保存设置'); ?>" class="btn btn-primary" onclick="AWS.ajax_post($('#settings_form'));" />
+	            </div>
+	        </div>
+	    </div>
+	</form>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>
