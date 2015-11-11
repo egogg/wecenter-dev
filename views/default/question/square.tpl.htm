@@ -67,11 +67,11 @@
 		            		<h3>难度：</h3>
 		            		<ul class="m-question-filter-items">
 		            			<li class="m-question-filter-difficulty <?php if(!$this->filter_info OR !$this->filter_info['difficulty']) { echo 'active'; } ?>"><a  href="javascript:;">全部</a></li>
-		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">休闲</a></li>
-		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">简单</a></li>
-		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">中等</a></li>
-		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">困难</a></li>
-		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 5) { echo 'active'; } ?>" data-id="5"><a href="javascript:;">极难</a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;"><?php echo get_setting('difficulty_level_1_text'); ?></a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;"><?php echo get_setting('difficulty_level_2_text'); ?></a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;"><?php echo get_setting('difficulty_level_3_text'); ?></a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;"><?php echo get_setting('difficulty_level_4_text'); ?></a></li>
+		            			<li class="m-question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 5) { echo 'active'; } ?>" data-id="5"><a href="javascript:;"><?php echo get_setting('difficulty_level_5_text'); ?></a></li>
 		            		</ul>
 		            	</li>
 		            	<li class="m-question-filter-row">

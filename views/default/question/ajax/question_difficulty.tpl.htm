@@ -1,5 +1,5 @@
 <?php if($this->question_difficulty == 5) { ?>
-	<a href="javascript:;" data-type="difficulty" data-id="5" class="question-tag b-red c-red">
+	<a href="javascript:;" data-type="difficulty" data-id="5" class="question-tag b-orange c-orange">
 		<span class="hidden-xs">
 			<i class="md md-star"></i>
 			<i class="md md-star"></i>
@@ -7,10 +7,10 @@
 			<i class="md md-star"></i>
 			<i class="md md-star"></i>
 		</span>
-		<span><?php _e('极难'); ?></span>
+		<span><?php echo get_setting('difficulty_level_5_text'); ?></span>
 	</a>
 <?php } elseif($this->question_difficulty == 4) { ?>
-	<a href="javascript:;" data-type="difficulty" data-id="4" class="question-tag b-orange c-orange">
+	<a href="javascript:;" data-type="difficulty" data-id="4" class="question-tag b-purple c-purple">
 		<span class="hidden-xs">
 			<i class="md md-star"></i>
 			<i class="md md-star"></i>
@@ -18,10 +18,10 @@
 			<i class="md md-star"></i>
 			<i class="md md-star-outline"></i>
 		</span>	
-		<span><?php _e('困难'); ?></span>
+		<span><?php echo get_setting('difficulty_level_4_text'); ?></span>
 	</a>
 <?php } elseif($this->question_difficulty == 3) { ?>
-	<a href="javascript:;" data-type="difficulty" data-id="3" class="question-tag b-blue c-blue">
+	<a href="javascript:;" data-type="difficulty" data-id="3" class="question-tag b-yellow c-yellow">
 		<span class="hidden-xs">
 			<i class="md md-star"></i>
 			<i class="md md-star"></i>
@@ -29,10 +29,10 @@
 			<i class="md md-star-outline"></i>
 			<i class="md md-star-outline"></i>
 		</span>
-		<span><?php _e('中等'); ?></span>
+		<span><?php echo get_setting('difficulty_level_3_text'); ?></span>
 	</a>
 <?php } elseif($this->question_difficulty == 2) { ?>
-	<a href="javascript:;" data-type="difficulty" data-id="2" class="question-tag b-cyan c-cyan">
+	<a href="javascript:;" data-type="difficulty" data-id="2" class="question-tag b-blue c-blue">
 		<span class="hidden-xs">
 			<i class="md md-star"></i>
 			<i class="md md-star"></i>
@@ -40,7 +40,7 @@
 			<i class="md md-star-outline"></i>
 			<i class="md md-star-outline"></i>
 		</span>
-		<span><?php _e('简单'); ?></span>
+		<span><?php echo get_setting('difficulty_level_2_text'); ?></span>
 	</a>
 <?php } else { ?>
 	<a href="javascript:;" data-type="difficulty" data-id="1" class="question-tag b-green c-green">
@@ -51,6 +51,6 @@
 			<i class="md md-star-outline"></i>
 			<i class="md md-star-outline"></i>
 		</span>
-		<span><?php _e('休闲'); ?></span>
+		<span><?php echo get_setting('difficulty_level_1_text'); ?></span>
 	</a> 
 <?php } ?>

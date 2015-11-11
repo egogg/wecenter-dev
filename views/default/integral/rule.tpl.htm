@@ -42,7 +42,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading"><a class="c-lightblue" href="question/">答题正确</a> <span class="c-green">＋问题基础分 * <?php echo abs(get_setting('question_quiz_correct_integral_coeffcient'));?></span></h4>
-                            当你回答并且正确回答问题时，你将获取<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_correct_integral_coeffcient'));?>
+                            当你回答并且正确回答问题时，你将获取<abbr class="base-question-score" data-html="true" data-trigger="hover" data-toggle="popover" data-placement="top" data-content='<?php TPL::output('block/question_integral_rule'); ?>' data-original-title="" title="">问题基础分</abbr> * <?php echo abs(get_setting('question_quiz_correct_integral_coeffcient'));?>
                         </div>
                     </div>
                 </div> 
@@ -97,7 +97,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">查看答案 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_solution_integral_coeffcient')); ?></span></h4>
-                            当你查看问题的答案解析时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_solution_integral_coeffcient')); ?>
+                            当你查看问题的答案解析时，将被扣除<abbr class="base-question-score" data-html="true" data-trigger="hover" data-toggle="popover" data-placement="top" data-content='<?php TPL::output('block/question_integral_rule'); ?>' data-original-title="" title="">问题基础分</abbr> * <?php echo abs(get_setting('question_quiz_solution_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -112,7 +112,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">答题错误 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_wrong_integral_coeffcient')); ?></span></h4>
-                            当你回答问题失败时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_wrong_integral_coeffcient')); ?>
+                            当你回答问题失败时，将被扣除<abbr class="base-question-score" data-html="true" data-trigger="hover" data-toggle="popover" data-placement="top" data-content='<?php TPL::output('block/question_integral_rule'); ?>' data-original-title="" title="">问题基础分</abbr> * <?php echo abs(get_setting('question_quiz_wrong_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -127,7 +127,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">答题超时 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_timeout_integral_coeffcient')); ?></span></h4>
-                            当你回答问题超时时，将被扣除<abbr class="base-question-score" title="问题基础分">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_timeout_integral_coeffcient')); ?>
+                            当你回答问题超时时，将被扣除<abbr class="base-question-score" data-html="true" data-trigger="hover" data-toggle="popover" data-placement="top" data-content='<?php TPL::output('block/question_integral_rule'); ?>' data-original-title="" title="">问题基础分</abbr> * <?php echo abs(get_setting('question_quiz_timeout_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
@@ -142,7 +142,7 @@
                         </div>
                         <div class="media-body">
                             <h4 class="media-heading">重新答题 <span class="c-red">- 问题基础分 * <?php echo abs(get_setting('question_quiz_retry_integral_coeffcient')); ?></span></h4>
-                            当你想重新尝试回答失败的题目时，将被扣除<abbr class="base-question-score" data-trigger="hover" data-toggle="popover" data-placement="bottom" data-content="<?php TPL::output('block/question_integral_rule'); ?>" data-original-title="问题基础分规则" title="">问题基础分<i class="md md-help"></i></abbr> * <?php echo abs(get_setting('question_quiz_retry_integral_coeffcient')); ?>
+                            当你想重新尝试回答失败的题目时，将被扣除<abbr class="base-question-score" data-html="true" data-trigger="hover" data-toggle="popover" data-placement="top" data-content='<?php TPL::output('block/question_integral_rule'); ?>' data-original-title="" title="">问题基础分</abbr> * <?php echo abs(get_setting('question_quiz_retry_integral_coeffcient')); ?>
                         </div>
                     </div>
                 </div> 
