@@ -444,7 +444,9 @@ $(function(){
 
 		//获取焦点
 
-		EDITOR.focus();
+		if(EDITOR) {
+			EDITOR.focus();
+		}
 	}
 
 	// 我要回答问题／继续参与讨论

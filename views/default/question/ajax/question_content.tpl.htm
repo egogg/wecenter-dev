@@ -65,7 +65,7 @@
 <div class="card-header question-title m-b-15 clearfix">
     <h2>
     	<?php if(!$this->show_question_content) { ?>
-    		<i class="md md-access-alarm"></i> 第<?php echo $this->question_info['question_id']; ?>题，该题为限时答题
+    		<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($this->question_info['question_content'], 2, 4, 'UTF-8', '***'); ?>
     	<?php } else { ?>
     		<?php echo $this->question_info['question_content']; ?>
     	<?php } ?>

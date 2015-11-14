@@ -16,9 +16,29 @@
 						<?php if($this->question_info['quiz_id']) { ?>
 							<li class="question-quiz-action-item question-discuss"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
 						<?php } ?>
-						<li class="question-quiz-action-item email-invite"><a href="javascript:void(0);" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
+						<li class="question-quiz-action-item email-invite"><a data-toggle="modal" href="#modalInviteFriend" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
 					</ul>
 				</div>
+
+				<div class="modal fade" id="modalInviteFriend" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">邀请朋友答题</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>你可以邀请朋友回答问题</p>
+		                            <form method="post" action="question/ajax/email_invite/question_id-<?php echo $this->question_info['question_id']; ?>" onsubmit="return false;" id="email_invite_form">
+		                            	<input class="form-control" type="text" name="email" placeholder="@邮件地址"/>
+									</form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onclick="AWS.ajax_post($('#email_invite_form'), 'ajax_processer', 'invite_friend');">发送邀请</button>
+                                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 				<div class="card-body card-padding question-focus">
 					<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a>
@@ -282,7 +302,7 @@
 										<div class="media-body">
 											<?php if($val['is_countdown']) { ?>
 												<div class="countdown-question-title">
-													<i class="md md-access-alarm"></i> 第<?php echo $val['question_id']; ?>题，该题为限时答题
+													<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($val['question_content'], 2, 4, 'UTF-8', '***'); ?>
 												</div>
 											<?php } else { ?>
 												<div class="c-black">

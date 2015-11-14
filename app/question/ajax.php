@@ -826,7 +826,7 @@ class ajax extends AWS_CONTROLLER
 	{
 		if (! H::valid_email($_POST['email']))
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('请填写正确的 Email')));
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('请填写正确的email地址')));
 		}
 
 		if ($_POST['email'] == $this->user_info['email'])
@@ -836,7 +836,7 @@ class ajax extends AWS_CONTROLLER
 
 		if ($this->model('question')->check_email_invite($_GET['question_id'], $this->user_id, $_POST['email']))
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('此 E-mail 已接收过邀请')));
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('你已经邀请过该朋友')));
 		}
 
 		$this->model('question')->add_invite($_GET['question_id'], $this->user_id, 0, $_POST['email']);

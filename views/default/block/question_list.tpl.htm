@@ -75,7 +75,7 @@
 								<h3>
 				            		<?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
 				            			<a class="countdown-question-title" href="question/<?php echo $question['question_id']; ?>" target="_blank">
-				            				<i class="md md-access-alarm"></i> 第<?php echo $question['question_id']; ?>题，该题为限时答题
+				            				<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($question['question_content'], 2, 4, 'UTF-8', '***'); ?>
 				            			</a>
 				            		<?php } else { ?>
 				            			<a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>

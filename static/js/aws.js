@@ -88,11 +88,12 @@ var AWS =
                 y: 85
             },
             spacing: 10,
-            z_index: 99999,
+            z_index: 9999,
             delay: 2500,
-            timer: 1000,
-            url_target: '_blank',
+            timer: 1500,
             mouse_over: false,
+            newest_on_top: true,
+            url_target: '_blank',
             animate: {
                     enter: 'animated fadeInDown',
                     exit: 'animated fadeOutDown'
@@ -260,6 +261,7 @@ var AWS =
 				case 'comments_form':
 				case 'reply':
 				case 'reply_question':
+				case 'invite_friend':
 					AWS.alert(result.err);
 
 					$('.submit-comment-box, .btn-reply').removeClass('disabled');
@@ -332,6 +334,18 @@ var AWS =
 
 					case 'ajax_post_modal':
 						$('#aw-ajax-box div.modal').modal('hide');
+					break;
+
+					// 邀请朋友答题
+					case 'invite_friend':
+						$('#modalInviteFriend').modal('hide');
+						swal({   
+				        	title: '发送邀请成功',
+				        	text: '',   
+				        	html: true,
+				        	confirmButtonText: "确定",
+				        	type: 'success'
+				        });
 					break;
 
 					// 问题回复
@@ -528,11 +542,12 @@ var AWS =
                 y: 85
             },
             spacing: 10,
-            z_index: 1031,
+            z_index: 9999,
             delay: 2500,
             timer: 1000,
             url_target: '_blank',
             mouse_over: false,
+            newest_on_top: true,
             animate: {
                     enter: 'animated fadeInDown',
                     exit: 'animated fadeOutDown'
