@@ -45,9 +45,9 @@
 				</div>
 
 				<div class="card-body card-padding question-quiz-footer clearfix">
-					<div class="pull-left clearfix question-quiz-stats">
-						<ul class="question-quiz-stats-items">
-							<li class="question-quiz-stats-item">
+					<div class="pull-left clearfix footer-stats">
+						<ul class="footer-stats-items">
+							<li class="footer-stats-item">
 								<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 									<i class="md md-visibility"></i> 
 									<span class="quiz-stats-text">
@@ -57,7 +57,7 @@
 								</a>
 							</li>
 							<?php if($this->question_info['quiz_id'] > 0) { ?>
-								<li class="question-quiz-stats-item">
+								<li class="footer-stats-item">
 									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 										<i class="md md-equalizer"> </i>
 										<span class="quiz-stats-text">
@@ -66,7 +66,7 @@
 										</span> 
 									</a>
 								</li>
-								<li class="question-quiz-stats-item">
+								<li class="footer-stats-item">
 									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
 										<i class="md md-flag"></i>
 										<span class="quiz-stats-text">
@@ -78,20 +78,20 @@
 							<?php } ?>
 						</ul>
 					</div>
-					<div class="pull-right question-share">
-						<span class="question-share-title">分享到</span>
-						<ul class="question-share-list">
-							<li class="question-share-item weibo">
+					<div class="pull-right footer-share">
+						<span class="footer-share-title">分享到</span>
+						<ul class="footer-share-list">
+							<li class="footer-share-item weibo">
 								<a class="bgm-red" onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});">	<i class="icon icon-weibo"></i>
 								</a>
 							</li>
-							<li class="question-share-item qzone">
+							<li class="footer-share-item qzone">
 								<a class="bgm-indigo" onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
 							</li>
-							<li class="question-share-item wechat">
+							<li class="footer-share-item wechat">
 								<a class="bgm-green" onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
 							</li>
-							<!-- <li class="question-share-item">
+							<!-- <li class="footer-share-item">
 								<a href="javascript:void(0);">
 									<i class="md md-more-horiz"></i>
 								</a>

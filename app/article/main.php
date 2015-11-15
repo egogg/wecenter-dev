@@ -150,6 +150,11 @@ class main extends AWS_CONTROLLER
 			TPL::assign('recommend_posts', $recommend_posts);
 		}
 
+		// 收藏数量
+
+		$bookmark_count = count($this->model('favorite')->get_favorite_counts('article', $article_info['id']));
+		TPL::assign('bookmark_count', $bookmark_count);
+
 		TPL::output('article/index');
 	}
 

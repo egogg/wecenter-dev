@@ -278,4 +278,9 @@ class favorite_class extends AWS_MODEL
 
 		return $favorite_list_data;
 	}
+
+	public function get_favorite_counts($item_type, $item_id) 
+	{
+		return $this->count('favorite', 'type = "' . $this->quote($item_type) . '" AND item_id = ' . intval($item_id));
+	}
 }

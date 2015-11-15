@@ -153,7 +153,7 @@ var AW_TEMPLATE = {
 		'</div>',
 
 	'favoriteBox' :
-		'<div class="modal hide fade alert-box aw-favorite-box">'+
+		'<div class="modal fade alert-box aw-favorite-box">'+
 			'<div class="modal-dialog">'+
 				'<div class="modal-content">'+
 					'<div class="modal-header">'+

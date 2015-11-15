@@ -778,7 +778,7 @@ var AWS =
 				case 'favorite':
 					$.get(G_BASE_URL + '/favorite/ajax/get_favorite_tags/', function (result)
 					{
-						var html = ''
+						var html = '';
 
 						$.each(result, function (i, e)
 						{
@@ -792,18 +792,20 @@ var AWS =
 							'item_type' : $('#favorite_form input[name="item_type"]').val()
 						}, function (result)
 						{
-							$.each(result, function (i, e)
-							{
-								var index = i;
-
-								$.each($('.aw-favorite-tag-list ul li .title'), function (i, e)
+							if(result) {
+								$.each(result, function (i, e)
 								{
-									if ($(this).text() == result[index])
+									var index = i;
+
+									$.each($('.aw-favorite-tag-list ul li .title'), function (i, e)
 									{
-										$(this).parents('li').addClass('active');
-									}
+										if ($(this).text() == result[index])
+										{
+											$(this).parents('li').addClass('active');
+										}
+									});
 								});
-							});
+							}
 						}, 'json');
 
 						$(document).on('click', '.aw-favorite-tag-list ul li a', function()
