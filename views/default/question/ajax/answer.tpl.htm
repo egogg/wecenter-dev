@@ -23,8 +23,8 @@
         		<li>
         			<a class="agree-answer <?php if ($this->user_info['user_name'] == $this->answer_info['user_info']['user_name']) { ?> disabled<?php } ?> <?php if ($this->answer_info['agree_status'] == 1) { ?>active<?php } ?> <?php if (!$this->user_id) { ?>disabled<?php } ?> c-gray" 
         				<?php if ($this->user_id && $this->user_info['user_name'] != $this->answer_info['user_info']['user_name']) { ?>onclick="AWS.User.agree_vote(this, '<?php echo $this->user_info['user_name']; ?>', <?php echo $this->answer_info['answer_id']; ?>);"<?php } ?> 
-    					<?php if(!$this->user_id) { ?>href="account/login/"<?php } ?> data-agreed="<?php echo $this->answer_info['agree_status']? 1 : 0; ?>">
-    					<i data-placement="right" title="" data-toggle="tooltip" class="md md-thumb-up" data-original-title="赞同"></i>
+    					<?php if(!$this->user_id) { ?>href="account/login/"<?php } ?> data-agreed="<?php echo $this->answer_info['agree_status']? 1 : 0; ?>" data-placement="bottom" title="<?php if($this->answer_info['agree_status']){ ?>取消赞同<?php } else { ?>赞同<?php } ?>" data-toggle="tooltip">
+    					<i class="md md-thumb-up"></i>
     					<span><?php if ($this->answer_info['agree_status'] == 1) { ?>已赞同<?php } else { ?> 赞同<?php } ?></span>(<b class="count"><?php echo $this->answer_info['agree_count']; ?></b>)
         			</a>
         		</li>

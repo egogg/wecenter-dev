@@ -152,7 +152,7 @@ class main extends AWS_CONTROLLER
 
 		// 收藏数量
 
-		$bookmark_count = count($this->model('favorite')->get_favorite_counts('article', $article_info['id']));
+		$bookmark_count = $this->model('favorite')->get_favorite_counts('article', $article_info['id']);
 		TPL::assign('bookmark_count', $bookmark_count);
 
 		TPL::output('article/index');

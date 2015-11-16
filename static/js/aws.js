@@ -782,7 +782,7 @@ var AWS =
 
 						$.each(result, function (i, e)
 						{
-							html += '<li><a data-value="' + e['title'] + '"><span class="title">' + e['title'] + '</span></a><i class="icon icon-followed"></i></li>';
+							html += '<li><a data-value="' + e['title'] + '"><i class="md md-check"></i><span class="title">' + e['title'] + '</span></a></li>';
 						});
 
 						$('.aw-favorite-tag-list ul').append(html);
@@ -2077,6 +2077,7 @@ AWS.User =
 	{
 		AWS.loading('show');
 
+		var textSelector = selector.find('span');
 		if (selector.hasClass('active'))
 		{
 			var rating = 0;
@@ -2094,11 +2095,13 @@ AWS.User =
 			{
 				if (rating == 0)
 				{
-					selector.html(selector.html().replace(_t('我已赞'), _t('赞'))).removeClass('active');
+					selector.attr('data-original-title', '赞同').removeClass('active').find('b').html(parseInt(selector.find('b').html()) - 1);;
+					textSelector.html('赞同');
 				}
 				else
 				{
-					selector.html(selector.html().replace(_t('赞'), _t('我已赞'))).addClass('active');
+					selector.attr('data-original-title', '取消赞同').addClass('active').find('b').html(parseInt(selector.find('b').html()) + 1);;
+					textSelector.html('已赞同');
 				}
 			}
 		}, 'json');
@@ -2113,12 +2116,16 @@ AWS.User =
 			'tags' : $('#favorite_form .add-input').val()
 		}, function (result)
 		{
-			if (result.errno == 1)
+			if(result.errno == -1)
+			{
+				AWS.alert(result.err);
+			}
+			else if (result.errno == 1)
 			{
 				$('.aw-favorite-box .aw-favorite-tag-list').show();
 				$('.aw-favorite-box .aw-favorite-tag-add').hide();
 
-				$('.aw-favorite-tag-list ul').prepend('<li class="active"><a data-value="' + $('#favorite_form .add-input').val() + '"><span class="title">' + $('#favorite_form .add-input').val() + '</span></a><i class="icon icon-followed"></i></li>');
+				$('.aw-favorite-tag-list ul').prepend('<li class="active"><a data-value="' + $('#favorite_form .add-input').val() + '"><i class="md md-check"></i><span class="title">' + $('#favorite_form .add-input').val() + '</span></a></li>');
 			}
 		}, 'json');
 	}

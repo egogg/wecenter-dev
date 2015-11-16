@@ -54,6 +54,10 @@ class ajax extends AWS_CONTROLLER
 		{
 			$this->model('favorite')->update_favorite_tag($_POST['item_id'], $_POST['item_type'], $_POST['tags'], $this->user_id);
 		}
+		else 
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('标签名称不能为空')));
+		}
 
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}

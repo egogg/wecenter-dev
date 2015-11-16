@@ -73,14 +73,14 @@
                         <?php } ?>
                     </ul>
                     <?php } ?>
-                    <div class="article-actions m-t-30 clearfix">
-                        <div class="article-action-agree text-center <?php if (!$this->user_id OR $this->user_id == $this->article_info['uid']) { ?> disabled<?php } ?>">
+                    <div class="article-actions m-t-30 text-center clearfix">
+                        <div class="article-action-agree <?php if (!$this->user_id OR $this->user_id == $this->article_info['uid']) { ?> disabled<?php } ?>">
                             <a href="javascript:;" class="agree<?php if ($this->article_info['vote_info']['rating'] == 1) { ?> active <?php } ?> " onclick="AWS.User.article_vote($(this), <?php echo $this->article_info['id']; ?>, 1);"><i class="md md-local-florist"></i> 赞同 <em>|</em> <b><?php echo $this->article_info['votes']; ?></b></a>
                         </div>
                        
                         <?php if ($this->article_info['vote_users']) { ?>
                         <div class="article-agree-users m-t-10">
-                            <p class="c-gray m-b-5 m-t-5">以下用户赞同该文章的观点：</p>
+                            <p class="c-gray m-b-5 m-t-5"><span class="agree-user-message">Ta们同意该文章的观点</span></p>
                             <?php foreach ($this->article_info['vote_users'] AS $key => $val) { ?>
                             <a href="people/<?php echo $val['url_token']; ?>" class="voter" data-toggle="tooltip" data-placement="bottom" data-original-title="<?php echo $val['user_name']; ?>"><img alt="<?php echo $val['user_name']; ?>" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" /></a>
                             <?php } ?>
@@ -106,7 +106,7 @@
                                     <i class="md md-bookmark-outline"></i> 
                                     <span class="quiz-stats-text">
                                         <span class="hidden-xs">收藏</span>
-                                        <?php echo intval($this->article_info['bookmark_count']); ?>
+                                        <?php echo $this->bookmark_count; ?>
                                     </span>
                                 </a>
                             </li>
@@ -132,6 +132,71 @@
                             </li> -->
                         </ul>
                     </div>
+                </div>
+            </div>
+            <div class="card article-comment">
+                <div class="card-header card-padding article-comment-header">
+                    <h3 class="m-b-0">
+                        <i class="md md-comment"></i> <?php echo $this->comments_count; ?>条评论
+                    </h3>
+                </div>
+                <div class="card-body card-padding article-comment-content p-t-0">
+                    <?php if ($this->comments) { ?>
+                        <div class="comment-list t-view">
+                            <div class="tv-comments">
+                                <ul class="tvc-lists">
+                                    <?php foreach ($this->comments AS $key => $val) { ?>
+                                        <li class="media comment-item" id="answer_list_<?php echo $val['id']; ?>">
+                                            <div class="media-body">
+                                                <div class="comment-user-info clearfix">
+                                                    <a class="tvh-user pull-left" href="people/<?php echo $val['user_info']['url_token']; ?>">
+                                                        <img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="<?php echo $val['user_info']['user_name']; ?>" />
+                                                    </a>
+                                                    <div class="d-block">
+                                                        <a class="user-name" href="people/<?php echo $val['user_info']['url_token']; ?>" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_info']['user_name']; ?>
+                                                        </a>
+                                                        <?php if ($val['user_info']['verified']) { ?>
+                                                            <i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+                                                        <?php } ?> 
+                                                         · <small class="c-gray"><?php echo date_friendly($val['add_time'], 604800, 'Y-m-d'); ?></small>
+                                                    </div>
+                                                </div>
+
+                                                <div class="m-t-10">
+                                                    <div class="markitup-box">
+                                                        <?php echo nl2br($val['message']); ?>
+                                                    </div>
+                                                </div>
+                                                <div class="answer-actions clearfix">
+                                                    <ul class="pull-left">
+                                                        <li>
+                                                            <a class="agree-answer <?php if (!$this->user_id) { ?>disabled<?php } ?> c-gray <?php if ($val['vote_info']['rating'] == 1) { ?> active<?php } ?>" onclick="AWS.User.article_comment_vote($(this), <?php echo $val['id']; ?>, 1)" data-placement="right" title="<?php if($val['vote_info']['rating'] == 1) { ?>取消赞同<?php } else { ?>赞同<?php } ?>" data-toggle="tooltip"><i  class="md md-thumb-up"></i> <span><?php if ($val['vote_info']['rating'] == 1) { ?>已赞同<?php } else { ?>赞同<?php } ?></span>(<b class="count"><?php echo $val['votes']; ?></b>)
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                    <ul class="answer-actions-right pull-right">
+                                                        <?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+                                                            <li>
+                                                                <a onclick="AWS.dialog('confirm', {'message' : '<?php _e('确认删除?'); ?>'}, function(){AWS.ajax_request(G_BASE_URL + '/article/ajax/remove_comment/', 'comment_id=<?php echo $val['id']; ?>');});"><?php _e('删除'); ?></a>
+                                                            </li>
+                                                            
+                                                        <?php } ?>
+                                                        <?php if ($this->user_id) { ?>
+                                                            <li class="new-sub-comment clearfix">
+                                                                <a href="javascript:void(0);" class="comment-remove" data-id="<?php echo $val['user_info']['uid']; ?>">
+                                                                    <?php _e('回复'); ?>
+                                                                </a>
+                                                            </li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                        </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
