@@ -94,7 +94,7 @@ class main extends AWS_CONTROLLER
 		}
 		else
 		{
-			$comments = $this->model('article')->get_comments($article_info['id'], $_GET['page'], 100);
+			$comments = $this->model('article')->get_comments($article_info['id'], $_GET['page'], 50);
 		}
 
 		if ($comments AND $this->user_id)
@@ -124,7 +124,7 @@ class main extends AWS_CONTROLLER
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/article/id-' . $article_info['id']),
 			'total_rows' => $article_info['comments'],
-			'per_page' => 100
+			'per_page' => 50
 		))->create_links());
 
 		TPL::set_meta('keywords', implode(',', $this->model('system')->analysis_keyword($article_info['title'])));
@@ -146,7 +146,7 @@ class main extends AWS_CONTROLLER
 					break;
 				}
 			}
-
+			
 			TPL::assign('recommend_posts', $recommend_posts);
 		}
 

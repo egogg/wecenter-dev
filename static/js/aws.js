@@ -390,9 +390,9 @@ var AWS =
 
 						if (result.rsm.ajax_html)
 						{
-							$('.aw-feed-list').append(result.rsm.ajax_html);
+							$('.article-comment-items').append(result.rsm.ajax_html);
 
-							$('.aw-comment-box-btn .btn-success, .btn-reply').removeClass('disabled');
+							$('.article-reply-button').removeClass('disabled');
 
 							$.scrollTo($('#' + $(result.rsm.ajax_html).attr('id')), 600, {queue:true});
 
@@ -2786,7 +2786,7 @@ AWS.Init =
 	{
 		$(document).on('click', selector, function ()
 		{
-			var _editor_box = $(this).parents('.aw-item').find('.aw-article-replay-box');
+			var _editor_box = $(this).closest('.comment-item').find('.article-reply-comment-box');
 			if (_editor_box.length)
 			{
 				if (_editor_box.css('display') == 'block')
@@ -2800,10 +2800,10 @@ AWS.Init =
 			}
 			else
 			{
-				$(this).parents('.mod-footer').append(Hogan.compile(AW_TEMPLATE.articleCommentBox).render(
+				$(this).closest('.comment-item').find('.media-body').append(Hogan.compile(AW_TEMPLATE.articleCommentBox).render(
 				{
 					'at_uid' : $(this).attr('data-id'),
-					'article_id' : $('.aw-topic-bar').attr('data-id')
+					'article_id' : ARTICLE_ID
 				}));
 			}
 		});

@@ -3,7 +3,7 @@
 <div id="content">
     <div class="container">
         <div class="col-sm-8">
-            <div class="card article-body">
+            <div class="card article-body" data-id="<?php echo $this->article_info['id']; ?>">
                 <div class="card-header">
                     <h1><?php echo $this->article_info['title']; ?></h1>
                     <?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
@@ -142,56 +142,49 @@
                 </div>
                 <div class="card-body card-padding article-comment-content p-t-0">
                     <?php if ($this->comments) { ?>
-                        <div class="comment-list t-view">
+                        <div class="comment-list t-view m-b-0">
                             <div class="tv-comments">
-                                <ul class="tvc-lists">
+                                <ul class="tvc-lists article-comment-items">
+                                    <li class="article-comment-box">
+                                        <a name="answer_form"></a>
+                                        <?php if ($this->article_info['lock']) { ?>
+                                            <p class="text-center m-b-0"><?php _e('该文章已经被锁定, 无法添加新评论'); ?></p>
+                                        <?php } else if (!$this->user_id) { ?>
+                                            <p class="text-center m-b-0">
+                                                <a class="c-lightblue" href="account/login/">登录</a>后参与答题讨论
+                                            </p>
+                                        <?php } else { ?>
+                                            <form action="article/ajax/save_comment/" onsubmit="return false;" method="post" id="answer_form">
+                                                <input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+                                                <input type="hidden" name="article_id" value="<?php echo $this->article_info['id']; ?>" />
+                                                <div class="mod-body">
+                                                    <textarea rows="5" name="message" id="comment_editor" class="article-comment-input form-control autosize" placeholder="写下你的评论"  /></textarea>
+                                                </div>
+                                                <div class="m-t-15 clearfix">
+                                                    <a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply');" class="article-reply-button btn btn-success btn-submit btn-reply"><?php _e('提交评论'); ?></a>
+                                                    <?php if ($this->human_valid) { ?>
+                                                    <em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha" /></em>
+                                                    <input class="pull-right form-control" type="text" name="seccode_verify" placeholder="<?php _e('验证码'); ?>" />
+                                                    <?php } ?>
+                                                </div>
+                                            </form>
+                                        <?php } ?>
+                                    </li>
                                     <?php foreach ($this->comments AS $key => $val) { ?>
-                                        <li class="media comment-item" id="answer_list_<?php echo $val['id']; ?>">
-                                            <div class="media-body">
-                                                <div class="comment-user-info clearfix">
-                                                    <a class="tvh-user pull-left" href="people/<?php echo $val['user_info']['url_token']; ?>">
-                                                        <img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="<?php echo $val['user_info']['user_name']; ?>" />
-                                                    </a>
-                                                    <div class="d-block">
-                                                        <a class="user-name" href="people/<?php echo $val['user_info']['url_token']; ?>" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_info']['user_name']; ?>
-                                                        </a>
-                                                        <?php if ($val['user_info']['verified']) { ?>
-                                                            <i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
-                                                        <?php } ?> 
-                                                         · <small class="c-gray"><?php echo date_friendly($val['add_time'], 604800, 'Y-m-d'); ?></small>
-                                                    </div>
-                                                </div>
+                                        <?php TPL::assign('comment_info', $val); ?>
+                                        <?php TPL::output('article/ajax/comment.tpl.htm'); ?>
+                                    <?php } ?>
 
-                                                <div class="m-t-10">
-                                                    <div class="markitup-box">
-                                                        <?php echo nl2br($val['message']); ?>
-                                                    </div>
-                                                </div>
-                                                <div class="answer-actions clearfix">
-                                                    <ul class="pull-left">
-                                                        <li>
-                                                            <a class="agree-answer <?php if (!$this->user_id) { ?>disabled<?php } ?> c-gray <?php if ($val['vote_info']['rating'] == 1) { ?> active<?php } ?>" onclick="AWS.User.article_comment_vote($(this), <?php echo $val['id']; ?>, 1)" data-placement="right" title="<?php if($val['vote_info']['rating'] == 1) { ?>取消赞同<?php } else { ?>赞同<?php } ?>" data-toggle="tooltip"><i  class="md md-thumb-up"></i> <span><?php if ($val['vote_info']['rating'] == 1) { ?>已赞同<?php } else { ?>赞同<?php } ?></span>(<b class="count"><?php echo $val['votes']; ?></b>)
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                    <ul class="answer-actions-right pull-right">
-                                                        <?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
-                                                            <li>
-                                                                <a onclick="AWS.dialog('confirm', {'message' : '<?php _e('确认删除?'); ?>'}, function(){AWS.ajax_request(G_BASE_URL + '/article/ajax/remove_comment/', 'comment_id=<?php echo $val['id']; ?>');});"><?php _e('删除'); ?></a>
-                                                            </li>
-                                                            
-                                                        <?php } ?>
-                                                        <?php if ($this->user_id) { ?>
-                                                            <li class="new-sub-comment clearfix">
-                                                                <a href="javascript:void(0);" class="comment-remove" data-id="<?php echo $val['user_info']['uid']; ?>">
-                                                                    <?php _e('回复'); ?>
-                                                                </a>
-                                                            </li>
-                                                        <?php } ?>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
+                                    <?php if ($_GET['item_id']) { ?>
+                                    <li>
+                                        <a href="article/<?php echo $this->article_info['id']; ?>" class="aw-load-more-content">
+                                            <span><?php _e('查看全部评论'); ?></span>
+                                        </a>
+                                    </li>
+                                    <?php } ?>
+
+                                    <?php if ($this->pagination) { ?>
+                                        <li class="clearfix"><?php echo $this->pagination; ?></li>
                                     <?php } ?>
                                 </ul>
                             </div>
@@ -497,7 +490,8 @@
 
 <script type="text/javascript">
     var ANSWER_EDIT_TIME = <?php echo get_setting('answer_edit_time'); ?>;
-
+    var ARTICLE_ID = <?php echo $this->article_info['id']; ?>;
+ 
     $(document).ready(function () {
 
         // 提示框
@@ -513,7 +507,7 @@
 
         AWS.at_user_lists('#wmd-input');
 
-        AWS.Init.init_article_comment_box($('.aw-article-comment'));
+        AWS.Init.init_article_comment_box('.article-reply-comment');
     });
 </script>
 

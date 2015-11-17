@@ -138,16 +138,16 @@ var AW_TEMPLATE = {
 			'</div>',
 
 	'articleCommentBox' :
-		'<div class="aw-article-replay-box clearfix">'+
+		'<div class="article-reply-comment-box clearfix">'+
 			'<form action="'+ G_BASE_URL +'/article/ajax/save_comment/" onsubmit="return false;" method="post">'+
 				'<div class="mod-body">'+
 					'<input type="hidden" name="at_uid" value="{{at_uid}}">'+
 					'<input type="hidden" name="post_hash" value="' + G_POST_HASH + '" />'+
 					'<input type="hidden" name="article_id" value="{{article_id}}" />'+
-					'<textarea placeholder="' + _t('写下你的评论...') + '" class="form-control" id="comment_editor" name="message" rows="2"></textarea>'+
+					'<textarea placeholder="' + _t('写下你的评论') + '" class="article-comment-input form-control" id="comment_editor" name="message" rows="5"></textarea>'+
 				'</div>'+
-				'<div class="mod-footer">'+
-					'<a href="javascript:;" onclick="AWS.ajax_post($(this).parents(\'form\'));" class="btn btn-normal btn-success pull-right btn-submit">' + _t('回复') + '</a>'+
+				'<div class="m-t-10">'+
+					'<a href="javascript:;" onclick="AWS.ajax_post($(this).parents(\'form\'));" class="btn article-reply-comment btn-success btn-submit">' + _t('回复评论') + '</a>'+
 				'</div>'+
 			'</form>'+
 		'</div>',
@@ -476,15 +476,14 @@ var AW_TEMPLATE = {
 			'<div class="modal-dialog">'+
 				'<div class="modal-content">'+
 					'<div class="modal-header">'+
-						'<a type="button" class="close icon icon-delete" data-dismiss="modal" aria-hidden="true"></a>'+
 						'<h3 class="modal-title" id="myModalLabel">' + _t('提示信息') + '</h3>'+
 					'</div>'+
 					'<div class="modal-body">'+
 						'{{message}}'+
 					'</div>'+
 					'<div class="modal-footer">'+
-						'<a class="btn btn-gray" data-dismiss="modal" aria-hidden="true">取消</a>'+
-						'<a class="btn btn-success yes">确定</a>'+
+						'<a class="btn btn-success yes m-l-10">确定</a>'+
+						'<a class="btn btn-link" data-dismiss="modal" aria-hidden="true">取消</a>'+
 					'</div>'+
 				'</div>'+
 			'</div>'+
