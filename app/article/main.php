@@ -114,6 +114,37 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('question_related_list', $this->model('question')->get_related_question_list(null, $article_info['title']));
 
+		// 最新推荐文章
+
+		$recommend_articles = $this->model('article')->get_recommend_article_list($article_info['id'], 3);
+		if($recommend_articles)
+		{
+			foreach ($recommend_articles as $key => $val) {
+				$article_ids[] = $val['id'];;
+			}
+
+			// 获取文章缩略图
+
+			$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
+
+			foreach ($recommend_articles AS $key => $val)
+			{
+				$recommend_article_list[$val['id']] = $val;
+				if ($val['has_attach'])
+				{
+					$recommend_article_list[$val['id']]['attachs'] = $article_attachs[$val['id']];
+				}
+			}
+		}
+		TPL::assign('recommend_article_list', $recommend_article_list);
+
+		// 推荐专题
+
+		if (TPL::is_output('block/sidebar_hot_topics.tpl.htm', 'question/square'))
+		{
+			TPL::assign('sidebar_hot_topics', $this->model('module')->sidebar_hot_topics($_GET['category'], 4));
+		}
+
 		$this->model('article')->update_views($article_info['id']);
 
 		TPL::assign('comments', $comments);
@@ -146,7 +177,7 @@ class main extends AWS_CONTROLLER
 					break;
 				}
 			}
-			
+
 			TPL::assign('recommend_posts', $recommend_posts);
 		}
 

@@ -222,6 +222,11 @@ class article_class extends AWS_MODEL
 		return $this->fetch_page('article', implode(' AND ', $where), $order_by, $page, $per_page);
 	}
 
+	public function get_recommend_article_list($exclude_id, $limit = 5)
+	{
+		return $this->fetch_all('article', 'id != ' . intval($exclude_id) . ' AND is_recommend = 1', 'add_time DESC ',  intval($limit));
+	}
+
 	public function get_articles_list_by_topic_ids($page, $per_page, $order_by, $topic_ids)
 	{
 		if (!$topic_ids)

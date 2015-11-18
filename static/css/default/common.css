@@ -1342,7 +1342,6 @@ ul.answer-actions-right li {
 .article-body h1 {
 	font-size: 24px;
 	font-weight: 600;
-	margin-bottom: 20px;
 }
 
 .article-publisher-info .publisher-img-sm {
@@ -1431,6 +1430,20 @@ ul.answer-actions-right li {
 	border-top: 1px solid #eee;
 }
 
+.article-list-feature-img {
+	display: block;
+    width: 100px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.article-feature-img-sm {
+	display: block;
+	width: 80px;
+	height: 60px;
+	background: #f9f9f9 no-repeat center center;
+}
+
 /* 重载bootstrap */
 
 .media>.pull-left {
@@ -1438,6 +1451,10 @@ ul.answer-actions-right li {
 }
 
 /* 重载material design 部分 */
+
+.listview .lv-item {
+	padding: 10px 23px !important;
+}
 
 .popover-title {
 	font-size: 13px;
