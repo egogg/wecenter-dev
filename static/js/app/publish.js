@@ -167,7 +167,7 @@ $(function()
 			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-teal b-teal"><i class="md md-apps"></i> 成语字谜</span></div>';
 		}
 		else if(quizContent.type == 'textInput') {
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-deeporange b-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-deeporange b-deeporange"><i class="md md-border-color"></i> 完形填空</span></div>';
 		}
 
 		$('#quiz-summary').html(quizSummary);
@@ -770,7 +770,7 @@ $(function()
 				return;
 			}
 
-			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-deeporange b-deeporange"><i class="md md-edit"></i> 完形填空</span></div>';
+			quizSummary  += '<div><i class="md md-local-offer"></i> 题型：<span class="question-tag c-deeporange b-deeporange"><i class="md md-border-color"></i> 完形填空</span></div>';
 			quizType = 'textInput';
 
 		} else {
