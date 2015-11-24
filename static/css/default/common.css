@@ -1479,9 +1479,9 @@ ul.answer-actions-right li {
 
 .nav-question-type-item {
 	display: block;
-    padding: 10px 0;
+    padding: 7px 0;
     border: 1px solid #eee;
-    margin: 15px;
+    margin: 5px;
 }
 
 .nav-question-type-item i {
@@ -1496,8 +1496,32 @@ ul.answer-actions-right li {
 	margin-bottom: 5px !important;
 }
 
+.explore-feature-item .media .pull-left {
+	padding-right: 25px;
+}
+
+.explore-feature-item .card-padding {
+	padding: 15px 25px !important;
+}
+
+.explore-feature-item:before {
+	backface-visibility: hidden;
+    content: "";
+    width: 86px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
 .explore-feature-item.ads {
-	height: 127px;
+	margin-top: 10px;
+	height: 170px;
+}
+
+.explore-feature-item.ads:before {
+	background: rgba(0, 0, 0, 0);
 }
 
 .feature-item-icon {
@@ -1506,7 +1530,7 @@ ul.answer-actions-right li {
     border-radius: 50%;
     left: -70px;
     top: 0;
-    border: 3px solid #fff;
+    border: 1px solid #fff;
     text-align: center;
     font-size: 20px;
     line-height: 34px;
@@ -1514,13 +1538,24 @@ ul.answer-actions-right li {
     font-family: 'Material Design Iconic Font';
     z-index: 1;
     margin-right: 5px;
-    box-shadow: 0 0 0 2px #fff;
+    box-shadow: 0 0 0 1px #fff;
 }
 
 .feature-item-icon.countdown {
 	background-color: #ff9800;
 	border-color: #ff9800;
 }
+
+.feature-item-icon.shares {
+	background-color: #2196f3;
+	border-color: #2196f3;
+}
+
+.feature-item-icon.wrong {
+	background-color: #ff5722;
+	border-color: #ff5722;
+}
+
 
 /* 重载bootstrap */
 
