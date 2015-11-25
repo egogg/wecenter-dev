@@ -59,6 +59,11 @@
                                 题型
                             </a>
                         </li>
+                        <li role="presentation" class="">
+                            <a class="col-xs-4" href="#tab-3" aria-controls="tab-3" role="tab" data-toggle="tab" aria-expanded="false">
+                                难度
+                            </a>
+                        </li>
                     </ul>
 
                     <div class="tab-content p-20">
@@ -99,6 +104,29 @@
                                     </a>
                                 </div>
                             </div>     
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-3">
+                            <ul class="nav-question-difficulty-list">
+                                <?php $colors = array("c-green", "c-blue", "c-yellow", "c-purple", "c-orange"); ?>
+                                <?php for($id = 1; $id <= 5; $id++) { ?>
+                                    <li class="nav-question-difficulty-item">
+                                        <a href="javascript:;" data-type="difficulty" data-id="<?php echo $id; ?>" class="<?php echo $colors[$id - 1]; ?>">
+                                            <span class="pull-left c-black"><?php echo $id; ?></span>
+                                            <span>
+                                                <?php for($i = 1; $i <= $id; $i++){ ?>
+                                                   <i class="md md-star"></i> 
+                                                <?php } ?>
+
+                                                <?php for($i; $i <= 5; $i++) { ?>
+                                                    <i class="md md-star-outline"></i>
+                                                <?php } ?>
+                                            </span>
+                                            <span class="pull-right c-black"><?php echo get_setting('difficulty_level_' . $id . '_text'); ?></span>
+                                        </a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
                         </div>
                     </div>
                 </div>

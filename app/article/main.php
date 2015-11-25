@@ -68,6 +68,10 @@ class main extends AWS_CONTROLLER
 
 		$article_info['vote_users'] = $this->model('article')->get_article_vote_users_by_id('article', $article_info['id'], 1, 10);
 
+		// 是否为推荐到首页
+
+		$article_info['is_recommend_homepage'] = $this->model('recommend')->recommend_homepage_check('article', $article_info['id']);
+
 		TPL::assign('article_info', $article_info);
 
 		$article_topics = $this->model('topic')->get_topics_by_item_id($article_info['id'], 'article');

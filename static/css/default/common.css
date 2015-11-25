@@ -1524,6 +1524,12 @@ ul.answer-actions-right li {
 	background: rgba(0, 0, 0, 0);
 }
 
+.nav-question-difficulty-item {
+	padding: 10px 15px;
+	text-align: center;
+}
+
+
 .feature-item-icon {
 	width: 40px;
     height: 40px;
