@@ -38,4 +38,9 @@ class recommend_class extends AWS_MODEL
 	{
 		return $this->delete('recommend_homepage', 'item_id = ' . intval($item_id) . ' AND item_type = "' . $item_type . '"');
 	}
+
+	public function recommend_homepage_remove_by_id($id)
+	{
+		return $this->delete('recommend_homepage', 'id = ' . intval($id));
+	}
 }

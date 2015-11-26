@@ -625,6 +625,7 @@ header .main-nav ul li a.active {
 
 .topic-details-img {
 	position: relative;
+	padding-right: 0 !important;
 }
 
 .topic-details-mark {
@@ -640,46 +641,44 @@ header .main-nav ul li a.active {
     z-index: 50;
 }
 
-.topic-details-info {
-	font-size: 12px;
-	margin-bottom: 10px;
+.topic-detail-info-items {
+	display: table;
+	padding: 15px 0;
+	width: 100%;
 }
 
-.topic-details-info span {
-	color: #d9d9d9;
+.topic-detail-info-item {
+	display: table-cell;
+	width: 50%;
+	text-align: center;
+    border-left: 1px solid #eee;
+}
+
+.topic-detail-info-item:first-child {
+	border-left: none;
 }
 
 .topic-details-info a {
 	color: #03A9F4;
 }
 
-.topic-details-add-foucs {
-	line-height: 36px;
-	display: inline-block;
-	float: left;
+.topic-details-content {
+	height: 76px;
+	overflow: hidden;
 }
 
-.topic-details-content {
-	min-width: 250px;
-	padding-right: 15px;
+.topic-detail-info-footer {
+	border-top: 1px solid #eee;
+	padding: 0 !important;
 }
 
 .topic-details-foucs {
-	display: block;
-    padding: 10px 10px 8px 0;
-    border-top: 1px solid #F0F0F0;
-    line-height: 100%;
-    margin-top: 20px;
-    text-align: right;
+    text-align: center;
 }
 
 .topic-details-foucs-label {
 	line-height: 36px;
     padding-bottom: 5px;
-}
-
-.topic-details-foucs-users {
-	margin-top: 5px;
 }
 
 .topic-details-foucs-users img {
@@ -700,26 +699,60 @@ body {
 }
 
 .follow, .follow:active, .follow:focus {
-	padding: 10px 20px;
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 18px;
+	padding: 8px 20px;
+    color: #4CAF50;
+    border-radius: 22px;
+    border: 1px solid #4CAF50;
+    display: inline-block;
 }
 
 .follow:hover {
-	background-color: #8BC34A;
-	color: #fff;
+	color: #4CAF50;
 }
 
 .follow.following, .follow.following:active, .follow.following:focus{
-	background-color: #ccc;
-	color: #555;
-	border-color: #;
+	background-color: #4CAF50;
+	color: #fff;
+	border-color: #4CAF50;
 }
 
-.follow.following:hover {
-	background-color: #eee;
-	color: #555;
+.follow-user-header {
+	position: relative;
+	display: inline-block;
+	color: #9e9e9e;
+	margin: 10px 0;
+}
+
+.follow-user-header:before {
+	position: absolute;
+    top: 8px;
+    left: -40px;
+    width: 30px;
+    height: 1px;
+    content: "";
+    background-color: #eee;
+}
+
+.follow-user-header:after {
+	position: absolute;
+    top: 8px;
+    right: -40px;
+    width: 30px;
+    height: 1px;
+    content: "";
+    background-color: #eee;
+}
+
+.follow-user-list a {
+	margin-right: 5px;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.follow-user-list img {
+	height: 32px !important;
+    width: 32px !important;
+    border-radius: 50%;
 }
 
 /*文章列表*/

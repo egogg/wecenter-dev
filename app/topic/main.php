@@ -103,6 +103,10 @@ class main extends AWS_CONTROLLER
 
 		$topic_info['topic_description'] = nl2br(FORMAT::parse_bbcode($topic_info['topic_description']));
 
+		//是否首页精选
+
+		$topic_info['is_recommend_homepage'] = $this->model('recommend')->recommend_homepage_check('topic', $topic_info['topic_id']);
+
 		TPL::assign('topic_info', $topic_info);
 
 		// TPL::assign('best_answer_users', $this->model('topic')->get_best_answer_users_by_topic_id($topic_info['topic_id'], 5));

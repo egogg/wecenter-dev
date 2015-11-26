@@ -2,60 +2,83 @@
 
 <div id="content">
 	<div class="container">
-		<div class="card">
-			<div class="card-body card-padding">
-				<div class="media">
-		            <div class="pull-left topic-details-img">
+		<div class="col-sm-5 p-l-0 p-r-0">
+			<div class="card m-b-0">
+				<div class="card-body">
+					<div class="topic-details-img">
 		            	<div class="topic-details-mark bgm-blue">专题</div>
-		                <img class="media-object img-responsive" src="<?php echo get_topic_pic_url('max', $this->topic_info['topic_pic']); ?>" alt="<?php echo $this->topic_info['topic_title']; ?>" />
+		                <img class="img-responsive" src="<?php echo get_topic_pic_url('max', $this->topic_info['topic_pic']); ?>" alt="<?php echo $this->topic_info['topic_title']; ?>" />
 		            </div>
-		            <div class="media-body topic-details-content">
-		            	
-		                <h4 class="media-heading">
-		                	<?php echo $this->topic_info['topic_title']; ?>
-		                </h4>
-		                <div class="topic-details-info clearfix">
-							<span>收录<a href="javascript:void(0);"> <?php echo $this->topic_info['question_count']; ?></a> 个问题 • </span> 
-							<span class="topic-details-category">
-								<a href="topic/channel-topic__topic_id-<?php echo $this->parent_topic_info['topic_id']; ?>"><i class="md md-local-offer"></i> <?php echo $this->parent_topic_info['topic_title']; ?></a>
-							</span>
-						</div>
-		                <p><?php echo $this->topic_info['topic_description']; ?></p>
-		            </div>
-		        </div>
-		        <div class="topic-details-foucs">
-		        	<div class="topic-details-add-foucs clearfix">
-	                	<?php if ($this->user_id) { ?>
-							<a href="javascript:;" onclick="AWS.User.follow($(this), 'topic', <?php echo $this->topic_info['topic_id']; ?>);" class="follow <?php if ($this->topic_info['has_focus']) { ?> following <?php } ?>">
-								<span>
-									<?php if ($this->topic_info['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
-								</span> 
-								<em>|</em> 
-								<b><?php echo $this->topic_info['focus_count']; ?></b>
-							</a>
-						<?php } ?>
-	                </div>
-	                <div class="topic-details-foucs-label">谁正在关注</div>
-	                <div class="topic-details-foucs-users clearfix">
-	                	
-	                	<div id="focus_users">
-	                		
-	                	</div>
-	                </div>
-		        </div>
-			        
+				</div>
 			</div>
 		</div>
-
+		<div class="col-sm-7 p-r-0 p-l-0">
+			<div class="card topic-details">
+				<div class="card-header card-padding p-b-0">
+        			<h2><span class="topic-title-mark">专题：</span><?php echo $this->topic_info['topic_title']; ?></h2>
+        			<?php if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+	        			<ul class="actions">
+	                        <li class="dropdown action-show">
+	                            <a href="#" data-toggle="dropdown">
+	                                <i class="md md-more-vert"></i>
+	                            </a>
+	                            
+	                            <ul class="dropdown-menu dropdown-menu-right">
+	                                <li>
+	                                   <a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=topic&id=<?php echo $this->topic_info['topic_id']; ?>');"><?php if ($this->topic_info['is_recommend_homepage']) { ?><?php _e('取消精选'); ?><?php } else { ?><?php _e('首页精选'); ?><?php } ?></a>
+	                                </li>
+	                            </ul>
+	                        </li>
+	                    </ul>
+                    <?php } ?>
+        		</div>
+				<div class="card-body card-padding p-t-15">
+					<div class="topic-details-content">
+						<p><?php echo $this->topic_info['topic_description']; ?></p>
+					</div>
+				</div>
+				<div class="card-body card-padding topic-detail-info-footer">
+					<ul class="topic-detail-info-items">
+						<li class="topic-detail-info-item">收录<strong class="c-lightblue"> <?php echo $this->topic_info['question_count']; ?></strong> 个问题</li> 
+						<li class="topic-detail-info-item topic-details-category">
+							<a class="c-lightblue" href="topic/channel-topic__topic_id-<?php echo $this->parent_topic_info['topic_id']; ?>"><i class="md md-local-offer"></i> <?php echo $this->parent_topic_info['topic_title']; ?></a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12 p-l-0 p-r-0">
+			<div class="card">
+				<div class="card-body card-padding">
+					<div class="topic-details-foucs">
+			        	<div class="topic-details-add-foucs clearfix">
+		                	<?php if ($this->user_id) { ?>
+								<a href="javascript:;" onclick="AWS.User.follow($(this), 'topic', <?php echo $this->topic_info['topic_id']; ?>);" class="follow <?php if ($this->topic_info['has_focus']) { ?> following <?php } ?>">
+									<span>
+										<?php if ($this->topic_info['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
+									</span> 
+									<em>|</em> 
+									<b><?php echo $this->topic_info['focus_count']; ?></b>
+								</a>
+							<?php } ?>
+		                </div>
+		                <div class="follow-user-header">Ta们正在关注该专题</div>
+		                <div class="follow-user-list" id="focus_users">
+		                </div>
+			        </div>
+				</div>
+			</div>
+		</div>
+		
 		<!-- 问题列表 -->
 
 		<?php TPL::output('block/question_list.tpl.htm'); ?>
-
+		
 		<div class="sidebar col-sm-3 hidden-xs">
 			<!-- 推荐专题 -->
 			<div class="card sidebar-hot-topics">
 				<div class="card-header">
-	                <h2>推荐专题</h2>
+	                <h2>热门专题</h2>
 	                <ul class="actions">
 	                    <li>
 	                       <a href="topic/"><i class="md md-chevron-right"></i></a>

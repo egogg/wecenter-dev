@@ -21,8 +21,14 @@ $(function()
 			if (data != null)
 			{
 				$.each(data, function (i, e) {		
-					$('#focus_users').append('<a href="' + e['url'] + '"><img class="img-circle" src="' + e['avatar_file'] + '" alt="' + e['user_name'] + '" /></a> ');
+					$('#focus_users').append('<a data-toggle="tooltip" data-placement="bottom" data-original-title="' + e['user_name'] + '" href="' + e['url'] + '"><img class="img-circle" src="' + e['avatar_file'] + '" alt="' + e['user_name'] + '" /></a> ');
 				});
+
+				// 提示框
+
+			    if ($('[data-toggle="tooltip"]')[0]) {
+			        $('[data-toggle="tooltip"]').tooltip();
+			    }
 			}
 		}, 'json');
 	}

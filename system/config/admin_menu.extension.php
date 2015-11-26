@@ -13,6 +13,11 @@ $config[] = array(
         	'id' => 602,
             'title' => AWS_APP::lang()->_t('难度及积分管理'),
             'url' => 'admin/integral/edit/',
+        ),
+        array(
+            'id' => 603,
+            'title' => AWS_APP::lang()->_t('首页精选管理'),
+            'url' => 'admin/recommend/list/',
         )
     )
 );
