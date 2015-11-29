@@ -521,23 +521,28 @@ header .main-nav ul li a.active {
 }
 
 .sidebar-topic-item {
-	padding-bottom: 15px;
+	position: relative;
 }
 
 .sidebar-topic-title {
 	position: relative;
+	top: -32px;
     z-index: 1;
-    background: rgba(0, 0, 0, 0.5);
-    margin-top: -24px;
+    background:rgba(0, 0, 0, 0.5);
     font-size: 12px;
     color: #fff;
-    line-height: 24px;
+    line-height: 32px;
 }
 
 .sidebar-topic-title a {
 	color: #fff;
 	font-weight: bold;
-	margin-left: 6px;
+	font-size: 14px;
+	display: inline-block;
+	max-width: 80%;
+	overflow: hidden;
+	padding-left: 15px;
+	float: left;
 }
 
 .sidebar-topic-title a:hover {
@@ -547,6 +552,7 @@ header .main-nav ul li a.active {
 .sidebar-topic-tag {
     display: inline-block;
     padding: 0 10px;
+    float: left;
 }
 
 .sidebar-hot-users .card-body {
@@ -1480,18 +1486,18 @@ ul.answer-actions-right li {
 /* 首页 */
 
 #main-slide .carousel-inner .item a img {
-	height: 400px;
+	height: 230px;
 	width: auto;
 }
 
 .explore-categories .tab-content {
-	height: 350px;
+	height: 325px;
 }
 
 .nav-category-item {
 	display: inline-block;
 	text-align: center;
-	margin: 14px 0;
+	margin: 10px 0;
 	width: 32%;
 }
 
@@ -1525,10 +1531,6 @@ ul.answer-actions-right li {
 	display: block;
 }
 
-.explore-feature-item {
-	margin-bottom: 5px !important;
-}
-
 .explore-feature-item .media .pull-left {
 	padding-right: 25px;
 }
@@ -1537,20 +1539,41 @@ ul.answer-actions-right li {
 	padding: 15px 25px !important;
 }
 
-.explore-feature-item:before {
-	backface-visibility: hidden;
-    content: "";
-    width: 86px;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.1);
-    position: absolute;
-    left: 0;
-    top: 0;
+.explore-feature-item {
+	position: relative;
+	margin-bottom: 10px;
 }
 
-.explore-feature-item.ads {
-	margin-top: 10px;
-	height: 170px;
+.explore-feature-item .card {
+	background-color:transparent;
+	margin-bottom: 0 !important;
+}
+
+.explore-feature-item:before {
+	-webkit-transition: width;
+  	-o-transition: width;
+  	transition: width;
+	-webkit-transition-duration: 500ms;
+	transition-duration: 500ms;
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+	backface-visibility: hidden;
+	content: "";
+	width: 83px;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.1);
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.explore-feature-item:hover:before {
+  width: 100%;
+}
+
+.explore-feature-item > .clearfix {
+	position: relative;
+    z-index: 1;
 }
 
 .explore-feature-item.ads:before {
@@ -1561,7 +1584,6 @@ ul.answer-actions-right li {
 	padding: 10px 15px;
 	text-align: center;
 }
-
 
 .feature-item-icon {
 	width: 40px;
@@ -1580,27 +1602,133 @@ ul.answer-actions-right li {
     box-shadow: 0 0 0 1px #fff;
 }
 
+.feature-item-icon.sign {
+	border-color: #009688;
+}
+
 .feature-item-icon.countdown {
-	background-color: #ff9800;
 	border-color: #ff9800;
 }
 
 .feature-item-icon.shares {
-	background-color: #2196f3;
 	border-color: #2196f3;
 }
 
 .feature-item-icon.wrong {
-	background-color: #ff5722;
 	border-color: #ff5722;
 }
 
+.topic-category-mark {
+	position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    padding: 3px 5px;
+    margin: 0;
+    width: auto;
+    bottom: auto;
+    display: block;
+    z-index: 50;
+    font-size: 12px;
+}
+
+.topic-card-bottom-a {
+	height: 2px;
+    margin: 0 1px;
+    overflow: hidden;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+.topic-card-bottom-b {
+	height: 2px;
+    margin: 0 2px;
+    overflow: hidden;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+}
+
+li.action-item-link a {
+	height: auto;
+	width: auto;
+	color: #03A9F4;
+}
+
+li.action-item-link a:hover:before {
+	text-transform: none;
+	content: none;
+	background-color: rgba(0, 0, 0, 0);
+}
+
+.explore-user-list {
+	height: 125px;
+}
 
 /* 重载bootstrap */
 
 .media>.pull-left {
 	margin-right: 0;
 }
+
+/* 分类颜色 */
+
+.c-category-1{color:#607D8B !important;}
+.c-category-2{color:#9E9E9E !important;}
+.c-category-3{color:#795548 !important;}
+.c-category-4{color:#FF5722 !important;}
+.c-category-5{color:#FF9800 !important;}
+.c-category-6{color:#FFC107 !important;}
+.c-category-7{color:#FFEB3B !important;}
+.c-category-8{color:#CDDC39 !important;}
+.c-category-9{color:#8BC34A !important;}
+.c-category-10{color:#4CAF50 !important;}
+.c-category-11{color:#009688 !important;}
+.c-category-12{color:#00BCD4 !important;}
+.c-category-13{color:#03A9F4 !important;}
+.c-category-14{color:#2196F3 !important;}
+.c-category-15{color:#3F51B5 !important;}
+.c-category-16{color:#673AB7 !important;}
+.c-category-17{color:#9C27B0 !important;}
+.c-category-18{color:#E91E63 !important;}
+.c-category-19{color:#F44336 !important;}
+
+.bgm-category-1{background-color:#607D8B !important;}
+.bgm-category-2{background-color:#9E9E9E !important;}
+.bgm-category-3{background-color:#795548 !important;}
+.bgm-category-4{background-color:#FF5722 !important;}
+.bgm-category-5{background-color:#FF9800 !important;}
+.bgm-category-6{background-color:#FFC107 !important;}
+.bgm-category-7{background-color:#FFEB3B !important;}
+.bgm-category-8{background-color:#CDDC39 !important;}
+.bgm-category-9{background-color:#8BC34A !important;}
+.bgm-category-10{background-color:#4CAF50 !important;}
+.bgm-category-11{background-color:#009688 !important;}
+.bgm-category-12{background-color:#00BCD4 !important;}
+.bgm-category-13{background-color:#03A9F4 !important;}
+.bgm-category-14{background-color:#2196F3 !important;}
+.bgm-category-15{background-color:#3F51B5 !important;}
+.bgm-category-16{background-color:#673AB7 !important;}
+.bgm-category-17{background-color:#9C27B0 !important;}
+.bgm-category-18{background-color:#E91E63 !important;}
+.bgm-category-19{background-color:#F44336 !important;}
+
+.b-category-1{border-color:#607D8B !important;}
+.b-category-2{border-color:#9E9E9E !important;}
+.b-category-3{border-color:#795548 !important;}
+.b-category-4{border-color:#FF5722 !important;}
+.b-category-5{border-color:#FF9800 !important;}
+.b-category-6{border-color:#FFC107 !important;}
+.b-category-7{border-color:#FFEB3B !important;}
+.b-category-8{border-color:#CDDC39 !important;}
+.b-category-9{border-color:#8BC34A !important;}
+.b-category-10{border-color:#4CAF50 !important;}
+.b-category-11{border-color:#009688 !important;}
+.b-category-12{border-color:#00BCD4 !important;}
+.b-category-13{border-color:#03A9F4 !important;}
+.b-category-14{border-color:#2196F3 !important;}
+.b-category-15{border-color:#3F51B5 !important;}
+.b-category-16{border-color:#673AB7 !important;}
+.b-category-17{border-color:#9C27B0 !important;}
+.b-category-18{border-color:#E91E63 !important;}
+.b-category-19{border-color:#F44336 !important;}
 
 /* 重载material design 部分 */
 

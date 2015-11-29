@@ -35,6 +35,12 @@ class topic_class extends AWS_MODEL
 
 				$count_query = $this->query_all('SELECT COUNT(*) AS `count` FROM ' . $this->get_table('topic_relation') . ' WHERE topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
 				$topic_list[$key]['question_count'] = reset($count_query)['count'];
+
+				// 获取分类信息
+
+				$parent_topic_info = $this->model('topic')->get_topic_by_id($val['parent_id']);
+				$topic_list[$key]['category'] = $parent_topic_info['topic_title'];
+				$topic_list[$key]['category_id'] = $parent_topic_info['topic_id'];
 			}
 		}
 
@@ -850,21 +856,37 @@ class topic_class extends AWS_MODEL
 		switch ($section)
 		{
 			default:
-				return $this->fetch_all('topic', implode(' AND ', $where), 'discuss_count DESC', $limit);
+				$topic_list = $this->fetch_all('topic', implode(' AND ', $where), 'discuss_count DESC', $limit);
 			break;
 
 			case 'week':
 				$where[] = 'discuss_count_update > ' . (time() - 604801);
 
-				return $this->fetch_all('topic', implode(' AND ', $where), 'discuss_count_last_week DESC', $limit);
+				$topic_list = $this->fetch_all('topic', implode(' AND ', $where), 'discuss_count_last_week DESC', $limit);
 			break;
 
 			case 'month':
 				$where[] = 'discuss_count_update > ' . (time() - 2592001);
 
-				return $this->fetch_all('topic', implode(' AND ', $where), 'discuss_count_last_month DESC', $limit);
+				$topic_list = $this->fetch_all('topic', implode(' AND ', $where), 'discuss_count_last_month DESC', $limit);
 			break;
 		}
+
+		foreach ($topic_list AS $key => $val)
+		{
+			if (!$val['url_token'])
+			{
+				$topic_list[$key]['url_token'] = rawurlencode($val['topic_title']);
+			}
+
+			// 获取分类信息
+
+			$parent_topic_info = $this->model('topic')->get_topic_by_id($val['parent_id']);
+			$topic_list[$key]['category'] = $parent_topic_info['topic_title'];
+			$topic_list[$key]['category_id'] = $parent_topic_info['topic_id'];
+		}
+
+		return $topic_list;
 	}
 
 	/**

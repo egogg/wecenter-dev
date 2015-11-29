@@ -101,6 +101,22 @@ class main extends AWS_CONTROLLER
 			TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('explore'));
 		}
 
+		// 精选专题
+		$recommend_items = $this->model('recommend')->get_recommend_homepage_items('topic', $limit = 4);
+		foreach ($recommend_items as $key => $item) {
+			$topic_info = $this->model('topic')->get_topic_by_id($item['item_id']);
+			$topic_info['topic_description'] = nl2br(FORMAT::parse_bbcode($topic_info['topic_description']));
+			if ($topic_info['parent_id'])
+			{
+				$parent_topic_info = $this->model('topic')->get_topic_by_id($topic_info['parent_id']);
+				$topic_info['category'] = $parent_topic_info['topic_title'];
+				$topic_info['category_id'] = $parent_topic_info['topic_id'];
+			}
+			$recommend_homepage_topics[$key] = $topic_info;
+		}
+
+		TPL::assign('recommend_homepage_topics', $recommend_homepage_topics);
+
 		// 边栏可能感兴趣的人
 		if (TPL::is_output('block/sidebar_recommend_users_topics.tpl.htm', 'explore/index'))
 		{

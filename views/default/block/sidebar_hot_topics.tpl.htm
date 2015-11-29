@@ -2,8 +2,9 @@
 	<ul class="sidebar-topics-list clearfix">
 	<?php foreach($this->sidebar_hot_topics AS $key => $val) {?>
 		<li class="sidebar-topic-item">
+			<a href="topic/channel-topic__topic_id-<?php echo $val['category_id']; ?>"><div class="topic-category-mark bgm-category-<?php echo ($val['category_id'] + 1) % 19; ?>"><?php echo $val['category']; ?></div></a>
 			<a href="topic/<?php echo $val['topic_id'];?>"><img class="img-responsive" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" /></a>
-			<div class="sidebar-topic-title">
+			<div class="sidebar-topic-title clearfix">
 				<div class="sidebar-topic-tag bgm-lightblue">
 					专题
 				</div>

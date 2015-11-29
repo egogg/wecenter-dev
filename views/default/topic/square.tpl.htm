@@ -25,27 +25,31 @@
                 <?php foreach ($this->topics_list AS $key => $val) { ?>
                     <?php if(!$val['is_parent']) { ?>
                         <div class="topic-item col-sm-4">
-                             <div class="card">
-                                <div class="card-header">
-                                    <h2><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?></a>
-                                        <small><!-- 话题统计 -->
-                                            <ul class="topic-stats">
-                                                <li class="topic-stats-item"><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>"><?php echo $val['question_count']; ?> 个问题</a> </li>
-                                                <li class="topic-stats-item"><?php echo $val['discuss_count']; ?> 人关注</li>
-                                            </ul>
-                                        </small>
-                                    </h2>
-                                </div>
-                                <div class="card-body card-padding">
-                                    <!-- 话题图片 -->
-                                    <a class="topic-img" target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>">
-                                        <img class="img-responsive m-b-15" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" alt="" />
-                                    </a>
-                                    
-                                    <div class="topic-description">
-                                        <?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['topic_description']))), 0, 28, 'UTF-8', '...'); ?> <a target="_blank" href="topic/<?php echo $val['topic_id']; ?>">进入专题 <i class="md md-chevron-right"></i></a>
+                            <div class="m-b-30">
+                                <div class="card m-b-0 clearfix">
+                                    <div class="card-header">
+                                        <h2><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?></a>
+                                            <small><!-- 话题统计 -->
+                                                <ul class="topic-stats">
+                                                    <li class="topic-stats-item"><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>"><?php echo $val['question_count']; ?> 个问题</a> </li>
+                                                    <li class="topic-stats-item"><?php echo $val['discuss_count']; ?> 人关注</li>
+                                                </ul>
+                                            </small>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body card-padding">
+                                        <!-- 话题图片 -->
+                                        <a class="topic-img" target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>">
+                                            <img class="img-responsive m-b-15" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" alt="" />
+                                        </a>
+                                        
+                                        <div class="topic-description">
+                                            <?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['topic_description']))), 0, 28, 'UTF-8', '...'); ?> <a target="_blank" href="topic/<?php echo $val['topic_id']; ?>">进入专题 <i class="md md-chevron-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="topic-card-bottom-a"></div>
+                                <div class="topic-card-bottom-b"></div>
                             </div>
                         </div>
                     <?php } ?>

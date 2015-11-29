@@ -154,24 +154,32 @@
 	        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'hot') { echo 'active';} ?>" data-sort="hot"><a href="javascript:;">热门</a></li>
 	        		</ul>
 	            </div>
-	            <div class="question-list-publish col-sm-3">
-					<a href="publish/"><i class="md md-create"></i> 我要出题</a>	
-				</div>
 	    	</div>
 	    </div>
 		
 		<!-- 问题列表 -->
-    	<?php TPL::output('block/question_list.tpl.htm'); ?>
+		<div class="question-list col-sm-8">
+    		<?php TPL::output('block/question_list.tpl.htm'); ?>
+
+    		<!-- 分页 -->
+			<?php if($this->pagination) { ?>
+		        <div class="card">
+		        	<div class="card-body card-padding">
+		        		<?php echo $this->pagination; ?>
+		        	</div>
+		        </div>
+		    <?php } ?>
+    	</div>
 		
-		<div class="sidebar col-sm-3 hidden-xs">
+		<div class="sidebar col-sm-4 hidden-xs">
 			<!-- 推荐专题 -->
 			<div class="card sidebar-hot-topics">
 				<div class="card-header">
-	                <h2>推荐专题</h2>
+	                <h2>热门专题</h2>
 	                <ul class="actions">
-	                    <li>
-	                       <a href="topic/"><i class="md md-chevron-right"></i></a>
-	                    </li>
+	                    <li class="action-item-link">
+                            <a href="topic/">所有专题<i class="md md-chevron-right c-lightblue"></i></a>
+                        </li>
 	                </ul>
 	            </div>
 				<div class="card-body card-padding">
