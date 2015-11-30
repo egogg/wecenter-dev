@@ -96,12 +96,28 @@ class main extends AWS_CONTROLLER
 		TPL::assign('slides', $slides);
 
 		// 导航
+		
 		if (TPL::is_output('block/content_nav_menu.tpl.htm', 'explore/index'))
 		{
 			TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('explore'));
 		}
 
+		//置顶问题
+
+		$recommend_items = $this->model('recommend')->get_recommend_homepage_items('top_question', $limit = 4);
+		foreach ($recommend_items as $key => $item) {
+			$question_info = $this->model('question')->get_question_info_by_id($item['item_id']);
+			if ($question_info['has_attach'])
+			{
+				$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'square');
+			}
+			$top_question_list[$key] = $question_info;
+		}
+
+		TPL::assign('top_question_list', $top_question_list);
+
 		// 精选专题
+		
 		$recommend_items = $this->model('recommend')->get_recommend_homepage_items('topic', $limit = 4);
 		foreach ($recommend_items as $key => $item) {
 			$topic_info = $this->model('topic')->get_topic_by_id($item['item_id']);

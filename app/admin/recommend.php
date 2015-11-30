@@ -44,7 +44,7 @@ class recommend extends AWS_ADMIN_CONTROLLER
                 {
                     case 'question' :
                     {
-                        $val['item_tag'] = '问题（问题）';
+                        $val['item_tag'] = '问题（精选）';
                         $val['item_link'] = 'question/' . $val['item_id'];
                         $question_info = $this->model('question')->get_question_info_by_id($val['item_id']);
                         if($question_info)
@@ -60,7 +60,7 @@ class recommend extends AWS_ADMIN_CONTROLLER
                     }
                     case 'article' :
                     {
-                        $val['item_tag'] = '文章（知识）';
+                        $val['item_tag'] = '文章（精选）';
                         $val['item_link'] = 'article/' . $val['item_id'];
                         $article_info = $this->model('article')->get_article_info_by_id($val['item_id']);
                         if($article_info)
@@ -76,7 +76,7 @@ class recommend extends AWS_ADMIN_CONTROLLER
                     }
                     case 'topic' :
                     {
-                        $val['item_tag'] = '话题（专题）';
+                        $val['item_tag'] = '专题（精选）';
                         $val['item_link'] = 'topic/' . $val['item_id'];
                         $topic_info = $this->model('topic')->get_topic_by_id($val['item_id']);
                         if($topic_info)
@@ -85,7 +85,23 @@ class recommend extends AWS_ADMIN_CONTROLLER
                         }
                         else
                         {
-                            $val['item_title'] = '话题 #' . $val['item_id'];
+                            $val['item_title'] = '专题 #' . $val['item_id'];
+                        }
+
+                        break;
+                    }
+                    case 'top_question' :
+                    {
+                        $val['item_tag'] = '问题（置顶）';
+                        $val['item_link'] = 'question/' . $val['item_id'];
+                        $question_info = $this->model('question')->get_question_info_by_id($val['item_id']);
+                        if($question_info)
+                        {
+                            $val['item_title'] = $question_info['question_content'];
+                        }
+                        else
+                        {
+                            $val['item_title'] = '问题 #' . $val['item_id']; 
                         }
 
                         break;

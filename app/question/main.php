@@ -341,10 +341,6 @@ class main extends AWS_CONTROLLER
 			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 		}
 
-		// 是否为首页推荐
-
-		$question_info['is_recommend_homepage'] = $this->model('recommend')->recommend_homepage_check('question', $question_info['question_id']);
-		
 		TPL::assign('question_info', $question_info);
 		TPL::assign('question_focus', $this->model('question')->has_focus_question($question_info['question_id'], $this->user_id));
 

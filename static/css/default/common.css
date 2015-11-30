@@ -1486,7 +1486,7 @@ ul.answer-actions-right li {
 /* 首页 */
 
 #main-slide .carousel-inner .item a img {
-	height: 230px;
+	height: 220px;
 	width: auto;
 }
 
@@ -1541,7 +1541,7 @@ ul.answer-actions-right li {
 
 .explore-feature-item {
 	position: relative;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 .explore-feature-item .card {
@@ -1658,8 +1658,31 @@ li.action-item-link a:hover:before {
 	background-color: rgba(0, 0, 0, 0);
 }
 
-.explore-user-list {
-	height: 125px;
+.explore-top-question-items {
+	padding-top: 5px;
+}
+
+.explore-top-question-items .card {
+	height: 70px;
+}
+
+.explore-top-question-item {
+	width: 50%;
+	display: inline-block;
+	float: left;
+	margin-bottom: 5px;
+}
+
+.explore-top-question-img-wrap {
+	height: 70px;
+	width: 113px;
+	display: block;
+	overflow: hidden;
+	margin-right: 15px !important;
+}
+
+.explore-top-question-img {
+	width: 113px;
 }
 
 /* 重载bootstrap */

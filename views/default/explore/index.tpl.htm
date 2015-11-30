@@ -47,7 +47,7 @@
                     </div>
                         
                     <!-- 推荐功能 -->
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 p-l-5">
                         <ul>
                             <li class="explore-feature-item bgm-teal">
                                 <div class="clearfix">
@@ -132,17 +132,36 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12 m-t-10">
-                       <div class="card explore-user-list">
-                            <div class="card-body card-padding">
-                                xxxx
-                            </div>
-                        </div> 
-                    </div>
+                    <div class="col-sm-12">
+                        <ul class="explore-top-question-items">
+                            <?php foreach ($this->top_question_list as $key => $question) { ?>
+                                <li class="explore-top-question-item <?php if($key % 2 == 0) { ?>p-r-5<?php } ?>">
+                                    <div class="card m-b-0">
+                                        <div class="media">
+                                            <div class="pull-left explore-top-question-img-wrap">
+                                                <a href="question/<?php echo $question['question_id']; ?>" target="_blank">
+                                                    <?php foreach ($question['attachs'] AS $attach) { ?>
+                                                        <?php if ($attach['is_image']) { ?>
+                                                            <a href="question/<?php echo $question['question_id']; ?>" target="_blank"><img class="explore-top-question-img" target="_blank" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
+                                                        <?php break; } ?>
+                                                    <?php } ?>
+                                                </a>
+                                            </div>
+                                            <div class="media-body m-t-5">
+                                                <h4 class="media-heading">
+                                                    <a href="question/<?php echo $question['question_id']; ?>" target="_blank">
+                                                        <?php echo $question['question_content']; ?>
+                                                    </a>
+                                                </h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    </div> 
                 </div>
-                    
             </div>
-                
 
             <!-- 分类以及题型 -->
             <div class="col-sm-4">
@@ -230,6 +249,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+
+        <div class="row">
+            
         </div>
 
         <div class="row">

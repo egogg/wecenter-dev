@@ -1490,6 +1490,7 @@ class ajax extends AWS_CONTROLLER
 		// 是否为首页推荐
 
 		TPL::assign('is_recommend_homepage', $this->model('recommend')->recommend_homepage_check('question', $question_info['question_id']));
+		TPL::assign('is_top_question', $this->model('recommend')->recommend_homepage_check('top_question', $question_info['question_id']));
 
 		$show_question_content = (!$has_quiz_options OR ($has_quiz_options AND !$is_countdown) OR ($is_countdown AND $passed_quiz));
 		$show_question_quiz = (($has_quiz_options AND !$is_countdown) OR ($is_countdown AND $passed_quiz));
