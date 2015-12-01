@@ -37,7 +37,7 @@
 	            			<!-- 问题分类 -->
 		            		<?php if ($question['category_info']) { ?>
 		            			<li class="question-tag-item">
-									<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
+									<a data-type="category" data-id="<?php echo $question['category_info']['id']; ?>" class="question-tag c-category-<?php echo $question['category_id'] % 19; ?> b-category-<?php echo $question['category_id'] % 19; ?>" href="javascript:;">
 										<span><?php echo $question['category_info']['title']; ?></span>
 									</a>
 								</li>

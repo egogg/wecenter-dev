@@ -111,6 +111,46 @@ class main extends AWS_CONTROLLER
 			{
 				$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'square');
 			}
+
+			// 答题选项
+
+			if($question_info['quiz_id'] > 0) 
+			{
+				$question_info['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+			}
+			
+			// 分类信息
+
+			$question_info['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
+
+			// 答题统计
+
+			$question_quiz_total = 0;
+			$question_quiz_passed = 0;
+			$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
+			if($question_quiz_record)
+			{
+				foreach ($question_quiz_record as $i => $v) {
+					if($v['passed'])
+					{
+						$question_quiz_passed++;
+					}
+
+					$question_quiz_total++;
+				}
+
+
+				$question_info['quiz_count'] = $question_quiz_total;
+				if($question_quiz_total)
+				{
+					$question_info['pass_rate'] = $question_quiz_passed / $question_quiz_total;
+				}
+				else
+				{
+					$question_info['pass_rate'] = 0.0;
+				}
+			}
+
 			$top_question_list[$key] = $question_info;
 		}
 
@@ -128,6 +168,7 @@ class main extends AWS_CONTROLLER
 				$topic_info['category'] = $parent_topic_info['topic_title'];
 				$topic_info['category_id'] = $parent_topic_info['topic_id'];
 			}
+
 			$recommend_homepage_topics[$key] = $topic_info;
 		}
 

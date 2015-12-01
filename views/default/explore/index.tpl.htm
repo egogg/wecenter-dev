@@ -136,6 +136,9 @@
                         <ul class="explore-top-question-items">
                             <?php foreach ($this->top_question_list as $key => $question) { ?>
                                 <li class="explore-top-question-item <?php if($key % 2 == 0) { ?>p-r-5<?php } ?>">
+                                    <div class="top-question-mark bgm-category-<?php echo $question['category_id'] % 19 ; ?>">
+                                        <?php echo $question['category_info']['title']; ?>
+                                    </div>
                                     <div class="card m-b-0">
                                         <div class="media">
                                             <div class="pull-left explore-top-question-img-wrap">
@@ -148,11 +151,33 @@
                                                 </a>
                                             </div>
                                             <div class="media-body m-t-5">
-                                                <h4 class="media-heading">
-                                                    <a href="question/<?php echo $question['question_id']; ?>" target="_blank">
-                                                        <?php echo $question['question_content']; ?>
-                                                    </a>
+                                                <h4 class="media-heading top-question-title">
+                                                    <?php if($question['quiz_info'] AND $question['quiz_info']['countdown']) { ?>
+                                                        <a class="countdown-question-title" href="question/<?php echo $question['question_id']; ?>" target="_blank">
+                                                            <i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($question['question_content'], 2, 4, 'UTF-8', '***'); ?>
+                                                        </a>
+                                                    <?php } else { ?>
+                                                        <a href="question/<?php echo $question['question_id']; ?>" target="_blank"><?php echo $question['question_content']; ?>
+                                                        </a>
+                                                    <?php } ?>
                                                 </h4>
+                                                <div class="top-question-footer">
+                                                    <ul class="top-question-stats-items">
+                                                        <?php if($question['quiz_id'] > 0) { ?>
+                                                            <li class="top-question-stats-item b-bluegray c-bluegray">
+                                                                答题 <strong class="top-question-stats-item-number"><?php echo intval($question['quiz_count']); ?></strong>
+                                                            </li>
+                                                        
+                                                            <li class="top-question-stats-item <?php if($question['pass_rate'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
+                                                                通过率 <strong class="top-question-stats-item-number"><?php echo number_format($question['pass_rate'] * 100, 0); ?>%</strong>  
+                                                            </li>
+                                                        <?php } else { ?>
+                                                            <li class="top-question-stats-item c-bluegray b-bluegray">
+                                                                讨论 <strong class="top-question-stats-item-number"><?php echo intval($question['answer_count']); ?></strong>
+                                                            </li>
+                                                        <?php } ?>
+                                                    </ul>  
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -190,38 +215,44 @@
                         </div>
                         
                         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-2">
-                            <div class="nav-question-type-list clearfix">
-                                <div class="col-xs-6 p-l-0 p-r-0 text-center">
-                                    <a href="javascript:void(0);" class="nav-question-type-item c-lightgreen b-lightgreen">
+                            <ul class="nav-question-type-items clearfix">
+                                <li class="nav-question-type-item">
+                                    <a href="javascript:void(0);" class="c-lightgreen b-lightgreen">
                                         <i class="md md-radio-button-on"></i>
                                         <span>单项选择</span>
                                     </a>
-                                </div>
-                                <div class="col-xs-6 p-l-0 p-r-0 text-center">
-                                    <a href="javascript:void(0);" class="nav-question-type-item c-cyan b-cyan">
+                                </li>
+                                <li class="nav-question-type-item">
+                                    <a href="javascript:void(0);" class="c-cyan b-cyan">
                                         <i class="md md-check-box"></i>
                                         <span>多项选择</span>
                                     </a>
-                                </div>
-                                <div class="col-xs-6 p-l-0 p-r-0 text-center">
-                                    <a href="javascript:void(0);" class="nav-question-type-item c-amber b-amber">
+                                </li>
+                                <li class="nav-question-type-item">
+                                    <a href="javascript:void(0);" class="c-amber b-amber">
                                         <i class="md md-apps"></i>
                                         <span>成语字谜</span>
                                     </a>
-                                </div>
-                                <div class="col-xs-6 p-l-0 p-r-0 text-center">
-                                    <a href="javascript:void(0);" class="nav-question-type-item c-deeppurple b-deeppurple">
+                                </li>
+                                <li class="nav-question-type-item">
+                                    <a href="javascript:void(0);" class="c-deeppurple b-deeppurple">
                                         <i class="md md-border-color"></i>
                                         <span>完形填空</span>
                                     </a>
-                                </div>
-                                <div class="col-xs-6 p-l-0 p-r-0 text-center">
-                                    <a href="javascript:void(0);" class="nav-question-type-item c-brown b-brown">
+                                </li>
+                                <li class="nav-question-type-item">
+                                    <a href="javascript:void(0);" class="c-brown b-brown">
                                         <i class="md md-question-answer"></i>
                                         <span>开放讨论</span>
                                     </a>
-                                </div>
-                            </div>     
+                                </li>
+                                <li class="nav-question-type-item">
+                                    <a href="javascript:void(0);" class="c-orange b-orange">
+                                        <i class="md md-access-alarm"></i>
+                                        <span>限时答题</span>
+                                    </a>
+                                </li>
+                            </ul>     
                         </div>
 
                         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-3">
@@ -252,7 +283,8 @@
         </div>
 
         <div class="row">
-            
+            <div class="col-sm-12">
+            </div> 
         </div>
 
         <div class="row">

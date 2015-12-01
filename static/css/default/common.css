@@ -1517,18 +1517,15 @@ ul.answer-actions-right li {
 }
 
 .nav-question-type-item {
+	display: inline-block;
+	width: 40%;
+	margin: 15px;
+}
+
+.nav-question-type-item a {
 	display: block;
-    padding: 7px 0;
+    padding: 10px 15px;
     border: 1px solid #eee;
-    margin: 5px;
-}
-
-.nav-question-type-item i {
-	font-size: 24px;
-}
-
-.nav-question-type-item span {
-	display: block;
 }
 
 .explore-feature-item .media .pull-left {
@@ -1667,6 +1664,7 @@ li.action-item-link a:hover:before {
 }
 
 .explore-top-question-item {
+	position: relative;
 	width: 50%;
 	display: inline-block;
 	float: left;
@@ -1683,6 +1681,38 @@ li.action-item-link a:hover:before {
 
 .explore-top-question-img {
 	width: 113px;
+}
+
+.top-question-mark {
+	display: inline-block;
+	background-color: #FFC107;
+	color: #fff;
+	padding: 2px 5px;
+	position: absolute;
+	top: 0;
+	z-index: 1;
+	font-size: 12px;
+}
+
+.top-question-title {
+	display: block;
+	overflow: hidden;
+	height: 23px;
+}
+
+.top-question-stats-item {
+	display: inline-block;
+	float: left;
+	font-size: 12px;
+	border: 1px solid #eee;
+	padding: 2px 5px;
+	margin-right: 10px;
+}
+
+.top-question-stats-item-number {
+	width: 32px;
+	text-align: center;
+	display: inline-block;
 }
 
 /* 重载bootstrap */
