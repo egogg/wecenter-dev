@@ -347,11 +347,6 @@ header .main-nav ul li a.active {
 
 /*问题列表*/
 
-.question-list {
-	padding-right: 0;
-	padding-left: 0;
-}
-
 .question-list-publish-info {
 	margin-top: 5px;
 }
@@ -522,16 +517,24 @@ header .main-nav ul li a.active {
 
 .sidebar-topic-item {
 	position: relative;
+	margin-bottom: 15px;
+}
+
+.sidebar-topic-img {
+	position: relative;
 }
 
 .sidebar-topic-title {
-	position: relative;
-	top: -32px;
+	position: absolute;
+	top: 101px;
     z-index: 1;
     background:rgba(0, 0, 0, 0.5);
     font-size: 12px;
     color: #fff;
     line-height: 32px;
+    display: inline-block;
+    float: left;
+    width: 100%;
 }
 
 .sidebar-topic-title a {
@@ -569,7 +572,7 @@ header .main-nav ul li a.active {
 .topic-category li {
 	display: inline-block;
 	float: left;
-	margin: 10px 15px 5px 0;
+	margin: 10px 10px 10px 0;
 }
 
 .topic-category li a {
@@ -1683,36 +1686,40 @@ li.action-item-link a:hover:before {
 	width: 113px;
 }
 
-.top-question-mark {
+.top-question-category-mark {
 	display: inline-block;
 	background-color: #FFC107;
 	color: #fff;
-	padding: 2px 5px;
-	position: absolute;
+	padding: 0 3px;
 	top: 0;
 	z-index: 1;
-	font-size: 12px;
+	font-size: 11px;
+	position: absolute;
+}
+
+.top-question-mark {
+	background: #4CAF50;
+    border-radius: 2px;
+    font-size: 11px;
+    padding: 1px 3px;
+    display: relative;
+    position: relative;
+    top: -1px;
+    color: #fff;
 }
 
 .top-question-title {
 	display: block;
 	overflow: hidden;
 	height: 23px;
+	margin: 10px 0;
 }
 
 .top-question-stats-item {
 	display: inline-block;
 	float: left;
 	font-size: 12px;
-	border: 1px solid #eee;
-	padding: 2px 5px;
 	margin-right: 10px;
-}
-
-.top-question-stats-item-number {
-	width: 32px;
-	text-align: center;
-	display: inline-block;
 }
 
 /* 重载bootstrap */
@@ -1930,6 +1937,23 @@ input.form-control {
 	.col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
 	.col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
 	    padding: 0;
+	}
+
+	body #content {
+		padding-top: 10px;
+	}
+
+	.row {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	.card {
+		margin-bottom: 10px;
+	}
+
+	.top-slider {
+		margin: -10px -10px 10px -10px;
 	}
 }
 

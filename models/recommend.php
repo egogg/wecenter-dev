@@ -48,4 +48,19 @@ class recommend_class extends AWS_MODEL
 	{
 		return $this->fetch_all('recommend_homepage', 'item_type = "' . $item_type . '"', 'add_time' ,intval($limit));
 	}
+
+	public function get_recommend_question_items($page = 1, $per_page = 10, $sort = null)
+	{
+		$order_key = 'add_time DESC';
+
+		$question_items = $this->fetch_page('recommend_homepage', 'item_type = "question"', $order_key, $page, $per_page);
+		$this->question_item_total = $this->found_rows();
+
+		return $question_items;
+	}
+
+	public function get_recommend_question_total()
+	{
+		return $this->question_item_total;
+	}
 }

@@ -102,7 +102,7 @@ class main extends AWS_CONTROLLER
 			TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('explore'));
 		}
 
-		//置顶问题
+		// 置顶问题
 
 		$recommend_items = $this->model('recommend')->get_recommend_homepage_items('top_question', $limit = 4);
 		foreach ($recommend_items as $key => $item) {
@@ -153,8 +153,87 @@ class main extends AWS_CONTROLLER
 
 			$top_question_list[$key] = $question_info;
 		}
-
+		
 		TPL::assign('top_question_list', $top_question_list);
+		
+		// 精选问题
+
+		$recommend_items = $this->model('recommend')->get_recommend_question_items($_GET['page'], get_setting('contents_per_page'));
+		foreach ($recommend_items as $key => $item) {
+			$question_info = $this->model('question')->get_question_info_by_id($item['item_id']);
+			$recommend_question_list[$key] = $question_info;
+
+			// 获取发表问题用户信息
+
+			$recommend_question_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid']);
+
+			// 获取问题分类信息
+
+			$recommend_question_list[$key]['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
+
+			// 获取问题评论
+
+			if ($question_info['answer_count'])
+			{
+				$recommend_question_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($question_info['question_id'], 2, $question_info['published_uid']);
+			}
+
+			// 获取问题缩略图
+
+			if ($question_info['has_attach'])
+			{
+				$recommend_question_list[$key]['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'square');
+			}
+
+			// 获取答题选项信息
+
+			if($question_info['quiz_id'])
+			{
+				$recommend_question_list[$key]['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+
+				// 获取当前用户答题信息
+
+				if($this->user_id > 0) 
+				{
+					$recommend_question_list[$key]['user_record_count'] = $this->model('quiz')->get_question_quiz_user_record_count($question_info['question_id'], $this->user_id);
+				}
+			
+				// 获取答题统计信息
+
+				$question_quiz_stats['total'] = 0;
+				$question_quiz_stats['passed'] = 0;
+				$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
+				if($question_quiz_record)
+				{
+					foreach ($question_quiz_record as $i => $v) {
+						if($v['passed'])
+						{
+							$question_quiz_stats['passed']++;
+						}
+
+						$question_quiz_stats['total']++;
+					}
+
+					if($question_quiz_stats['total'])
+					{
+						$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
+					}
+					else
+					{
+						$question_quiz_stats['rate'] = 0.0;
+					}
+				}
+				$recommend_question_list[$key]['quiz_stats'] = $question_quiz_stats;
+			}
+		}
+
+		TPL::assign('recommend_homepage_questions', $recommend_question_list);
+		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
+			'base_url' => get_js_url('/'),
+			'total_rows' => $this->model('recommend')->get_recommend_question_total(),
+			'per_page' => get_setting('contents_per_page'),
+			'num_links' => 2
+		))->create_links());
 
 		// 精选专题
 		
@@ -173,6 +252,25 @@ class main extends AWS_CONTROLLER
 		}
 
 		TPL::assign('recommend_homepage_topics', $recommend_homepage_topics);
+
+		// 精选知识
+
+		$recommend_items = $this->model('recommend')->get_recommend_homepage_items('article', $limit = 5);
+		foreach ($recommend_items as $key => $item) {
+			$article_ids[] = $item['item_id'];;
+		}
+
+		// 获取文章缩略图
+
+		$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
+
+		foreach ($recommend_items as $key => $item) {
+			$article_info = $this->model('article')->get_article_info_by_id($item['item_id']);
+			$article_info['attachs'] = $article_attachs[$article_info['id']];
+
+			$recommend_homepage_articles[$key] = $article_info;
+		}
+		TPL::assign('recommend_homepage_articles', $recommend_homepage_articles);
 
 		// 边栏可能感兴趣的人
 		if (TPL::is_output('block/sidebar_recommend_users_topics.tpl.htm', 'explore/index'))
@@ -198,39 +296,39 @@ class main extends AWS_CONTROLLER
 			TPL::assign('feature_list', $this->model('module')->feature_list());
 		}
 
-		if (! $_GET['sort_type'] AND !$_GET['is_recommend'])
-		{
-			$_GET['sort_type'] = 'new';
-		}
+		// if (! $_GET['sort_type'] AND !$_GET['is_recommend'])
+		// {
+		// 	$_GET['sort_type'] = 'new';
+		// }
 
-		if ($_GET['sort_type'] == 'hot')
-		{
-			$posts_list = $this->model('posts')->get_hot_posts(null, $category_info['id'], null, $_GET['day'], $_GET['page'], get_setting('contents_per_page'));
-		}
-		else
-		{
-			$posts_list = $this->model('posts')->get_posts_list(null, $_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], null, $category_info['id'], $_GET['answer_count'], $_GET['day'], $_GET['is_recommend']);
-		}
+		// if ($_GET['sort_type'] == 'hot')
+		// {
+		// 	$posts_list = $this->model('posts')->get_hot_posts(null, $category_info['id'], null, $_GET['day'], $_GET['page'], get_setting('contents_per_page'));
+		// }
+		// else
+		// {
+		// 	$posts_list = $this->model('posts')->get_posts_list(null, $_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], null, $category_info['id'], $_GET['answer_count'], $_GET['day'], $_GET['is_recommend']);
+		// }
 
-		if ($posts_list)
-		{
-			foreach ($posts_list AS $key => $val)
-			{
-				if ($val['answer_count'])
-				{
-					$posts_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
-				}
-			}
-		}
+		// if ($posts_list)
+		// {
+		// 	foreach ($posts_list AS $key => $val)
+		// 	{
+		// 		if ($val['answer_count'])
+		// 		{
+		// 			$posts_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
+		// 		}
+		// 	}
+		// }
 
-		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
-			'base_url' => get_js_url('/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__day-' . intval($_GET['day']) . '__is_recommend-' . intval($_GET['is_recommend'])),
-			'total_rows' => $this->model('posts')->get_posts_list_total(),
-			'per_page' => get_setting('contents_per_page')
-		))->create_links());
+		// TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
+		// 	'base_url' => get_js_url('/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__day-' . intval($_GET['day']) . '__is_recommend-' . intval($_GET['is_recommend'])),
+		// 	'total_rows' => $this->model('posts')->get_posts_list_total(),
+		// 	'per_page' => get_setting('contents_per_page')
+		// ))->create_links());
 
-		TPL::assign('posts_list', $posts_list);
-		TPL::assign('posts_list_bit', TPL::output('explore/ajax/list', false));
+		// TPL::assign('posts_list', $posts_list);
+		// TPL::assign('posts_list_bit', TPL::output('explore/ajax/list', false));
 
 		TPL::output('explore/index');
 	}

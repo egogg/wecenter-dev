@@ -1,0 +1,23 @@
+<div class="listview">
+    <div class="lv-body">
+        <?php foreach ($this->article_list as $id => $article) { ?>
+            <a class="lv-item" href="article/<?php echo $id; ?>">
+                <div class="media">
+                    <div class="pull-left article-list-feature-img">
+                        <img class="article-feature-img-sm responsive-img" 
+                            <?php foreach ($article['attachs'] AS $attach) { ?>
+                                <?php if ($attach['is_image']) { ?>
+                                    src="<?php echo $attach['attachment']; ?>" alt="<?php echo $attach['attach_name']; ?>"
+                                <?php break; } ?>
+                            <?php } ?> 
+                        >
+                    </div>
+                    <div class="media-body">
+                        <div class="lv-title"><?php echo $article['title']; ?></div>
+                    </div>
+                </div>
+            </a>   
+        <?php }?>
+        <div class="lv-footer"></div>
+    </div>
+</div>

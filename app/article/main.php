@@ -120,7 +120,7 @@ class main extends AWS_CONTROLLER
 
 		// 最新推荐文章
 
-		$recommend_articles = $this->model('article')->get_recommend_article_list($article_info['id'], 3);
+		$recommend_articles = $this->model('article')->get_recommend_article_list($article_info['id'], 10);
 		if($recommend_articles)
 		{
 			foreach ($recommend_articles as $key => $val) {
