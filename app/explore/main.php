@@ -259,7 +259,7 @@ class main extends AWS_CONTROLLER
 		foreach ($recommend_items as $key => $item) {
 			$article_ids[] = $item['item_id'];;
 		}
-
+		
 		// 获取文章缩略图
 
 		$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');

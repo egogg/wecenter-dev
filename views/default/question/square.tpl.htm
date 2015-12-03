@@ -153,14 +153,20 @@
 			<!-- 排序 -->
 		    
 		    <div class="question-list-heading col-sm-12 hidden-xs">
-		    	<div class="card" >
-		    		<div class="question-list-sort card-body card-padding">
-		            	<ul class="question-sort-items">
-		        			<li class="question-sort-item <?php if(!$this->filter_info OR !$this->filter_info['sort_type'] OR $this->filter_info['sort_type'] == 'new') { echo 'active';} ?>" data-sort="new"><a href="javascript:;">最新</a></li>
-		        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'recommend') { echo 'active';} ?>" data-sort="recommend"><a href="javascript:;">推荐</a></li>
-		        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'hot') { echo 'active';} ?>" data-sort="hot"><a href="javascript:;">热门</a></li>
-		        		</ul>
-		            </div>
+		    	<div class="card">
+		    		<div class="card-body card-padding clearfix">
+		    			<div class="question-list-sort">
+		    				<ul class="question-sort-items">
+			        			<li class="question-sort-item <?php if(!$this->filter_info OR !$this->filter_info['sort_type'] OR $this->filter_info['sort_type'] == 'new') { echo 'active';} ?>" data-sort="new"><a href="javascript:;">最新</a></li>
+			        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'recommend') { echo 'active';} ?>" data-sort="recommend"><a href="javascript:;">推荐</a></li>
+			        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'hot') { echo 'active';} ?>" data-sort="hot"><a href="javascript:;">热门</a></li>
+			        		</ul>
+		    			</div>
+			            <div class="user-quiz-message">
+			            	<i class="md md-volume-up"></i>
+			            	<?php TPL::output('block/user_quiz_message.tpl.htm'); ?>
+			            </div>
+		            </div>       
 		    	</div>
 		    </div>
 		</div>

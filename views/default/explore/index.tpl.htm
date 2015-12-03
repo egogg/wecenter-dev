@@ -7,7 +7,7 @@
         <div class="row top-slider">
             <div class="col-sm-8">
                 <div class="row">
-                    <div class="col-sm-8 p-r-0">
+                    <div class="col-sm-8 p-r-5">
                         <!-- 幻灯页面 -->
                         <?php if($this->slides) { ?>
                         <div class="main-slide">
@@ -135,7 +135,7 @@
                     <div class="col-sm-12">
                         <ul class="explore-top-question-items">
                             <?php foreach ($this->top_question_list as $key => $question) { ?>
-                                <li class="explore-top-question-item <?php if($key % 2 == 0) { ?>p-r-5<?php } ?>">
+                                <li class="explore-top-question-item <?php if($key % 2 == 0) { ?>p-r-10<?php } ?>">
                                     <div class="top-question-category-mark bgm-category-<?php echo $question['category_id'] % 19 ; ?>">
                                         <?php echo $question['category_info']['title']; ?>
                                     </div>
@@ -170,7 +170,7 @@
                                                             </li>
                                                         
                                                             <li class="pull-right top-question-stats-item <?php if($question['pass_rate'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
-                                                                通过率 <strong class="top-question-stats-item-number"><?php echo number_format($question['pass_rate'] * 100, 0); ?>%</strong>  
+                                                                准确率 <strong class="top-question-stats-item-number"><?php echo number_format($question['pass_rate'] * 100, 0); ?>%</strong>  
                                                             </li>
                                                         <?php } else { ?>
                                                             <li class="top-question-stats-item c-gray b-gray">
@@ -188,6 +188,60 @@
                     </div> 
                 </div>
             </div>
+
+            <div class="col-sm-4 hidden-xs">
+                <div class="card m-b-0 user-ranks">
+                    <div class="card-body card-padding">
+                        用户排行
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-4 hidden-xs">
+                <div class="card m-t-10 global-message">
+                    <div class="card-body card-padding">
+                        系统公告/二维码
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 最新答题动态 -->
+        <div class="row">
+            <div class="col-sm-12 hidden-xs">
+                <div class="card">
+                    <div class="card-header card-padding clearfix" role="alert">
+                        <div class="user-quiz-message">
+                            <i class="md md-volume-up pull-left"></i>
+                            <?php TPL::output('block/user_quiz_message.tpl.htm'); ?>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+
+        <div class="row">
+            <!-- 精选答题 -->
+            <div class="col-sm-8">
+                <div class="question-list" id="question-list">
+                    <?php TPL::assign('question_list', $this->recommend_homepage_questions); ?>
+                    <?php TPL::output('block/question_list.tpl.htm'); ?>
+                </div>
+                    
+                <!-- 加载更多 -->
+                
+                <a href="javascript:void(0);" id="question-load-more" auto-load="false">
+                    <div class="card">
+                            <div class="card-body card-padding text-center">
+                                <h3>
+                                    下一页 <i class="md md-arrow-drop-down"></i>
+                                </h3>
+                            </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- 侧边栏 -->
 
             <!-- 分类以及题型 -->
             <div class="col-sm-4 hidden-xs">
@@ -281,34 +335,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-sm-12 hidden-xs">
-                <div class="block-header">
-                    <i class="md md-volume-up"></i>
-                </div>
-            </div> 
-        </div>
-
-        <div class="row">
-            <!-- 精选答题 -->
-
-            <div class="question-list col-sm-8">
-                <?php TPL::assign('question_list', $this->recommend_homepage_questions); ?>
-                <?php TPL::output('block/question_list.tpl.htm'); ?>
-
-                <!-- 分页 -->
-                <?php if($this->pagination) { ?>
-                    <div class="card">
-                        <div class="card-body card-padding">
-                            <?php echo $this->pagination; ?>
-                        </div>
-                    </div>
-                <?php } ?>
-            </div>
-
-            <!-- 侧边栏 -->
 
             <div class="col-sm-4 hidden-xs">
                 <div class="card">
@@ -423,5 +449,7 @@
         }); 
     });
 </script>
+
+<script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/explore.js"></script>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>
