@@ -230,4 +230,9 @@ class quiz_class extends AWS_MODEL
 
 		return $record_count;
 	}
+
+	public function get_question_quiz_record_list($limit = 10)
+	{
+		return $this->fetch_all('question_quiz_record', 'user_answer IS NOT NULL', ' end_time DESC' , intval($limit));
+	}
 }

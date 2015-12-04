@@ -496,7 +496,7 @@ class main extends AWS_CONTROLLER
 			TPL::assign('publish_integral', get_setting('integral_system_config_new_question'));
 			TPL::assign('user_integral', $this->user_info['integral']);
 
-			$this->model('question')->set_is_first_visited($question_info['question_id'], 1);
+			$this->model('question')->set_is_first_visited($question_info['question_id'], 0);
 		}
 		
 		// // 添加题目解析提示提示

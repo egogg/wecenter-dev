@@ -1565,7 +1565,8 @@ AWS.G =
 	loading_timer: '',
 	loading_bg_count: 12,
 	loading_mini_bg_count: 9,
-	notification_timer: ''
+	notification_timer: '',
+	user_quiz_message_timer: ''
 }
 
 AWS.User =
@@ -2662,6 +2663,19 @@ AWS.Message =
 				});
 			}
 		}
+	},
+
+	// 检测用户答题纪录信息
+
+	update_user_quiz_message: function()
+	{
+		$.get(G_BASE_URL + '/explore/ajax/user_quiz_message/', function (result)
+		{
+			var messageSlide = $('#slide-user-quiz-message');
+			messageSlide.html(result);
+			
+			messageSlide.carousel();
+		});
 	}
 }
 

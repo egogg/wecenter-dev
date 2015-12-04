@@ -1681,7 +1681,7 @@ li.action-item-link a:hover:before {
 	color: #fff;
 	padding: 0 3px;
 	top: 0;
-	z-index: 1;
+	z-index: 5;
 	font-size: 11px;
 	position: absolute;
 }
@@ -1699,9 +1699,11 @@ li.action-item-link a:hover:before {
 
 .top-question-title {
 	display: block;
-	overflow: hidden;
-	height: 23px;
-	margin: 10px 0;
+    overflow: hidden;
+    height: 36px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 18px;
 }
 
 .top-question-stats-item {
@@ -1885,7 +1887,7 @@ li.action-item-link a:hover:before {
 	width: 70%;
 }
 
-.user-quiz-message .md {
+.user-quiz-message .message-icon {
 	float: left;
 	line-height: 30px;
 	margin-right: 15px;

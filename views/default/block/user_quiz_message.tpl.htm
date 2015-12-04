@@ -1,48 +1,20 @@
-<div id="slide-user-quiz-message" class="carousel vertical slide">
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <p class="ticker-headline">
-                <a class="alert-link" href="#">
-                    <strong>Article Headline 1</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras luctus eu odio fermentum tempus. Aliquam erat volutpat. Etiam arcu urna, lacinia sed dapibus sed, molestie ac mi.
-                </a>
-            </p>
-        </div>
-        <div class="item">
-            <p class="ticker-headline">
-                <a class="alert-link" href="#">
-                    <strong>Article Headline 2</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras luctus eu odio fermentum tempus. Aliquam erat volutpat. Etiam arcu urna, lacinia sed dapibus sed, molestie ac mi.
-                </a>
-            </p>
-        </div>
-        <div class="item">
-            <p class="ticker-headline">
-                <a class="alert-link" href="#">
-                    <strong>Article Headline 3</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras luctus eu odio fermentum tempus. Aliquam erat volutpat. Etiam arcu urna, lacinia sed dapibus sed, molestie ac mi.
-                </a>
-            </p>
-        </div>
-        <div class="item">
-            <p class="ticker-headline">
-                <a class="alert-link" href="#">
-                    <strong>Article Headline 4</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras luctus eu odio fermentum tempus. Aliquam erat volutpat. Etiam arcu urna, lacinia sed dapibus sed, molestie ac mi.
-                </a>
-            </p>
-        </div>
-        <div class="item">
-            <p class="ticker-headline">
-                <a class="alert-link" href="#">
-                    <strong>Article Headline 5</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras luctus eu odio fermentum tempus. Aliquam erat volutpat. Etiam arcu urna, lacinia sed dapibus sed, molestie ac mi.
-                </a>
-            </p>
-        </div>
-    </div>
-    <!-- Controls -->
-    <a class="up carousel-control" href="#slide-user-quiz-message" role="button" data-slide="prev">
-        <i class="md md-arrow-drop-up" aria-hidden="true"></i>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="down carousel-control" href="#slide-user-quiz-message" role="button" data-slide="next">
-        <i class="md md-arrow-drop-down" aria-hidden="true"></i>
-        <span class="sr-only">Next</span>
-    </a>
+<div class="carousel-inner" role="listbox">
+    <?php if($this->user_quiz_messages)  { ?>
+        <?php foreach ($this->user_quiz_messages as $key => $message) { ?>
+            <div class="item <?php if($key == 0) { ?>active<?php } ?>">
+                <p>
+                    <a href="people/<?php echo $message['user_url']; ?>" target="_blank" class="c-lightblue"><strong><?php echo $message['user_name']; ?></strong></a> 回答了 <a class="<?php if($message['is_countdown']) { ?>c-orange<?php } else { ?>c-lightblue<?php } ?>" href="question/<?php echo $message['question_id']; ?>"><strong><?php if($message['is_countdown']) { ?> <i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($message['question_title'], 2, 4, 'UTF-8', '***'); ?> <?php } else { echo cjk_substr($message['question_title'], 0, 20, 'UTF-8', '...'); } ?></strong></a> <?php if($message['passed']) { ?><strong class="c-green m-l-15"><i class="md md-check"></i>回答正确</strong> <?php } else { ?> <strong class="c-red m-l-15"><i class="md md-clear"></i>回答错误</strong> <?php } ?> <span class="c-gray m-l-5"><?php echo date_friendly($message['record_time']); ?></span>
+                </p>
+            </div>
+        <?php }?>
+    <?php } ?>
 </div>
+<!-- Controls -->
+<a class="up carousel-control" href="#slide-user-quiz-message" role="button" data-slide="prev">
+    <i class="md md-arrow-drop-up" aria-hidden="true"></i>
+    <span class="sr-only">Previous</span>
+</a>
+<a class="down carousel-control" href="#slide-user-quiz-message" role="button" data-slide="next">
+    <i class="md md-arrow-drop-down" aria-hidden="true"></i>
+    <span class="sr-only">Next</span>
+</a>

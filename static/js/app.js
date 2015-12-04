@@ -474,6 +474,13 @@ $(document).ready(function ()
             AWS.check_placeholder($('input[data-placeholder!="true"], textarea[data-placeholder!="true"]'));
         }, 1000);
     }
+
+    // 重新加载用户答题动态
+    if (typeof (G_USER_QUIZ_MESSAGE_INTERVAL) != 'undefined')
+    {
+        AWS.Message.update_user_quiz_message();
+        AWS.G.user_quiz_message_timer = setInterval('AWS.Message.update_user_quiz_message()', G_USER_QUIZ_MESSAGE_INTERVAL);
+    }
 });
 
 $(window).on('hashchange', function() {
