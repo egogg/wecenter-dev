@@ -1,21 +1,22 @@
 <?php if($this->question_list) { ?>
 	<?php foreach ($this->question_list as $index => $question) { ?>
 		<div class="card">
-			<div class="user-passed-quiz-mark">
-				<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
-					<?php if($question['user_record_count'] > 0) { ?>
-						<span class="user-passed-quiz bgm-green c-white">答题通过</span>
+			<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
+				<?php if($question['user_record_count'] > 0) { ?>
+					<div class="user-passed-quiz-mark success bgm-green c-white">
 						<?php if($question['user_record_count'] == 1) { ?>
-							<span class="user-passed-quiz bgm-lightgreen c-white m-l-10"><i class="md md-flag"></i>	一次通过</span>
+							<i class="md md-flag"></i> 一次通过
 						<?php } else { ?>
-							<span class="user-passed-quiz bgm-indigo c-white m-l-10">尝试 <?php echo $question['user_record_count']; ?> 次</span>
+							答题通过 ｜ <span><?php echo $question['user_record_count']; ?></span>
 						<?php } ?>
-					<?php } else { ?>
-						<span class="user-passed-quiz bgm-red c-white">答题失败</span>
-						<span class="user-passed-quiz bgm-gray c-white m-l-10">尝试 <?php echo -$question['user_record_count']; ?> 次 </span>
-					<?php } ?>
-    			<?php } ?>
-			</div>
+					</div>
+				<?php } else { ?>
+					<div class="user-passed-quiz-mark failed bgm-red c-white">
+						答题失败 ｜ <span><?php echo -$question['user_record_count']; ?></span>
+					</div>
+				<?php } ?>
+			<?php } ?>
+			
 			<div class="card-body card-padding">
 				<div class="question-list-heading m-b-10 clearfix">
 					<div class="question-publish-info m-t-5 m-b-5">

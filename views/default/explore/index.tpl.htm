@@ -211,6 +211,25 @@
             <div class="col-sm-12 hidden-xs">
                 <div class="card">
                     <div class="card-header card-padding clearfix" role="alert">
+                        <ul class="question-list-filter-items">
+                            <li class="question-list-filter-item sort dropdown">
+                                <a class="c-lightblue" href="javascript:void(0);" data-toggle="dropdown" aria-expanded="true"><i class="md md-access-time"></i> 最新发布 <i class="caret"></i></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#"><i class="md md-access-time"></i> 最新发布</a></li>
+                                    <li><a href="#"><i class="md md-equalizer"></i> 最多答题</a></li>
+                                    <li><a href="#"><i class="md md-comment"></i> 最多讨论</a></li>
+                                    <li><a href="#"><i class="md md-trending-up"></i> 最低正确率</a></li>
+                                    <li><a href="#"><i class="md md-trending-down"></i> 最高正确率</a></li>
+                                </ul>
+                            </li>
+                            <li class="question-list-filter-item">
+                                <ul class="user-quiz-status-filter-items">
+                                    <li class="user-quiz-status-filter-item active"><a href="javascript:void(0);">所有答题</a> <i class="dot"></i></li>
+                                    <li class="user-quiz-status-filter-item"><a href="javascript:void(0);">我已答过</a> <i class="dot"></i></li>
+                                    <li class="user-quiz-status-filter-item"><a href="javascript:void(0);">我未答过</a></li>
+                                </ul>
+                            </li>
+                        </ul>
                         <div class="user-quiz-message">
                             <i class="md md-volume-up pull-left message-icon"></i>
                             <div id="slide-user-quiz-message" class="carousel vertical slide">
@@ -221,7 +240,7 @@
                 </div>
             </div> 
         </div>
-
+        
         <div class="row">
             <!-- 精选答题 -->
             <div class="col-sm-8">
