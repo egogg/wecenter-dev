@@ -102,10 +102,10 @@
 			    <div class="m-t-10">
 			    	<ul class="question-stats">
 		            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
-						<?php if($question['quiz_stats']) { ?>
+						<?php if($question['count_info']) { ?>
 							
-                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['quiz_stats']['total']; ?> <span class="hidden-xs">次答题</span></li>
-                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['quiz_stats']['rate'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
+                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['count_info']['total']; ?> <span class="hidden-xs">次答题</span></li>
+                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['count_info']['success_ratio'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
                     	<?php } ?>
                     	<li class="question-stat"><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
                     </ul>

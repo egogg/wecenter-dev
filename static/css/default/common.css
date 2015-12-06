@@ -1795,11 +1795,13 @@ li.action-item-link a:hover:before {
 	float: left;
 	padding-right: 15px;
 	line-height: 30px;
-}
-
-.question-list-filter-item.sort {
 	border-right: 1px solid #eee;
 	margin-right: 15px;
+}
+
+.question-list-filter-item:last-child {
+	border-right: none;
+	margin-right: 0;	
 }
 
 .user-quiz-status-filter-item {

@@ -127,6 +127,59 @@ class quiz_class extends AWS_MODEL
 		return $this->fetch_row('question_quiz_record', 'id = ' . intval($record_id));
 	}
 
+	public function get_question_quiz_count_by_question_id($question_id, $type = 'total')
+	{
+		switch ($type) {
+			case 'total':
+				$where = '';
+
+				break;
+			case 'passed':
+				$where = ' AND passed = 1';
+
+				break;
+			case 'timeout':
+				$where = ' AND user_answer IS NULL';
+
+				break;
+			default:
+				$where = '';
+
+				break;
+		}
+
+		return $this->count('question_quiz_record', "question_id = " . intval($question_id) . $where);
+	}
+
+	public function get_question_quiz_count_POFT_by_question_id($question_id)
+	{
+		return count($this->query_all("SELECT count(uid) FROM " . $this->get_table('question_quiz_record') . " WHERE question_id = " . intval($question_id) . " AND uid in (SELECT uid FROM " . $this->get_table("question_quiz_record") . " WHERE question_id = " . intval($question_id) . " AND passed = 1) GROUP BY uid HAVING count(uid) = 1"));
+	}
+
+	public function get_question_quiz_success_ratio_by_question_id($question_id)
+	{
+		$total = $this->get_question_quiz_count_by_question_id($question_id, 'total');
+		$passed = $this->get_question_quiz_count_by_question_id($question_id, 'passed');
+
+		return ($total == 0 ? 0 : $passed / $total);
+	}
+
+	public function get_question_quiz_count_info_by_question_id($question_id)
+	{
+		$count_info['total'] = $this->get_question_quiz_count_by_question_id($question_id, 'total');
+		$count_info['passed'] = $this->get_question_quiz_count_by_question_id($question_id, 'passed');
+		$count_info['timeout'] = $this->get_question_quiz_count_by_question_id($question_id, 'timeout');
+		$count_info['POFT'] = $this->get_question_quiz_count_POFT_by_question_id($question_id);
+		$count_info['success_ratio'] = ($count_info['total'] == 0 ? 0 : $count_info['passed'] / $count_info['total']);
+
+		return $count_info;
+	}
+
+	public function get_question_quiz_count_info_by_uid($uid)
+	{
+
+	}
+
 	public function save_question_quiz_record($question_id, $uid, $user_answer, $passed, $time_spend)
 	{
 		$now = time();

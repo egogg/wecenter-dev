@@ -200,30 +200,31 @@ class main extends AWS_CONTROLLER
 			
 				// 获取答题统计信息
 
-				$question_quiz_stats['total'] = 0;
-				$question_quiz_stats['passed'] = 0;
-				$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
-				if($question_quiz_record)
-				{
-					foreach ($question_quiz_record as $i => $v) {
-						if($v['passed'])
-						{
-							$question_quiz_stats['passed']++;
-						}
+				$recommend_question_list[$key]['count_info'] = $this->model('quiz')->get_question_quiz_count_info_by_question_id($question_info['question_id']);
+				// $question_quiz_stats['total'] = 0;
+				// $question_quiz_stats['passed'] = 0;
+				// $question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
+				// if($question_quiz_record)
+				// {
+				// 	foreach ($question_quiz_record as $i => $v) {
+				// 		if($v['passed'])
+				// 		{
+				// 			$question_quiz_stats['passed']++;
+				// 		}
 
-						$question_quiz_stats['total']++;
-					}
+				// 		$question_quiz_stats['total']++;
+				// 	}
 
-					if($question_quiz_stats['total'])
-					{
-						$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
-					}
-					else
-					{
-						$question_quiz_stats['rate'] = 0.0;
-					}
-				}
-				$recommend_question_list[$key]['quiz_stats'] = $question_quiz_stats;
+				// 	if($question_quiz_stats['total'])
+				// 	{
+				// 		$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
+				// 	}
+				// 	else
+				// 	{
+				// 		$question_quiz_stats['rate'] = 0.0;
+				// 	}
+				// }
+				// $recommend_question_list[$key]['quiz_stats'] = $question_quiz_stats;
 			}
 		}
 
@@ -259,7 +260,7 @@ class main extends AWS_CONTROLLER
 		foreach ($recommend_items as $key => $item) {
 			$article_ids[] = $item['item_id'];;
 		}
-		
+
 		// 获取文章缩略图
 
 		$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
