@@ -209,68 +209,7 @@ class main extends AWS_CONTROLLER
 				{
 					foreach ($question_list AS $key => $val)
 					{	
-						// 获取发表问题用户信息
-
-						$question_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($val['published_uid']);
-
-						// 获取当前用户答题信息
-
-						if($this->user_id > 0) 
-						{
-							$question_list[$key]['user_record_count'] = $this->model('quiz')->get_question_quiz_user_record_count($val['question_id'], $this->user_id);
-						}
-
-						// 获取问题分类信息
-
-						$question_list[$key]['category_info'] = $this->model('system')->get_category_info($val['category_id']);
-
-						// 获取问题评论
-
-						if ($val['answer_count'])
-						{
-							$question_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($val['question_id'], 2, $val['published_uid']);
-						}
-
-						// 获取问题缩略图
-
-						if ($val['has_attach'])
-						{
-							$question_list[$key]['attachs'] = $this->model('publish')->get_attach('question', $val['question_id'], 'square');
-						}
-
-						// 获取答题选项信息
-
-						if($val['quiz_id'])
-						{
-							$question_list[$key]['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($val['quiz_id']);
-						
-							// 获取答题统计信息
-
-							$question_quiz_stats['total'] = 0;
-							$question_quiz_stats['passed'] = 0;
-							$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($val['question_id']);
-							if($question_quiz_record)
-							{
-								foreach ($question_quiz_record as $i => $v) {
-									if($v['passed'])
-									{
-										$question_quiz_stats['passed']++;
-									}
-
-									$question_quiz_stats['total']++;
-								}
-
-								if($question_quiz_stats['total'])
-								{
-									$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
-								}
-								else
-								{
-									$question_quiz_stats['rate'] = 0.0;
-								}
-							}
-							$question_list[$key]['quiz_stats'] = $question_quiz_stats;
-						}
+						$this->model('question')->load_list_question_info($question_list[$key], $val, $this->user_id);
 					}
 				}
 

@@ -440,11 +440,15 @@ var AWS =
 		{
 			var _this = this;
 
+			var spinner = $('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
+			spinner.insertBefore($(this).hide());
 			$(this).addClass('loading');
 
 			$.get(url + '__page-' + $(_this).attr('data-page'), function (result)
 			{
 				$(_this).removeClass('loading');
+				spinner.remove();
+				$(_this).show();
 
 				if ($.trim(result) != '')
 				{
@@ -465,12 +469,12 @@ var AWS =
 					//没有内容
 					if ($(_this).attr('data-page') == start_page && $(_this).attr('auto-load') != 'false')
 					{
-						container.html('<p style="padding: 15px 0" align="center">' + _t('没有内容') + '</p>');
+						container.html('<p class="text-center p-t-15 p-b-15">' + '没有内容' + '</p>');
 					}
 
 					$(_this).addClass('disabled').unbind('click').bind('click', function () { return false; });
 
-					$(_this).find('span').html(_t('没有更多了'));
+					$(_this).html('<span class="c-gray">没有更多了</span>');
 				}
 
 				if (callback != null)

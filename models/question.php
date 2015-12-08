@@ -1700,4 +1700,97 @@ class question_class extends AWS_MODEL
 			'is_first' => intval($code)
 		), 'question_id = ' . intval($question_id));
 	}
+
+	public function update_question_quiz_count_info($question_id)
+	{
+		if (!$question_id)
+		{
+			return false;
+		}
+
+		$count_info = $this->model('quiz')->get_question_quiz_count_info_by_question_id($question_id);
+
+		$this->update('question', array(
+			'quiz_count_total' => intval($count_info['total']),
+			'quiz_count_passed' => intval($count_info['passed']),
+			'quiz_count_timeout' => intval($count_info['timeout']),
+			'quiz_count_POFT' => intval($count_info['POFT']),
+			'quiz_success_ratio' => floatval($count_info['success_ratio'])
+		), 'question_id = ' . intval($question_id));
+
+		return $count_info;
+	}
+
+	public function load_detailed_question_info($question_id)
+	{
+		if (! $question_info = $this->get_question_info_by_id($question_id))
+		{
+			return false;
+		}
+
+		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
+
+		if ($question_info['category_id'] AND get_setting('category_enable') == 'Y')
+		{
+			$question_info['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
+		}
+
+		if ($question_info['has_attach'])
+		{
+			$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'min');
+
+			$question_info['attachs_ids'] = FORMAT::parse_attachs($question_info['question_detail'], true);
+		}
+
+		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
+		
+		// 答题选项
+
+		if(intval($question_info['quiz_id']) > 0) 
+		{
+			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+		}
+
+		return $question_info;
+	}
+
+	public function load_list_question_info(&$question_item, $question_info, $uid)
+	{
+		// 获取发表问题用户信息
+
+		$question_item['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid']);
+
+		// 获取问题分类信息
+
+		$question_item['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
+
+		// 获取问题评论
+
+		if ($question_info['answer_count'])
+		{
+			$question_item['answer_users'] = $this->model('question')->get_answer_users_by_question_id($question_info['question_id'], 2, $question_info['published_uid']);
+		}
+
+		// 获取问题缩略图
+
+		if ($question_info['has_attach'])
+		{
+			$question_item['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'square');
+		}
+
+		// 获取答题选项信息
+
+		if($question_info['quiz_id'])
+		{
+			$question_item['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+
+			// 获取当前用户答题信息
+
+			if($uid > 0) 
+			{
+				$question_item['user_quiz_passed'] = $this->model('quiz')->user_question_quiz_passed($question_info['question_id'], $uid);
+				$question_item['user_quiz_count'] = $this->model('quiz')->user_question_quiz_count($question_info['question_id'], $uid);
+			}
+		}
+	}
 }

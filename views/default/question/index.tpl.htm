@@ -62,7 +62,7 @@
 										<i class="md md-equalizer"> </i>
 										<span class="quiz-stats-text">
 											<span class="hidden-xs">答题</span>
-											<?php echo $this->question_quiz_stats['total']; ?>
+											<?php echo $this->question_info['quiz_count_total']; ?>
 										</span> 
 									</a>
 								</li>
@@ -71,7 +71,7 @@
 										<i class="md md-flag"></i>
 										<span class="quiz-stats-text">
 											<span class="hidden-xs">正确率</span>
-											<?php if($this->question_quiz_stats['total'] > 0) {echo number_format($this->question_quiz_stats['passed'] * 100 / $this->question_quiz_stats['total'], 0);} else {echo '0';} ?>%
+											<?php echo number_format($this->question_info['quiz_success_ratio'] * 100, 0); ?>%
 										</span>
 									</a>
 								</li>
@@ -197,16 +197,16 @@
 	                        	<div class="question-publisher-stats">
 		                        	<ul class="clearfix">
 		                        		<li>
-		                        			<a class="c-gray" href="javascript:void(0);">出题 <span>0</span></a>
+		                        			<a class="c-gray" href="javascript:void(0);">出题 <span><?php echo $this->question_info['user_info']['question_count']; ?></span></a>
 		                        		</li>
 		                        		<li>
-		                        			<a class="c-gray" href="javascript:void(0);">答题 <span>1</span></a>
+		                        			<a class="c-gray" href="javascript:void(0);">答题 <span><?php echo $this->question_info['user_info']['question_quiz_count_total']; ?></span></a>
 		                        		</li>
 		                        		<li>
-		                        			<a class="c-gray" href="javascript:void(0);">讨论 <span>15</span></a>
+		                        			<a class="c-gray" href="javascript:void(0);">讨论 <span><?php echo $this->question_info['user_info']['answer_count']; ?></span></a>
 		                        		</li>
 		                        		<li>
-		                        			<a class="c-gray" href="javascript:void(0);">正确率 <span>25%</span></a>
+		                        			<a class="c-gray" href="javascript:void(0);">正确率 <span><?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 0) ?>%</span></a>
 		                        		</li>
 		                        	</ul>
 		                        </div>
@@ -226,25 +226,21 @@
 					</div>
 				</div>
 			</div>
-			<!-- 我要出题 -->
-			<!-- <div class="card  hidden-xs">
-				<a href="publish/" class="question-content-publish"><i class="md md-create"></i> 我要出题</a>
-			</div> -->
+			
 			<!-- 答题动态 -->
 			<?php if ($this->question_quiz_record) { ?>
 				<div class="card hidden-xs">
 					<div class="card-header">
-						<h2>答题动态</h2>
+						<h2>答题纪录</h2>
 						<ul class="actions">
-		                    <li>
-		                       <a href="question/record/<?php echo $this->question_info['question_id']; ?>"><i class="md md-chevron-right"></i></a>
+		                    <li class="action-item-link">
+		                       <a href="question/record/<?php echo $this->question_info['question_id']; ?>">所有记录<i class="md md-chevron-right c-lightblue"></i></a>
 		                    </li>
 		                </ul>
 					</div>
 					<div class="listview">
 	            		<div class="lv-body">
 	            			<?php foreach($this->question_quiz_record AS $key => $val) { ?>
-	            				<?php if($key < 5) { ?>
 								<a class="lv-item" href="people/<?php echo $val['user_info']['url_token']; ?>">
 									<div class="media">
                                         <div class="pull-left">
@@ -253,25 +249,25 @@
                                         </div>
                                         <div class="media-body">
                                             <div class="lv-title">
+                                            	<strong class="c-lightblue m-r-5"><?php echo $val['user_info']['user_name']; ?></strong> 
 			                                    <?php if($val['passed']) { ?>
-													<div class="c-green">
-														答题通过<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?>，用时<?php echo $val['time_spend']; ?>秒 <?php } ?>
-													</div>
+													<span class="c-green">
+														答题成功<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?><em class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</em><?php } ?>
+													</span>
 												<?php } else if($this->question_info['question_quiz']['countdown'] > 0 and $val['time_spend'] <= 0) { ?>
-													<div class="c-deeporange">
+													<span class="c-deeporange">
 														答题超时
-													</div>
+													</span>
 												<?php } else { ?>
-													<div class="c-red">
-														答题失败<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?>，用时<?php echo $val['time_spend']; ?>秒 <?php } ?>
-													</div>
+													<span class="c-red">
+														答题失败<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?><em class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</em><?php } ?>
+													</span>
 												<?php } ?>
                                             </div>
-                                            <small class="lv-small"><span class="c-lightblue"><?php echo $val['user_info']['user_name']; ?></span> • <?php echo date_friendly($val['start_time']); ?></small>
+                                            <small class="lv-small"><?php echo date_friendly($val['start_time']); ?></small>
                                         </div>
                                     </div>
 								</a>
-								<?php } ?>
 							<?php } ?>
 							<div class="lv-footer"></div>
 	            		</div>

@@ -112,9 +112,23 @@ class quiz_class extends AWS_MODEL
 		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC');
 	}
 
-	public function get_question_quiz_record_by_question($question_id)
+	public function get_question_quiz_record_by_question($question_id, $limit = 10)
 	{
-		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id), ' start_time DESC');
+		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id), ' start_time DESC', intval($limit));
+	}
+
+	public function get_question_quiz_record_list_page($question_id, $page = 1, $per_page = 10)
+	{
+		$records = $this->fetch_page('question_quiz_record', 'question_id = ' . intval($question_id), ' start_time DESC', $page, $per_page);
+		$this->record_list_total = $this->found_rows();
+
+		$record_list = array();
+		foreach ($records as $key => $value) {
+			$record_list[$key] = $value;
+			$record_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['uid'], true);
+		}
+
+		return $record_list;
 	}
 
 	public function get_question_quiz_record_by_id($record_id)
@@ -127,7 +141,7 @@ class quiz_class extends AWS_MODEL
 		return $this->fetch_row('question_quiz_record', 'id = ' . intval($record_id));
 	}
 
-	public function get_question_quiz_count_by_question_id($question_id, $type = 'total')
+	public function get_question_quiz_count($column, $item_id, $type = 'total')
 	{
 		switch ($type) {
 			case 'total':
@@ -148,36 +162,90 @@ class quiz_class extends AWS_MODEL
 				break;
 		}
 
-		return $this->count('question_quiz_record', "question_id = " . intval($question_id) . $where);
+		return $this->count('question_quiz_record', $column . " = " . intval($item_id) . $where);
+	}
+
+	public function get_question_quiz_count_POFT($key_column, $key_id, $var_column)
+	{
+		return count($this->query_all("SELECT count(" . $var_column . ") FROM " . $this->get_table('question_quiz_record') . " WHERE " . $key_column . " = " . intval($key_id) . " AND " . $var_column . " in (SELECT " . $var_column . " FROM " . $this->get_table("question_quiz_record") . " WHERE " . $key_column . " = " . intval($key_id) . " AND passed = 1) GROUP BY " . $var_column . " HAVING count(" . $var_column . ") = 1"));
+	}
+
+	public function get_question_quiz_count_total_by_question_id($question_id)
+	{
+		return $this->get_question_quiz_count('question_id', $question_id, 'total');
+	}
+
+	public function get_question_quiz_count_passed_by_question_id($question_id)
+	{
+		return $this->get_question_quiz_count('question_id', $question_id, 'passed');
+	}
+
+	public function get_question_quiz_count_timeout_by_question_id($question_id)
+	{
+		return $this->get_question_quiz_count('question_id', $question_id, 'timeout');
 	}
 
 	public function get_question_quiz_count_POFT_by_question_id($question_id)
 	{
-		return count($this->query_all("SELECT count(uid) FROM " . $this->get_table('question_quiz_record') . " WHERE question_id = " . intval($question_id) . " AND uid in (SELECT uid FROM " . $this->get_table("question_quiz_record") . " WHERE question_id = " . intval($question_id) . " AND passed = 1) GROUP BY uid HAVING count(uid) = 1"));
+		return $this->get_question_quiz_count_POFT('question_id', $question_id, 'uid');
 	}
 
 	public function get_question_quiz_success_ratio_by_question_id($question_id)
 	{
-		$total = $this->get_question_quiz_count_by_question_id($question_id, 'total');
-		$passed = $this->get_question_quiz_count_by_question_id($question_id, 'passed');
+		$total = $this->get_question_quiz_count('question_id', $question_id, 'total');
+		$passed = $this->get_question_quiz_count('question_id', $question_id, 'passed');
 
 		return ($total == 0 ? 0 : $passed / $total);
 	}
 
 	public function get_question_quiz_count_info_by_question_id($question_id)
 	{
-		$count_info['total'] = $this->get_question_quiz_count_by_question_id($question_id, 'total');
-		$count_info['passed'] = $this->get_question_quiz_count_by_question_id($question_id, 'passed');
-		$count_info['timeout'] = $this->get_question_quiz_count_by_question_id($question_id, 'timeout');
-		$count_info['POFT'] = $this->get_question_quiz_count_POFT_by_question_id($question_id);
+		$count_info['total'] = $this->get_question_quiz_count('question_id', $question_id, 'total');
+		$count_info['passed'] = $this->get_question_quiz_count('question_id', $question_id, 'passed');
+		$count_info['timeout'] = $this->get_question_quiz_count('question_id', $question_id, 'timeout');
+		$count_info['POFT'] = $this->get_question_quiz_count_POFT('question_id', $question_id, 'uid');
 		$count_info['success_ratio'] = ($count_info['total'] == 0 ? 0 : $count_info['passed'] / $count_info['total']);
 
 		return $count_info;
 	}
 
+	public function get_question_quiz_count_total_by_uid($uid)
+	{
+		return $this->get_question_quiz_count('uid', $uid, 'total');
+	}
+
+	public function get_question_quiz_count_passed_by_uid($uid)
+	{
+		return $this->get_question_quiz_count('uid', $uid, 'passed');
+	}
+
+	public function get_question_quiz_count_timeout_by_uid($uid)
+	{
+		return $this->get_question_quiz_count('uid', $uid, 'timeout');
+	}
+
+	public function get_question_quiz_count_POFT_by_uid($uid)
+	{
+		return $this->get_question_quiz_count_POFT('uid', $uid, 'question_id');
+	}
+
+	public function get_question_quiz_success_ratio_by_uid($uid)
+	{
+		$total = $this->get_question_quiz_count('uid', $uid, 'total');
+		$passed = $this->get_question_quiz_count('uid', $uid, 'passed');
+
+		return ($total == 0 ? 0 : $passed / $total);
+	}
+
 	public function get_question_quiz_count_info_by_uid($uid)
 	{
+		$count_info['total'] = $this->get_question_quiz_count('uid', $uid, 'total');
+		$count_info['passed'] = $this->get_question_quiz_count('uid', $uid, 'passed');
+		$count_info['timeout'] = $this->get_question_quiz_count('uid', $uid, 'timeout');
+		$count_info['POFT'] = $this->get_question_quiz_count_POFT('uid', $uid, 'uid');
+		$count_info['success_ratio'] = ($count_info['total'] == 0 ? 0 : $count_info['passed'] / $count_info['total']);
 
+		return $count_info;
 	}
 
 	public function save_question_quiz_record($question_id, $uid, $user_answer, $passed, $time_spend)
@@ -219,14 +287,14 @@ class quiz_class extends AWS_MODEL
 
 	public function get_unfinished_question_quiz_record($user_id)
 	{
-		return $this->fetch_all('question_quiz_record', 'uid = ' . intval($user_id) . ' AND start_time = end_time AND time_spend > 0');
+		return $this->fetch_all('question_quiz_record', 'uid = ' . intval($user_id) . ' AND start_time = end_time AND user_answer IS NULL');
 	}
 
 	public function update_unfinished_question_quiz_record($user_id)
 	{
 		$this->update('question_quiz_record', array(
 			'end_time' => time()
-		), 'uid = ' . intval($user_id) . ' AND start_time = end_time AND time_spend > 0');
+		), 'uid = ' . intval($user_id) . ' AND start_time = end_time AND user_answer IS NULL');
 	}
 
 	public function get_quiz_ids_by_type($quiz_type)
@@ -268,20 +336,14 @@ class quiz_class extends AWS_MODEL
 		return $quiz['type'];
 	}
 
-	public function get_question_quiz_user_record_count($question_id, $uid)
+	public function user_question_quiz_count($question_id, $uid)
 	{
-		$records = $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC');
-		$record_count = 0;
-		if($records)
-		{
-			$record_count = count($records);
-			if(!$records[0]['passed'])
-			{
-				$record_count = -$record_count;
-			}
-		}
+		return ($this->count('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid)));
+	}
 
-		return $record_count;
+	public function user_question_quiz_passed($question_id, $uid)
+	{
+		return ($this->count('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid) . ' AND passed = 1') > 0);
 	}
 
 	public function get_question_quiz_record_list($limit = 10)

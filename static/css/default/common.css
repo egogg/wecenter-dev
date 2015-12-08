@@ -830,6 +830,17 @@ body {
 	color: #03A9F4;
 }
 
+/*答题记录*/
+
+.question-quiz-record-stats-item {
+	padding: 15px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.question-quiz-record-stats-item > strong {
+	padding-left: 15px;
+}
+
 /*文章内容*/
 
 .countdown-question-title {

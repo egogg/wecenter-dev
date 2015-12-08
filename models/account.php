@@ -37,7 +37,9 @@ class account_class extends AWS_MODEL
      * @return boolean
      */
     public function check_username($user_name)
-    {    	$user_name = trim($user_name);    	
+    {
+    	$user_name = trim($user_name);
+    	
         return $this->fetch_one('users', 'uid', "user_name = '" . $this->quote($user_name) . "' OR url_token = '" . $this->quote($user_name) . "'");
     }
 
@@ -1450,5 +1452,25 @@ class account_class extends AWS_MODEL
         }
 
         return true;
+    }
+
+    public function update_user_quiz_count_info($uid)
+    {
+        if (!$uid)
+        {
+            return false;
+        }
+
+        $count_info = $this->model('quiz')->get_question_quiz_count_info_by_uid($uid);
+
+        $this->update('users', array(
+            'question_quiz_count_total' => intval($count_info['total']),
+            'question_quiz_count_passed' => intval($count_info['passed']),
+            'question_quiz_count_timeout' => intval($count_info['timeout']),
+            'question_quiz_count_POFT' => intval($count_info['POFT']),
+            'question_quiz_success_ratio' => floatval($count_info['success_ratio'])
+        ), 'uid = ' . intval($uid));
+
+        return $count_info;
     }
 }

@@ -8,66 +8,52 @@
                     <h2>答题统计</h2>
                 </div>
                 <div class="card-body card-padding">
-                    <div id="question-quiz-stats-chart">
+                    <div id="question-quiz-stats-chart" style="width:100%;height:250px;">
                         
                     </div>
-                    <div class="p-20">
-                        <small>答题总数</small>
-                        <h3 class="m-0 f-400"><?php echo $this->question_quiz_stats['total']; ?></h3>
-                        
-                        <br>
-                        
-                        <small>答题成功</small>
-                        <h3 class="m-0 f-400 c-green"><?php echo $this->question_quiz_stats['passed']; ?></h3>
-                        
-                        <br>
-                        
-                        <small>答题失败</small>
-                        <h3 class="m-0 f-400 c-red"><?php echo $this->question_quiz_stats['total'] - $this->question_quiz_stats['passed']; ?></h3>
-                    </div>
+                    <ul class="p-20">
+                        <li class="question-quiz-record-stats-item">
+                            <span><i class="md md-equalizer"></i> 答题总数</span> <strong><?php echo $this->question_info['quiz_count_total']; ?></strong>
+                        </li>
+
+                        <li class="question-quiz-record-stats-item">
+                            <span><i class="md md-check"></i> 答题成功</span> <strong><?php echo $this->question_info['quiz_count_passed']; ?></strong>
+                        </li>
+
+                        <li class="question-quiz-record-stats-item">
+                            <span><i class="md md-clear"></i> 答题失败</span> <strong><?php echo $this->question_info['quiz_count_total'] - $this->question_info['quiz_count_passed']; ?></strong>
+                        </li>
+
+                        <li class="question-quiz-record-stats-item">
+                            <span><i class="md md-alarm-off"></i> 答题超时</span> <strong><?php echo $this->question_info['quiz_count_timeout']; ?></strong>
+                        </li>
+
+                        <li class="question-quiz-record-stats-item">
+                            <span><i class="md md-flag"></i> 一次通过</span> <strong><?php echo $this->question_info['quiz_count_POFT']; ?></strong>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
         <div class="col-sm-8">
             <div class="card">
                 <div class="card-header">
-                    <h2>答题纪录</h2>
+                    <h2>答题记录（<?php echo $this->question_info['quiz_count_total']; ?>）</h2>
                 </div>
                 <div class="card-body">
                     
                 </div>
                 <div class="listview">
-                    <ul class="lv-body">
-                        <?php foreach($this->question_quiz_record AS $key => $val) { ?>
-                            <li class="lv-item">
-                                <div class="media">
-                                    <div class="pull-left">
-                                        <img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-                                    <?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-                                    </div>
-                                    <div class="media-body">
-                                        <div class="lv-title">
-                                            <a class="c-lightblue" href="people/<?php echo $val['user_info']['url_token']; ?>"><?php echo $val['user_info']['user_name']; ?></a> 回答了该问题<?php if($this->question_info['question_quiz']['countdown'] > 0 and $val['time_spend'] > 0) { ?>，用时<strong><?php echo $val['time_spend']; ?></strong>秒 <?php } ?>
-                                            <?php if($val['passed']) { ?>
-                                                <span class="c-green pull-right">
-                                                    答题通过
-                                                </span>
-                                            <?php } else if($this->question_info['question_quiz']['countdown'] > 0 and $val['time_spend'] <= 0) { ?>
-                                                <span class="c-amber pull-right">
-                                                    答题超时
-                                                </span>
-                                            <?php } else { ?>
-                                                <span class="c-red pull-right">
-                                                    答题失败
-                                                </span>
-                                            <?php } ?>
-                                        </div>
-                                        <small class="lv-small"><?php echo date_friendly($val['start_time']); ?></small>
-                                    </div>
-                                </div>
-                            </li>
-                        <?php } ?>
+                    <ul class="lv-body" id="question-quiz-record-items">
+                        <?php TPL::assign('question_quiz_record_list', $this->question_quiz_record); ?>
+                        <?php TPL::output('question/ajax/question_quiz_record.tpl.htm'); ?>
                     </ul>
+                    <div class="lv-footer"></div>
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-body card-padding">
+                    <a href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
                 </div>
             </div>
         </div>
@@ -75,14 +61,16 @@
 </div>
 
 <script type="text/javascript">
-    var QUESTION_QUIZ_STATS_TOTAL = '<?php echo $this->question_quiz_stats['total']; ?>';
-    var QUESTION_QUIZ_STATS_PASSED = '<?php echo $this->question_quiz_stats['passed']; ?>';
-    var QUESTION_QUIZ_STATS_FAILED = '<?php echo $this->question_quiz_stats['total'] - $this->question_quiz_stats['passed']; ?>';
+    var QUESTION_QUIZ_STATS_TOTAL = "<?php echo $this->question_info['quiz_count_total']; ?>";
+    var QUESTION_QUIZ_STATS_PASSED = "<?php echo $this->question_info['quiz_count_passed']; ?>";
+    var QUESTION_QUIZ_STATS_TIMEOUT = "<?php echo $this->question_info['quiz_count_timeout']; ?>";
+     var QUESTION_QUIZ_STATS_FAILED = "<?php echo $this->question_info['quiz_count_total'] - $this->question_info['quiz_count_passed'] - $this->question_info['quiz_count_timeout']; ?>";
 
     $(function(){
         var recordData = [
             {data: parseInt(QUESTION_QUIZ_STATS_FAILED), color: '#F44336', label: '答题失败'},
-            {data: parseInt(QUESTION_QUIZ_STATS_PASSED), color: '#8BC34A', label: '答题成功'}        
+            {data: parseInt(QUESTION_QUIZ_STATS_PASSED), color: '#8BC34A', label: '答题成功'},
+            {data: parseInt(QUESTION_QUIZ_STATS_TIMEOUT), color: '#FF5722', label: '答题超时'}        
         ];
         $.plot('#question-quiz-stats-chart', recordData, {
             series: {
@@ -97,6 +85,10 @@
                 show: false
             }
         });
+
+        // 绑定加载更多
+
+        AWS.load_list_view(G_BASE_URL + "/question/ajax/load_more_question_quiz_record/question_id-<?php echo $this->question_info['question_id']; ?>", $('#load-more-question-quiz-record'), $('#question-quiz-record-items'), 2);
     });
 </script>
 

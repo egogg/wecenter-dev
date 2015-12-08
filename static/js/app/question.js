@@ -125,7 +125,7 @@ $(function(){
 
 	// 加载问题内容
 
-	function initQuestionContent() {
+	function loadQuestionContent() {
 		$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
 			$('.question-loader').html(response);
 
@@ -171,6 +171,122 @@ $(function(){
 		});
 	}
 
+	function submitAnswerHandle(answer, spendTime) {
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		// 检查问题答案
+
+		$.get(G_BASE_URL + '/question/ajax/question_quiz_submit_answer/question_id-' + QUESTION_ID + '__answer-' + answer + '__spend_time-' + spendTime + '__record_id-' + QUESTION_QUIZ_RECORD_ID, function (quiz_result) {
+
+			// 检查是否为特殊用户
+
+			if(quiz_result['is_special_user']) {
+				return;
+			}
+
+			// 检查是否为有效答案
+
+			if(quiz_result['internal_error']) {
+				sweetAlert("系统错误", "答题无效！", "error");
+				window.location.href = G_BASE_URL;
+				return;
+			}
+
+			// 检查是否为正确答案
+
+			var textInfo = '';
+			if(spendTime > 0)
+			{
+				textInfo = '<p><i class="md md-timer"></i> 答题用时 <span><strong>' + spendTime + '</strong> 秒</span></p>';
+			}
+
+            if (quiz_result['correct']) {
+            	if(quiz_result.integral)
+				{
+					textInfo += '<p><span class="c-green"> +' + quiz_result.integral + '</span> 积分</p>';
+					textInfo += '<p>你当前剩余 <span><strong>' + (quiz_result.user_integral + quiz_result.integral) + '</strong></span> 积分</p>';
+				}
+
+                swal({   
+                	title: '回答正确',
+                	text: textInfo,   
+                	html: true,
+                	confirmButtonText: "确定",
+                	type: 'success'
+                	},
+                	function() {
+                		loadQuestionContent();
+                	}
+                );
+
+            } else {
+            	if(quiz_result.integral)
+				{
+					textInfo += '<p><span class="c-red"> -' + quiz_result.integral + '</span> 积分</p>';
+					textInfo += '<p>你当前剩余 <span><strong>' + (quiz_result.user_integral - quiz_result.integral) + '</strong></span> 积分</p>';
+				}
+				swal({   
+                	title: '回答错误',   
+                	text: textInfo,   
+                	html: true,
+                	confirmButtonText: "确定",
+                	type: 'error'
+                	},
+                	function() {
+                		loadQuestionContent();
+                	}
+                );
+            }
+        }, 'json');
+	}
+
+	function answerTimeoutHandle() {
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		// 提交超时请求
+
+		$.get(G_BASE_URL + '/question/ajax/question_quiz_timeout/record_id-' + QUESTION_QUIZ_RECORD_ID + '__question_id-' + QUESTION_ID, function (result) {
+			
+			// 特殊用户
+
+			if(result.is_special_user)
+			{
+				return;
+			}
+			
+			// 超时提示
+
+			textInfo = '<p class="c-deeporange"><i class="md md-timer-off"></i> 答题超时</p>';
+			if(result.required_integral)
+			{
+				textInfo += '<p><span class="c-red"> -' + result.required_integral + '</span> 积分</p>';
+				textInfo += '<p>你当前剩余 <span><strong>' + (result.user_integral - result.required_integral) + '</strong></span> 积分</p>';
+			}
+
+			swal({
+            	title: '答题失败',
+            	text: textInfo,   
+            	html: true,
+            	confirmButtonText: "确定",
+            	type: 'error'
+            	},
+            	function() {
+            		loadQuestionContent();
+            	}
+            );
+		}, 'json');
+	}
+
 	function parseQuestionQuiz(enabled) {
 
 		if(typeof enabled == 'undefined') {
@@ -196,126 +312,13 @@ $(function(){
 				'enableCountdown' : true,
 				'data' : quizContent,
 				'enabled' : enabled,
-				'onSubmitAnswer' : function (answer, spendTime) {
-
-					// 检查用户是否登录
-
-					if(G_USER_ID <= 0) {
-						window.location.href = G_BASE_URL + '/account/login/';
-						return;
-					}
-
-					// 检查问题答案
-
-					$.get(G_BASE_URL + '/question/ajax/question_quiz_check_answer/question_id-' + QUESTION_ID + '__answer-' + answer + '__spend_time-' + spendTime + '__record_id-' + QUESTION_QUIZ_RECORD_ID, function (quiz_result) {
-
-						// 检查是否为特殊用户
-
-						if(quiz_result['is_special_user']) {
-							return;
-						}
-
-						// 检查是否为有效答案
-
-						if(quiz_result['internal_error']) {
-							sweetAlert("系统错误", "答题无效！", "error");
-							window.location.href = G_BASE_URL;
-							return;
-						}
-
-						// 检查是否为正确答案
-
-						var textInfo = '';
-						if(spendTime > 0)
-						{
-							textInfo = '<p><i class="md md-timer"></i> 答题用时 <span><strong>' + spendTime + '</strong> 秒</span></p>';
-						}
-
-		                if (quiz_result['correct']) {
-		                	if(quiz_result.integral)
-							{
-								textInfo += '<p><span class="c-green"> +' + quiz_result.integral + '</span> 积分</p>';
-								textInfo += '<p>你当前剩余 <span><strong>' + (quiz_result.user_integral + quiz_result.integral) + '</strong></span> 积分</p>';
-							}
-
-		                    swal({   
-		                    	title: '回答正确',
-		                    	text: textInfo,   
-		                    	html: true,
-		                    	confirmButtonText: "确定",
-		                    	type: 'success'
-		                    	},
-		                    	function() {
-		                    		initQuestionContent();
-		                    	}
-		                    );
-
-		                } else {
-		                	if(quiz_result.integral)
-							{
-								textInfo += '<p><span class="c-red"> -' + quiz_result.integral + '</span> 积分</p>';
-								textInfo += '<p>你当前剩余 <span><strong>' + (quiz_result.user_integral - quiz_result.integral) + '</strong></span> 积分</p>';
-							}
-							swal({   
-		                    	title: '回答错误',   
-		                    	text: textInfo,   
-		                    	html: true,
-		                    	confirmButtonText: "确定",
-		                    	type: 'error'
-		                    	},
-		                    	function() {
-		                    		initQuestionContent();
-		                    	}
-		                    );
-		                }
-		            }, 'json');
-				},
-				'onTimeout' : function () {
-					// 检查用户是否登录
-
-					if(G_USER_ID <= 0) {
-						window.location.href = G_BASE_URL + '/account/login/';
-						return;
-					}
-
-					// 提交超时请求
-
-					$.get(G_BASE_URL + '/question/ajax/question_quiz_timeout/record_id-' + QUESTION_QUIZ_RECORD_ID + '__question_id-' + QUESTION_ID, function (result) {
-						
-						// 特殊用户
-
-						if(result.is_special_user)
-						{
-							return;
-						}
-						
-						// 超时提示
-
-						textInfo = '<p class="c-deeporange"><i class="md md-timer-off"></i> 答题超时</p>';
-						if(result.required_integral)
-						{
-							textInfo += '<p><span class="c-red"> -' + result.required_integral + '</span> 积分</p>';
-							textInfo += '<p>你当前剩余 <span><strong>' + (result.user_integral - result.required_integral) + '</strong></span> 积分</p>';
-						}
-
-						swal({
-	                    	title: '答题失败',
-	                    	text: textInfo,   
-	                    	html: true,
-	                    	confirmButtonText: "确定",
-	                    	type: 'error'
-	                    	},
-	                    	function() {
-	                    		initQuestionContent();
-	                    	}
-	                    );
-					}, 'json');
-				}
+				'onSubmitAnswer' : submitAnswerHandle,
+				'onTimeout' : answerTimeoutHandle
 			});
 		}
 	}
 
-	initQuestionContent();
+	loadQuestionContent();
 
 	// 重新答题积分操作
 

@@ -94,70 +94,9 @@ class ajax extends AWS_CONTROLLER
 		$recommend_items = $this->model('recommend')->get_recommend_question_items($_GET['page'], get_setting('contents_per_page'));
 		foreach ($recommend_items as $key => $item) {
 			$question_info = $this->model('question')->get_question_info_by_id($item['item_id']);
+
 			$recommend_question_list[$key] = $question_info;
-
-			// 获取发表问题用户信息
-
-			$recommend_question_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid']);
-
-			// 获取问题分类信息
-
-			$recommend_question_list[$key]['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
-
-			// 获取问题评论
-
-			if ($question_info['answer_count'])
-			{
-				$recommend_question_list[$key]['answer_users'] = $this->model('question')->get_answer_users_by_question_id($question_info['question_id'], 2, $question_info['published_uid']);
-			}
-
-			// 获取问题缩略图
-
-			if ($question_info['has_attach'])
-			{
-				$recommend_question_list[$key]['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'square');
-			}
-
-			// 获取答题选项信息
-
-			if($question_info['quiz_id'])
-			{
-				$recommend_question_list[$key]['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
-
-				// 获取当前用户答题信息
-
-				if($this->user_id > 0) 
-				{
-					$recommend_question_list[$key]['user_record_count'] = $this->model('quiz')->get_question_quiz_user_record_count($question_info['question_id'], $this->user_id);
-				}
-			
-				// 获取答题统计信息
-
-				$question_quiz_stats['total'] = 0;
-				$question_quiz_stats['passed'] = 0;
-				$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
-				if($question_quiz_record)
-				{
-					foreach ($question_quiz_record as $i => $v) {
-						if($v['passed'])
-						{
-							$question_quiz_stats['passed']++;
-						}
-
-						$question_quiz_stats['total']++;
-					}
-
-					if($question_quiz_stats['total'])
-					{
-						$question_quiz_stats['rate'] = $question_quiz_stats['passed'] / $question_quiz_stats['total'];
-					}
-					else
-					{
-						$question_quiz_stats['rate'] = 0.0;
-					}
-				}
-				$recommend_question_list[$key]['quiz_stats'] = $question_quiz_stats;
-			}
+			$this->model('question')->load_list_question_info($recommend_question_list[$key], $question_info, $this->user_id);
 		}
 
 		TPL::assign('question_list', $recommend_question_list);

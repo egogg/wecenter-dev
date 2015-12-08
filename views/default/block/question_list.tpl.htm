@@ -1,18 +1,18 @@
 <?php if($this->question_list) { ?>
 	<?php foreach ($this->question_list as $index => $question) { ?>
 		<div class="card">
-			<?php if($question['user_record_count'] AND $question['user_record_count'] != 0) { ?>
-				<?php if($question['user_record_count'] > 0) { ?>
+			<?php if($question['user_quiz_count'] > 0) { ?>
+				<?php if($question['user_quiz_passed']) { ?>
 					<div class="user-passed-quiz-mark success bgm-green c-white">
-						<?php if($question['user_record_count'] == 1) { ?>
+						<?php if($question['user_quiz_count'] == 1) { ?>
 							<i class="md md-flag"></i> 一次通过
 						<?php } else { ?>
-							答题通过 ｜ <span><?php echo $question['user_record_count']; ?></span>
+							答题通过 ｜ <span><?php echo $question['user_quiz_count']; ?></span>
 						<?php } ?>
 					</div>
 				<?php } else { ?>
 					<div class="user-passed-quiz-mark failed bgm-red c-white">
-						答题失败 ｜ <span><?php echo -$question['user_record_count']; ?></span>
+						答题失败 ｜ <span><?php echo $question['user_quiz_count']; ?></span>
 					</div>
 				<?php } ?>
 			<?php } ?>
@@ -102,10 +102,9 @@
 			    <div class="m-t-10">
 			    	<ul class="question-stats">
 		            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
-						<?php if($question['count_info']) { ?>
-							
-                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['count_info']['total']; ?> <span class="hidden-xs">次答题</span></li>
-                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['count_info']['success_ratio'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
+						<?php if($question['quiz_id'] > 0) { ?>
+                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['quiz_count_total']; ?> <span class="hidden-xs">次答题</span></li>
+                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['quiz_success_ratio'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
                     	<?php } ?>
                     	<li class="question-stat"><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
                     </ul>

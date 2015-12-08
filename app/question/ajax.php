@@ -34,8 +34,8 @@ class ajax extends AWS_CONTROLLER
 			'get_answer_users',
 			'remove_answer',
 			'fetch_share_data',
-			'check_quiz_answer',
 			'init_question_content',
+			'question_quiz_submit_answer',
 			'begin_question_quiz_countdown',
 			'get_question_solution',
 			'get_question_solution_record',
@@ -44,7 +44,8 @@ class ajax extends AWS_CONTROLLER
 			'save_question_quiz_retry_integral',
 			'get_question_view_solution_integral',
 			'save_question_view_solution_integral',
-			'question_quiz_timeout'
+			'question_quiz_timeout',
+			'load_more_question_quiz_record'
 		);
 
 		return $rule_action;
@@ -1176,7 +1177,7 @@ class ajax extends AWS_CONTROLLER
 
 	// 检查问题答案
 
-	public function question_quiz_check_answer_action()
+	public function question_quiz_submit_answer_action()
 	{
 		// 获取答案信息
 
@@ -1304,6 +1305,14 @@ class ajax extends AWS_CONTROLLER
 				$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
 			}
 
+			// 更新用户答题统计
+
+			$this->model('account')->update_user_quiz_count_info($this->user_id);
+
+			// 更新问题答题统计
+
+			$this->model('question')->update_question_quiz_count_info($question_info['question_id']);
+
 			// 积分操作
 
 			$required_integral = $this->question_quiz_answer_integral($_GET['question_id'], $is_correct_answer);
@@ -1318,44 +1327,13 @@ class ajax extends AWS_CONTROLLER
 			}
 		}
 
-		// 用户答题记录
-
-		$try_count = 0;
-		$passed_quiz = false;
-		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
-		{
-			$try_count = count($quiz_record);
-			$passed_quiz = $quiz_record[0]['passed'];
-		}
-
-		// 总答题记录信息
-
-		$question_quiz_stats_total = 0;
-		$question_quiz_stats_passed = 0;
-		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id']);
-		if($question_quiz_record)
-		{
-			foreach ($question_quiz_record as $key => $value) {
-				if($value['passed'])
-				{
-					$question_quiz_stats_passed++;
-				}
-
-				$question_quiz_stats_total++;
-			}
-		}
-
         H::ajax_json_output(array(
         	'is_countdown' => $is_countdown,
         	'user_answer' => $user_answer,
         	'spend_time' => $spend_time,
         	'correct' => $is_correct_answer,
         	'user_integral' => $this->user_info['integral'],
-        	'integral' => $required_integral,
-        	'try_count' => $try_count,
-        	'passed_quiz' => $passed_quiz,
-        	'quiz_stats_total' => $question_quiz_stats_total,
-        	'quiz_stats_passed' => $question_quiz_stats_passed
+        	'integral' => $required_integral
         ));
 	}
 
@@ -1372,11 +1350,19 @@ class ajax extends AWS_CONTROLLER
 			));
 		}
 
-		// 更新答题状态
-
 		if($_GET['record_id'])
 		{
+			// 更新答题状态
+
 			$this->model('quiz')->update_question_quiz_record_timeout($_GET['record_id']);
+
+			// 更新用户答题统计
+
+			$this->model('account')->update_user_quiz_count_info($this->user_id);
+
+			// 更新问题答题统计
+
+			$this->model('question')->update_question_quiz_count_info($question_info['question_id']);
 
 			// 积分操作
 
@@ -1423,50 +1409,29 @@ class ajax extends AWS_CONTROLLER
 			// 更新未完成记录
 
 			$this->model('quiz')->update_unfinished_question_quiz_record($this->user_id);
+
+			// 更新用户答题统计
+
+			$this->model('account')->update_user_quiz_count_info($this->user_id);
+
+			// 更新问题答题统计
+
+			$this->model('question')->update_question_quiz_count_info($question_info['question_id']);
 		}
-	}
-
-	public function get_question_content()
-	{
-		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['id']))
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
-		}
-
-		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
-
-		if ($question_info['category_id'] AND get_setting('category_enable') == 'Y')
-		{
-			$question_info['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
-		}
-
-		if ($question_info['has_attach'])
-		{
-			$question_info['attachs'] = $this->model('publish')->get_attach('question', $question_info['question_id'], 'min');
-
-			$question_info['attachs_ids'] = FORMAT::parse_attachs($question_info['question_detail'], true);
-		}
-
-		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
-		
-		// 答题选项
-
-		if(intval($question_info['quiz_id']) > 0) 
-		{
-			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
-		}
-
-		// 清算该用户的所有超时答题记录
-
-		$this->complete_unfinished_question_quiz_record();
-
-		return $question_info;
 	}
 
 	public function init_question_content_action ()
 	{
-		$question_info = $this->get_question_content();
+		if(!($question_info = $this->model('question')->load_detailed_question_info($_GET['id'])))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
+		}
+
 		TPL::assign('question_info', $question_info);
+
+		// 清算该用户所有未纪录的超时答题
+
+		$this->complete_unfinished_question_quiz_record();
 
 		// 用户答题记录
 
@@ -1509,8 +1474,16 @@ class ajax extends AWS_CONTROLLER
 
 	public function begin_question_quiz_countdown_action ()
 	{
-		$question_info = $this->get_question_content();
+		if(!($question_info = $this->model('question')->load_detailed_question_info($_GET['id'])))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));
+		}
+
 		TPL::assign('question_info', $question_info);
+
+		// 清算该用户所有未纪录的超时答题
+
+		$this->complete_unfinished_question_quiz_record();
 
 		// 添加临时答题记录
 
@@ -1731,41 +1704,6 @@ class ajax extends AWS_CONTROLLER
 		}
 
 		return $base_integral * $coefficient;
-
-		// 获取答题失败次数
-
-		// $failed_count = 0;
-		// $quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($_GET['question_id'], $this->user_id);
-		// if($quiz_record)
-		// {
-		// 	$failed_count = count($quiz_record);
-		// }
-
-		// if($failed_count == 0)
-		// {
-		// 	return $base_integral * abs(get_setting(''));
-		// }
-
-		// if($correct)
-		// {
-		// 	if($failed_count > 10)
-		// 	{
-		// 		return round($base_integral / 10);
-		// 	}
-
-		// 	return round($base_integral / $failed_count);
-		// }
-		// else
-		// {
-		// 	if($failed_count >= 4)
-		// 	{
-		// 		return $base_integral * 2;
-		// 	}
-		// 	else
-		// 	{
-		// 		return round($base_integral * (1 + 1/(4 - failed_count)));
-		// 	}
-		// }
 	}
 
 	function get_question_quiz_retry_integral_action()
@@ -2025,5 +1963,19 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('answer_count', $answer_count);
 
 		TPL::output('question/ajax/answer_list');
+	}
+
+	public function load_more_question_quiz_record_action()
+	{
+		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
+		{
+			return;
+		}
+
+		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_list_page($question_info['question_id'], $_GET['page'], 10);
+
+		TPL::assign('question_quiz_record_list', $question_quiz_record);
+
+		TPL::output('question/ajax/question_quiz_record.tpl.htm');
 	}
 }

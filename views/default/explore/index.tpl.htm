@@ -143,10 +143,12 @@
                                         <div class="media">
                                             <div class="pull-left explore-top-question-img-wrap">
                                                 <a href="question/<?php echo $question['question_id']; ?>" target="_blank">
-                                                    <?php foreach ($question['attachs'] AS $attach) { ?>
-                                                        <?php if ($attach['is_image']) { ?>
-                                                            <a href="question/<?php echo $question['question_id']; ?>" target="_blank"><img class="explore-top-question-img" target="_blank" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
-                                                        <?php break; } ?>
+                                                    <?php if($question['attachs']) { ?>
+                                                        <?php foreach ($question['attachs'] AS $attach) { ?>
+                                                            <?php if ($attach['is_image']) { ?>
+                                                                <a href="question/<?php echo $question['question_id']; ?>" target="_blank"><img class="explore-top-question-img" target="_blank" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
+                                                            <?php break; } ?>
+                                                        <?php } ?>
                                                     <?php } ?>
                                                 </a>
                                             </div>
@@ -166,11 +168,11 @@
                                                     <ul class="top-question-stats-items">
                                                         <?php if($question['quiz_id'] > 0) { ?>
                                                             <li class="top-question-stats-item b-gray c-gray">
-                                                                答题 <strong class="top-question-stats-item-number"><?php echo intval($question['quiz_count']); ?></strong>
+                                                                答题 <strong class="top-question-stats-item-number"><?php echo intval($question['quiz_count_total']); ?></strong>
                                                             </li>
                                                         
                                                             <li class="pull-right top-question-stats-item <?php if($question['pass_rate'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
-                                                                准确率 <strong class="top-question-stats-item-number"><?php echo number_format($question['pass_rate'] * 100, 0); ?>%</strong>  
+                                                                正确率 <strong class="top-question-stats-item-number"><?php echo number_format($question['quiz_success_ratio'] * 100, 0); ?>%</strong>  
                                                             </li>
                                                         <?php } else { ?>
                                                             <li class="top-question-stats-item c-gray b-gray">
