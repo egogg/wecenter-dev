@@ -260,6 +260,15 @@ header .main-nav ul li a.active {
 	color: #03A9F4;
 }
 
+#nav-question-list-header.affix {
+	top: 0;
+	left: 0;
+	padding-left: 0;
+	padding-right: 0;
+	width: 100%;
+	z-index: 100;
+}
+
 .question-list-sort {
 	display: inline-block;
 	float: left;
@@ -313,16 +322,11 @@ header .main-nav ul li a.active {
 	margin-bottom: 0;
 }
 
-.m-question-list-heading .card-body {
-	
-}
-
 .m-question-list-heading .m-question-filter>li {
 	display: inline-block;
 	float: left;
 	padding-right: 36px;
 }
-
 
 .m-question-list-publish {
 	float: right !important;
