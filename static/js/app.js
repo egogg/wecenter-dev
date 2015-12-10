@@ -112,13 +112,13 @@ $(document).ready(function ()
 
 
     function getSort() {
-        var sortItem = $('.question-sort-item.active');
+        var sortItem = $('#question-list-sort-type');
         if(sortItem.length != 1) {
             return('');
         }
 
-        var sort_type = sortItem.attr('data-sort');
-        if(typeof sort_type == 'undefined') {
+        var sort_type = sortItem.attr('data-sort-type');
+        if(typeof sort_type == 'undefined' || sort_type == '') {
             return ('');
         } else {
             return('sort_type-' + sort_type);
@@ -135,29 +135,75 @@ $(document).ready(function ()
             }
         };
 
+        // 用户记录选项 
+
+        var filter_urecord = $('#question-list-filter-urecord').attr('data-filter-type');
+        if(typeof filter_urecord != 'undefined' && filter_urecord != '' ) {
+            filterTokens += ('urecord-' + filter_urecord + '__');
+        }
+
+        // 日期范围
+
+        var filter_date = $('#question-list-filter-date').attr('data-filter-type');
+        if(typeof filter_date != 'undefined' && filter_date != '') {
+            filterTokens += ('date-' + filter_date + '__');
+        }
+
         filterTokens += getSort();
         filterTokens = filterTokens.replace(/(__$)/g, '');
 
         return filterTokens;
     }
 
-    function clearFilters() {
-        $('.question-filter-items li.active').removeClass('active');
-    }
+    // filter items
 
     $('.question-filters').on('click', '.question-filter-items li', function(e){
         e.preventDefault();
         $(this).addClass('active').siblings().removeClass('active');        
 
-        window.location.href = G_BASE_URL + '/question/' + getFilterTokens();
+        window.location.href = G_BASE_URL + $('#question-filters').attr('data-url-base') + getFilterTokens();
     });
 
-    $('.question-list-sort').on('click', '.question-sort-items li', function(e){
+    $('.question-list-filter-item.sort .dropdown-menu li').on('click', function(e){
         e.preventDefault();
-        $(this).addClass('active').siblings().removeClass('active');
 
-        window.location.href = G_BASE_URL + '/question/' + getFilterTokens();
+        var currentSel = $(this).find('a');
+        var currentSelText = currentSel.html();
+        var linkElement = $('#question-list-sort-type');
+        linkElement.attr('data-sort-type', currentSel.attr('data-sort-type'));
+
+        window.location.href = G_BASE_URL + linkElement.attr('data-url-base') + getFilterTokens();
     });
+
+    $('.question-list-filter-item.urecord .dropdown-menu li').on('click', function(e){
+        e.preventDefault();
+        if(G_USER_ID <= 0) {
+            window.location.href = G_BASE_URL + '/account/login/';
+            return;
+        }
+
+        var currentSel = $(this).find('a');
+        var currentSelText = currentSel.html();
+        var linkElement = $('#question-list-filter-urecord');
+        linkElement.attr('data-filter-type', currentSel.attr('data-filter-type'));
+
+        window.location.href = G_BASE_URL + linkElement.attr('data-url-base') + getFilterTokens();
+    });
+
+    $('.question-list-filter-item.date .dropdown-menu li').on('click', function(e){
+        e.preventDefault();
+
+        var currentSel = $(this).find('a');
+        var currentSelText = currentSel.html();
+        var linkElement = $('#question-list-filter-date');
+        linkElement.attr('data-filter-type', currentSel.attr('data-filter-type'));
+
+        window.location.href = G_BASE_URL + linkElement.attr('data-url-base') + getFilterTokens();
+    });
+
+    function clearFilters() {
+        $('.question-filter-items li.active').removeClass('active');
+    }
 
     $('.question-list').on('click', '.question-tag', function(e){
         var questionTag = $(this);

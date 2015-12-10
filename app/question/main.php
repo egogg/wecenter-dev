@@ -603,11 +603,14 @@ class main extends AWS_CONTROLLER
 			'difficulty' => intval($_GET['difficulty']),
 			'quiztype' => intval($_GET['quiztype']),
 			'countdown' => intval($_GET['countdown']),
+			'urecord' => $_GET['urecord'],
+			'date' => $_GET['date'],
+			'url_base' => '/question/'
 		);
 
 		TPL::assign('filter_info', $filter_info);
 
-		$question_list = $this->model('question')->get_question_list($_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $category_info['id'], $_GET['difficulty'], $_GET['quiztype'], $_GET['countdown']);
+		$question_list = $this->model('question')->get_question_list($_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $category_info['id'], $_GET['difficulty'], $_GET['quiztype'], $_GET['countdown'], $_GET['urecord'], $_GET['date'], $this->user_id);
 
 		if ($question_list)
 		{
@@ -618,7 +621,7 @@ class main extends AWS_CONTROLLER
 		}
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
-			'base_url' => get_js_url('/question/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__difficulty-' . $_GET['difficulty'] . '__quiztype-' . $_GET['quiztype'] . '__countdown-' . $_GET['countdown'] . '__is_recommend-' . $_GET['is_recommend']),
+			'base_url' => get_js_url('/question/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__difficulty-' . $_GET['difficulty'] . '__quiztype-' . $_GET['quiztype'] . '__countdown-' . $_GET['countdown'] . '__is_recommend-' . $_GET['is_recommend'] . '__urecord-' . $_GET['urecord'] . '__date-' . $_GET['date']),
 			'total_rows' => $this->model('question')->get_question_list_total(),
 			'per_page' => get_setting('contents_per_page'),
 			'num_links' => 2

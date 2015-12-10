@@ -97,7 +97,7 @@
 			<div class="col-sm-12">
 				<div class="card hidden-xs">
 					<div class="card-body card-padding">
-						<ul class="question-filters">      
+						<ul class="question-filters" id="question-filters" data-url-base="<?php echo $this->filter_info['url_base']; ?>">      
 			            	<li class="question-filter-row">
 			            		<h3>分类：</h3>
 			            		<ul class="question-filter-items">
@@ -161,6 +161,7 @@
 			        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'recommend') { echo 'active';} ?>" data-sort="recommend"><a href="javascript:;">推荐</a></li>
 			        			<li class="question-sort-item <?php if($this->filter_info AND $this->filter_info['sort_type'] == 'hot') { echo 'active';} ?>" data-sort="hot"><a href="javascript:;">热门</a></li>
 			        		</ul> -->
+
 			        		<?php TPL::output('block/question_list_filter_bar.tpl.htm'); ?>
 		    			</div>
 			            <div class="user-quiz-message">

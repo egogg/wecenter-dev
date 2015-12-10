@@ -1607,7 +1607,7 @@ class question_class extends AWS_MODEL
 	}
 
 
-	public function get_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null)
+	public function get_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null, $urecord = null, $date = null, $uid = 0)
 	{
 		$order_key = 'add_time DESC';
 
@@ -1622,7 +1622,30 @@ class question_class extends AWS_MODEL
 				$order_key = 'popular_value DESC';
 
 				break;
+			case 'update_time':
+				$order_key = 'update_time DESC';
 
+				break;
+			case 'quiz_count':
+				$order_key = 'quiz_count_total DESC';
+
+				break;
+			case 'answer_count':
+				$order_key = 'answer_count DESC';
+
+				break;
+			case 'success_ratio_up':
+				$order_key = 'quiz_success_ratio ASC';
+
+				break;
+			case 'success_ratio_down':
+				$order_key = 'quiz_success_ratio DESC';
+
+				break;
+			case 'quiz_count_failed':
+				$order_key = '(quiz_count_total - quiz_count_passed) DESC';
+
+				break;
 			default:
 				$order_key = 'update_time DESC';
 		}
@@ -1675,6 +1698,48 @@ class question_class extends AWS_MODEL
 			else
 			{
 				$where[] = 'quiz_id NOT IN(' . implode(',', $quiz_ids) . ')';
+			}
+		}
+
+		if($urecord and $uid > 0)
+		{
+			$answered_question_ids = $this->model('quiz')->get_user_answered_question_ids($uid);
+
+			switch ($urecord) {
+				case 'answered':
+					$where[] = 'question_id IN(' . implode(',', $answered_question_ids) . ')';
+
+					break;
+
+				case 'unanswered':
+					$where[] = 'question_id NOT IN(' . implode(',', $answered_question_ids) . ')';
+
+					break;
+				
+				default:
+					
+					break;
+			}
+		}
+		
+		if($date)
+		{
+			switch ($date) {
+				case 'week':
+					$where[] = 'update_time > ' . (time() - 604801);
+
+					break;
+				case 'month':
+					$where[] = 'update_time > ' . (time() - 2592001);
+
+					break;
+				case 'year' :
+					$where = 'update_time > ' . (time() - 31536001);
+
+					break;
+				default:
+					
+					break;
 			}
 		}
 

@@ -350,4 +350,14 @@ class quiz_class extends AWS_MODEL
 	{
 		return $this->fetch_all('question_quiz_record', 'user_answer IS NOT NULL', ' end_time DESC' , intval($limit));
 	}
+
+	public function get_user_answered_question_ids($uid)
+	{
+		$results = $this->query_all("SELECT DISTINCT question_id FROM " .  $this->get_table('question_quiz_record') . " WHERE uid = " . intval($uid));
+		foreach ($results as $key => $value) {
+			$question_ids[] = $value['question_id'];
+		}
+
+		return $question_ids;
+	}
 }
