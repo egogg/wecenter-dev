@@ -177,6 +177,7 @@ $(document).ready(function ()
 
     $('.question-list-filter-item.urecord .dropdown-menu li').on('click', function(e){
         e.preventDefault();
+        
         if(G_USER_ID <= 0) {
             window.location.href = G_BASE_URL + '/account/login/';
             return;
@@ -231,10 +232,10 @@ $(document).ready(function ()
 
 
     function mGetSort() {
-        var sortItem = $('.m-question-sort');
+        var sortItem = $('.m-question-sort-type');
 
-        var sort_type = sortItem.attr('data-sort');
-        if(typeof sort_type == 'undefined') {
+        var sort_type = sortItem.attr('data-sort-type');
+        if(typeof sort_type == 'undefined' || sort_type == '') {
             return ('');
         } else {
             return('sort_type-' + sort_type);
@@ -252,6 +253,14 @@ $(document).ready(function ()
         };
 
         filterTokens += mGetSort();
+
+        // 答题记录筛选
+
+        var filter_urecord = $('#m-question-filter-urecord').attr('data-filter-type');
+        if(typeof filter_urecord != 'undefined' && filter_urecord != '' ) {
+            filterTokens += ('urecord-' + filter_urecord + '__');
+        }
+
         filterTokens = filterTokens.replace(/(__$)/g, '');
 
         return filterTokens;
@@ -262,20 +271,68 @@ $(document).ready(function ()
         $(this).addClass('active').siblings().removeClass('active');
     });
 
-    $('.m-question-sort-items').on('click', 'li', function(e){
-        e.preventDefault();
-
-        var currentSel = $(this);
-        var currentSelText = currentSel.find('a').text();
-        $('.m-question-sort').attr('data-sort', currentSel.attr('data-sort')).html(currentSelText + ' <i class="caret"></i>');
-
-        window.location.href = G_BASE_URL + '/question/' + mGetFilterTokens();
-    });
-
     $('#m-question-filters-apply').on('click', function(e){
         window.location.href = G_BASE_URL + '/question/' + mGetFilterTokens();
     });
 
+    $('.m-question-sort-items').on('click', 'li', function(e){
+        e.preventDefault();
+
+        var currentSel = $(this).find('a');
+        var currentSelText = currentSel.html();
+        $('#m-question-sort-type').attr('data-sort-type', currentSel.attr('data-sort-type')).html(currentSelText + ' <i class="caret"></i>');
+
+        window.location.href = G_BASE_URL + $('#m-question-sort-type').attr('data-url-base') + mGetFilterTokens();
+    });
+
+    $('.m-question-urecord-filter-items').on('click', 'li', function(e){
+        e.preventDefault();
+
+        if(G_USER_ID <= 0) {
+            window.location.href = G_BASE_URL + '/account/login/';
+            return;
+        }
+
+        var currentSel = $(this).find('a');
+        var currentSelText = currentSel.html();
+        $('#m-question-filter-urecord').attr('data-filter-type', currentSel.attr('data-filter-type')).html(currentSelText + ' <i class="caret"></i>');
+
+        window.location.href = G_BASE_URL + $('#m-question-filter-urecord').attr('data-url-base') + mGetFilterTokens();
+    });
+
+    // 排序bar sticky
+
+    var navBar = $('#nav-question-list-header');
+    if(navBar.length != 0)
+    {
+        var navBarPadding = navBar.offset().left + 15;
+        
+        $('#nav-question-list-header-wrap').height(navBar.height());
+        
+        navBar.on('affixed.bs.affix', function () {
+            $('#nav-question-list-header > .card').css({"padding-left": navBarPadding, "padding-right": navBarPadding});
+        });
+
+        navBar.on('affixed-top.bs.affix', function() {
+            $('#nav-question-list-header > .card').css({"padding-left": 0, "padding-right": 0});
+        });
+
+        navBar.affix({
+            offset: { top: navBar.offset().top}
+        });
+    }
+
+    // 移动版排序栏
+
+    var mNavBar = $('#m-question-list-heading');
+    if(mNavBar.length != 0)
+    {
+        $('#m-question-list-heading-wrap').height(mNavBar.height());
+        mNavBar.affix({
+            offset: { top: mNavBar.offset().top}
+        });
+    }
+        
     // fix form bug...
     $("form[action='']").attr('action', window.location.href);
 

@@ -325,7 +325,7 @@ header .main-nav ul li a.active {
 .m-question-list-heading .m-question-filter>li {
 	display: inline-block;
 	float: left;
-	padding-right: 36px;
+	padding-right: 15px;
 }
 
 .m-question-list-publish {
@@ -339,13 +339,13 @@ header .main-nav ul li a.active {
 	color: #03A9F4;
 }
 
-#m-question-filter .modal-dialog {
+.m-question-menu-dialog .modal-dialog {
 	width: 100%;
 	height: 100%;
 	margin: 0;
 }
 
-#m-question-filter .modal-content {
+.m-question-menu-dialog .modal-content {
 	height: 100%;
 	width: 100%;
 }
@@ -1521,6 +1521,10 @@ ul.answer-actions-right li {
 	width: auto;
 }
 
+.carousel-indicators {
+	z-index: 4;
+}
+
 .explore-categories .tab-content {
 	height: 230px;
 }
@@ -1758,6 +1762,10 @@ li.action-item-link a:hover:before {
 
 .global-message {
 	height: 150px;
+}
+
+.m-question-list-filter-bar {
+	margin: 0 -10px 10px -10px;
 }
 
 /* spinner */
@@ -2208,7 +2216,7 @@ input.form-control {
 	}
 
 	.top-slider {
-		margin: -10px -10px 10px -10px;
+		margin: -10px -10px 0px -10px;
 	}
 }
 

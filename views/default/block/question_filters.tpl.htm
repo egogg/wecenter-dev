@@ -1,0 +1,47 @@
+<ul class="question-filters" id="question-filters" data-url-base="<?php echo $this->filter_info['url_base']; ?>">  
+	<li class="question-filter-row">
+		<h3>分类：</h3>
+		<ul class="question-filter-items">
+			<li class="<?php if(!$this->filter_info OR !$this->filter_info['category_id']) { echo 'active'; } ?>"><a class="question-filter-category" href="javascript:;">全部</a></li>
+			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
+				<?php if($val['id']) { ?>
+					<li class="question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['id']) { echo 'active'; } ?>" data-id="<?php echo $val['id']; ?>">
+						<a href="javascript:;"> 
+							<?php echo $val['title']; ?> 
+						</a>
+					</li>
+				<?php } ?>
+			<?php } ?>	
+		</ul>
+	</li>
+	<li class="question-filter-row">
+		<h3>题型：</h3>
+		<ul class="question-filter-items">
+			<li class="question-filter-quiztype <?php if(!$this->filter_info OR !$this->filter_info['quiztype']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
+			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">单选</a></li>
+			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">多选</a></li>
+			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">字谜</a></li>
+			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">填空</a></li>
+			<li class="question-filter-quiztype <?php if($this->filter_info AND $this->filter_info['quiztype'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">开放</a></li>
+		</ul>
+	</li>
+	<li class="question-filter-row">
+		<h3>难度：</h3>
+		<ul class="question-filter-items">
+			<li class="question-filter-difficulty <?php if(!$this->filter_info OR !$this->filter_info['difficulty']) { echo 'active'; } ?>"><a  href="javascript:;">全部</a></li>
+			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 1) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">休闲</a></li>
+			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 2) { echo 'active'; } ?>" data-id="2"><a href="javascript:;">简单</a></li>
+			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 3) { echo 'active'; } ?>" data-id="3"><a href="javascript:;">中等</a></li>
+			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 4) { echo 'active'; } ?>" data-id="4"><a href="javascript:;">困难</a></li>
+			<li class="question-filter-difficulty <?php if($this->filter_info AND $this->filter_info['difficulty'] == 5) { echo 'active'; } ?>" data-id="5"><a href="javascript:;">极难</a></li>
+		</ul>
+	</li>
+	<li class="question-filter-row">
+		<h3>时限：</h3>
+		<ul class="question-filter-items">
+			<li class="question-filter-countdown <?php if(!$this->filter_info OR !$this->filter_info['countdown']) { echo 'active'; } ?>"><a href="javascript:;">全部</a></li>
+			<li class="question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] > 0) { echo 'active'; } ?>" data-id="1"><a href="javascript:;">限时答题</a></li>
+			<li class="question-filter-countdown <?php if($this->filter_info AND $this->filter_info['countdown'] < 0) { echo 'active'; } ?>" data-id="-1"><a href="javascript:;">非限时答题</a></li>
+		</ul>
+	</li>
+</ul>

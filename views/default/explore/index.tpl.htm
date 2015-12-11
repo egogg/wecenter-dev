@@ -3,11 +3,11 @@
 <!-- 内容区域 -->
 
 <section id="content">
-	<div class="container">
+	<div class="container homepage">
         <div class="row top-slider">
             <div class="col-sm-8">
                 <div class="row">
-                    <div class="col-sm-8 p-r-5">
+                    <div class="col-sm-8 p-r-0">
                         <!-- 幻灯页面 -->
                         <?php if($this->slides) { ?>
                             <div class="main-slide">
@@ -168,15 +168,15 @@
                                                     <ul class="top-question-stats-items">
                                                         <?php if($question['quiz_id'] > 0) { ?>
                                                             <li class="top-question-stats-item b-gray c-gray">
-                                                                答题 <strong class="top-question-stats-item-number"><?php echo intval($question['quiz_count_total']); ?></strong>
+                                                                <strong class="top-question-stats-item-number"><?php echo intval($question['quiz_count_total']); ?></strong> 次答题 
                                                             </li>
                                                         
-                                                            <li class="pull-right top-question-stats-item <?php if($question['pass_rate'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
-                                                                正确率 <strong class="top-question-stats-item-number"><?php echo number_format($question['quiz_success_ratio'] * 100, 0); ?>%</strong>  
+                                                            <li class="pull-right top-question-stats-item <?php if($question['quiz_success_ratio'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
+                                                                <strong class="top-question-stats-item-number"><?php echo number_format($question['quiz_success_ratio'] * 100, 0); ?>%</strong> 正确率 
                                                             </li>
                                                         <?php } else { ?>
                                                             <li class="top-question-stats-item c-gray b-gray">
-                                                                讨论 <strong class="top-question-stats-item-number"><?php echo intval($question['answer_count']); ?></strong>
+                                                                <strong class="top-question-stats-item-number"><?php echo intval($question['answer_count']); ?></strong> 条讨论 
                                                             </li>
                                                         <?php } ?>
                                                     </ul>  
@@ -207,22 +207,31 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- 排序及答题动态 -->
+       
+        <div class="m-question-list-filter-bar">
+            <?php TPL::output('block/m_question_list_filter_bar.tpl.htm'); ?>
+        </div>
         
-        <!-- 最新答题动态 -->
-        <div class="row">
-            <div class="col-sm-12 hidden-xs">
+
+        <div class="row hidden-xs" id="nav-question-list-header-wrap">
+            <div class="question-list-heading col-sm-12" id="nav-question-list-header">
                 <div class="card">
-                    <div class="card-header card-padding clearfix" role="alert">
-                        <?php TPL::output('block/question_list_filter_bar.tpl.htm'); ?>
+                    <div class="card-body card-padding clearfix">
+                        <div class="question-list-sort">
+                            <?php TPL::output('block/question_list_filter_bar.tpl.htm'); ?>
+                        </div>
                         <div class="user-quiz-message">
                             <i class="md md-volume-up pull-left message-icon"></i>
                             <div id="slide-user-quiz-message" class="carousel vertical slide">
                                 <?php TPL::output('block/user_quiz_message.tpl.htm'); ?>
                             </div>
                         </div>
-                    </div>
+                    </div>       
                 </div>
-            </div> 
+            </div>
         </div>
         
         <div class="row">
