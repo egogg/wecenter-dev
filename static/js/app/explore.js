@@ -81,5 +81,43 @@ $(function()
 
 	// 加载更多绑定
 
-	LoadQuestionList(G_BASE_URL + '/explore/ajax/load_question_list/', $('#question-load-more'), $('#question-list'), 2);
+	var filterTokens = '';
+	if(FILTER_SORT_TYPE.length > 0)
+	{
+		filterTokens += 'sort_type-' + FILTER_SORT_TYPE.replace(/[\(\)\.;']/, "");
+	}
+
+	if(FILTER_CATEGORY.length > 0)
+	{
+		filterTokens += '__category-' + FILTER_CATEGORY;
+	}
+
+	if(FILTER_DIFFICULTY > 0)
+	{
+		filterTokens += '__difficulty-' + FILTER_DIFFICULTY;
+	}
+
+	if(FILTER_QUIZ_TYPE > 0)
+	{
+		filterTokens += '__quiztype-' + FILTER_QUIZ_TYPE;
+	}
+
+	if(FILTER_COUNTDOWN > 0)
+	{
+		filterTokens += '__countdown-' + FILTER_COUNTDOWN;
+	}
+
+	if(FILTER_URECORD.length > 0)
+	{
+		filterTokens += '__urecord-' + FILTER_URECORD;
+	}
+
+	if(FILTER_DATE.length > 0)
+	{
+		filterTokens += '__date-' + FILTER_DATE;
+	}
+	
+	filterTokens.replace(/(^__)/, "");
+
+	LoadQuestionList(G_BASE_URL + '/explore/ajax/load_question_list/' + filterTokens, $('#question-load-more'), $('#question-list'), 2);
 });

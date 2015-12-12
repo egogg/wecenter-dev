@@ -121,7 +121,7 @@ $(document).ready(function ()
         if(typeof sort_type == 'undefined' || sort_type == '') {
             return ('');
         } else {
-            return('sort_type-' + sort_type);
+            return('sort_type-' + sort_type + '__');
         }
     }
 
@@ -151,6 +151,7 @@ $(document).ready(function ()
 
         filterTokens += getSort();
         filterTokens = filterTokens.replace(/(__$)/g, '');
+        filterTokens = filterTokens.replace(/(^__)/g, '');
 
         return filterTokens;
     }
@@ -238,7 +239,7 @@ $(document).ready(function ()
         if(typeof sort_type == 'undefined' || sort_type == '') {
             return ('');
         } else {
-            return('sort_type-' + sort_type);
+            return('sort_type-' + sort_type + '__');
         }
     }
 
@@ -262,6 +263,7 @@ $(document).ready(function ()
         }
 
         filterTokens = filterTokens.replace(/(__$)/g, '');
+        filterTokens = filterTokens.replace(/(^__)/g, '');
 
         return filterTokens;
     }
@@ -272,7 +274,7 @@ $(document).ready(function ()
     });
 
     $('#m-question-filters-apply').on('click', function(e){
-        window.location.href = G_BASE_URL + '/question/' + mGetFilterTokens();
+        window.location.href = G_BASE_URL + $('#m-question-filter').attr('data-url-base') + mGetFilterTokens();
     });
 
     $('.m-question-sort-items').on('click', 'li', function(e){

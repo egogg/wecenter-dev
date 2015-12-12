@@ -4,7 +4,7 @@
 			<div class="card-body card-padding">
 				<ul class="m-question-filter clearfix">
 					<li>
-						<a href="#m-question-filter" data-toggle="modal"><i class="md md-filter-list"></i> 筛选 <i class="caret"></i></a>
+						<a id="m-question-filter" href="#m-question-filter-dlg" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-toggle="modal"><i class="md md-filter-list"></i> 筛选 <i class="caret"></i></a>
 					</li>
 					<li class="dropdown">
 						<a class="m-question-sort-type" id="m-question-sort-type" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-sort-type="<?php echo $this->filter_info['sort_type']; ?>" href="javascript:void(0);" data-toggle="dropdown" aria-expanded="true">
@@ -60,7 +60,7 @@
 	</div>
 </div>
 
-<div class="modal fade m-question-menu-dialog" id="m-question-filter" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+<div class="modal fade m-question-menu-dialog" id="m-question-filter-dlg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="card m-question-filter-list">

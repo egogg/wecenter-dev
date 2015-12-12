@@ -130,21 +130,37 @@ class main extends AWS_CONTROLLER
 		
 		// 精选问题
 
-		$recommend_items = $this->model('recommend')->get_recommend_question_items($_GET['page'], get_setting('contents_per_page'));
-		foreach ($recommend_items as $key => $item) {
-			$question_info = $this->model('question')->get_question_info_by_id($item['item_id']);
+		$filter_info = array(
+			'sort_type' => $_GET['sort_type'],
+			'category_id' => $category_info['id'],
+			'difficulty' => intval($_GET['difficulty']),
+			'quiztype' => intval($_GET['quiztype']),
+			'countdown' => intval($_GET['countdown']),
+			'urecord' => $_GET['urecord'],
+			'date' => $_GET['date'],
+			'url_base' => '/'
+		);
 
-			$recommend_question_list[$key] = $question_info;
-			$this->model('question')->load_list_question_info($recommend_question_list[$key], $question_info, $this->user_id);
+		TPL::assign('filter_info', $filter_info);
+
+		$recommend_question_list = $this->model('question')->get_homepage_recommend_question_list($_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $category_info['id'], $_GET['difficulty'], $_GET['quiztype'], $_GET['countdown'], $_GET['urecord'], $_GET['date'], $this->user_id);
+
+		if ($recommend_question_list)
+		{
+			foreach ($recommend_question_list AS $key => $val)
+			{	
+				$this->model('question')->load_list_question_info($recommend_question_list[$key], $val, $this->user_id);
+			}
 		}
 
 		TPL::assign('recommend_homepage_questions', $recommend_question_list);
-		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
-			'base_url' => get_js_url('/'),
-			'total_rows' => $this->model('recommend')->get_recommend_question_total(),
-			'per_page' => get_setting('contents_per_page'),
-			'num_links' => 2
-		))->create_links());
+
+		// TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
+		// 	'base_url' => get_js_url('/sort_type-' . preg_replace("/[\(\)\.;']/", '', $_GET['sort_type']) . '__category-' . $category_info['id'] . '__difficulty-' . $_GET['difficulty'] . '__quiztype-' . $_GET['quiztype'] . '__countdown-' . $_GET['countdown'] . '__is_recommend-' . $_GET['is_recommend'] . '__urecord-' . $_GET['urecord'] . '__date-' . $_GET['date']),
+		// 	'total_rows' => $this->model('question')->get_homepage_recommend_question_list_total(),
+		// 	'per_page' => get_setting('contents_per_page'),
+		// 	'num_links' => 2
+		// ))->create_links());
 
 		// 精选专题
 		

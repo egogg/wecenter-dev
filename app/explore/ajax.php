@@ -91,16 +91,18 @@ class ajax extends AWS_CONTROLLER
 
 	public function load_question_list_action()
 	{
-		$recommend_items = $this->model('recommend')->get_recommend_question_items($_GET['page'], get_setting('contents_per_page'));
-		foreach ($recommend_items as $key => $item) {
-			$question_info = $this->model('question')->get_question_info_by_id($item['item_id']);
+		$recommend_question_list = $this->model('question')->get_homepage_recommend_question_list($_GET['page'], get_setting('contents_per_page'), $_GET['sort_type'], $category_info['id'], $_GET['difficulty'], $_GET['quiztype'], $_GET['countdown'], $_GET['urecord'], $_GET['date'], $this->user_id);
 
-			$recommend_question_list[$key] = $question_info;
-			$this->model('question')->load_list_question_info($recommend_question_list[$key], $question_info, $this->user_id);
+		if ($recommend_question_list)
+		{
+			foreach ($recommend_question_list AS $key => $val)
+			{	
+				$this->model('question')->load_list_question_info($recommend_question_list[$key], $val, $this->user_id);
+			}
+
+			TPL::assign('question_list', $recommend_question_list);
+			TPL::output('block/question_list.tpl.htm');
 		}
-
-		TPL::assign('question_list', $recommend_question_list);
-		TPL::output('block/question_list.tpl.htm');
 	}
 
 	public function user_quiz_message_action() {
