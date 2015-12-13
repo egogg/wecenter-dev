@@ -1058,6 +1058,26 @@
                 <tr>
                     <td>
                         <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('签到积分（每天）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="sign_integral_every_day" type="text" class="form-control" value="<?php echo $this->setting['sign_integral_every_day']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('签到积分（连续7天）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="sign_integral_seventh_day" type="text" class="form-control" value="<?php echo $this->setting['sign_integral_seventh_day']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
                             <span class="col-sm-4 col-xs-3 control-label"><?php _e('回复问题'); ?>:</span>
                             <div class="col-sm-5 col-xs-8">
                                 <input name="integral_system_config_new_answer" type="text" class="form-control" value="<?php echo $this->setting['integral_system_config_new_answer']; ?>"/>

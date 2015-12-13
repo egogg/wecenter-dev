@@ -108,6 +108,7 @@ class integral_class extends AWS_MODEL
 				break;
 
 				case 'INVITE':
+				case 'SIGN_IN':
 					$user_ids[] = $item['item_id'];
 				break;
 			}
@@ -179,10 +180,11 @@ class integral_class extends AWS_MODEL
 				break;
 
 				case 'INVITE':
+				case 'SIGN_IN':
 					if ($users_info[$item['item_id']])
 					{
 						$result[$log_id] = array(
-							'title' => '会员: ' . $users_info[$item['item_id']]['user_name'],
+							'title' => '用户: ' . $users_info[$item['item_id']]['user_name'],
 							'url' => get_js_url('/people/' . $users_info[$item['item_id']]['uid'])
 						);
 					}
