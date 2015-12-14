@@ -257,6 +257,13 @@ class main extends AWS_CONTROLLER
 		// TPL::assign('posts_list', $posts_list);
 		// TPL::assign('posts_list_bit', TPL::output('explore/ajax/list', false));
 
+		// 是否签到成功
+
+		TPL::assign('signed_in', $this->model('sign')->is_signed_today($this->user_id));
+
+		TPL::import_js('js/sweetalert.min.js');
+		TPL::import_css('css/sweetalert.css');
+
 		TPL::output('explore/index');
 	}
 }

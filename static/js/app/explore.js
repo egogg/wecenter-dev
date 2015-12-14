@@ -120,4 +120,53 @@ $(function()
 	filterTokens.replace(/(^__)/, "");
 
 	LoadQuestionList(G_BASE_URL + '/explore/ajax/load_question_list/' + filterTokens, $('#question-load-more'), $('#question-list'), 2);
+
+	// 签到
+
+	$('#explore-sign-in').on('click', function(e) {
+		e.preventDefault();
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		$.get(G_BASE_URL + '/sign/ajax/sign_in/uid-' + G_USER_ID, function (result) {
+			if(result['rsm']['is_signed']) {
+
+				// 检查是否已经签到
+
+				textInfo = '<div class="sign-in-alert-hint">你已经成功获取今天的签到积分，点击<a href="' + G_BASE_URL + '/integral/rule/">获取更多积分</a></div>';
+				
+				swal({   
+		        	title: '恭喜你，已经成功签到',
+		        	text: textInfo,   
+		        	html: true,
+		        	confirmButtonText: "确定",
+		        	type: 'info'
+		        });
+			} else {
+
+				// 提示签到成功
+
+				var textInfo = '<p>+<span class="c-green">' + result['rsm']['integral_every_day'] + '</span>积分</p><p>当前剩余<strong>'+ result['rsm']['user_integral'] + '</strong>积分</p><div class="sign-in-alert-hint">你已经连续签到<span class="c-red">' + (parseInt(result['rsm']['continous']) + 1) + '</span>天，连续签到<span class="c-red">7</span>天可以获得<span class="c-red">' + result['rsm']['integral_seventh_day'] + '</span>积分奖励</div>';
+				if(result['rsm']['continous'] == 6)
+				{
+					textInfo = '<p>+<span class="c-green">' + result['rsm']['integral_seventh_day'] + '</span>积分</p><p>当前剩余<strong>' + result['rsm']['user_integral'] + '</strong>积分</p><div class="sign-in-alert-hint">你已经连续签到<span class="c-red">7</span>天，获取到连续签到<span class="c-red">' + result['rsm']['integral_seventh_day'] + '</span>积分奖励</div>';
+				}
+				
+				swal({   
+		        	title: '签到成功',
+		        	text: textInfo,   
+		        	html: true,
+		        	confirmButtonText: "确定",
+		        	type: 'success'
+		        }, function(){
+		        	$('.explore-feature-item .sign-message').html('<strong class="d-block"><s>签到成功</s> <i class="md md-check"></i> </strong><small>成功获取积分</small>');
+		        	$('.explore-feature-item.sign-in').removeClass('bgm-teal').addClass('bgm-green');
+		        });
+			}
+
+		}, 'json');
+	});
 });

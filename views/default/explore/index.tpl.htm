@@ -49,18 +49,23 @@
                     <!-- 推荐功能 -->
                     <div class="col-sm-4 p-l-5 hidden-xs">
                         <ul>
-                            <li class="explore-feature-item bgm-teal">
+                            <li class="explore-feature-item sign-in <?php if($this->signed_in) { ?>bgm-green<?php } else { ?>bgm-teal<?php } ?>">
                                 <div class="clearfix">
-                                    <a class="c-white" href="#">
+                                    <a id="explore-sign-in" class="c-white" href="javascript:void(0);">
                                         <div class="card">
                                             <div class="card-body card-padding">
                                                 <div class="media">
                                                     <div class="pull-left">
                                                         <i class="md md-event-available feature-item-icon sign"></i>
                                                     </div>
-                                                    <div class="media-body">
-                                                        <strong class="d-block">每日签到</strong>
-                                                        <small>免费获取积分</small>
+                                                    <div class="media-body sign-message">
+                                                        <?php if(!$this->signed_in) { ?>
+                                                            <strong class="d-block">每日签到</strong>
+                                                            <small class="d-block">免费获取积分</small>
+                                                        <?php } else { ?>
+                                                            <strong class="d-block"><s>签到成功</s> <i class="md md-check"></i> </strong> 
+                                                            <small>成功获取积分</small>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
                                             </div>
