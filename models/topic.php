@@ -1309,6 +1309,11 @@ class topic_class extends AWS_MODEL
 		return $this->fetch_one('topic_relation', 'id', implode(' AND ', $where));
 	}
 
+	public function has_topic_relation($topic_id, $item_id, $type)
+	{
+		return $this->fetch_one('topic_relation', 'id', "topic_id = " . intval($topic_id) . " AND `type` = '" . $this->quote($type) . "'" . " AND item_id = " . intval($item_id));
+	}
+
 	public function get_topics_by_item_id($item_id, $type)
 	{
 		$result = $this->get_topics_by_item_ids(array(
@@ -1527,5 +1532,32 @@ class topic_class extends AWS_MODEL
 	public function get_question_list_total()
 	{
 		return $this->question_list_total;
+	}
+
+	public function toggle_question_topic_relation($uid, $topic_id, $item_id, $type)
+	{
+		$flag = $this->has_topic_relation(intval($topic_id), intval($item_id), $type);
+		
+		if($flag)
+		{
+			$this->delete('topic_relation', 'topic_id = ' . intval($topic_id) . ' AND item_id = ' . intval($item_id) . " AND `type` = '" . $this->quote($type) . "'");
+			$has_relation = false;
+		}
+		else
+		{
+			$this->insert('topic_relation', array(
+				'topic_id' => intval($topic_id),
+				'item_id' => intval($item_id),
+				'add_time' => time(),
+				'uid' => intval($uid),
+				'type' => $type
+			));
+
+			$has_relation = 'xyz';
+		}
+
+		$this->model('topic')->update_discuss_count($topic_id);
+
+		return $has_relation;
 	}
 }

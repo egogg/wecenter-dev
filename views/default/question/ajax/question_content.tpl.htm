@@ -56,6 +56,7 @@
 						<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=question&id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->is_recommend_homepage) { ?><?php _e('取消精选'); ?><?php } else { ?><?php _e('首页精选'); ?><?php } ?></a>
 						</li>
 						<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=top_question&id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->is_top_question) { ?><?php _e('取消置顶'); ?><?php } else { ?><?php _e('首页置顶'); ?><?php } ?></a></li>
+						<li><a href="javascript:void(0);" onclick="AWS.dialog('addTopic', {question_id:<?php echo $this->question_info['question_id']; ?>});">收入专题</a></li>
 					<?php } ?>
 	            </ul>
 	        </li>

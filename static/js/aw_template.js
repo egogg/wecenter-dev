@@ -152,6 +152,32 @@ var AW_TEMPLATE = {
 			'</form>'+
 		'</div>',
 
+	'addTopicBox' :
+		'<div class="modal fade alert-box aw-add-topic-box">'+
+			'<div class="modal-dialog">'+
+				'<div class="modal-content">'+
+					'<div class="modal-header">'+
+						'<h3 class="modal-title" id="myModalLabel">' + _t('收入专题') + ' <small class="d-block">收录答题到以下专题</small></h3>'+
+					'</div>'+
+					'<div class="modal-body">'+
+						'<div id="cloud-topic-list" data-question-id="{{question_id}}"">'+
+							'<ul class="cloud-topic-items clearfix">' +
+
+							'</ul>' +
+						'</div>' +
+						'<div class="load-more">' +
+							'<span id="topic-cloud-load-more" auto-load="false">' +
+                            	'<a class="c-white" href="javascript:void(0);"><i class="md md-refresh"></i>更多专题</a>'+
+                        	'</span>' +
+                        '</div>' +
+					'</div>'+
+					'<div class="modal-footer">'+
+						'<button type="button" class="btn btn-primary" data-dismiss="modal">完成</button>' +
+					'</div>'+
+				'</div>'+
+			'</div>'+
+		'</div>',
+
 	'favoriteBox' :
 		'<div class="modal fade alert-box aw-favorite-box">'+
 			'<div class="modal-dialog">'+

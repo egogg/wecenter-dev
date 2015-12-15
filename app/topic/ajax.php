@@ -688,4 +688,39 @@ class ajax extends AWS_CONTROLLER
 			TPL::output('topic/ajax/focus_topics_list');
 		}
 	}
+
+	public function get_question_cloud_topic_list_action()
+	{
+		if($topic_list = $this->model('topic')->get_child_topic_list(null, 'topic_id ASC', 20, intval($_GET['page'])))
+		{
+			foreach ($topic_list AS $key => $val)
+			{
+				if($this->model('topic')->has_relation(intval($val['topic_id']), intval($_GET['question_id']), 'question'))
+				{
+					$topic_list[$key]['has_relation'] = true;
+				}
+				else
+				{
+					$topic_list[$key]['has_relation'] = false;
+				}
+			}
+		}
+
+		TPL::assign('topic_list', $topic_list);
+
+		TPL::output('topic/ajax/cloud_topic_list');
+	}
+
+	public function toggle_question_topic_relation_action()
+	{
+		$has_relation = false;
+		if($this->user_id)
+		{
+			$has_relation = $this->model('topic')->toggle_question_topic_relation($this->user_id, $_GET['topic_id'], $_GET['question_id'], 'question');
+		}
+		
+		H::ajax_json_output(array(
+			'has_relation' => $has_relation
+		));
+	}
 }

@@ -1,0 +1,8 @@
+<?php if ($this->topic_list) { ?>
+    <?php foreach ($this->topic_list AS $key => $val) { ?>
+        <li class="cloud-topic-item <?php if($val['has_relation']) { ?>active<?php } ?>" data-topic-id="<?php echo $val['topic_id']; ?>">
+            <a class="text" href="javascript:void(0);" data-url="topic/<?php echo $val['url_token']; ?>" data-id="<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?>
+            </a>
+        </li>
+    <?php } ?>
+<?php } ?>

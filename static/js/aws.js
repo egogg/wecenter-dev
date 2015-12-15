@@ -704,6 +704,13 @@ var AWS =
 				});
 
 			break;
+
+			case 'addTopic':
+				var template = Hogan.compile(AW_TEMPLATE.addTopicBox).render(
+				{
+					'question_id': data.question_id
+				});
+			break;
 		}
 
 		if (template)
@@ -1003,6 +1010,26 @@ var AWS =
 							}
 						}
 					}, 'json');
+				break;
+
+				case 'addTopic':
+					var questionId = $('#cloud-topic-list').attr('data-question-id');
+
+					$('body').on('click', '.cloud-topic-item', function(e) {
+						e.preventDefault();
+
+						var topicItem = $(this);
+						var topicId = topicItem.attr('data-topic-id');
+
+						$.get(G_BASE_URL + '/topic/ajax/toggle_question_topic_relation/topic_id-' + topicId + '__question-id-' + questionId, function (result) {
+							topicItem.toggleClass('active', result['has_relation']);
+						}, 'json');
+					});
+
+					AWS.load_list_view(G_BASE_URL + '/topic/ajax/get_question_cloud_topic_list/question_id-' + questionId, $('#topic-cloud-load-more'), $('.cloud-topic-list ul'), 2);
+					$.get(G_BASE_URL + '/topic/ajax/get_question_cloud_topic_list/question_id-' + questionId, function (result) {
+						$('#cloud-topic-list ul').html(result);
+					});
 				break;
 			}
 
