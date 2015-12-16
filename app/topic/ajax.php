@@ -695,7 +695,7 @@ class ajax extends AWS_CONTROLLER
 		{
 			foreach ($topic_list AS $key => $val)
 			{
-				if($this->model('topic')->has_relation(intval($val['topic_id']), intval($_GET['question_id']), 'question'))
+				if($this->model('topic')->has_topic_relation(intval($val['topic_id']), intval($_GET['question_id']), 'question'))
 				{
 					$topic_list[$key]['has_relation'] = true;
 				}

@@ -61,12 +61,12 @@
 										<span>
 											<?php if ($this->topic_info['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
 										</span> 
-										<em>|</em> 
-										<b><?php echo $this->topic_info['focus_count']; ?></b>
+										<!-- <em>|</em>  -->
+										<!-- <b><?php echo $this->topic_info['focus_count']; ?></b> -->
 									</a>
 								<?php } ?>
 			                </div>
-			                <div class="follow-user-header">Ta们正在关注该专题</div>
+			                <div class="follow-user-header">共<?php echo $this->topic_info['focus_count']; ?>人正在关注该专题</div>
 			                <div class="follow-user-list" id="focus_users">
 			                </div>
 				        </div>

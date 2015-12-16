@@ -40,10 +40,6 @@
                     </div>
                 </div>
 
-				<div class="card-body card-padding question-focus">
-					<p class="c-gray question-focus-message">共<span><?php echo $this->question_info['focus_count']; ?></span>人关注该问题<span class="hidden-xs">，如果你对这个问题比较感兴趣你可以</span></p> <a class="question-follow follow" href="javascript:void(0);"><i class="md md-add"></i> <em>|</em> 添加关注</a>
-				</div>
-
 				<div class="card-body card-padding question-quiz-footer clearfix">
 					<div class="pull-left clearfix footer-stats">
 						<ul class="footer-stats-items">
@@ -100,10 +96,24 @@
 					</div>
 				</div>
 			</div>
-			<!-- 添加关注 -->
-			<div class="card question-publish-question hidden-xs">
-				<div class="card-body card-padding">
-					<span class="hidden-xs">如果你知道一些不错的题目，你可以</span> <a href="publish/" class="btn btn-primary m-l-5"><i class="md md-create"></i> 出题考考别人</a>
+
+			<div class="card">
+				<div class="card-body card-padding question-focus text-center">
+					<div class="question-add-foucs">
+						<a class="question-follow follow <?php if ($this->question_focus) { ?>following<?php } ?>" href="javascript:void(0);" onclick="AWS.User.follow($(this), 'question', <?php echo $this->question_info['question_id']; ?>);">
+						<span>
+							<?php if ($this->question_focus) { ?>
+								<i class="md md-check"></i> 正在关注
+							<?php } else { ?>
+								<i class="md md-add"></i> 添加关注
+							<?php } ?>
+						</span>
+						</a>
+					</div>
+					
+					<div class="follow-user-header">共<span><?php echo $this->question_info['focus_count']; ?></span>人正在关注该问题</div>
+	                <div class="follow-user-list" id="focus_users">
+	                </div>
 				</div>
 			</div>
 			
@@ -193,6 +203,16 @@
 	                        	<h4>
 	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
 	                        		<span class="question-publisher-mark">出题</span>
+	                        		<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher pull-right <?php if ($this->user_follow_check) { ?>following<?php } ?>">
+	                        			<span>
+	                        				<?php if ($this->user_follow_check) { ?>
+	                        					<i class="md md-check"></i> 正在关注
+	                        				<?php } else { ?>
+	                        					<i class="md md-add"></i> 添加关注
+	                        				<?php } ?>
+	                        			</span>
+	                        			
+	                        		</a>
 	                        	</h4>
 	                        	<div class="question-publisher-stats">
 		                        	<ul class="clearfix">
@@ -218,11 +238,15 @@
 					<div class="m-b-10">
 						<?php echo $this->question_info['user_info']['signature']; ?>
 					</div>
-					<div class="clearfix">
-						<span class="c-gray question-publisher-followers">共有 3 人关注该用户</span> 
-						<span class="pull-right">
-							<a href="#" class="follow question-publisher"><i class="md md-add"></i> <em>|</em> 添加关注</a>
-						</span>
+				</div>
+			</div>
+
+			<!-- 分享问题 -->
+			<div class="card question-publish-question hidden-xs">
+				<div class="card-body card-padding">
+					<span class="hidden-xs">如果你知道一些不错的题目，你可以</span> 
+					<div class="m-t-15">
+						<a href="publish/" class="btn btn-primary"><i class="md md-create"></i> 出题考考别人</a>
 					</div>
 				</div>
 			</div>

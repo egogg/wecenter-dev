@@ -1553,7 +1553,7 @@ class topic_class extends AWS_MODEL
 				'type' => $type
 			));
 
-			$has_relation = 'xyz';
+			$has_relation = true;
 		}
 
 		$this->model('topic')->update_discuss_count($topic_id);

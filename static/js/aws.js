@@ -1021,7 +1021,7 @@ var AWS =
 						var topicItem = $(this);
 						var topicId = topicItem.attr('data-topic-id');
 
-						$.get(G_BASE_URL + '/topic/ajax/toggle_question_topic_relation/topic_id-' + topicId + '__question-id-' + questionId, function (result) {
+						$.get(G_BASE_URL + '/topic/ajax/toggle_question_topic_relation/topic_id-' + topicId + '__question_id-' + questionId, function (result) {
 							topicItem.toggleClass('active', result['has_relation']);
 						}, 'json');
 					});
