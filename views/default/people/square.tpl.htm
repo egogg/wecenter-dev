@@ -1,5 +1,113 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<div id="content">
+	<div class="container">
+		<div class="card">
+			<div class="listview lv-bordered lv-lg">
+	            <div class="lv-header-alt">
+	                <h2 class="lvh-label"><i class="md md-people"></i> 用户排行榜</h2>
+	                <ul class="user-list-sort-items hidden-xs">
+	                	<li class="user-list-sort-item">
+	                		<a href="javascript:void(0);" data-sort-type="success_ratio">正确率</a> <i class="dot"></i>
+	                	</li>
+	                	<li class="user-list-sort-item">
+	                		<a href="javascript:void(0);" data-sort-type="poft">一次通过</a> <i class="dot"></i>
+	                	</li>
+	                	<li class="user-list-sort-item">
+	                		<a href="javascript:void(0);" data-sort-type="question_count">出题</a> <i class="dot"></i>
+	                	</li>
+	                	<li class="user-list-sort-item">
+	                		<a href="javascript:void(0);" data-sort-type="quiz_count">答题</a> <i class="dot"></i>
+	                	</li>
+	                	<li class="user-list-sort-item">
+	                		<a href="javascript:void(0);" data-sort-type="integral">积分</a>
+	                	</li>
+	                </ul>
+	                <ul class="lv-actions actions visible-xs">
+	                    <li class="dropdown">
+	                        <a href="#" data-toggle="dropdown" aria-expanded="true">
+	                            <i class="md md-sort"></i>
+	                        </a>
+	            
+	                        <ul class="dropdown-menu dropdown-menu-right">
+	                            <li class="user-list-sort-item">
+			                		<a href="javascript:void(0);" data-sort-type="success_ratio">正确率</a>
+			                	</li>
+			                	<li class="user-list-sort-item">
+			                		<a href="javascript:void(0);" data-sort-type="poft">一次通过</a>
+			                	</li>
+			                	<li class="user-list-sort-item">
+			                		<a href="javascript:void(0);" data-sort-type="question_count">出题</a>
+			                	</li>
+			                	<li class="user-list-sort-item">
+			                		<a href="javascript:void(0);" data-sort-type="quiz_count">答题</a>
+			                	</li>
+			                	<li class="user-list-sort-item">
+			                		<a href="javascript:void(0);" data-sort-type="integral">积分</a>
+			                	</li>
+	                        </ul>
+	                    </li>
+	                </ul>
+	            </div>
+	            
+	            <div class="lv-body">
+	            	<?php if ($this->users_list) { ?>
+						<?php foreach($this->users_list as $key => $val) { ?>
+							<div class="lv-item media">
+			                    <div class="pull-left">
+			                        <img class="lv-img-sm" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="">
+			                        <div class="user-list-rank-num">
+			                        	<em><?php if (($key + 1 + ((intval($_GET['page']) - 1) * get_setting('contents_per_page'))) < 99) { echo ($key + 1 + ((intval($_GET['page']) - 1) * get_setting('contents_per_page'))); } else { echo '*'; }; ?></em>
+			                        </div>
+			                    </div>
+			                    <div class="media-body">
+			                    	<div class="user-list-add-foucs">
+			                        	<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $val['uid']; ?>);" class="follow question-publisher pull-right <?php if ($val['focus']) { ?>following<?php } ?>">
+		                        			<span>
+		                        				<?php if ($val['focus']) { ?>
+		                        					<i class="md md-check"></i> 正在关注
+		                        				<?php } else { ?>
+		                        					<i class="md md-add"></i> 添加关注
+		                        				<?php } ?>
+		                        			</span>
+		                        		</a>
+			                        </div>
+
+			                        <div class="lv-title">
+			                        	<a href="people/<?php echo $val['url_token']; ?>" class="aw-user-name"><?php echo $val['user_name']; ?></a>
+										<?php if ($val['verified']) { ?><i class="icon-v<?php if ($val['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['verified'] == 'enterprise') { ?><?php _e('企业认证'); ?><?php } else { ?><?php _e('个人认证'); ?><?php } ?>"></i><?php } ?>
+										<small class="lv-small"><?php echo $val['signature']; ?></small>
+			                        </div>
+			                        
+			                        <ul class="lv-attrs">
+			                        	<li>正确率: <?php echo number_format($val['question_quiz_success_ratio'] * 100, 0); ?>%</li>
+			                        	<li>一次通过: <?php echo $val['question_quiz_count_POFT']; ?></li>
+			                        	<li>出题: <?php echo $val['question_count']; ?></li>
+			                            <li>答题: <?php echo $val['question_quiz_count_total']; ?></li>
+			                            <li>积分: <?php echo $val['integral']; ?></li>
+			                        </ul>
+
+			                        <div class="lv-actions actions dropdown">
+			                            <a href="#" data-toggle="dropdown" aria-expanded="true">
+			                                <i class="md md-more-vert"></i>
+			                            </a>
+			                
+			                            <ul class="dropdown-menu dropdown-menu-right">
+			                                <li>
+			                                    <a href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $val['user_name']; ?>');"><i class="md md-email"></i> 私信</a>
+			                                </li>
+			                            </ul>
+			                        </div>
+			                    </div>
+			                </div>
+						<?php } ?>
+					<?php } ?>
+	            </div>
+	        </div>
+		</div>
+	</div>
+</div>
+
 <div class="aw-container-wrap">
 	<div class="container">
 		<div class="row">
