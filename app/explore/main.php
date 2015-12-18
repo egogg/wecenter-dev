@@ -261,6 +261,11 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('signed_in', $this->model('sign')->is_signed_today($this->user_id));
 
+		// 用户排行榜
+
+		TPL::assign('top_user_list_success_ratio', array_values($this->model('account')->get_top_users('success_ratio', 3)));
+		TPL::assign('top_user_list_integral', array_values($this->model('account')->get_top_users('integral', 3)));
+
 		TPL::import_js('js/sweetalert.min.js');
 		TPL::import_css('css/sweetalert.css');
 

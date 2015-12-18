@@ -1473,4 +1473,22 @@ class account_class extends AWS_MODEL
 
         return $count_info;
     }
+
+    public function get_top_users($sort_type, $limit = 3)
+    {
+        switch ($sort_type) {
+            case 'success_ratio':
+                $sort_key = 'question_quiz_success_ratio DESC';
+            break;
+            
+            case 'integral':
+                $sort_key = 'integral DESC';
+            break;
+
+            default:
+                $sort_key = 'question_quiz_success_ratio DESC';
+            break;
+        }
+        return $this->get_users_list("forbidden = 0 AND group_id >=4 AND group_id < 99", $limit, true, false, $sort_key);
+    }
 }

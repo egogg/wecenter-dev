@@ -290,11 +290,9 @@ var AW_TEMPLATE = {
 				'<div class="modal-dialog">'+
 					'<div class="modal-content">'+
 						'<div class="modal-header">'+
-							'<a type="button" class="close icon icon-delete" data-dismiss="modal" aria-hidden="true"></a>'+
 							'<h3 class="modal-title" id="myModalLabel">' + _t('新私信') + '</h3>'+
 						'</div>'+
 						'<div class="modal-body">'+
-							'<div class="alert alert-danger hide error_message"> <i class="icon icon-delete"></i> <em></em></div>'+
 							'<form action="' + G_BASE_URL + '/inbox/ajax/send/" method="post" id="quick_publish" onsubmit="return false">'+
 								'<input type="hidden" name="post_hash" value="' + G_POST_HASH + '" />'+
 								'<input id="invite-input" class="form-control" type="text" placeholder="' + _t('搜索用户') + '" name="recipient" value="{{recipient}}" />'+
@@ -303,12 +301,14 @@ var AW_TEMPLATE = {
 									'<ul class="aw-dropdown-list">'+
 									'</ul>'+
 								'</div>'+
-								'<textarea class="form-control" name="message" rows="3" placeholder="' + _t('私信内容...') + '"></textarea>'+
+								'<div class="m-t-15">'+ 
+									'<textarea class="form-control" name="message" rows="3" placeholder="' + _t('私信内容...') + '"></textarea>'+
+								'</div>'+
 							'</form>'+
 						'</div>'+
 						'<div class="modal-footer">'+
-							'<a data-dismiss="modal" aria-hidden="true" class="text-color-999">' + _t('取消') + '</a>'+
-							'<button class="btn btn-large btn-success" onclick="AWS.ajax_post($(\'#quick_publish\'), AWS.ajax_processer, \'error_message\');">' + _t('发送') + '</button>'+
+							'<button class="btn btn-success" onclick="AWS.ajax_post($(\'#quick_publish\'), AWS.ajax_processer, \'error_message\');">' + _t('发送') + '</button>'+
+							'<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>' +
 						'</div>'+
 					'</div>'+
 				'</div>'+

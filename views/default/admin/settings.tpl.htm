@@ -1903,6 +1903,26 @@
                         </div>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('显示排行榜用户个数（排名前多少才显示）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="user_rank_list_total" class="form-control" type="text" value="<?php echo $this->setting['user_rank_list_total']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('排行榜每一页显示的用户个数'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="user_rank_list_perpage" class="form-control" type="text" value="<?php echo $this->setting['user_rank_list_perpage']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
             </table>
         </div>
         <?php } ?>

@@ -197,9 +197,20 @@
             </div>
 
             <div class="col-sm-4 hidden-xs">
-                <div class="card m-b-0 user-ranks">
-                    <div class="card-body card-padding">
-                        用户排行
+                <div class="row">
+                    <div class="col-sm-6 p-r-5">
+                        <div class="card m-b-0 user-ranks">
+                            <?php TPL::assign('rank_type', 'success_ratio'); ?>
+                            <?php TPL::assign('user_rank_list', $this->top_user_list_success_ratio); ?>
+                            <?php TPL::output('block/user_rank_list'); ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 p-l-5">
+                        <div class="card m-b-0 user-ranks">
+                            <?php TPL::assign('rank_type', 'integral'); ?>
+                            <?php TPL::assign('user_rank_list', $this->top_user_list_integral); ?>
+                            <?php TPL::output('block/user_rank_list'); ?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -219,7 +230,6 @@
         <div class="m-question-list-filter-bar">
             <?php TPL::output('block/m_question_list_filter_bar.tpl.htm'); ?>
         </div>
-        
 
         <div class="row hidden-xs" id="nav-question-list-header-wrap">
             <div class="question-list-heading col-sm-12" id="nav-question-list-header">
@@ -251,11 +261,11 @@
                 
                 <a href="javascript:void(0);" id="question-load-more" auto-load="false">
                     <div class="card">
-                            <div class="card-body card-padding text-center">
-                                <h3>
-                                    下一页 <i class="md md-arrow-drop-down"></i>
-                                </h3>
-                            </div>
+                        <div class="card-body card-padding text-center">
+                            <h3>
+                                下一页 <i class="md md-arrow-drop-down"></i>
+                            </h3>
+                        </div>
                     </div>
                 </a>
             </div>

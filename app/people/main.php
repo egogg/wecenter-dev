@@ -169,14 +169,44 @@ class main extends AWS_CONTROLLER
 				$where[] = 'group_id = ' . intval($_GET['group_id']);
 			}
 
-			$users_list = $this->model('account')->get_users_list(implode('', $where), calc_page_limit($_GET['page'], get_setting('contents_per_page')), true, false, 'reputation DESC');
+			if($_GET['sort_type'])
+			{
+				switch ($_GET['sort_type']) {
+					case 'passed':
+						$sort_key = 'question_quiz_count_passed DESC';
+					break;
+					case 'poft':
+						$sort_key = 'question_quiz_count_POFT DESC';
+					break;
+					case 'question_count':
+						$sort_key = 'question_count DESC';
+					break;
+					case 'quiz_count':
+						$sort_key = 'question_quiz_count_total DESC';
+					break;
+					case 'integral':
+						$sort_key = 'integral DESC';
+					break;
+					
+					default:
+						$sort_key = 'question_quiz_success_ratio DESC';
+					break;
+				}
+			}
+			else 
+			{
+				$sort_key = 'question_quiz_success_ratio DESC';
+			}
 
-			$where[] = 'forbidden = 0 AND group_id <> 3';
+			$where[] = 'forbidden = 0 AND group_id >=4 AND group_id < 99';
+			$users_list = $this->model('account')->get_users_list(implode('', $where), calc_page_limit($_GET['page'], get_setting('user_rank_list_perpage')), true, false, $sort_key);
+
+			
 
 			TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
-				'base_url' => get_js_url('/people/group_id-' . $_GET['group_id']),
+				'base_url' => get_js_url('/people/sort_type-' . $_GET['sort_type'] . '__group_id-' . $_GET['group_id']),
 				'total_rows' => $this->model('account')->get_user_count(implode(' AND ', $where)),
-				'per_page' => get_setting('contents_per_page')
+				'per_page' => get_setting('user_rank_list_perpage')
 			))->create_links());
 		}
 
@@ -223,6 +253,12 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('custom_group', $this->model('account')->get_user_group_list(0, 1));
 
+		if($_GET['sort_type'])
+		{
+			TPL::assign('sort_type', $_GET['sort_type']);
+		}
+
+		TPL::import_js('js/app/rank.js');
 		TPL::output('people/square');
 	}
 }
