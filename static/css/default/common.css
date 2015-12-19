@@ -1116,7 +1116,6 @@ li.user-quiz-record-item.timeout:before {
 .footer-share-item i {
     color: #fff;
     font-size: 16px;
-    font-weight: bold;
     line-height: 28px;
 }
 
@@ -1603,6 +1602,7 @@ ul.answer-actions-right li {
 	display: inline-block;
 	width: 43%;
 	margin: 10px;
+	text-align: center;
 }
 
 .nav-question-type-item a {
@@ -2543,7 +2543,7 @@ a.aw-load-more-content{display: block;}
 .icon-inverse.follow{background-color: #f5f5f5;color: #b3b3b3;}
 .icon-inverse.follow:hover{color: #499ef3;}
 .icon-inverse.follow.active:before{content: "\e636";color: #58b957;}
-.icon-wechat, .icon-phone, .icon-reply, .icon-prestige, .icon-score, .icon-agree, .icon-comment, .icon-share, .icon-edit, .icon-invite, .icon-report, .icon-fold, .icon-best, .icon-favor, .icon-thank, .icon-cog, .icon-off, .icon-down, .icon-mobile-phone, .icon-envelope, .icon-check, .icon-attach{margin-right: 2px;color: #999;font-size: 16px;}
+/*.icon-wechat, .icon-phone, .icon-reply, .icon-prestige, .icon-score, .icon-agree, .icon-comment, .icon-share, .icon-edit, .icon-invite, .icon-report, .icon-fold, .icon-best, .icon-favor, .icon-thank, .icon-cog, .icon-off, .icon-down, .icon-mobile-phone, .icon-envelope, .icon-check, .icon-attach{margin-right: 2px;color: #999;font-size: 16px;}*/
 .icon-v{color: #a3d700;font-size: 16px;}
 .icon-v.i-ve{color: #ffca3f;}
 .icon-down.active:before{content:"\e634";}

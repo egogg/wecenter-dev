@@ -1,6 +1,60 @@
 <?php TPL::output('global/header_meta.tpl.htm'); ?>
 
-<div id="wrapper">
+<div class="row">
+	<div class="col-sm-2"></div>
+	<div class="col-sm-8">
+		<div class="card">
+			<div class="login-block">
+				<div class="card-header card-padding login-header p-b-0">
+					<h1>欢迎回来</h1>
+					<span class="pull-right">
+						还没有账号？<a href="#" class="c-lightblue">马上注册</a>
+					</span>
+				</div>
+				<div class="card-body card-padding">
+					<div class="login-form">
+						<div class="m-b-20">
+				            <input type="text" class="form-control" placeholder="邮箱/用户名">
+				        </div>
+				        
+				        <div class="m-b-20">
+				        	<input type="password" class="form-control" placeholder="密码">
+				        </div>
+				        
+				        <div class="checkbox m-b-20">
+				            <label>
+				                <input type="checkbox" value="">
+				                <i class="input-helper"></i>
+				                记住我
+				            </label>
+				            <label class="pull-right">
+			            		<a href="#">忘记密码？</a>
+			            	</label>
+				        </div>
+				        <div>
+				        	<button type="submit" class="btn btn-primary btn-lg submit">立即登陆</button>
+				        </div>
+					</div>
+					
+					<div class="login-sns">
+						<div class="login-sns-title">
+							<h2>使用其他账号登录</h2>
+						</div>
+						
+						<ul class="sns-login-items">
+							<li><a class="bgm-blue" href="#"><i class="icon icon-qq"></i></a></li>
+							<li><a class="bgm-green" href="#"><i class="icon icon-wechat"></i></a></li>
+							<li><a class="bgm-red" href="#"><i class="icon icon-weibo"></i></a></li>
+						</ul>
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<div class="col-sm-2"></div>
+</div>
+
+<div id="wrapper" class="hidden">
 	<div class="aw-login-box">
 		<div class="mod-body clearfix">
 			<div class="content pull-left">
