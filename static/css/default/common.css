@@ -2408,6 +2408,31 @@ input.form-control {
 	display: none;
 }
 
+/*侧边底部工具栏*/
+
+.fixed-side-toolbar {
+	position: fixed;
+    right: 1%;
+    bottom: 2%;
+    border: 1px solid #eee;
+    background-color: white;
+    font-size: 24px;
+    z-index: 1040;
+    -webkit-backface-visibility: hidden;
+}
+
+.fixed-side-toolbar li a {
+	display: block;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.fixed-side-toolbar li a i {
+	vertical-align: middle;
+}
+
 /*移动版*/
 
 @media (max-width: 767px) {

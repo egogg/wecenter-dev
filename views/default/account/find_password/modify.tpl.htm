@@ -15,15 +15,15 @@
 							<li>
 								<input class="aw-register-email form-control" name="password" type="password" placeholder="<?php _e('密码'); ?>" />
 							</li>
-							<li>
+							<li class="m-t-20">
 								<input class="aw-register-email form-control" name="re_password" type="password" placeholder="<?php _e('再次输入密码'); ?>" />
 							</li>
 							
-							<li class="aw-register-verify">
+							<li class="aw-register-verify m-t-20">
 								<img id="captcha" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" src="" class="auth-img pull-right"/>
 								<input class="form-control" type="text" name="seccode_verify" placeholder="<?php _e('验证码'); ?>" />
 							</li>
-							<li class="clearfix">
+							<li class="clearfix m-t-20">
 								<button class="btn btn-lg btn-primary submit" onclick="AWS.ajax_post($('#fpw_form'), AWS.ajax_processer, 'error_message'); return false;"><?php _e('重置密码'); ?></button>
 							</li>
 						</ul>

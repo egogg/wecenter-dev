@@ -586,6 +586,35 @@ $(document).ready(function ()
         AWS.Message.update_user_quiz_message();
         AWS.G.user_quiz_message_timer = setInterval('AWS.Message.update_user_quiz_message()', G_USER_QUIZ_MESSAGE_INTERVAL);
     }
+
+    // tooltip提示
+
+    if ($('[data-toggle="tooltip"]')[0]) {
+        $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+    }
+
+    // popover提示
+
+    if ($('[data-toggle="popover"]')[0]) {
+        $('[data-toggle="popover"]').popover({container: 'body'});
+    }
+
+    // 底部侧边工具条
+
+    if ($('.go-top').length)
+    {
+        $(window).scroll(function ()
+        {
+            if ($(window).scrollTop() > ($(window).height() / 2))
+            {
+                $('.go-top').removeClass('hide');
+            }
+            else
+            {
+                $('.go-top').addClass('hide');
+            }
+        });
+    }
 });
 
 $(window).on('hashchange', function() {
@@ -597,18 +626,3 @@ $(window).on('hashchange', function() {
         }
     }
 });
-
-if ($('.aw-back-top').length)
-{
-    $(window).scroll(function ()
-    {
-        if ($(window).scrollTop() > ($(window).height() / 2))
-        {
-            $('.aw-back-top').fadeIn();
-        }
-        else
-        {
-            $('.aw-back-top').fadeOut();
-        }
-    });
-}
