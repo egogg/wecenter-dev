@@ -1837,6 +1837,11 @@ li.action-item-link a:hover:before {
 	height: 150px;
 }
 
+.global-message .wechat-qrcode {
+	width: 104px;
+	height: 104px;
+}
+
 .m-question-list-filter-bar {
 	margin: 0 -10px 10px -10px;
 }
@@ -2413,7 +2418,7 @@ input.form-control {
 .fixed-side-toolbar {
 	position: fixed;
     right: 1%;
-    bottom: 2%;
+    bottom: 5%;
     border: 1px solid #eee;
     background-color: white;
     font-size: 24px;
@@ -2429,8 +2434,32 @@ input.form-control {
     border-bottom: 1px solid #eee;
 }
 
+.fixed-side-toolbar li:last-child a {
+	border-bottom: none;
+}
+
 .fixed-side-toolbar li a i {
 	vertical-align: middle;
+}
+
+.fixed-side-toolbar .wechat-qrcode {
+	width: 80px;
+	height: 80px;
+}
+
+.wechat-qrcode {
+	background: url("img/wechat_qrcode.png");
+	background-size: 100%;
+	height: 100px;
+	width: 100px;
+	display: inline-block;
+}
+
+/*footer*/
+
+body #footer {
+	z-index: 1024;
+	position: relative;
 }
 
 /*移动版*/
@@ -2453,6 +2482,7 @@ input.form-control {
 
 	body #content {
 		padding-top: 10px;
+		position: relative;
 	}
 
 	.row {

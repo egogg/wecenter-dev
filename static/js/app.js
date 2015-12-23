@@ -596,7 +596,7 @@ $(document).ready(function ()
     // popover提示
 
     if ($('[data-toggle="popover"]')[0]) {
-        $('[data-toggle="popover"]').popover({container: 'body'});
+        $('[data-toggle="popover"]').popover({html : true});
     }
 
     // 底部侧边工具条
