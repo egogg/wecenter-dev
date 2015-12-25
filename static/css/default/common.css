@@ -19,12 +19,17 @@ header a {
 }
 
 header .navbar-brand {
-	margin: 15px 0;
+	background: url("img/logo.png") no-repeat;
+	background-position: center;
+	background-size: 100%;
+	width: 135px;
+	height: 80px;
+	text-indent: -99999px;
 }
 
 header .navbar-slogan {
-	margin: 15px 0;
-    padding: 14px 15px;
+	margin: 15px 50px;
+    padding: 15px;
     display: inline-block;
 }
 
@@ -113,7 +118,6 @@ header .navbar-search-input {
 header .navbar-search-input input {
 	border: 1px solid #e0e0e0;
     padding: 0 35px 0 10px;
-    border-radius: 4px;
 }
 
 header .lv-footer {

@@ -4,7 +4,7 @@
 		<div class="header">
 			<div class="container">
 				<a class="navbar-brand icon-logo" href="<?php echo base_url(); ?>" title="脑壳网">脑壳网</a>
-				<a class="navbar-slogan hidden-xs" href="<?php echo base_url(); ?>">你我的智力乐园</a>
+				<a class="navbar-slogan hidden-xs" href="<?php echo base_url(); ?>">中文最大智力问答社区</a>
 				<div class="navbar-user visible-xs">
 					<ul class="navbar-user-actions">
 						<li class="dropdown">
@@ -105,7 +105,7 @@
 		        </div>
 				<form class="navbar-search hidden-xs" action="search/" id="global_search_form" method="post">
 					<div class="navbar-search-input dropdown">
-						<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、话题或人'); ?>" autocomplete="off" name="q" id="aw-search-query" />
+						<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、专题、知识或人'); ?>" autocomplete="off" name="q" id="aw-search-query" />
 						<div class="dropdown-menu dropdown-menu-lg pull-left">
 							<div class="mod-body listview">
 								<div class="title lv-header"><?php _e('输入关键字进行搜索'); ?></div>
@@ -138,8 +138,7 @@
         			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>"><?php _e('题库'); ?></a></li>
 					<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>"><?php _e('专题'); ?></a></li>
 					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>"><?php _e('知识'); ?></a></li>
-					<li><a href="help/" class="<?php if ($_GET['app'] == 'help') { ?>active<?php } ?>"><?php _e('测试'); ?></a></li>
-					<li class="hidden-xs"><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>"><?php _e('排行'); ?></a></li>
+					<li><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>"><?php _e('排行'); ?></a></li>
 				</ul>
 
 				<ul class="nav navbar-nav pull-right hidden-xs">
