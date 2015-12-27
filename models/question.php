@@ -1610,11 +1610,15 @@ class question_class extends AWS_MODEL
 	public function get_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null, $urecord = null, $date = null, $uid = 0)
 	{
 		$query_info = $this->get_question_filter_query_info($sort, $category_id, $difficulty, $quiz_type, $countdown, $urecord, $date, $uid);
-		$where = $query_info['where'];
-		$order_key = $query_info['sort'];
+		
+		if($query_info)
+		{
+			$where = $query_info['where'];
+			$order_key = $query_info['sort'];
 
-		$questions = $this->fetch_page('question', implode(' AND ', $where), $order_key, $page, $per_page);
-		$this->question_list_total = $this->found_rows();
+			$questions = $this->fetch_page('question', implode(' AND ', $where), $order_key, $page, $per_page);
+			$this->question_list_total = $this->found_rows();
+		}
 
 		$question_list = array();
 		foreach ($questions as $key => $value) {
@@ -1809,10 +1813,12 @@ class question_class extends AWS_MODEL
 		if ($countdown)
 		{
 			$quiz_ids = $this->model('quiz')->get_quiz_ids_with_countdown(true);
+
 			if(!$quiz_ids)
 			{
 				return false;
 			}
+
 			if($countdown > 0)
 			{
 				$where[] = 'quiz_id IN(' . implode(',',  $quiz_ids) . ')';
@@ -1829,18 +1835,22 @@ class question_class extends AWS_MODEL
 
 			switch ($urecord) {
 				case 'answered':
-					$where[] = 'question_id IN(' . implode(',', $answered_question_ids) . ')';
+					if(!$answered_question_ids)
+					{
+						return false;
+					}
 
-					break;
+					$where[] = 'question_id IN(' . implode(',', $answered_question_ids) . ')';
+				break;
 
 				case 'unanswered':
-					$where[] = 'question_id NOT IN(' . implode(',', $answered_question_ids) . ')';
-
-					break;
+					if($answered_question_ids)
+					{
+						$where[] = 'question_id NOT IN(' . implode(',', $answered_question_ids) . ')';
+					}
+				break;
 				
 				default:
-					
-					break;
 			}
 		}
 		
@@ -1874,16 +1884,22 @@ class question_class extends AWS_MODEL
 	public function get_homepage_recommend_question_list($page = 1, $per_page = 10, $sort = null, $category_id = null, $difficulty = null, $quiz_type = null, $countdown = null, $urecord = null, $date = null, $uid = 0)
 	{
 		$query_info = $this->get_question_filter_query_info($sort, $category_id, $difficulty, $quiz_type, $countdown, $urecord, $date, $uid);
-		$where = $query_info['where'];
-		$order_key = $query_info['sort'];
+		if($query_info)
+		{
+			$where = $query_info['where'];
+			$order_key = $query_info['sort'];
 
-		// 首页推荐问题id过滤
+			// 首页推荐问题id过滤
 
-		$recommend_question_ids = $this->model('recommend')->get_recommend_homepage_question_ids();
-		$where[] = 'question_id IN(' . implode(',', $recommend_question_ids) . ')';
+			$recommend_question_ids = $this->model('recommend')->get_recommend_homepage_question_ids();
+			if($recommend_question_ids)
+			{
+				$where[] = 'question_id IN(' . implode(',', $recommend_question_ids) . ')';
 
-		$questions = $this->fetch_page('question', implode(' AND ', $where), $order_key, $page, $per_page);
-		$this->recommend_homepage_question_list_total = $this->found_rows();
+				$questions = $this->fetch_page('question', implode(' AND ', $where), $order_key, $page, $per_page);
+				$this->recommend_homepage_question_list_total = $this->found_rows();
+			}
+		}
 
 		$question_list = array();
 		foreach ($questions as $key => $value) {

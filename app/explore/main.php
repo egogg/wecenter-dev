@@ -47,10 +47,10 @@ class main extends AWS_CONTROLLER
 
 	public function index_action()
 	{
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/explore/' . $_GET['id']);
-		}
+		// if (is_mobile())
+		// {
+		// 	HTTP::redirect('/m/explore/' . $_GET['id']);
+		// }
 
 		if ($this->user_id)
 		{
@@ -268,6 +268,10 @@ class main extends AWS_CONTROLLER
 
 		TPL::import_js('js/sweetalert.min.js');
 		TPL::import_css('css/sweetalert.css');
+
+		// 移动版
+
+		TPL::assign('is_mobile', is_mobile());
 
 		TPL::output('explore/index');
 	}

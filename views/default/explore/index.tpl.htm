@@ -22,7 +22,7 @@
                                     <div class="carousel-inner" role="listbox">
                                         <?php foreach ($this->slides as $index => $slide) { ?>
                                             <div class="item <?php if($index == 0) { echo 'active'; } ?>">
-                                                <a href="<?php echo $slide['link']; ?>"><img src="<?php echo get_slide_img_url($slide['id']); ?>" alt="<?php echo $slide['title']; ?>"></a>
+                                                <a href="<?php echo $slide['link']; ?>"><img src="<?php if(!is_mobile(true)) { echo get_slide_img_url($slide['id']); } else { echo get_slide_img_url($slide['id'], 'min');} ?>" alt="<?php echo $slide['title']; ?>"></a>
                                                 <?php if($slide['description']) { ?>
                                                 <div class="carousel-caption">
                                                     <?php echo $slide['description']; ?>
@@ -76,7 +76,7 @@
 
                             <li class="explore-feature-item bgm-blue">
                                 <div class="clearfix">
-                                    <a class="c-white" href="#">
+                                    <a class="c-white" href="publish/">
                                         <div class="card">
                                             <div class="card-body card-padding ">
                                                 <div class="media">
@@ -313,37 +313,37 @@
                         <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-2">
                             <ul class="nav-question-type-items clearfix">
                                 <li class="nav-question-type-item">
-                                    <a href="javascript:void(0);" class="c-lightgreen b-lightgreen">
+                                    <a href="question/quiztype-1" class="c-lightgreen b-lightgreen">
                                         <i class="md md-radio-button-on"></i>
                                         <span>单项选择</span>
                                     </a>
                                 </li>
                                 <li class="nav-question-type-item">
-                                    <a href="javascript:void(0);" class="c-cyan b-cyan">
+                                    <a href="question/quiztype-2" class="c-cyan b-cyan">
                                         <i class="md md-check-box"></i>
                                         <span>多项选择</span>
                                     </a>
                                 </li>
                                 <li class="nav-question-type-item">
-                                    <a href="javascript:void(0);" class="c-amber b-amber">
+                                    <a href="question/quiztype-3" class="c-amber b-amber">
                                         <i class="md md-apps"></i>
                                         <span>成语字谜</span>
                                     </a>
                                 </li>
                                 <li class="nav-question-type-item">
-                                    <a href="javascript:void(0);" class="c-deeppurple b-deeppurple">
+                                    <a href="question/quiztype-4" class="c-deeppurple b-deeppurple">
                                         <i class="md md-border-color"></i>
                                         <span>完形填空</span>
                                     </a>
                                 </li>
                                 <li class="nav-question-type-item">
-                                    <a href="javascript:void(0);" class="c-brown b-brown">
+                                    <a href="question/quiztype--1" class="c-brown b-brown">
                                         <i class="md md-question-answer"></i>
                                         <span>开放讨论</span>
                                     </a>
                                 </li>
                                 <li class="nav-question-type-item">
-                                    <a href="javascript:void(0);" class="c-orange b-orange">
+                                    <a href="question/countdown-1" class="c-orange b-orange">
                                         <i class="md md-access-alarm"></i>
                                         <span>限时答题</span>
                                     </a>
@@ -356,7 +356,7 @@
                                 <?php $colors = array("c-green", "c-blue", "c-yellow", "c-purple", "c-orange"); ?>
                                 <?php for($id = 1; $id <= 5; $id++) { ?>
                                     <li class="nav-question-difficulty-item">
-                                        <a href="javascript:;" data-type="difficulty" data-id="<?php echo $id; ?>" class="<?php echo $colors[$id - 1]; ?>">
+                                        <a href="question/difficulty-<?php echo $id?>" data-type="difficulty" data-id="<?php echo $id; ?>" class="<?php echo $colors[$id - 1]; ?>">
                                             <span class="pull-left c-black"><?php echo $id; ?></span>
                                             <span>
                                                 <?php for($i = 1; $i <= $id; $i++){ ?>
