@@ -33,8 +33,7 @@ class topic_class extends AWS_MODEL
 
 				// 获取问题个数
 
-				$count_query = $this->query_all('SELECT COUNT(*) AS `count` FROM ' . $this->get_table('topic_relation') . ' WHERE topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
-				$topic_list[$key]['question_count'] = reset($count_query)['count'];
+				$topic_list[$key]['question_count'] = $this->count('topic_relation', 'topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
 
 				// 获取分类信息
 
@@ -69,8 +68,7 @@ class topic_class extends AWS_MODEL
 
 				// 获取问题个数
 
-				$count_query = $this->query_all('SELECT COUNT(*) AS `count` FROM ' . $this->get_table('topic_relation') . ' WHERE topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
-				$topic_list[$key]['question_count'] = reset($count_query)['count'];
+				$topic_list[$key]['question_count'] = $this->count('topic_relation', 'topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
 			}
 		}
 
@@ -182,8 +180,7 @@ class topic_class extends AWS_MODEL
 
 			// 获取问题个数
 
-			$count_query = $this->query_all('SELECT COUNT(*) AS `count` FROM ' . $this->get_table('topic_relation') . ' WHERE topic_id = ' . intval($topic_id) . ' AND `type` = "question"');
-			$topics[$topic_id]['question_count'] = reset($count_query)['count'];
+			$topics[$topic_id]['question_count'] = $this->count('topic_relation', 'topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
 		}
 
 		return $topics[$topic_id];

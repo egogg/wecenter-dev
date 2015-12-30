@@ -18,6 +18,9 @@
 	                    	<ul class="dropdown-menu dm-icon pull-right">
 		                    	<?php if($this->user_id) { ?>
 		                    		<li><a href="publish/"><i class="md md-create"></i> 发表问题</a></li>
+		                    		<?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+		                    			<li><a href="publish/article/"><i class="md md-local-library"></i> 发布知识</a></li>
+		                    		<?php } ?>
 		                    		<li class="divider"></li>
 		                    		<li>
 										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><span class="badge badge-important pull-right" style="display:none" id="notifications_unread_mobile"><?php echo $this->user_info['notification_unread']; ?></span><i class="md md-notifications"></i> 站内消息</a>
@@ -55,6 +58,9 @@
 								</a>
 								<ul class="dropdown-menu dm-icon pull-right">
 									<li><a href="publish/"><i class="md md-create"></i> 发表问题</a></li>
+									<?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+		                    			<li><a href="publish/article/"><i class="md md-local-library"></i> 发布知识</a></li>
+		                    		<?php } ?>
 									<li class="divider"></li>
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
 		                           	<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-mail"></i> 我的私信</a></li>
