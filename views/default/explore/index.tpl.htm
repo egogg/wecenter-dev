@@ -22,7 +22,7 @@
                                     <div class="carousel-inner" role="listbox">
                                         <?php foreach ($this->slides as $index => $slide) { ?>
                                             <div class="item <?php if($index == 0) { echo 'active'; } ?>">
-                                                <a href="<?php echo $slide['link']; ?>"><img src="<?php if(!is_mobile(true)) { echo get_slide_img_url($slide['id']); } else { echo get_slide_img_url($slide['id'], 'min');} ?>" alt="<?php echo $slide['title']; ?>"></a>
+                                                <a href="<?php echo $slide['link']; ?>"><img src="<?php echo get_slide_img_url($slide['id']); ?>" alt="<?php echo $slide['title']; ?>"></a>
                                                 <?php if($slide['description']) { ?>
                                                 <div class="carousel-caption">
                                                     <?php echo $slide['description']; ?>
