@@ -180,7 +180,7 @@ class topic_class extends AWS_MODEL
 
 			// 获取问题个数
 
-			$topics[$topic_id]['question_count'] = $this->count('topic_relation', 'topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
+			$topics[$topic_id]['question_count'] = $this->count('topic_relation', 'topic_id = ' . intval($topic_id) . ' AND `type` = "question"');
 		}
 
 		return $topics[$topic_id];

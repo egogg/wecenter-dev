@@ -127,7 +127,7 @@ class ajax extends AWS_CONTROLLER
 			}
 		}
 
-		TPL::assign('user_quiz_messages', $user_quiz_messages);
+		TPL::assign('user_quiz_messages', array_values($user_quiz_messages));
 		TPL::output('block/user_quiz_message.tpl.htm');
 	}
 }

@@ -4,8 +4,8 @@
 		<ul class="question-filter-items">
 			<li class="<?php if(!$this->filter_info OR !$this->filter_info['category_id']) { echo 'active'; } ?>"><a class="question-filter-category" href="javascript:;">全部</a></li>
 			<?php foreach ($this->content_nav_menu as $key => $val) { ?>
-				<?php if($val['id']) { ?>
-					<li class="question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['id']) { echo 'active'; } ?>" data-id="<?php echo $val['id']; ?>">
+				<?php if($val['type'] == 'category') { ?>
+					<li class="question-filter-category <?php if($this->filter_info AND $this->filter_info['category_id'] == $val['type_id']) { echo 'active'; } ?>" data-id="<?php echo $val['type_id']; ?>">
 						<a href="javascript:;"> 
 							<?php echo $val['title']; ?> 
 						</a>

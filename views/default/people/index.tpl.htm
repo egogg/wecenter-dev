@@ -1,5 +1,81 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<div class="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card user-info-basic">
+                    <div class="card-header card-padding">
+                        <div class="media">
+                            <div class="pull-left">
+                                <img class="user-info-avatar" src="<?php echo get_avatar_url($this->user['uid'], 'max'); ?>" alt="<?php echo $this->user['user_name']; ?>">
+                                <div class="m-t-20">
+                                    <a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->user['uid']; ?>);" class="follow user-info-follow <?php if ($this->user_follow_check) { ?>following<?php } ?>">
+                                        <span>
+                                            <?php if ($this->user_follow_check) { ?>
+                                                <i class="md md-check"></i> 正在关注
+                                            <?php } else { ?>
+                                                <i class="md md-add"></i> 添加关注
+                                            <?php } ?>
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h1 class="media-heading">
+                                    <?php echo $this->user['user_name']; ?> <?php if ($this->user['verified']) { ?><i class="icon-v <?php if ($this->user['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->user['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i><?php } ?>
+                                </h1>
+                                <p class="user-signature"><?php echo $this->user['signature']; ?></p>
+                                <ul class="user-info-stats">
+                                    <li class="<?php if($this->user['question_quiz_success_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">正确率 <?php echo number_format($this->user['question_quiz_success_ratio'] * 100, 0); ?>%</li>
+                                    <li>一次通过 <?php echo $this->user['question_quiz_count_POFT']; ?></li>
+                                    <li>被<?php echo $this->user['fans_count']; ?>人关注</li>
+                                    <li>关注<?php echo $this->user['friend_count']; ?>人</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-sm-3 user-info-menu-wrapper">
+                <div class="affix-top user-info-menu">
+                    <div class="user-info-entry">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-assignment-turned-in"></i> 答题</a>
+                            <a href="#" class="list-group-item"> <i class="md md-assignment"></i> 错题</a>
+                            <a href="#" class="list-group-item"> <i class="md md-create"></i> 出题</a>
+                            <a href="#" class="list-group-item"> <i class="md md-local-library"></i> 投稿</a>
+                            <a href="#" class="list-group-item"> <i class="md md-description"></i> 草稿</a>
+                        </div>
+                    </div>
+
+                    <div class="user-info-entry">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-notifications"></i> 我的消息</a>
+                            <a href="#" class="list-group-item"> <i class="md md-favorite"></i> 我的关注</a>
+                            <a href="#" class="list-group-item"> <i class="md md-bookmark"></i> 我的收藏</a>
+                            <a href="#" class="list-group-item"> <i class="md md-attach-money"></i> 我的积分</a>
+                        </div>
+                    </div>
+
+                    <div class="user-info-entry">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item"> <i class="md md-settings"></i> 个人设置</a>
+                            <a href="#" class="list-group-item"> <i class="md md-quick-contacts-mail"></i> 邀请注册</a>
+                        </div>
+                    </div>          
+                </div>
+            </div>
+                
+            <div class="col-sm-9">
+                
+            </div>
+        </div>
+    </div>
+</div>           
+
 <div class="aw-container-wrap">
     <div class="container">
         <div class="row">
