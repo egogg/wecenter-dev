@@ -31,9 +31,9 @@ $(document).ready(function () {
 
 	// 固定用户基本信息
 
-	var userInfoMenu = $('.user-info-menu');
-	userInfoMenu.width($('.user-info-menu-wrapper').width());
-    userInfoMenu.affix({
-        offset: { top: userInfoMenu.offset().top - 10}
-    });
+	// var userInfoMenu = $('.user-info-menu');
+	// userInfoMenu.width($('.user-info-menu-wrapper').width());
+ //    userInfoMenu.affix({
+ //        offset: { top: userInfoMenu.offset().top - 10}
+ //    });
 });

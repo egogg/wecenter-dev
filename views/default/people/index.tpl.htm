@@ -43,17 +43,19 @@
                 <div class="affix-top user-info-menu">
                     <div class="user-info-entry">
                         <div class="list-group">
+                            <a href="#" class="list-group-item"> <i class="md md-camera"></i> 动态</a>
                             <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-assignment-turned-in"></i> 答题</a>
+                            <a href="#" class="list-group-item"> <i class="md md-comment"></i> 讨论</a>
                             <a href="#" class="list-group-item"> <i class="md md-assignment"></i> 错题</a>
                             <a href="#" class="list-group-item"> <i class="md md-create"></i> 出题</a>
-                            <a href="#" class="list-group-item"> <i class="md md-local-library"></i> 投稿</a>
-                            <a href="#" class="list-group-item"> <i class="md md-description"></i> 草稿</a>
+                            <a href="#" class="list-group-item"> <i class="md md-school"></i> 投稿</a>
                         </div>
                     </div>
 
                     <div class="user-info-entry">
                         <div class="list-group">
                             <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-notifications"></i> 我的消息</a>
+                            <a href="#" class="list-group-item"> <i class="md md-description"></i> 我的草稿</a>
                             <a href="#" class="list-group-item"> <i class="md md-favorite"></i> 我的关注</a>
                             <a href="#" class="list-group-item"> <i class="md md-bookmark"></i> 我的收藏</a>
                             <a href="#" class="list-group-item"> <i class="md md-attach-money"></i> 我的积分</a>
@@ -70,7 +72,52 @@
             </div>
                 
             <div class="col-sm-9">
-                
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card hidden-xs">
+                            <div class="card-header card-padding">
+                                <h2>
+                                    <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
+                                </h2>
+                                <ul class="actions">
+                                    <li class="action-item-link">
+                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
+                            <?php TPL::output('block/question_list_lite'); ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card hidden-xs">
+                            <div class="card-header card-padding">
+                                <h2>
+                                    <i class="md md-assignment"></i> 错题 （<?php echo $this->user_failed_question_count; ?>）
+                                </h2>
+                                <ul class="actions">
+                                    <li class="action-item-link">
+                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
+                            <?php TPL::output('block/question_list_lite'); ?>
+                        </div>
+                        <div class="card hidden-xs">
+                            <div class="card-header card-padding">
+                                <h2><i class="md md-create"></i> 出题 （<?php echo $this->user['question_count']; ?>）</h2>
+                                <ul class="actions">
+                                    <li class="action-item-link">
+                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
+                            <?php TPL::output('block/question_list_lite'); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

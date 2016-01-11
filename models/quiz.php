@@ -360,4 +360,49 @@ class quiz_class extends AWS_MODEL
 
 		return $question_ids;
 	}
+
+	public function get_user_answerd_question_count($uid)
+	{
+		return count($this->get_user_answered_question_ids($uid));
+	}
+
+	public function get_user_passed_question_ids($uid)
+	{
+		$results = $this->query_all("SELECT DISTINCT question_id FROM " .  $this->get_table('question_quiz_record') . " WHERE uid = " . intval($uid) . " AND passed = 1");
+		foreach ($results as $key => $value) {
+			$question_ids[] = $value['question_id'];
+		}
+
+		return $question_ids;
+	}
+
+	public function get_user_passed_question_count($uid)
+	{
+		return count($this->get_user_passed_question_ids($uid));
+	}
+
+	public function get_user_failed_question_ids($uid)
+	{
+		$passed_question_ids = $this->get_user_passed_question_ids($uid);
+		if($passed_question_ids)
+		{
+			$where = ' WHERE uid = ' . intval($uid) . ' AND question_id NOT IN(' . implode(',', $passed_question_ids) . ')';
+		}
+		else 
+		{
+			$where = ' WHERE uid = ' . intval($uid);
+		}
+
+		$results = $this->query_all("SELECT DISTINCT question_id FROM " .  $this->get_table('question_quiz_record') . $where);
+		foreach ($results as $key => $value) {
+			$question_ids[] = $value['question_id'];
+		}
+
+		return $question_ids;
+	}
+
+	public function get_user_failed_question_count($uid)
+	{
+		return count($this->get_user_failed_question_ids($uid));
+	}
 }

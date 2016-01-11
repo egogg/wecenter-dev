@@ -1913,4 +1913,65 @@ class question_class extends AWS_MODEL
 	{
 		return $this->recommend_homepage_question_list_total;
 	}
+
+	public function get_user_question_list_publish($uid = 0, $page = 1, $per_page = 5) 
+	{
+		$questions = $this->fetch_page('question', 'published_uid = ' . intval($uid), 'update_time DESC', $page, $per_page);
+	
+		$question_list = array();
+		foreach ($questions as $key => $value) {
+			if ($value['has_attach'])
+			{
+				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
+			}
+
+			$question_list[$key] = $value;
+		}
+
+		return $question_list;
+	}
+
+	public function get_user_question_list_answered($uid = 0, $page = 1, $per_page = 5)
+	{
+		$answered_question_ids = $this->model('quiz')->get_user_answered_question_ids($uid);
+		if($answered_question_ids)
+		{
+			$where = 'question_id IN(' . implode(',', $answered_question_ids) . ')';
+			$questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page);
+		}
+
+		$question_list = array();
+		foreach ($questions as $key => $value) {
+			if ($value['has_attach'])
+			{
+				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
+			}
+
+			$question_list[$key] = $value;
+		}
+
+		return $question_list;
+	}
+
+	public function get_user_question_list_failed($uid = 0, $page = 1, $per_page = 5)
+	{
+		$failed_question_ids = $this->model('quiz')->get_user_failed_question_ids($uid);
+		if($failed_question_ids)
+		{
+			$where = 'question_id IN(' . implode(',', $failed_question_ids) . ')';
+			$questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page);
+		}
+
+		$question_list = array();
+		foreach ($questions as $key => $value) {
+			if ($value['has_attach'])
+			{
+				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
+			}
+
+			$question_list[$key] = $value;
+		}
+
+		return $question_list;
+	}
 }

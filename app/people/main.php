@@ -126,6 +126,12 @@ class main extends AWS_CONTROLLER
 			ACTION_LOG::ADD_ARTICLE
 		)), $this->user_id));
 
+		TPL::assign('user_question_list_publish', $this->model('question')->get_user_question_list_publish($user['uid'], 1, 5));
+		TPL::assign('user_question_list_answered', $this->model('question')->get_user_question_list_answered($user['uid'], 1, 5));
+		TPL::assign('user_answered_question_count', $this->model('quiz')->get_user_answerd_question_count($user['uid']));
+		TPL::assign('user_question_list_failed', $this->model('question')->get_user_question_list_failed($user['uid'], 1, 5));
+		TPL::assign('user_failed_question_count', $this->model('quiz')->get_user_failed_question_count($user['uid']));
+
 		TPL::output('people/index');
 	}
 

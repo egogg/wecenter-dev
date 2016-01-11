@@ -1291,12 +1291,6 @@ ul.answer-actions-right li {
 	color: #fff;
 }
 
-.related-question-info .question-feature-img {
-	width: 80px;
-	height: 50px;
-	border-radius: 4px;
-}
-
 /* 发表问题 */
 
 .publish-question-footer {
@@ -1814,7 +1808,7 @@ li.action-item-link a:hover:before {
     line-height: 18px;
 }
 
-.top-question-stats-item {
+.question-lite-stats-item {
 	display: inline-block;
 	float: left;
 	font-size: 12px;

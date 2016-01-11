@@ -305,37 +305,8 @@
 					<div class="card-header">
 						<h2>你可能喜欢的问题</h2>
 					</div>
-					<div class="listview">
-	            		<div class="lv-body">
-	            			<?php foreach($this->question_related_list AS $key => $val) { ?>
-								<a class="lv-item related-question-info" href="question/<?php echo $val['question_id']; ?>">
-									<div class="media">
-										<div class="pull-left">
-											<?php if(!$val['is_countdown'] AND $val['attachs']) { ?>
-												<?php foreach ($val['attachs'] AS $attach) { ?>
-													<?php if ($attach['is_image']) { ?>
-														<img class="question-feature-image" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>">
-													<?php break; } ?>
-												<?php } ?>	
-									    	<?php } ?>
-										</div>
-										<div class="media-body">
-											<?php if($val['is_countdown']) { ?>
-												<div class="countdown-question-title">
-													<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($val['question_content'], 2, 4, 'UTF-8', '***'); ?>
-												</div>
-											<?php } else { ?>
-												<div class="c-black">
-													<?php echo $val['question_content']; ?>
-												</div>
-											<?php } ?>
-										</div>
-									</div>
-								</a>
-							<?php } ?>
-							<div class="lv-footer"></div>
-	            		</div>
-	            	</div>
+					<?php TPL::assign('question_list_lite', $this->question_related_list); ?>
+					<?php TPL::output('block/question_list_lite'); ?>
 				</div>
 			<?php } ?>
 		</div>

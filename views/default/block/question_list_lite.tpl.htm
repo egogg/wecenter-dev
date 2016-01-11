@@ -1,0 +1,52 @@
+<div class="listview">
+	<div class="lv-body">
+		<?php foreach($this->question_list_lite AS $key => $val) { ?>
+			<a class="lv-item question-list-lite-item" href="question/<?php echo $val['question_id']; ?>">
+				<div class="media">
+					<div class="pull-left">
+						<?php if(!$val['is_countdown'] AND $val['attachs']) { ?>
+							<?php foreach ($val['attachs'] AS $attach) { ?>
+								<?php if ($attach['is_image']) { ?>
+									<img class="question-feature-image" src="<?php echo $attach['thumb']; ?>" alt="<?php echo $attach['attach_name']; ?>">
+								<?php break; } ?>
+							<?php } ?>	
+				    	<?php } ?>
+					</div>
+					<div class="media-body">
+						<?php if($val['is_countdown']) { ?>
+							<div class="countdown-question-title">
+								<?php if($this->user_id AND ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $val['published_uid'])) { ?>
+								<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($val['question_content'], 2, 4, 'UTF-8', '***'); ?>
+								<?php } else { ?>
+									<i class="md md-access-alarm"></i> 限时答题：<?php echo $val['question_content']; ?>
+								<?php } ?>
+							</div>
+						<?php } else { ?>
+							<div class="c-black">
+								<?php echo $val['question_content']; ?>
+							</div>
+						<?php } ?>
+						<div class="m-t-5">
+							<ul class="question-lite-stats-items">
+                                <?php if($val['quiz_id'] > 0) { ?>
+                                    <li class="question-lite-stats-item b-gray c-gray">
+                                        <strong class="question-lite-stats-item-number"><?php echo intval($val['quiz_count_total']); ?></strong> 次答题 
+                                    </li>
+                                
+                                    <li class="pull-right question-lite-stats-item <?php if($val['quiz_success_ratio'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
+                                        <strong class="question-lite-stats-item-number"><?php echo number_format($val['quiz_success_ratio'] * 100, 0); ?>%</strong> 正确率 
+                                    </li>
+                                <?php } else { ?>
+                                    <li class="question-lite-stats-item c-gray b-gray">
+                                        <strong class="question-lite-stats-item-number"><?php echo intval($val['answer_count']); ?></strong> 条讨论 
+                                    </li>
+                                <?php } ?>
+                            </ul> 
+						</div>
+					</div>
+				</div>
+			</a>
+		<?php } ?>
+		<div class="lv-footer"></div>
+	</div>
+</div>
