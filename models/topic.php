@@ -92,7 +92,7 @@ class topic_class extends AWS_MODEL
 			$topic_ids[] = $val['topic_id'];
 		}
 
-		if ($topic_list = $this->fetch_all('topic', 'topic_id IN(' . implode(',', $topic_ids) . ')', 'discuss_count DESC', $limit))
+		if ($topic_list = $this->fetch_all('topic', 'topic_id IN(' . implode(',', $topic_ids) . ') AND is_parent = 0', 'discuss_count DESC', $limit))
 		{
 			foreach ($topic_list AS $key => $val)
 			{

@@ -33,7 +33,7 @@ $(document).ready(function () {
 
 	// var userInfoMenu = $('.user-info-menu');
 	// userInfoMenu.width($('.user-info-menu-wrapper').width());
- //    userInfoMenu.affix({
- //        offset: { top: userInfoMenu.offset().top - 10}
- //    });
+	// userInfoMenu.affix({
+	//     offset: { top: userInfoMenu.offset().top - 10}
+	// });
 });
