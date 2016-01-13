@@ -267,4 +267,89 @@ class main extends AWS_CONTROLLER
 		TPL::import_js('js/app/rank.js');
 		TPL::output('people/square');
 	}
+
+	public function following_action()
+	{
+		if (isset($_GET['notification_id']))
+		{
+			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
+		}
+
+		// if (is_mobile())
+		// {
+		// 	HTTP::redirect('/m/people/' . $_GET['id']);
+		// }
+
+        if (is_digits($_GET['id']))
+        {
+            if (!$user = $this->model('account')->get_user_info_by_uid($_GET['id'], TRUE))
+            {
+                $user = $this->model('account')->get_user_info_by_username($_GET['id'], TRUE);
+            }
+        }
+        else if ($user = $this->model('account')->get_user_info_by_username($_GET['id'], TRUE))
+        {
+
+        }
+        else
+        {
+            $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
+        }
+
+        if (!$user)
+        {
+            H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');
+        }
+
+        // if (urldecode($user['url_token']) != $_GET['id'])
+        // {
+        //     HTTP::redirect('/people/' . $user['url_token']);
+        // }
+
+        // $this->model('people')->update_views($user['uid']);
+
+		TPL::assign('user', $user);
+
+		// $job_info = $this->model('account')->get_jobs_by_id($user['job_id']);
+
+		// TPL::assign('job_name', $job_info['job_name']);
+
+		if ($user['weibo_visit'])
+		{
+			if ($users_sina = $this->model('openid_weibo_oauth')->get_weibo_user_by_uid($user['uid']))
+			{
+				TPL::assign('sina_weibo_url', 'http://www.weibo.com/' . $users_sina['id']);
+			}
+		}
+
+		TPL::assign('user_follow_check', $this->model('follow')->user_follow_check($this->user_id, $user['uid']));
+
+		$this->crumb(AWS_APP::lang()->_t('%s 的个人主页', $user['user_name']), 'people/' . $user['url_token']);
+
+		TPL::import_css('css/user.css');
+
+		TPL::assign('user_answered_question_count', $this->model('quiz')->get_user_answerd_question_count($user['uid']));
+		TPL::assign('user_failed_question_count', $this->model('quiz')->get_user_failed_question_count($user['uid']));
+
+		if($_GET['type'] == 'friends') 
+		{
+			TPL::assign('friends_list', $this->model('follow')->get_user_friends($user['uid'], 8));
+
+			TPL::assign('current_menu', 'following_friends');
+		} 
+		else if($_GET['type'] == 'fans')
+		{
+			TPL::assign('fans_list', $this->model('follow')->get_user_fans($user['uid'], 8));
+
+			TPL::assign('current_menu', 'following_fans');
+		}
+		else
+		{
+			TPL::assign('focus_topics', $this->model('topic')->get_focus_topic_list($user['uid'], 8));
+
+			TPL::assign('current_menu', 'following_topics');
+		}
+
+		TPL::output('people/following');
+	}
 }

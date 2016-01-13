@@ -3,77 +3,8 @@
 <div class="container">
     <div id="content">
         <div class="row">
-            <div class="col-sm-3 user-info-menu-wrapper">
-                <div class="user-info-menu">
-                    <div class="card user-info-basic text-center">
-                        <div class="card-header card-padding">
-                            <div class="m-b-10">
-                                <img class="user-info-avatar" src="<?php echo get_avatar_url($this->user['uid'], 'max'); ?>" alt="<?php echo $this->user['user_name']; ?>">
-                            </div>
-                            <div>
-                                <h1>
-                                    <?php echo $this->user['user_name']; ?> <?php if ($this->user['verified']) { ?><i class="icon-v <?php if ($this->user['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->user['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i><?php } ?>
-                                    <small>
-                                        <ul class="user-info-stats">
-                                            <li class="<?php if($this->user['question_quiz_success_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">正确率 <?php echo number_format($this->user['question_quiz_success_ratio'] * 100, 0); ?>%</li>
-                                            <li>一次通过 <?php echo $this->user['question_quiz_count_POFT']; ?></li>
-                                            <li>答题 <?php echo $this->user['question_quiz_count_total']; ?></li>
-                                            <li>出题 <?php echo $this->user['question_count']; ?></li>
-                                            <li>积分 <?php echo $this->user['integral']; ?></li>
-                                        </ul>
-                                    </small>
-                                </h1>
-                                <p class="user-signature"><?php echo $this->user['signature']; ?></p>
-                                <div class="m-t-20">
-                                    <a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->user['uid']; ?>);" class="follow user-info-follow <?php if ($this->user_follow_check) { ?>following<?php } ?>">
-                                        <span>
-                                            <?php if ($this->user_follow_check) { ?>
-                                                <i class="md md-check"></i> 正在关注
-                                            <?php } else { ?>
-                                                <i class="md md-add"></i> 添加关注
-                                            <?php } ?>
-                                        </span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
-
-                    <div class="user-info-entry">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item"> <i class="md md-add-to-photos"></i> 关注的专题</a>
-                            <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-person-add"></i> 关注的人</a>
-                            <a href="#" class="list-group-item"> <i class="md md-people"></i> 被人关注</a>
-                        </div>
-                    </div>
-
-                    <div class="user-info-entry">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-assignment-turned-in"></i> 答题</a>
-                            <a href="#" class="list-group-item"> <i class="md md-comment"></i> 讨论</a>
-                            <a href="#" class="list-group-item"> <i class="md md-assignment"></i> 错题</a>
-                            <a href="#" class="list-group-item"> <i class="md md-create"></i> 出题</a>
-                            <!-- <a href="#" class="list-group-item"> <i class="md md-school"></i> 投稿</a> -->
-                        </div>
-                    </div>
-
-                    <div class="user-info-entry">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item active"><span class="badge">119</span> <i class="md md-notifications"></i> 我的消息</a>
-                            <a href="#" class="list-group-item"> <i class="md md-description"></i> 我的草稿</a>
-                            <a href="#" class="list-group-item"> <i class="md md-favorite"></i> 我的关注</a>
-                            <a href="#" class="list-group-item"> <i class="md md-bookmark"></i> 我的收藏</a>
-                            <a href="#" class="list-group-item"> <i class="md md-attach-money"></i> 我的积分</a>
-                        </div>
-                    </div>
-
-                    <div class="user-info-entry">
-                        <div class="list-group">
-                            <a href="#" class="list-group-item"> <i class="md md-settings"></i> 个人设置</a>
-                            <a href="#" class="list-group-item"> <i class="md md-quick-contacts-mail"></i> 邀请注册</a>
-                        </div>
-                    </div>          
-                </div>
+            <div class="col-sm-3">
+                <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
             </div>
                 
             <div class="col-sm-9">
@@ -86,7 +17,7 @@
                                 </h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-topics">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -115,7 +46,7 @@
                                 </h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-friends">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>
@@ -182,7 +113,7 @@
                                 </h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-fans">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>

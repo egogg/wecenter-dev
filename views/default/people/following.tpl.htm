@@ -1,0 +1,63 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-3">
+                <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
+            </div>
+                
+            <div class="col-sm-9">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card hidden-xs">
+                            
+                            <?php if($this->current_menu == 'following_friends') { ?>
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-person-add"></i> 关注 <?php echo $this->user['friend_count']; ?> 人
+                                    </h2>
+                                </div>
+                            <?php } else if ($this->current_menu == 'following_fans') { ?>
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-people"></i> 被 <?php echo $this->user['fans_count']; ?> 人关注
+                                    </h2>
+                                </div>
+                            <?php } else { ?>
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-add-to-photos"></i> 关注的专题 （<?php echo $this->user['topic_focus_count']; ?>）
+                                    </h2>
+                                </div>
+                                <div class="card-body card-padding p-t-0">
+                                    <div class="topic-list-lite clearfix">
+                                        <?php if ($this->focus_topics) { ?>
+                                            <?php foreach ($this->focus_topics AS $key => $val) { ?>
+                                                <div class="col-xs-3">
+                                                    <a class="" href="topic/<?php echo $val['topic_id'];?>"><img class="img-responsive" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
+                                                        <div class="topic-title">
+                                                            <?php echo $val['topic_title'];?>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var PEOPLE_USER_ID = '<?php echo $this->user['uid']; ?>';
+</script>
+
+<script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/people.js"></script>
+
+<?php TPL::output('global/footer.tpl.htm'); ?>

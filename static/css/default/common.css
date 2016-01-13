@@ -2641,6 +2641,11 @@ body #content {
     padding-left: 13px;
 }
 
+.user-info-entry .count-tag {
+	float: right;
+	padding: 0 6px;
+}
+
 .user-info-menu {
 	z-index: 100;
 }
