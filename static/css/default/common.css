@@ -648,6 +648,7 @@ header .main-nav ul li a.active {
 .topic-description {
 	font-size: 12px;
 	height: 3em;
+	overflow: hidden;
 }
 
 .topic-item .card-header {
@@ -674,29 +675,12 @@ header .main-nav ul li a.active {
     z-index: 50;
 }
 
-.topic-detail-info-items {
-	display: table;
-	padding: 15px 0;
-	width: 100%;
-}
-
-.topic-detail-info-item {
-	display: table-cell;
-	width: 50%;
-	text-align: center;
-    border-left: 1px solid #eee;
-}
-
-.topic-detail-info-item:first-child {
-	border-left: none;
-}
-
 .topic-details-info a {
 	color: #03A9F4;
 }
 
 .topic-details-content {
-	height: 75px;
+	height: 68px;
 	overflow: hidden;
 }
 
@@ -2262,8 +2246,26 @@ i.dot {
 }
 
 .user-list-add-foucs {
-	float: right;
-	margin-right: 25px;
+	right: 15px;
+    position: absolute;
+    top: 50%;
+    margin-top: -14px;
+}
+
+.user-list-add-foucs a.follow {
+	padding: 2px 8px;
+	font-size: 12px;
+}
+
+.listview .lv-item .user-list-actions {
+	right: 130px;
+}
+
+@media (max-width: 767px) {
+	.user-list-add-foucs {
+		top: 23px;
+		right: 10px;
+	}
 }
 
 .user-list-rank-num {
@@ -2665,11 +2667,11 @@ body #content {
 	line-height: 20px;
 }
 
-.topic-list-lite [class*="col-"] {
+.topic-square-lite [class*="col-"] {
 	padding: 5px;
 }
 
-.topic-list-lite .topic-title {
+.topic-square-lite .topic-title {
 	padding: 0 5px;
     color: #fff;
     position: relative;
@@ -2678,6 +2680,30 @@ body #content {
     width: 100%;
     background: rgba(0, 0, 0, 0.3);
     max-height: 20px;
+}
+
+.topic-list-lite .topic-img {
+	width: auto;
+	height: 93px;
+}
+
+@media (max-width: 767px) {
+	.topic-list-lite .topic-img-wrapper {
+		display: block;
+		width: 93px;
+		height: 93px;
+		overflow: hidden;
+		margin-right: 15px;
+	}
+}
+
+.topic-list-lite .topic-description {
+	height: 1.5em;
+}
+
+.topic-list-lite a.follow {
+	font-size: 11px;
+	padding: 2px 8px;
 }
 
 /*移动版*/

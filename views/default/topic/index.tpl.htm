@@ -16,7 +16,15 @@
 			<div class="col-sm-7 p-l-0">
 				<div class="card topic-details">
 					<div class="card-header card-padding p-b-0">
-	        			<h2><span class="topic-title-mark">专题：</span><?php echo $this->topic_info['topic_title']; ?></h2>
+	        			<h2>
+	        				<span class="topic-title-mark">专题：</span><?php echo $this->topic_info['topic_title']; ?>
+	        			</h2>
+	        			<ul class="topic-stats m-t-10">
+							<li>收录<strong class="c-lightblue"> <?php echo $this->topic_info['question_count']; ?></strong> 个问题</li> 
+							<li>
+								<a class="c-lightblue" href="topic/channel-topic__topic_id-<?php echo $this->parent_topic_info['topic_id']; ?>"><i class="md md-local-offer"></i> <?php echo $this->parent_topic_info['topic_title']; ?></a>
+							</li>
+						</ul>
 	        			<?php if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
 		        			<ul class="actions">
 		                        <li class="dropdown action-show">
@@ -37,44 +45,20 @@
 						<div class="topic-details-content">
 							<p><?php echo $this->topic_info['topic_description']; ?></p>
 						</div>
-					</div>
-					<div class="card-body card-padding topic-detail-info-footer">
-						<ul class="topic-detail-info-items">
-							<li class="topic-detail-info-item">收录<strong class="c-lightblue"> <?php echo $this->topic_info['question_count']; ?></strong> 个问题</li> 
-							<li class="topic-detail-info-item topic-details-category">
-								<a class="c-lightblue" href="topic/channel-topic__topic_id-<?php echo $this->parent_topic_info['topic_id']; ?>"><i class="md md-local-offer"></i> <?php echo $this->parent_topic_info['topic_title']; ?></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="card">
-					<div class="card-body card-padding">
-						<div class="topic-details-foucs">
-				        	<div class="topic-details-add-foucs clearfix">
-			                	<?php if ($this->user_id) { ?>
-									<a href="javascript:;" onclick="AWS.User.follow($(this), 'topic', <?php echo $this->topic_info['topic_id']; ?>);" class="follow <?php if ($this->topic_info['has_focus']) { ?> following <?php } ?>">
-										<span>
-											<?php if ($this->topic_info['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
-										</span> 
-										<!-- <em>|</em>  -->
-										<!-- <b><?php echo $this->topic_info['focus_count']; ?></b> -->
-									</a>
-								<?php } ?>
-			                </div>
-			                <div class="follow-user-header">共<?php echo $this->topic_info['focus_count']; ?>人正在关注该专题</div>
-			                <div class="follow-user-list" id="focus_users">
-			                </div>
-				        </div>
+						<div class="topic-details-add-foucs clearfix">
+		                	<?php if ($this->user_id) { ?>
+								<a href="javascript:;" onclick="AWS.User.follow($(this), 'topic', <?php echo $this->topic_info['topic_id']; ?>);" class="follow <?php if ($this->topic_info['has_focus']) { ?> following <?php } ?>">
+									<span>
+										<?php if ($this->topic_info['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
+									</span>
+								</a>
+							<?php } ?>
+		                </div>
 					</div>
 				</div>
 			</div>
 		</div>
-			
+
 		<div class="row">
 			<!-- 问题列表 -->
 
@@ -92,6 +76,15 @@
 			</div>
 			
 			<div class="sidebar col-sm-4 hidden-xs">
+				<div class="card">
+					<div class="card-header p-b-0">
+						<h2>共 <?php echo $this->topic_info['focus_count']; ?> 人关注该专题</h2>
+					</div>
+					<div class="card-body card-padding">
+						<div class="follow-user-list" id="focus_users">
+			            </div>
+					</div>
+				</div>
 				<!-- 推荐专题 -->
 				<div class="card sidebar-hot-topics">
 					<div class="card-header">

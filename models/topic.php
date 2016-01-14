@@ -100,6 +100,10 @@ class topic_class extends AWS_MODEL
 				{
 					$topic_list[$key]['url_token'] = urlencode($val['topic_title']);
 				}
+
+				// 获取问题个数
+
+				$topic_list[$key]['question_count'] = $this->count('topic_relation', 'topic_id = ' . intval($val['topic_id']) . ' AND `type` = "question"');
 			}
 		}
 

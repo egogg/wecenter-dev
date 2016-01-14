@@ -3,47 +3,41 @@
 <div class="container">
     <div id="content">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-3 hidden-xs">
                 <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
             </div>
                 
             <div class="col-sm-9">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="card hidden-xs">
-                            
-                            <?php if($this->current_menu == 'following_friends') { ?>
-                                <div class="card-header card-padding">
-                                    <h2>
-                                        <i class="md md-person-add"></i> 关注 <?php echo $this->user['friend_count']; ?> 人
-                                    </h2>
-                                </div>
-                            <?php } else if ($this->current_menu == 'following_fans') { ?>
-                                <div class="card-header card-padding">
-                                    <h2>
-                                        <i class="md md-people"></i> 被 <?php echo $this->user['fans_count']; ?> 人关注
-                                    </h2>
-                                </div>
-                            <?php } else { ?>
-                                <div class="card-header card-padding">
-                                    <h2>
+                        <div class="card">
+                            <div class="card-header card-padding">
+                                <h2>
+                                    <?php if($this->current_menu == 'following_friends') { ?>
+                                        <i class="md md-person-add"></i> 关注 <?php echo $this->user['friend_count']; ?> 人 
+                                    <?php } else if ($this->current_menu == 'following_fans') { ?>
+                                        <i class="md md-people"></i> 被 <?php echo $this->user['fans_count']; ?> 人关注 
+                                    <?php } else { ?>
                                         <i class="md md-add-to-photos"></i> 关注的专题 （<?php echo $this->user['topic_focus_count']; ?>）
-                                    </h2>
-                                </div>
-                                <div class="card-body card-padding p-t-0">
-                                    <div class="topic-list-lite clearfix">
-                                        <?php if ($this->focus_topics) { ?>
-                                            <?php foreach ($this->focus_topics AS $key => $val) { ?>
-                                                <div class="col-xs-3">
-                                                    <a class="" href="topic/<?php echo $val['topic_id'];?>"><img class="img-responsive" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
-                                                        <div class="topic-title">
-                                                            <?php echo $val['topic_title'];?>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            <?php } ?>
-                                        <?php } ?>
-                                    </div>
+                                    <?php } ?>
+                                </h2>
+                                <ul class="actions">
+                                    <li class="action-item-link">
+                                       <a href="people/<?php echo $this->user['url_token']; ?>"><i class="md md-chevron-left c-lightblue"></i>返回</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <?php if($this->current_menu == 'following_friends') { ?>
+                                
+                            <?php } else if ($this->current_menu == 'following_fans') { ?>
+                                
+                            <?php } else { ?>
+                                <div class="topic-list-lite clearfix">
+                                    <?php if ($this->focus_topics) { ?>
+                                        <?php TPL::assign('topic_list_lite', $this->focus_topics); ?>
+                                        <?php TPL::output('block/topic_list_lite.tpl.htm'); ?>
+                                    <?php } ?>
                                 </div>
                             <?php } ?>
                         </div>
