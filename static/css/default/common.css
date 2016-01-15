@@ -2687,6 +2687,10 @@ body #content {
 	height: 93px;
 }
 
+.topic-list-lite .lv-title {
+	font-weight: bold;
+}
+
 @media (max-width: 767px) {
 	.topic-list-lite .topic-img-wrapper {
 		display: block;

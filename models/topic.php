@@ -75,7 +75,7 @@ class topic_class extends AWS_MODEL
 		return $topic_list;
 	}
 
-	public function get_focus_topic_list($uid, $limit = 20)
+	public function get_focus_topic_list($uid, $page = null, $limit = 20)
 	{
 		if (!$uid)
 		{
@@ -92,7 +92,7 @@ class topic_class extends AWS_MODEL
 			$topic_ids[] = $val['topic_id'];
 		}
 
-		if ($topic_list = $this->fetch_all('topic', 'topic_id IN(' . implode(',', $topic_ids) . ') AND is_parent = 0', 'discuss_count DESC', $limit))
+		if ($topic_list = $this->fetch_page('topic', 'topic_id IN(' . implode(',', $topic_ids) . ') AND is_parent = 0', 'discuss_count DESC', $page, $limit))
 		{
 			foreach ($topic_list AS $key => $val)
 			{
@@ -427,7 +427,25 @@ class topic_class extends AWS_MODEL
 		}
 
 		// 更新个人计数
-		$focus_count = $this->count('topic_focus', 'uid = ' . intval($uid));
+
+		$parent_topics = $this->fetch_all('topic', 'is_parent = 1');
+
+
+		if($parent_topics)
+		{
+			foreach ($parent_topics as $key => $value) 
+			{
+				$parent_topic_ids[] = $value['topic_id']; 	
+			}
+
+			$where = 'uid = ' . intval($uid) . ' AND topic_id NOT IN (' . implode($parent_topic_ids, ',') . ')';
+		}
+		else
+		{
+			$where = 'uid = ' . intval($uid);
+		}
+
+		$focus_count = $this->count('topic_focus', $where);
 
 		$this->model('account')->update_users_fields(array(
 			'topic_focus_count' => $focus_count

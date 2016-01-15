@@ -156,7 +156,7 @@ class ajax extends AWS_CONTROLLER
 
 	public function topics_action()
 	{
-		if ($topic_list = $this->model('topic')->get_focus_topic_list($_GET['uid'], (intval($_GET['page']) * $this->per_page) . ", {$this->per_page}") AND $this->user_id)
+		if ($topic_list = $this->model('topic')->get_focus_topic_list($_GET['uid'], intval($_GET['page']), $this->per_page ) AND $this->user_id)
 		{
 			$topic_ids = array();
 
