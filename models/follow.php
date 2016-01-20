@@ -110,11 +110,12 @@ class follow_class extends AWS_MODEL
 	 * 获取单个用户的粉丝列表
 	 *
 	 * @param  $friend_uid
-	 * @param  $limit
+	 * @param  $page 
+	 * @param  $per_page
 	 */
-	public function get_user_fans($friend_uid, $limit = 20)
+	public function get_user_fans($friend_uid, $page, $per_page)
 	{
-		if (!$user_fans = $this->fetch_all('user_follow', 'friend_uid = ' . intval($friend_uid), 'add_time DESC', $limit))
+		if (!$user_fans = $this->fetch_page('user_follow', 'friend_uid = ' . intval($friend_uid), 'add_time DESC', $page, $per_page))
 		{
 			return false;
 		}
@@ -131,11 +132,12 @@ class follow_class extends AWS_MODEL
 	 * 获取单个用户的关注列表(我关注的人)
 	 *
 	 * @param  $friend_uid
-	 * @param  $limit
+	 * @param  $page
+	 * @param  $per_page
 	 */
-	public function get_user_friends($fans_uid, $limit = 20)
+	public function get_user_friends($fans_uid, $page, $per_page)
 	{
-		if (!$user_follow = $this->fetch_all('user_follow', 'fans_uid = ' . intval($fans_uid), 'add_time DESC', $limit))
+		if (!$user_follow = $this->fetch_page('user_follow', 'fans_uid = ' . intval($fans_uid), 'add_time DESC', $page, $per_page))
 		{
 			return false;
 		}

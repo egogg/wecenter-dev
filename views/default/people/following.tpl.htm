@@ -29,9 +29,29 @@
                             </div>
 
                             <?php if($this->current_menu == 'following_friends') { ?>
-                                
+                                <div class="user-list-lite">
+                                    <?php if($this->friends_list) { ?>
+                                        <div class="listview">
+                                            <div class="lv-body" id="friends-list-items">
+                                                <?php TPL::assign('user_list_lite', $this->friends_list); ?>
+                                                <?php TPL::output('block/user_list_lite.tpl.htm'); ?>
+                                            </div>
+                                            <div class="lv-footer"></div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
                             <?php } else if ($this->current_menu == 'following_fans') { ?>
-                                
+                                <div class="user-list-lite">
+                                    <?php if($this->fans_list) { ?>
+                                        <div class="listview">
+                                            <div class="lv-body" id="fans-list-items">
+                                                <?php TPL::assign('user_list_lite', $this->fans_list); ?>
+                                                <?php TPL::output('block/user_list_lite.tpl.htm'); ?>
+                                            </div>
+                                            <div class="lv-footer"></div>
+                                        </div>
+                                    <?php } ?>
+                                </div>
                             <?php } else { ?>
                                 <div class="topic-list-lite clearfix">
                                     <?php if ($this->focus_topics) { ?>

@@ -109,9 +109,8 @@ class main extends AWS_CONTROLLER
 		TPL::import_css('css/user.css');
 
 		TPL::assign('reputation_topics', $this->model('people')->get_user_reputation_topic($user['uid'], $user['reputation'], 12));
-
-		TPL::assign('fans_list', $this->model('follow')->get_user_fans($user['uid'], 8));
-		TPL::assign('friends_list', $this->model('follow')->get_user_friends($user['uid'], 8));
+		TPL::assign('fans_list', $this->model('follow')->get_user_fans($user['uid'], 1, 8));
+		TPL::assign('friends_list', $this->model('follow')->get_user_friends($user['uid'], 1, 8));
 		TPL::assign('focus_topics', $this->model('topic')->get_focus_topic_list($user['uid'], 1, 8));
 
 		TPL::assign('user_actions_questions', $this->model('actions')->get_user_actions($user['uid'], 5, ACTION_LOG::ADD_QUESTION, $this->user_id));
@@ -242,11 +241,11 @@ class main extends AWS_CONTROLLER
 			if ($uids AND $this->user_id)
 			{
 				$users_follow_check = $this->model('follow')->users_follow_check($this->user_id, $uids);
-			}
 
-			foreach ($users_list as $key => $val)
-			{
-				$users_list[$key]['focus'] = $users_follow_check[$val['uid']];
+				foreach ($users_list as $key => $val)
+				{
+					$users_list[$key]['focus'] = $users_follow_check[$val['uid']];
+				}
 			}
 
 			TPL::assign('users_list', array_values($users_list));
@@ -333,13 +332,42 @@ class main extends AWS_CONTROLLER
 
 		if($_GET['type'] == 'friends') 
 		{
-			TPL::assign('friends_list', $this->model('follow')->get_user_friends($user['uid'], get_setting('contents_per_page')));
+			$user_list = $this->model('follow')->get_user_friends($user['uid'], 1, get_setting('contents_per_page'));
+			foreach ($user_list as $key => $val) 
+			{
+				$uids[] = $val['uid'];
+			}
+			if ($uids AND $this->user_id)
+			{
+				$users_follow_check = $this->model('follow')->users_follow_check($this->user_id, $uids);
+
+				foreach ($user_list as $key => $val)
+				{
+					$user_list[$key]['follow_check'] = $users_follow_check[$val['uid']];
+				}
+			}
+
+			TPL::assign('friends_list', $user_list);
 
 			TPL::assign('current_menu', 'following_friends');
 		} 
 		else if($_GET['type'] == 'fans')
 		{
-			TPL::assign('fans_list', $this->model('follow')->get_user_fans($user['uid'], get_setting('contents_per_page')));
+			$user_list = $this->model('follow')->get_user_fans($user['uid'], 1, get_setting('contents_per_page'));
+			foreach ($user_list as $key => $val) 
+			{
+				$uids[] = $val['uid'];
+			}
+			if ($uids AND $this->user_id)
+			{
+				$users_follow_check = $this->model('follow')->users_follow_check($this->user_id, $uids);
+
+				foreach ($user_list as $key => $val)
+				{
+					$user_list[$key]['follow_check'] = $users_follow_check[$val['uid']];
+				}
+			}
+			TPL::assign('fans_list', $user_list);
 
 			TPL::assign('current_menu', 'following_fans');
 		}

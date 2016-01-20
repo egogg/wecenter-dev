@@ -123,11 +123,11 @@ class ajax extends AWS_CONTROLLER
 		switch ($_GET['type'])
 		{
 			case 'follows':
-				$users_list = $this->model('follow')->get_user_friends($_GET['uid'], (intval($_GET['page']) * $this->per_page) . ", {$this->per_page}");
+				$users_list = $this->model('follow')->get_user_friends($_GET['uid'], intval($_GET['page']), $this->per_page);
 			break;
 
 			case 'fans':
-				$users_list = $this->model('follow')->get_user_fans($_GET['uid'], (intval($_GET['page']) * $this->per_page) . ", {$this->per_page}");
+				$users_list = $this->model('follow')->get_user_fans($_GET['uid'], intval($_GET['page']), $this->per_page);
 			break;
 		}
 
@@ -156,7 +156,7 @@ class ajax extends AWS_CONTROLLER
 
 	public function topics_action()
 	{
-		if ($topic_list = $this->model('topic')->get_focus_topic_list($_GET['uid'], intval($_GET['page']), $this->per_page ) AND $this->user_id)
+		if ($topic_list = $this->model('topic')->get_focus_topic_list($_GET['uid'], intval($_GET['page']), $this->per_page) AND $this->user_id)
 		{
 			$topic_ids = array();
 
