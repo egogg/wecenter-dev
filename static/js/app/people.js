@@ -13,6 +13,11 @@ $(document).ready(function () {
 	AWS.load_list_view(G_BASE_URL + '/people/ajax/follows/type-fans__uid-' + PEOPLE_USER_ID, $('#load-more-focus-fans-list-lite'), $('#fans-list-items'));	// 粉丝	
 	AWS.load_list_view(G_BASE_URL + '/people/ajax/topics/uid-' + PEOPLE_USER_ID, $('#load-more-focus-topics-list-lite'), $('#topic-list-lite-items'));	// 话题
 
+	AWS.load_list_view(G_BASE_URL + '/people/ajax/questions/uid-' + PEOPLE_USER_ID + '__type-answered', $('#load-more-user-questions-answered'), $('#user-questions-answered-list'));
+	AWS.load_list_view(G_BASE_URL + '/people/ajax/questions/uid-' + PEOPLE_USER_ID + '__type-failed', $('#load-more-user-questions-failed'), $('#user-questions-failed-list'));
+	AWS.load_list_view(G_BASE_URL + '/people/ajax/questions/uid-' + PEOPLE_USER_ID + '__type-publish', $('#load-more-user-questions-publish'), $('#user-questions-publish-list'));
+	AWS.load_list_view(G_BASE_URL + '/people/ajax/user_actions/uid-' + PEOPLE_USER_ID + '__actions-201', $('#load-more-user-questions-comments'), $('#user-questions-comment-list'));	// 参与的问题
+	
 	// AWS.load_list_view(G_BASE_URL + '/account/ajax/integral_log/', $('#bp_user_integral'), $('#contents_user_integral'));	// 积分
 	
 	if (window.location.hash)

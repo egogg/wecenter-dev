@@ -385,4 +385,101 @@ class main extends AWS_CONTROLLER
 
 		TPL::output('people/following');
 	}
+
+	public function questions_action()
+	{
+		if (isset($_GET['notification_id']))
+		{
+			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
+		}
+
+		// if (is_mobile())
+		// {
+		// 	HTTP::redirect('/m/people/' . $_GET['id']);
+		// }
+
+        if (is_digits($_GET['id']))
+        {
+            if (!$user = $this->model('account')->get_user_info_by_uid($_GET['id'], TRUE))
+            {
+                $user = $this->model('account')->get_user_info_by_username($_GET['id'], TRUE);
+            }
+        }
+        else if ($user = $this->model('account')->get_user_info_by_username($_GET['id'], TRUE))
+        {
+
+        }
+        else
+        {
+            $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
+        }
+
+        if (!$user)
+        {
+            H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');
+        }
+
+        // if (urldecode($user['url_token']) != $_GET['id'])
+        // {
+        //     HTTP::redirect('/people/' . $user['url_token']);
+        // }
+
+        // $this->model('people')->update_views($user['uid']);
+
+		TPL::assign('user', $user);
+
+		// $job_info = $this->model('account')->get_jobs_by_id($user['job_id']);
+
+		// TPL::assign('job_name', $job_info['job_name']);
+
+		if ($user['weibo_visit'])
+		{
+			if ($users_sina = $this->model('openid_weibo_oauth')->get_weibo_user_by_uid($user['uid']))
+			{
+				TPL::assign('sina_weibo_url', 'http://www.weibo.com/' . $users_sina['id']);
+			}
+		}
+
+		TPL::assign('user_follow_check', $this->model('follow')->user_follow_check($this->user_id, $user['uid']));
+
+		$this->crumb(AWS_APP::lang()->_t('%s 的个人主页', $user['user_name']), 'people/' . $user['url_token']);
+
+		TPL::import_css('css/user.css');
+
+		TPL::assign('user_answered_question_count', $this->model('quiz')->get_user_answerd_question_count($user['uid']));
+		TPL::assign('user_failed_question_count', $this->model('quiz')->get_user_failed_question_count($user['uid']));
+
+		if($_GET['type'] == 'answered') 
+		{
+			TPL::assign('user_question_list_answered', $this->model('question')->get_user_question_list_answered($user['uid'], 1, get_setting('contents_per_page')));
+
+			TPL::assign('current_menu', 'questions_answered');
+		} 
+		else if($_GET['type'] == 'comments')
+		{
+			TPL::assign('user_actions_answers', $this->model('actions')->get_user_actions($user['uid'], get_setting('contents_per_page'), ACTION_LOG::ANSWER_QUESTION, $this->user_id));
+
+			TPL::assign('current_menu', 'questions_comments');
+		}
+		else if($_GET['type'] == 'failed')
+		{
+			TPL::assign('user_question_list_failed', $this->model('question')->get_user_question_list_failed($user['uid'], 1, get_setting('contents_per_page')));
+
+			TPL::assign('current_menu', 'questions_failed');
+		}
+		else if($_GET['type'] == 'publish')
+		{
+			TPL::assign('user_question_list_publish', $this->model('question')->get_user_question_list_publish($user['uid'], 1, get_setting('contents_per_page')));
+			
+			TPL::assign('current_menu', 'questions_publish');
+		}
+		else
+		{
+			TPL::assign('user_question_list_answered', $this->model('question')->get_user_question_list_answered($user['uid'], 1, get_setting('contents_per_page')));
+
+			TPL::assign('current_menu', 'questions_answered');
+		}
+
+		TPL::output('people/questions');
+	}
 }

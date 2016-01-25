@@ -65,10 +65,10 @@
 
         <div class="user-info-entry">
             <div class="list-group">
-                <a href="#" class="list-group-item"><i class="md md-assignment-turned-in"></i> 答题 <span class="count-tag"><?php echo $this->user_answered_question_count; ?></span></a>
-                <a href="#" class="list-group-item"> <i class="md md-comment"></i> 讨论 <span class="count-tag"><?php echo $this->user['answer_count']; ?></span></a>
-                <a href="#" class="list-group-item"> <i class="md md-assignment"></i> 错题 <span class="count-tag"><?php echo $this->user_failed_question_count; ?></span></a>
-                <a href="#" class="list-group-item"> <i class="md md-create"></i> 出题 <span class="count-tag"><?php echo $this->user['question_count']; ?></span></a>
+                <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-answered" class="list-group-item <?php if($this->current_menu == 'questions_answered') { ?>active<?php } ?>"><i class="md md-assignment-turned-in"></i> 答题 <span class="count-tag"><?php echo $this->user_answered_question_count; ?></span></a>
+                <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-comments" class="list-group-item <?php if($this->current_menu == 'questions_comments') { ?>active<?php } ?>"> <i class="md md-comment"></i> 讨论 <span class="count-tag"><?php echo $this->user['answer_count']; ?></span></a>
+                <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-failed" class="list-group-item <?php if($this->current_menu == 'questions_failed') { ?>active<?php } ?>"> <i class="md md-assignment"></i> 错题 <span class="count-tag"><?php echo $this->user_failed_question_count; ?></span></a>
+                <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-publish" class="list-group-item <?php if($this->current_menu == 'questions_publish') { ?>active<?php } ?>"> <i class="md md-create"></i> 出题 <span class="count-tag"><?php echo $this->user['question_count']; ?></span></a>
                 <!-- <a href="#" class="list-group-item"> <i class="md md-school"></i> 投稿</a> -->
             </div>
         </div>

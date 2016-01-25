@@ -68,12 +68,17 @@
                                 </h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-answered">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>
-                            <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
-                            <?php TPL::output('block/question_list_lite'); ?>
+                            <div class="listview">
+                                <div class="lv-body">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>
                         </div>
                         <div class="card hidden-xs">
                             <div class="card-header card-padding">
@@ -82,24 +87,14 @@
                                 </h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-comments">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>
                             <div class="listview">
                                 <div class="lv-body">
-                                    <?php foreach ($this->user_actions_answers AS $key => $val) { ?>
-                                        <a href="<?php echo $val['link']; ?>" class="lv-item">
-                                            <h3><?php echo $val['title']; ?></h3>
-                                            <div class="question-comment-block">
-                                                <div class="m-b-5"><small class="c-gray"><?php echo date_friendly($val['add_time']); ?></small></div>
-                                                <?php echo cjk_substr($val['answer_info']['answer_content'], 0, 130, 'UTF-8', '...'); ?>
-                                                <span class="question-comment-agree c-gray">
-                                                    <i class="md md-thumb-up"></i> <?php echo $val['answer_info']['agree_count']; ?>
-                                                </span>
-                                            </div>
-                                        </a>
-                                    <?php } ?>
+                                    <?php TPL::assign('comments', $this->user_actions_answers); ?>
+                                    <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>
                                 </div>
                                 <div class="lv-footer"></div>
                             </div>
@@ -135,24 +130,34 @@
                                 </h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-failed">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>
-                            <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
-                            <?php TPL::output('block/question_list_lite'); ?>
+                            <div class="listview">
+                                <div class="lv-body">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>    
                         </div>
                         <div class="card hidden-xs">
                             <div class="card-header card-padding">
                                 <h2><i class="md md-create"></i> 出题 （<?php echo $this->user['question_count']; ?>）</h2>
                                 <ul class="actions">
                                     <li class="action-item-link">
-                                       <a href="http://localhost/~dengxiaodi/wecenter/?/question/record/3">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-publish">更多<i class="md md-chevron-right c-lightblue"></i></a>
                                     </li>
                                 </ul>
                             </div>
-                            <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
-                            <?php TPL::output('block/question_list_lite'); ?>
+                            <div class="listview">
+                                <div class="lv-body">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>   
                         </div>
                     </div>
                 </div>

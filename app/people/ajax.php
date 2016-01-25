@@ -154,6 +154,27 @@ class ajax extends AWS_CONTROLLER
 		TPL::output('people/ajax/follows');
 	}
 
+	public function questions_action()
+	{
+		switch ($_GET['type'])
+		{
+			case 'answered':
+				$question_list = $this->model('question')->get_user_question_list_answered($_GET['uid'], intval($_GET['page']), $this->per_page);
+			break;
+
+			case 'failed':
+				$question_list = $this->model('question')->get_user_question_list_failed($_GET['uid'], intval($_GET['page']), $this->per_page);
+			break;
+
+			case 'publish' :
+				$question_list = $this->model('question')->get_user_question_list_publish($_GET['uid'], intval($_GET['page']), $this->per_page);				
+			break;
+		}
+
+		TPL::assign('question_list_lite', $question_list);
+        TPL::output('block/question_list_lite');
+	}
+
 	public function topics_action()
 	{
 		if ($topic_list = $this->model('topic')->get_focus_topic_list($_GET['uid'], intval($_GET['page']), $this->per_page) AND $this->user_id)
