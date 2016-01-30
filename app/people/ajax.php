@@ -175,6 +175,12 @@ class ajax extends AWS_CONTROLLER
         TPL::output('block/question_list_lite');
 	}
 
+	public function answers_action()
+	{
+		TPL::assign('comments', $this->model('answer')->get_user_answer_list($_GET['uid'], intval($_GET['page']), $this->per_page));
+		TPL::output('block/comment_list_lite.tpl.htm');
+	}
+
 	public function topics_action()
 	{
 		if ($topic_list = $this->model('topic')->get_focus_topic_list($_GET['uid'], intval($_GET['page']), $this->per_page) AND $this->user_id)

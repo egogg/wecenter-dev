@@ -43,7 +43,7 @@
                             <?php } else if ($this->current_menu == 'questions_comments') { ?>
                                 <div class="listview">
                                     <div class="lv-body" id="user-questions-comment-list">
-                                        <?php TPL::assign('comments', $this->user_actions_answers); ?>
+                                        <?php TPL::assign('comments', $this->user_answer_list); ?>
                                         <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>  
                                     </div>
                                     <div class="lv-footer"></div>

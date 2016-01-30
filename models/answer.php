@@ -936,4 +936,20 @@ class answer_class extends AWS_MODEL
 
 		return true;
 	}
+
+	public function get_user_answer_list($uid, $page, $per_page)
+	{
+		$answers = $this->fetch_page('answer', 'uid = ' . intval($uid), 'add_time DESC', $page, $per_page);
+
+		if($answers)
+		{
+			foreach ($answers as $key => $val) 
+			{
+				$answer_list[$key] = $val;
+				$answer_list[$key]['question_info'] = $this->model('question')->get_question_info_by_id($val['question_id']);
+			}
+		}
+
+		return $answer_list;
+	}
 }

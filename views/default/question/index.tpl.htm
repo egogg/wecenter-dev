@@ -118,7 +118,7 @@
 			</div>
 			
 			<!-- 答题讨论 -->
-			<div class="card question-comments">
+			<div class="card question-comments" id="question-comments">
 				<div class="card-header card-padding question-comment-header clearfix">
 					<h3>
 						<i class="md md-comment"></i>
@@ -305,8 +305,13 @@
 					<div class="card-header">
 						<h2>你可能喜欢的问题</h2>
 					</div>
-					<?php TPL::assign('question_list_lite', $this->question_related_list); ?>
-					<?php TPL::output('block/question_list_lite'); ?>
+					<div class="listview">
+                        <div class="lv-body">
+							<?php TPL::assign('question_list_lite', $this->question_related_list); ?>
+							<?php TPL::output('block/question_list_lite'); ?>
+                        </div>
+                        <div class="lv-footer"></div>
+                    </div>
 				</div>
 			<?php } ?>
 		</div>

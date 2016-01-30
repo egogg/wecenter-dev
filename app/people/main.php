@@ -126,10 +126,14 @@ class main extends AWS_CONTROLLER
 		)), $this->user_id));
 
 		TPL::assign('user_question_list_publish', $this->model('question')->get_user_question_list_publish($user['uid'], 1, 5));
+		
 		TPL::assign('user_question_list_answered', $this->model('question')->get_user_question_list_answered($user['uid'], 1, 5));
 		TPL::assign('user_answered_question_count', $this->model('quiz')->get_user_answerd_question_count($user['uid']));
+		
 		TPL::assign('user_question_list_failed', $this->model('question')->get_user_question_list_failed($user['uid'], 1, 5));
 		TPL::assign('user_failed_question_count', $this->model('quiz')->get_user_failed_question_count($user['uid']));
+
+		TPL::assign('user_answer_list', $this->model('answer')->get_user_answer_list($user['uid'], 1, 5));
 
 		TPL::output('people/index');
 	}
@@ -457,7 +461,7 @@ class main extends AWS_CONTROLLER
 		} 
 		else if($_GET['type'] == 'comments')
 		{
-			TPL::assign('user_actions_answers', $this->model('actions')->get_user_actions($user['uid'], get_setting('contents_per_page'), ACTION_LOG::ANSWER_QUESTION, $this->user_id));
+			TPL::assign('user_answer_list', $this->model('answer')->get_user_answer_list($user['uid'], 1, get_setting('contents_per_page')));
 
 			TPL::assign('current_menu', 'questions_comments');
 		}

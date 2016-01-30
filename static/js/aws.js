@@ -1026,7 +1026,7 @@ var AWS =
 						}, 'json');
 					});
 
-					AWS.load_list_view(G_BASE_URL + '/topic/ajax/get_question_cloud_topic_list/question_id-' + questionId, $('#topic-cloud-load-more'), $('.cloud-topic-list ul'), 2);
+					AWS.load_list_view(G_BASE_URL + '/topic/ajax/get_question_cloud_topic_list/question_id-' + questionId, $('#topic-cloud-load-more'), $('#cloud-topic-list ul'), 2);
 					$.get(G_BASE_URL + '/topic/ajax/get_question_cloud_topic_list/question_id-' + questionId, function (result) {
 						$('#cloud-topic-list ul').html(result);
 					});
