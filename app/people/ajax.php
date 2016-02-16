@@ -36,8 +36,9 @@ class ajax extends AWS_CONTROLLER
 			$rule_action['actions'][] = 'user_actions';
 			$rule_action['actions'][] = 'follows';
 			$rule_action['actions'][] = 'topics';
+			$rule_action['actions'][] = 'answers';
 		}
-
+		
 		return $rule_action;
 	}
 

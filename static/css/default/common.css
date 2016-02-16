@@ -2691,6 +2691,26 @@ body #content {
 	font-weight: bold;
 }
 
+/*inbox*/
+
+.inbox-item {
+	border-bottom: 1px dashed #eee;
+}
+
+.inbox-item.active {
+	background: #FFFFDB;
+}
+
+.inbox-item-actions {
+	float: right;
+}
+
+.inbox-item-actions li {
+	display: inline-block;
+	font-size: 12px;
+	padding-left: 15px;
+}
+
 @media (max-width: 767px) {
 	.topic-list-lite .topic-img-wrapper {
 		display: block;
