@@ -1,5 +1,44 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<div class="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-3">
+                <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+            </div>
+            <div class="col-sm-9">
+            	<div class="card clearfix">
+            		<div class="card-header">
+            			<h2><i class="md md-notifications"></i> 我的消息</h2>
+            			<ul class="actions">
+                            <li data-toggle="tooltip" data-original-title="消息设置" data-placement="bottom">
+                                <a href="account/setting/privacy/#!notifications">
+                                    <i class="md md-settings"></i>
+                                </a>
+                            </li>
+                            <li data-toggle="tooltip" data-original-title="全部已读" data-placement="bottom">
+                                <a href="javascript:;" onclick="AWS.Message.read_notification(true, 0, true);">
+                                    <i class="md md-done-all"></i>
+                                </a>
+                            </li>
+                        </ul>							
+            		</div>
+            		<div class="listview">
+            			<div class="lv-body" id="notifications_list">
+            			</div>
+            			<div class="lv-footer"></div>
+            		</div>
+            	</div>
+            	<div class="card text-center">
+                    <div class="card-body card-padding">
+                        <a href="javascript:void(0);" id="notifications_more"><i class="md md-refresh"></i> 加载更多</a>
+                    </div>
+                </div>
+            </div>						
+        </div>
+    </div>
+</div>
+
 <div class="aw-container-wrap">
 	<div class="container">
 		<div class="row">
@@ -18,11 +57,11 @@
 						</div>
 						<div class="mod-body">
 							<div class="aw-notifications-list">
-								<ul id="notifications_list"></ul>
+								<ul id="notifications_listx"></ul>
 							</div>
 						</div>
 						<div class="mod-footer">
-							<a class="aw-load-more-content" id="notifications_more">
+							<a class="aw-load-more-content" id="notifications_morex">
 								<span><?php _e('更多'); ?>...</span>
 							</a>
 						</div>

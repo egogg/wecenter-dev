@@ -2691,6 +2691,19 @@ body #content {
 	font-weight: bold;
 }
 
+.lv-avatar.pull-left {
+	margin-right: 15px !important;
+}
+
+.lv-item:not(.right) .ms-item .ms-user {
+	color: #fff;
+}
+
+.ms-reply {
+	border-top: 1px solid #f0f0f0 !important;
+	border-bottom: 1px solid #f0f0f0 !important;
+}
+
 /*inbox*/
 
 .inbox-item {
@@ -2709,6 +2722,20 @@ body #content {
 	display: inline-block;
 	font-size: 12px;
 	padding-left: 15px;
+}
+
+/*notifications*/
+
+.notification-item.unread {
+	background-color: #ffffdb;
+}
+
+.notification-item a {
+	color: #2196F3;
+}
+
+.notification-item:not(:last-child) {
+	border-bottom: 1px solid #f0f0f0;
 }
 
 @media (max-width: 767px) {
