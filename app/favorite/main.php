@@ -74,6 +74,7 @@ class main extends AWS_CONTROLLER
 		}
 
 		TPL::assign('favorite_tags', $this->model('favorite')->get_favorite_tags($this->user_id));
+		TPL::assign('filter_tag', $_GET['tag']);
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/favorite/tag-' . $_GET['tag']),

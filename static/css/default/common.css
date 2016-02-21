@@ -1194,6 +1194,11 @@ li.user-quiz-record-item.timeout:before {
 	font-size: 12px;
 }
 
+.answer-actions li {
+	display: inline-block;
+	padding-right: 15px;
+}
+
 .answer-actions a {
 	color: #9e9e9e;
 }
@@ -2747,6 +2752,46 @@ body #content {
 
 .draft-item:not(:last-child) {
 	border-bottom: 1px dashed #f0f0f0;
+}
+
+/*favorite*/
+
+.favorite-item:not(:last-child) {
+	border-bottom: 1px dashed #f0f0f0;
+}
+
+.favorite-tags li {
+	display: inline-block;
+	margin-right: 15px;
+	margin-bottom: 10px;
+}
+
+.favorite-tags li a {
+	border: 1px solid #eee;
+	padding: 2px 10px 3px;
+	font-size: 12px;
+}
+
+.favorite-tags li a.active {
+	border-color: #03A9F4;
+	color: #03A9F4;
+}
+
+.favorite-actions li {
+	display: inline-block;
+	line-height: 21px;
+}
+
+.favorite-actions {
+	font-size: 12px;
+}
+
+.favorite-item-footer {
+	margin-top: 15px;
+}
+
+.favorite-item-footer ul {
+	display: inline-block;
 }
 
 @media (max-width: 767px) {

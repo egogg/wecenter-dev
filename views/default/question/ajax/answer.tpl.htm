@@ -28,6 +28,9 @@
     					<span><?php if ($this->answer_info['agree_status'] == 1) { ?>已赞同<?php } else { ?> 赞同<?php } ?></span>(<b class="count"><?php echo $this->answer_info['agree_count']; ?></b>)
         			</a>
         		</li>
+                <li>
+                    <a href="javascript:;" onclick="AWS.dialog('favorite', {item_id:<?php echo $this->answer_info['answer_id']; ?>, item_type:'answer'});" class="c-gray"><i class="md md-bookmark"></i> 收藏</a>
+                </li>
         	</ul>
         	<ul class="answer-actions-right pull-right">
         		<?php if (($this->answer_info['uid'] == $this->user_id AND !$this->question['lock']) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>

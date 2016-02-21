@@ -1,0 +1,46 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-3">
+                <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+            </div>
+            <div class="col-sm-9">
+            	<div class="card">
+            		<div class="card-header">
+            			<h2><i class="md md-attach-money"></i> 我的积分</h2>	
+            		</div>
+                    <div class="card-body card-padding p-t-0 table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>时间</th>
+                                    <th>积分</th>
+                                    <th>余额</th>
+                                    <th>描述</th>
+                                    <th width="30%">相关信息</th>
+                                </tr>
+                            </thead>
+                            <tbody id="integral_list">
+                            </tbody>
+                        </table>
+                    </div>
+            	</div>
+            	<div class="card text-center">
+                    <div class="card-body card-padding">
+                        <a href="javascript:void(0);" id="integral_more"><i class="md md-refresh"></i> 加载更多</a>
+                    </div>
+                </div>
+            </div>						
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		AWS.load_list_view(G_BASE_URL + '/integral/ajax/list/', $('#integral_more'), $('#integral_list'));
+	});
+</script>
+
+<?php TPL::output('global/footer.tpl.htm'); ?>

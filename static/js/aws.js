@@ -1108,6 +1108,7 @@ var AWS =
 	content_switcher: function(hide_el, show_el)
 	{
 		hide_el.hide();
+		show_el.removeClass('hide');
 		show_el.fadeIn();
 	},
 
