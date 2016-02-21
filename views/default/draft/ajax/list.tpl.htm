@@ -1,0 +1,24 @@
+<?php if ($this->drafts) { ?>
+	<?php foreach ($this->drafts AS $key => $val) { ?>
+	<div class="lv-item media draft-item">
+		<div class="media-body">
+			<div class="media-heading">
+				<strong><a href="question/<?php echo $val['item_id']; ?>#!answer_form"><?php echo $val['question_info']['question_content']; ?></a></strong>
+			</div>
+			<div class="markitup-box"><?php echo nl2br(htmlspecialchars($val['data']['message'])); ?></div>
+			<small class="c-gray">
+				<i class="md md-access-time"></i> <?php echo date_friendly($val['time']); ?>
+				<ul class="draft-actions pull-right">
+					<li>
+						<a class="c-red" onclick="AWS.User.delete_draft(<?php echo $val['item_id']; ?>, 'answer'); $(this).closest('.lv-item').fadeOut();">删除</a>
+					</li>
+					<li>
+						<a class="c-lightblue" href="question/<?php echo $val['item_id']; ?>#!answer_form">编辑</a>
+					</li>
+				</ul>
+			</small>
+		</div>
+			
+	</div>
+	<?php } ?>
+<?php } ?>

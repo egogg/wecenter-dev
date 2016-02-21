@@ -2706,8 +2706,8 @@ body #content {
 
 /*inbox*/
 
-.inbox-item {
-	border-bottom: 1px dashed #eee;
+.inbox-item:not(:last-child) {
+	border-bottom: 1px dashed #f0f0f0;
 }
 
 .inbox-item.active {
@@ -2735,7 +2735,18 @@ body #content {
 }
 
 .notification-item:not(:last-child) {
-	border-bottom: 1px solid #f0f0f0;
+	border-bottom: 1px dashed #f0f0f0;
+}
+
+/*draft*/
+
+.draft-actions li {
+	display: inline-block;
+	margin-left: 15px;
+}
+
+.draft-item:not(:last-child) {
+	border-bottom: 1px dashed #f0f0f0;
 }
 
 @media (max-width: 767px) {
