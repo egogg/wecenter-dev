@@ -2794,6 +2794,18 @@ body #content {
 	display: inline-block;
 }
 
+/*invitation*/
+
+.invitation-item:not(:last-child) {
+	border-bottom: 1px dashed #f0f0f0;
+}
+
+.invitation-actions li {
+	display: inline-block;
+	margin-left: 15px;
+	font-size: 12px;
+}
+
 @media (max-width: 767px) {
 	.topic-list-lite .topic-img-wrapper {
 		display: block;

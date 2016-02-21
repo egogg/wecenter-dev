@@ -19,7 +19,7 @@
 <div class="user-info-entry">
     <div class="list-group">
         <a href="#" class="list-group-item"> <i class="md md-settings"></i> 个人设置</a>
-        <a href="#" class="list-group-item"> <i class="md md-quick-contacts-mail"></i> 邀请注册</a>
+        <a href="invitation/" class="list-group-item <?php if ($_GET['app'] == 'invitation') { ?>active<?php } ?>"> <i class="md md-quick-contacts-mail"></i> 邀请注册 <?php if ($this->user_info['invitation_available']) { ?><span class="badge"><?php echo $this->user_info['invitation_available']; ?></span><?php } ?></a>
     </div>
 </div>
 

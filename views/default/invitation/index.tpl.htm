@@ -1,5 +1,51 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<div class="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-3">
+                <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+            </div>
+            <div class="col-sm-9">
+            	<div class="card clearfix">
+            		<div class="card-header">
+            			<h2><i class="md md-quick-contacts-mail"></i> 邀请好友注册</h2>					
+            		</div>
+            		<div class="card-body card-padding">
+            			<div class="alert alert-success" role="alert">你还有<strong><?php echo $this->user_info['invitation_available']; ?></strong>个邀请名额</div>
+            			<form id="invitation_form" method="post" action="invitation/ajax/invite/" onsubmit="return false">
+							
+							<div class="form-group">
+								<input class="form-control" type="text" name="email" placeholder="请输入好友邮箱" />
+							</div>
+							
+							<a class="btn btn-normal btn-primary" onclick="AWS.ajax_post($('#invitation_form')); return false;"><?php _e('发送邀请'); ?></a>
+							
+						</form>
+            		</div>
+            	</div>
+            	<div class="card">
+            		<div class="card-header">
+            			<h2>
+            				<i class="md md-people"></i> 已经邀请的好友
+            			</h2>
+            		</div>
+            		<div class="listview">
+            			<div class="lv-body" id="invitation_list">
+            			</div>
+            			<div class="lv-footer"></div>
+            		</div>
+            	</div>
+            	<div class="card text-center">
+                    <div class="card-body card-padding">
+                        <a href="javascript:void(0);" id="invitation_more"><i class="md md-refresh"></i> 加载更多</a>
+                    </div>
+                </div>
+            </div>						
+        </div>
+    </div>
+</div>
+
 <div class="aw-container-wrap">
 	<div class="container">
 		<div class="row">
