@@ -1,18 +1,34 @@
-<div class="aw-container-wrap">
-	<div class="container">
-		<div class="row">
-			<div class="aw-content-wrap clearfix">
-				<div class="aw-user-setting">
-					<div class="tabbable">
-						<ul class="nav nav-tabs aw-nav-tabs active">
-							<li<?php if ($_GET['act'] == 'verify') { ?> class="active"<?php } ?>><a href="account/setting/verify/"><?php _e('申请认证'); ?></a></li>
-							<li<?php if ($_GET['act'] == 'security') { ?> class="active"<?php } ?>><a href="account/setting/security/"><?php _e('安全设置'); ?></a></li>
-							<li<?php if ($_GET['act'] == 'openid') { ?> class="active"<?php } ?>><a href="account/setting/openid/"><?php _e('账号绑定'); ?></a></li>
-							<li<?php if ($_GET['act'] == 'privacy') { ?> class="active"<?php } ?>><a href="account/setting/privacy/"><?php _e('隐私/提醒'); ?></a></li>
-							<li<?php if (!$_GET['act'] OR $_GET['act'] == 'profile') { ?> class="active"<?php } ?>><a href="account/setting/profile/"><?php _e('基本资料'); ?></a></li>
-							
-							<h2><i class="icon icon-setting"></i> <?php _e('用户设置'); ?></h2>
-						</ul>
-					</div>
-					
-					<div class="tab-content clearfix">
+<div class="container">
+    <div id="content">
+        <div class="row">
+            <div class="col-sm-3">
+                <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+            </div>
+            <div class="col-sm-9">
+            	<div class="card clearfix">
+            		<div class="card-header">
+            			<h2><i class="md md-settings"></i> 用户设置</h2>					
+            		</div>
+            		<ul class="tab-nav tn-justified" role="tablist">
+                        <li role="presentation" <?php if (!$_GET['act'] OR $_GET['act'] == 'profile') { ?> class="active"<?php } ?>>
+                            <a class="col-sx-3" href="account/setting/profile/" aria-controls="tab-1" role="tab">
+                                基本资料
+                            </a>
+                        </li>
+                        <li role="presentation" <?php if ($_GET['act'] == 'privacy') { ?> class="active"<?php } ?>>
+                            <a class="col-xs-3" href="account/setting/privacy/" aria-controls="tab-2" role="tab">
+                                隐私提醒
+                            </a>
+                        </li>
+                        <li role="presentation" <?php if ($_GET['act'] == 'openid') { ?> class="active"<?php } ?>>
+                            <a class="col-xs-3" href="account/setting/openid/" aria-controls="tab-3" role="tab">
+                                账号绑定
+                            </a>
+                        </li>
+                        <li role="presentation" <?php if ($_GET['act'] == 'security') { ?> class="active"<?php } ?>>
+                            <a class="col-xs-3" href="account/setting/security/" aria-controls="tab-3" role="tab">
+                                密码修改
+                            </a>
+                        </li>
+                    </ul>
+            		<div class="card-body card-padding">

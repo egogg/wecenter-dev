@@ -2806,6 +2806,34 @@ body #content {
 	font-size: 12px;
 }
 
+/*setting*/
+
+.setting-profile .user-setting-group dt,
+.setting-profile .user-setting-group dd {
+	line-height: 35px;
+}
+
+.user-setting-group {
+	margin-bottom: 20px;
+}
+
+.user-setting-group .user-signature {
+	padding: 10px;
+	resize: none;
+	height: 80px;
+}
+
+.user-avatar-upload a {
+	width: 100px;
+	margin-top: 5px;
+}
+
+.user-setting-group .radio-inline, 
+.user-setting-group .checkbox-inline {
+	margin-left: 0;
+	margin-bottom: 5px;
+}
+
 @media (max-width: 767px) {
 	.topic-list-lite .topic-img-wrapper {
 		display: block;
@@ -2918,7 +2946,6 @@ body{margin: 0;font-size:14px; color: #333;background-color:#f3f3f3;padding-bott
 body, input, button, select, textarea, h1, h2, h3, h4, h5, h6{font-family:'Helvetica Neue', 'STHeiti', '微软雅黑', 'Microsoft YaHei', Helvetica,Arial,sans-serif;}
 ul, ol{margin:0;padding:0;list-style:none;}
 h1, h2, h3, h4, h5, h6{margin-top:0;font-size:100%;line-height: 1.7;}
-dd{margin-left: 10px;}
 a{cursor: pointer;color: #333;}
 a:hover{text-decoration: none;color: #2196F3;}
 a:focus{outline: none !important;}

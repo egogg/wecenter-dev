@@ -961,7 +961,7 @@ class ajax extends AWS_CONTROLLER
 
 		$this->model('account')->update_notification_setting_fields($notification_setting, $this->user_id);
 
-		H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('隐私设置保存成功')));
+		H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('隐私设置保存成功')));
 	}
 
 	public function profile_setting_action()
@@ -1087,7 +1087,7 @@ class ajax extends AWS_CONTROLLER
 
 		$this->model('account')->set_default_timezone($_POST['default_timezone'], $this->user_id);
 
-		H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('个人资料保存成功')));
+		H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('个人资料保存成功')));
 	}
 
 	public function modify_password_action()
@@ -1122,7 +1122,7 @@ class ajax extends AWS_CONTROLLER
 
 		if ($this->model('account')->update_user_password($_POST['old_password'], $_POST['password'], $this->user_id, $this->user_info['salt']))
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, 1, AWS_APP::lang()->_t('密码修改成功, 请牢记新密码')));
+			H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('密码修改成功, 请牢记新密码')));
 		}
 		else
 		{
