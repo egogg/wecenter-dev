@@ -2817,6 +2817,10 @@ body #content {
 	margin-bottom: 20px;
 }
 
+.user-setting-group-header {
+	margin-bottom: 20px;
+}
+
 .user-setting-group .user-signature {
 	padding: 10px;
 	resize: none;
@@ -2832,6 +2836,15 @@ body #content {
 .user-setting-group .checkbox-inline {
 	margin-left: 0;
 	margin-bottom: 5px;
+}
+
+.setting-security .user-setting-group dt,
+.setting-security .user-setting-group dd {
+	line-height: 35px;
+}
+
+.openid-items li {
+	margin: 20px 0;
 }
 
 @media (max-width: 767px) {

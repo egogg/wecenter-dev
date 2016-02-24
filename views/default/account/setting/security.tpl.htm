@@ -1,83 +1,37 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 <?php TPL::output('account/setting/setting_header.tpl.htm'); ?>
 
-<form class="form-horizontal" action="account/ajax/modify_password/" method="post" id="setting_form">
+<form class="setting-security" action="account/ajax/modify_password/" method="post" id="setting_form">
 	<section class="user-setting-group">
         <div class="user-setting-group-header">
             <h2><i class="md md-lock m-r-5"></i> 修改密码</h2>
         </div>
         <div class="user-setting-group-body p-l-25">
         	<dl class="dl-horizontal">
-        		<dt>
-        			当前密码
-        		</dt>
+        		<dt>当前密码</dt>
         		<dd>
         			<input type="password" class="form-control" id="input-password-old" name="old_password" />
         		</dd>
         	</dl>
-        	
-			<div class="form-group">
-				<label class="control-label" for="input-password-new"><?php _e('新的密码'); ?></label>
-				<div class="row">
-					<div class="col-lg-4">
-					    <input type="password" class="form-control" id="input-password-new" name="password" />
-					</div>
-				</div>
-			</div> 
-			<div class="form-group">
-				<label class="control-label" for="input-password-re-new"><?php _e('确认密码'); ?></label>
-				<div class="row">
-					<div class="col-lg-4">
-					    <input type="password" class="form-control" id="input-password-re-new" name="re_password" />
-					</div>
-				</div>
-			</div>
+
+        	<dl class="dl-horizontal">
+        		<dt>新的密码</dt>
+        		<dd>
+        			<input type="password" class="form-control" id="input-password-new" name="password" />
+        		</dd>
+        	</dl>
+
+        	<dl class="dl-horizontal">
+        		<dt>确认密码</dt>
+        		<dd>
+        			<input type="password" class="form-control" id="input-password-re-new" name="re_password" />
+        		</dd>
+        	</dl>
         </div>
     </section>
 </form>
 
-<div class="aw-mod">
-	<div class="mod-body">
-		<div class="aw-mod aw-user-setting-bind">
-			<div class="mod-head">
-				<h3><?php _e('修改密码'); ?></h3>
-			</div>
-			<form class="form-horizontal" action="account/ajax/modify_password/" method="post" id="setting_form">
-				<div class="mod-body">
-					<div class="form-group">
-						<label class="control-label" for="input-password-old"><?php _e('当前密码'); ?></label>
-						<div class="row">
-							<div class="col-lg-4">
-								<input type="password" class="form-control" id="input-password-old" name="old_password" />
-							</div>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="control-label" for="input-password-new"><?php _e('新的密码'); ?></label>
-						<div class="row">
-							<div class="col-lg-4">
-							    <input type="password" class="form-control" id="input-password-new" name="password" />
-							</div>
-						</div>
-					</div> 
-					<div class="form-group">
-						<label class="control-label" for="input-password-re-new"><?php _e('确认密码'); ?></label>
-						<div class="row">
-							<div class="col-lg-4">
-							    <input type="password" class="form-control" id="input-password-re-new" name="re_password" />
-							</div>
-						</div>
-					</div>      
-				</div>
-			</form>
-		</div>
-	</div>
-	<div class="mod-footer clearfix">
-		<a href="javascript:;" class="btn btn-large btn-success pull-right" onclick="AWS.ajax_post($('#setting_form'));"><?php _e('保存'); ?></a>
-	</div>
-</div>
-
-
+<a href="javascript:;" class="btn btn-large btn-primary m-t-25" onclick="AWS.ajax_post($('#setting_form'));">保存</a>
 
 <?php TPL::output('account/setting/setting_footer.tpl.htm'); ?>
 <?php TPL::output('global/footer.tpl.htm'); ?>
