@@ -2847,6 +2847,34 @@ body #content {
 	margin: 20px 0;
 }
 
+/*user homepage*/
+
+.user-signature-dialog .dropdown-menu {
+	padding: 5px 0 55px;
+    left: -7px;
+    width: 228px;
+    height: 150px;
+    top: -74px;
+    -webkit-transform-origin: center !important;
+    -moz-transform-origin: center !important;
+    -ms-transform-origin: center !important;
+    transform-origin: center !important;
+}
+
+.user-signature-dialog textarea {
+	width: 100%;
+    height: 95px;
+    border: 0;
+    resize: none;
+    padding: 10px 19px;
+}
+
+.user-signature-dialog button {
+	position: absolute;
+    bottom: 5px;
+    left: 93px;
+}
+
 @media (max-width: 767px) {
 	.topic-list-lite .topic-img-wrapper {
 		display: block;

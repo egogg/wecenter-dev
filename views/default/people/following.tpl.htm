@@ -53,10 +53,15 @@
                                     <?php } ?>
                                 </div>
                             <?php } else { ?>
-                                <div class="topic-list-lite clearfix">
+                                <div class="topic-list-lite"> 
                                     <?php if ($this->focus_topics) { ?>
-                                        <?php TPL::assign('topic_list_lite', $this->focus_topics); ?>
-                                        <?php TPL::output('block/topic_list_lite.tpl.htm'); ?>
+                                        <div class="listview">
+                                            <div class="lv-body" id="topic-list-lite-items">
+                                                <?php TPL::assign('topic_list_lite', $this->focus_topics); ?>
+                                                <?php TPL::output('block/topic_list_lite.tpl.htm'); ?>
+                                            </div>
+                                            <div class="lv-footer"></div>
+                                        </div>
                                     <?php } ?>
                                 </div>
                             <?php } ?>

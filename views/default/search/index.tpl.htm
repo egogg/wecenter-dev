@@ -1,5 +1,31 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
+<div id="content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2><strong class="c-lightblue"><?php echo addslashes($this->keyword); ?></strong> 的搜索结果</h2>
+            </div>
+            <div class="card-body card-padding">
+                <div role="tabpanel">
+                    <ul class="tab-nav" role="tablist">
+                        <li class="active"><a href="#search-all">全部</a></li>
+                        <li class=""><a href="#profile11">问题</a></li>
+                        <li class=""><a href="#messages11">专题</a></li>
+                        <li class=""><a href="#settings11">知识</a></li>
+                        <li class=""><a href="#settings11">用户</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="search_resultx">
+                        	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="aw-container-wrap">
 	<div class="container">
 		<div class="row">

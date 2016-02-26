@@ -57,16 +57,21 @@ class ajax extends AWS_CONTROLLER
 				switch ($val['type'])
 				{
 					case 'questions':
+						$search_result_questions[] = $this->model('question')->get_question_info_by_id($val['search_id']);
+
 						$search_result[$key]['focus'] = $this->model('question')->has_focus_question($val['search_id'], $this->user_id);
 
 						break;
 
 					case 'topics':
+						$search_result_topics[] = $this->model('topic')->get_topic_by_id($val['search_id']);
+
 						$search_result[$key]['focus'] = $this->model('topic')->has_focus_topic($this->user_id, $val['search_id']);
 
 						break;
 
 					case 'users':
+						$search_result_users[] = $this->model('account')->get_user_info_by_uid($val['search_id']);
 						$search_result[$key]['focus'] = $this->model('follow')->user_follow_check($this->user_id, $val['search_id']);
 
 						break;
@@ -74,6 +79,28 @@ class ajax extends AWS_CONTROLLER
 			}
 		}
 
+		// 问题图片
+
+		foreach ($search_result_questions as $key => $value) {
+			if ($value['has_attach'])
+			{
+				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
+			}
+
+			$search_result_questions[$key] = $value;
+		}
+
+		// 专题关注
+
+		foreach ($search_result_topics as $key => $value) 
+		{
+			$search_result_topics[$key]['has_focus'] = $this->model('topic')->has_focus_topic($this->user_id, $value['topic_id']);	
+		}
+
+		TPL::assign('search_result_questions', $search_result_questions);
+		TPL::assign('search_result_users', $search_result_users);
+		TPL::assign('search_result_topics', $search_result_topics);
+		
 		TPL::assign('search_result', $search_result);
 
 		if (is_mobile())

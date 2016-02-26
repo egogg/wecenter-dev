@@ -25,7 +25,7 @@
                 </div>
                 
                 <ul class="lv-attrs">
-                	<li class="<?php if(!$this->sort_type || $this->sort_type == 'success_ratio') { ?>active<?php } ?>">正确率: <?php echo number_format($val['question_quiz_success_ratio'] * 100, 0); ?>%</li>
+                	<li class="<?php if($this->sort_type == 'success_ratio') { ?>active<?php } ?>">正确率: <?php echo number_format($val['question_quiz_success_ratio'] * 100, 0); ?>%</li>
                 	<li class="<?php if($this->sort_type == 'poft') { ?>active<?php } ?>">一次通过: <?php echo $val['question_quiz_count_POFT']; ?></li>
                 	<li class="<?php if($this->sort_type == 'quiz_count') { ?>active<?php } ?>">答题: <?php echo $val['question_quiz_count_total']; ?></li>
                 	<li class="<?php if($this->sort_type == 'question_count') { ?>active<?php } ?>">出题: <?php echo $val['question_count']; ?></li>

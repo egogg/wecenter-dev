@@ -1293,4 +1293,17 @@ class ajax extends AWS_CONTROLLER
 
 		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
 	}
+
+	function update_signature_action()
+	{
+		if (!$_POST['signature'])
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入个人简介')));
+		}
+
+		$update_attrib_data['signature'] = htmlspecialchars($_POST['signature']);
+		$this->model('account')->update_users_attrib_fields($update_attrib_data, $this->user_id);
+
+		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+	}
 }

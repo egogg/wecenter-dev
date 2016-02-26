@@ -2230,6 +2230,33 @@ AWS.User =
 				$('.aw-favorite-tag-list ul').prepend('<li class="active"><a data-value="' + $('#favorite_form .add-input').val() + '"><i class="md md-check"></i><span class="title">' + $('#favorite_form .add-input').val() + '</span></a></li>');
 			}
 		}, 'json');
+	},
+
+	// 更新个人介绍
+
+	update_signature: function()
+	{	
+		if(G_USER_ID < 0)
+		{
+			window.location.reload();
+
+			return;
+		}
+
+		var signature = $('#user-signature-input').val();
+		
+		$.post(G_BASE_URL + '/account/ajax/update_signature/', {'signature': signature}, function(result)
+		{
+			if(result.errno == -1)
+			{
+				AWS.alert(result.err);
+			}
+			else if (result.errno == 1)
+			{
+				$('.user-signature span.signature').html(signature);
+				$('.dropdown.pmop-message.user-signature-dialog').removeClass('open');
+			}
+		}, 'json');
 	}
 }
 

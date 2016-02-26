@@ -7,18 +7,23 @@
                         <img class="user-info-avatar" src="<?php echo get_avatar_url($this->user['uid'], 'max'); ?>" alt="<?php echo $this->user['user_name']; ?>">
                     </a>
                     
-                    <ul class="actions">
-                        <li>
-                            <a href="#" data-toggle="tooltip" data-original-title="发送私信" data-placement="bottom">
-                                <i class="md md-email"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" data-toggle="tooltip" data-original-title="个人设置" data-placement="bottom">
-                                <i class="md md-settings"></i>
-                            </a>
-                        </li>
-                    </ul>
+                    <?php if($this->user_id) { ?>
+                        <ul class="actions">
+                            <?php if($this->user_id != $this->user['uid']) { ?>
+                                <li>
+                                    <a href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $this->user['user_name']; ?>');" data-toggle="tooltip" data-original-title="发送私信" data-placement="bottom">
+                                        <i class="md md-email"></i>
+                                    </a>
+                                </li>
+                            <?php } else { ?>
+                                <li>
+                                    <a href="account/setting/" data-toggle="tooltip" data-original-title="个人设置" data-placement="bottom">
+                                        <i class="md md-settings"></i>
+                                    </a>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    <?php } ?>
                 </div>
                 <div>
                     <h1>
@@ -33,7 +38,25 @@
                             </ul>
                         </small>
                     </h1>
-                    <p class="user-signature"><?php echo $this->user['signature']; ?></p>
+                    <p class="user-signature">
+                        <span class="signature">
+                            <?php echo $this->user['signature']; ?>
+                        </span>
+
+                        <?php if($this->user_id && $this->user_id == $this->user['uid']) { ?>
+                            <div class="dropdown pmop-message user-signature-dialog">
+                                <a data-toggle="dropdown" href="#" class="c-lightblue" aria-expanded="false">
+                                    <i class="md md-create"></i> 编辑个人简介
+                                </a>
+                                
+                                <div class="dropdown-menu user-signature-dialog">
+                                    <textarea id="user-signature-input" placeholder="简短介绍一下自己"><?php echo $this->user['signature']; ?></textarea>
+                                    <button class="btn bgm-green btn-icon" onclick="AWS.User.update_signature();"><i class="md md-send"></i></button>
+                                </div>
+                            </div>
+                        <?php } ?>
+                    </p>
+
                     <div class="m-t-20">
                         <a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->user['uid']; ?>);" class="follow user-info-follow <?php if ($this->user_follow_check) { ?>following<?php } ?>">
                             <span>

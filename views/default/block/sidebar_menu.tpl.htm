@@ -8,6 +8,12 @@
 
 <div class="user-info-entry">
     <div class="list-group">
+        <a href="people/<?php echo $this->user_id; ?>" class="list-group-item"><i class="md md-home"></i> 我的主页</a>
+    </div>
+</div>
+
+<div class="user-info-entry">
+    <div class="list-group">
         <a href="notifications/" class="list-group-item <?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><i class="md md-notifications"></i> 我的消息</a>
         <a href="inbox/" class="list-group-item <?php if ($_GET['app'] == 'inbox') { ?>active<?php } ?>"> <i class="md md-email"></i> 我的私信</a>
         <a href="draft/" class="list-group-item <?php if ($_GET['app'] == 'draft') { ?>active<?php } ?>"> <i class="md md-description"></i> 我的草稿 <?php if ($this->user_info['draft_count']) { ?><span class="badge"><?php echo $this->user_info['draft_count']; ?></span><?php } ?></a>
@@ -18,7 +24,7 @@
 
 <div class="user-info-entry">
     <div class="list-group">
-        <a href="account/setting/" class="list-group-item <?php if ($_GET['app'] == 'account') { ?>active<?php } ?>"> <i class="md md-settings"></i> 个人设置</a>
+        <a href="account/setting/" class="list-group-item <?php if ($_GET['app'] == 'account') { ?>active<?php } ?>"> <i class="md md-settings"></i> 我的设置</a>
         <a href="invitation/" class="list-group-item <?php if ($_GET['app'] == 'invitation') { ?>active<?php } ?>"> <i class="md md-person-add"></i> 邀请注册 <?php if ($this->user_info['invitation_available']) { ?><span class="badge"><?php echo $this->user_info['invitation_available']; ?></span><?php } ?></a>
     </div>
 </div>

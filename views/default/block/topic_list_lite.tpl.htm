@@ -1,37 +1,30 @@
-<div class="topic-list-lite clearfix">
-    <div class="listview">
-        <div class="lv-body" id="topic-list-lite-items">
-            <?php foreach ($this->topic_list_lite AS $key => $val) { ?>
-                <div class="lv-item media">
-                    <div class="topic-img-wrapper pull-left">
-                        <a href="topic/<?php echo $val['topic_id'];?>">
-                            <img class="topic-img" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <div class="lv-title">
-                            <a href="topic/<?php echo $val['topic_id'];?>">
-                                <?php echo $val['topic_title'];?>
-                            </a>
-                        </div>
-                        <p class="m-t-5 m-b-5 topic-description">
-                            <?php echo $val['topic_description']; ?>
-                        </p>
-                        <div class="topic-list-lite-focus">
-                            <a href="javascript:;" onclick="AWS.User.follow($(this), 'topic', <?php echo $val['topic_id']; ?>);" class="follow <?php if ($val['has_focus']) { ?> following <?php } ?>">
-                                <span>
-                                    <?php if ($val['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
-                                </span>
-                            </a>
-                        </div> 
-                        <ul class="topic-stats m-t-5">
-                            <li>收录 <?php echo $val['question_count']; ?></li>
-                            <li>关注 <?php echo $val['focus_count']; ?></li>
-                        </ul>
-                    </div>     
-                </div> 
-            <?php } ?>
+<?php foreach ($this->topic_list_lite AS $key => $val) { ?>
+    <div class="lv-item media">
+        <div class="topic-img-wrapper pull-left">
+            <a href="topic/<?php echo $val['topic_id'];?>">
+                <img class="topic-img" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
+            </a>
         </div>
-        <div class="lv-footer"></div>
-    </div>
-</div> 
+        <div class="media-body">
+            <div class="lv-title">
+                <a href="topic/<?php echo $val['topic_id'];?>">
+                    <?php echo $val['topic_title'];?>
+                </a>
+            </div>
+            <p class="m-t-5 m-b-5 topic-description">
+                <?php echo $val['topic_description']; ?>
+            </p>
+            <div class="topic-list-lite-focus">
+                <a href="javascript:;" onclick="AWS.User.follow($(this), 'topic', <?php echo $val['topic_id']; ?>);" class="follow <?php if ($val['has_focus']) { ?> following <?php } ?>">
+                    <span>
+                        <?php if ($val['has_focus']) { ?><i class="md md-check"></i> <?php _e('正在关注'); ?><?php } else { ?><i class="md md-add"></i> <?php _e('添加关注'); ?><?php } ?>
+                    </span>
+                </a>
+            </div> 
+            <ul class="topic-stats m-t-5">
+                <li>收录 <?php echo $val['question_count']; ?></li>
+                <li>关注 <?php echo $val['focus_count']; ?></li>
+            </ul>
+        </div>     
+    </div> 
+<?php } ?>
