@@ -1,5 +1,5 @@
 <?php foreach ($this->topic_list_lite AS $key => $val) { ?>
-    <div class="lv-item media">
+    <div class="lv-item media topic-list-lite-item">
         <div class="topic-img-wrapper pull-left">
             <a href="topic/<?php echo $val['topic_id'];?>">
                 <img class="topic-img" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
@@ -8,7 +8,7 @@
         <div class="media-body">
             <div class="lv-title">
                 <a href="topic/<?php echo $val['topic_id'];?>">
-                    <?php echo $val['topic_title'];?>
+                    <span class="title"><?php echo $val['topic_title'];?></span>
                 </a>
             </div>
             <p class="m-t-5 m-b-5 topic-description">

@@ -1,0 +1,22 @@
+<?php foreach ($this->article_list_lite as $id => $article) { ?>
+    <a class="lv-item" href="article/<?php echo $article['id']; ?>">
+        <div class="media">
+            <div class="pull-left article-list-feature-img">
+                <img class="article-feature-img-sm responsive-img" 
+                    <?php foreach ($article['attachs'] AS $attach) { ?>
+                        <?php if ($attach['is_image']) { ?>
+                            src="<?php echo $attach['attachment']; ?>" alt="<?php echo $attach['attach_name']; ?>"
+                        <?php break; } ?>
+                    <?php } ?> 
+                >
+            </div>
+            <div class="media-body">
+                <div class="lv-title"><span class="title"><?php echo $article['title']; ?></span></div>
+                <ul class="article-list-stats-items m-t-5">
+                    <li><i class="md md-local-florist"></i> 赞同 <?php echo $article['votes']; ?></li>
+                    <li><i class="md md-comment"></i> 评论 <?php echo $article['comments']; ?></li>
+                </ul>
+            </div>
+        </div>
+    </a>   
+<?php }?>

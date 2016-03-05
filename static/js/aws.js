@@ -442,21 +442,21 @@ var AWS =
 
 		selector.bind('click', function ()
 		{
-			var _this = this;
+			var _this = $(this);
 
-			var spinner = $('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
-			spinner.insertBefore($(this).hide());
-			$(this).addClass('loading');
+			var spinner = $('<div class="spinner m-t-0"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
+			spinner.insertBefore(_this.hide());
+			_this.addClass('loading');
 
-			$.get(url + '__page-' + $(_this).attr('data-page'), function (result)
+			$.get(url + '__page-' + _this.attr('data-page'), function (result)
 			{
-				$(_this).removeClass('loading');
+				_this.removeClass('loading');
 				spinner.remove();
-				$(_this).show();
+				_this.show();
 
 				if ($.trim(result) != '')
 				{
-					if ($(_this).attr('data-page') == start_page && $(_this).attr('auto-load') != 'false')
+					if (_this.attr('data-page') == start_page && _this.attr('auto-load') != 'false')
 					{
 						container.html(result);
 					}
@@ -466,19 +466,18 @@ var AWS =
 					}
 
 					// 页数增加1
-					$(_this).attr('data-page', parseInt($(_this).attr('data-page')) + 1);
+					_this.attr('data-page', parseInt(_this.attr('data-page')) + 1);
 				}
 				else
 				{
 					//没有内容
-					if ($(_this).attr('data-page') == start_page && $(_this).attr('auto-load') != 'false')
+					if (_this.attr('data-page') == start_page && _this.attr('auto-load') != 'false')
 					{
 						container.html('<p class="text-center p-t-15 p-b-15">' + '没有内容' + '</p>');
 					}
 
-					$(_this).addClass('disabled').unbind('click').bind('click', function () { return false; });
-
-					$(_this).html('<span class="c-gray">没有更多了</span>');
+					_this.addClass('disabled').unbind('click').bind('click', function () { return false; });
+					_this.html('<span class="c-gray">没有更多了</span>');
 				}
 
 				if (callback != null)
@@ -2499,7 +2498,7 @@ AWS.Dropdown =
 									{
 										'url': a.url,
 										'name': a.name,
-										'discuss_count': a.detail.discuss_count,
+										'focus_count': a.detail.focus_count,
 										'topic_id': a.detail.topic_id
 									}));
 								break;

@@ -265,23 +265,19 @@ class main extends AWS_CONTROLLER
 			HTTP::redirect('/m/topic/');
 		}
 
-		$per_page = 18; // 包含一个父目录
-		if ($today_topics = rtrim(get_setting('today_topics'), ','))
+		$per_page = 18;
+		
+		// 今日话题
+
+		if ($today_topic = $this->model('topic')->get_topic_by_title(array_random(explode(',', $today_topics))))
 		{
-			if (!$today_topic = AWS_APP::cache()->get('square_today_topic_' . md5($today_topics)))
-			{
-				if ($today_topic = $this->model('topic')->get_topic_by_title(array_random(explode(',', $today_topics))))
-				{
-					$today_topic['best_answer_users'] = $this->model('topic')->get_best_answer_users_by_topic_id($today_topic['topic_id'], 5);
+			$today_topic['best_answer_users'] = $this->model('topic')->get_best_answer_users_by_topic_id($today_topic['topic_id'], 5);
 
-					$today_topic['questions_list'] = $this->model('posts')->get_posts_list('question', 1, 3, 'new', explode(',', $today_topic['topic_id']));
-
-					AWS_APP::cache()->set('square_today_topic_' . md5($today_topics), $today_topic, (strtotime('Tomorrow') - time()));
-				}
-			}
-
-			TPL::assign('today_topic', $today_topic);
+			$today_topic['questions_list'] = $this->model('posts')->get_posts_list('question', 1, 3, 'new', explode(',', $today_topic['topic_id']));
 		}
+		TPL::assign('today_topic', $today_topic);
+
+		// 专题列表
 
 		switch ($_GET['channel'])
 		{
@@ -311,49 +307,23 @@ class main extends AWS_CONTROLLER
 					break;
 				}
 
-				$cache_key = 'square_hot_topic_list' . md5($order) . '_' . intval($_GET['page']);
-
-				if (!$topics_list = AWS_APP::cache()->get($cache_key))
-				{
-					if ($topics_list = $this->model('topic')->get_child_topic_list(null, $order, $per_page, $_GET['page']))
-					{
-						$topics_list_total_rows = $this->model('topic')->found_rows();
-
-						AWS_APP::cache()->set('square_hot_topic_list_total_rows', $topics_list_total_rows, get_setting('cache_level_low'));
-					}
-
-					AWS_APP::cache()->set($cache_key, $topics_list, get_setting('cache_level_low'));
-				}
-				else
-				{
-					$topics_list_total_rows = AWS_APP::cache()->get('square_hot_topic_list_total_rows');
-				}
+				$topics_list = $this->model('topic')->get_child_topic_list(null, $order, $per_page, $_GET['page']);
+				$topics_list_total_rows = $this->model('topic')->found_rows();
 
 				TPL::assign('topics_list', $topics_list);
 			break;
 
 			case 'topic':
-				if (!$topics_list = AWS_APP::cache()->get('square_parent_topics_topic_list_' . intval($_GET['topic_id']) . '_' . intval($_GET['page'])))
+				$topic_ids[] = intval($_GET['topic_id']);
+
+				if ($child_topic_ids = $this->model('topic')->get_child_topic_ids($_GET['topic_id']))
 				{
-					$topic_ids[] = intval($_GET['topic_id']);
-
-					if ($child_topic_ids = $this->model('topic')->get_child_topic_ids($_GET['topic_id']))
-					{
-						$topic_ids = array_merge($child_topic_ids, $topic_ids);
-					}
-
-					if ($topics_list = $this->model('topic')->get_child_topic_list('topic_id IN(' . implode(',', $topic_ids) . ') AND merged_id = 0', 'discuss_count DESC', $per_page, $_GET['page']))
-					{
-						$topics_list_total_rows = $this->model('topic')->found_rows();
-
-						AWS_APP::cache()->set('square_parent_topics_topic_list_' . intval($_GET['topic_id']) . '_total_rows', $topics_list_total_rows, get_setting('cache_level_low'));
-					}
-
-					AWS_APP::cache()->set('square_parent_topics_topic_list_' . intval($_GET['topic_id']) . '_' . intval($_GET['page']), $topics_list, get_setting('cache_level_low'));
+					$topic_ids = array_merge($child_topic_ids, $topic_ids);
 				}
-				else
+
+				if ($topics_list = $this->model('topic')->get_child_topic_list('topic_id IN(' . implode(',', $topic_ids) . ') AND merged_id = 0', 'discuss_count DESC', $per_page, $_GET['page']))
 				{
-					$topics_list_total_rows = AWS_APP::cache()->get('square_parent_topics_topic_list_' . intval($_GET['topic_id']) . '_total_rows');
+					$topics_list_total_rows = $this->model('topic')->found_rows();
 				}
 
 				TPL::assign('topics_list', $topics_list);
@@ -361,8 +331,6 @@ class main extends AWS_CONTROLLER
 		}
 
 		TPL::assign('parent_topics', $this->model('topic')->get_parent_topics());
-
-		TPL::assign('new_topics', $this->model('topic')->get_child_topic_list(null, 'topic_id DESC', 10));
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/topic/channel-' . $_GET['channel'] . '__topic_id-' . $_GET['topic_id'] . '__day-' . $_GET['day']),

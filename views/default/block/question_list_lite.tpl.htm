@@ -20,27 +20,28 @@
 						<?php } ?>
 					</div>
 				<?php } else { ?>
-					<div class="c-black">
-						<?php echo $val['question_content']; ?>
+					<div class="lv-title">
+						<span class="title">
+							<?php echo $val['question_content']; ?>
+						</span>
 					</div>
 				<?php } ?>
-				<div class="m-t-5">
-					<ul class="question-lite-stats-items">
-                        <?php if($val['quiz_id'] > 0) { ?>
-                            <li class="question-lite-stats-item b-gray c-gray">
-                                <strong class="question-lite-stats-item-number"><?php echo intval($val['quiz_count_total']); ?></strong> 次答题 
-                            </li>
-                        
-                            <li class="pull-right question-lite-stats-item <?php if($val['quiz_success_ratio'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
-                                <strong class="question-lite-stats-item-number"><?php echo number_format($val['quiz_success_ratio'] * 100, 0); ?>%</strong> 正确率 
-                            </li>
-                        <?php } else { ?>
-                            <li class="question-lite-stats-item c-gray b-gray">
-                                <strong class="question-lite-stats-item-number"><?php echo intval($val['answer_count']); ?></strong> 条讨论 
-                            </li>
-                        <?php } ?>
-                    </ul> 
-				</div>
+				
+				<ul class="question-lite-stats-items m-t-5">
+                    <?php if($val['quiz_id'] > 0) { ?>
+                        <li class="question-lite-stats-item b-gray c-gray">
+                            <strong class="question-lite-stats-item-number"><?php echo intval($val['quiz_count_total']); ?></strong> 次答题 
+                        </li>
+                    
+                        <li class="question-lite-stats-item <?php if($val['quiz_success_ratio'] < 0.5) { ?>c-red b-red<?php } else { ?>c-green b-green<?php } ?>">
+                            <strong class="question-lite-stats-item-number"><?php echo number_format($val['quiz_success_ratio'] * 100, 0); ?>%</strong> 正确率 
+                        </li>
+                    <?php } else { ?>
+                        <li class="question-lite-stats-item c-gray b-gray">
+                            <strong class="question-lite-stats-item-number"><?php echo intval($val['answer_count']); ?></strong> 条讨论 
+                        </li>
+                    <?php } ?>
+                </ul>
 			</div>
 		</div>
 	</a>

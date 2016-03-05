@@ -75,13 +75,17 @@ class ajax extends AWS_CONTROLLER
 						$search_result[$key]['focus'] = $this->model('follow')->user_follow_check($this->user_id, $val['search_id']);
 
 						break;
+
+					default:
+						$search_result_articles[] = $this->model('article')->get_article_info_by_id($val['search_id']);
 				}
 			}
 		}
 
-		// 问题图片
+		// 问题缩略图
 
-		foreach ($search_result_questions as $key => $value) {
+		foreach ($search_result_questions as $key => $value) 
+		{
 			if ($value['has_attach'])
 			{
 				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
@@ -97,10 +101,23 @@ class ajax extends AWS_CONTROLLER
 			$search_result_topics[$key]['has_focus'] = $this->model('topic')->has_focus_topic($this->user_id, $value['topic_id']);	
 		}
 
+		// 文章缩略图
+
+		foreach ($search_result_articles as $key => $value) 
+		{
+			if ($value['has_attach'])
+			{
+				$value['attachs'] = $this->model('publish')->get_attach('article', $value['id'], 'min');
+			}
+
+			$search_result_articles[$key] = $value;
+		}
+
 		TPL::assign('search_result_questions', $search_result_questions);
 		TPL::assign('search_result_users', $search_result_users);
 		TPL::assign('search_result_topics', $search_result_topics);
-		
+		TPL::assign('search_result_articles', $search_result_articles);
+
 		TPL::assign('search_result', $search_result);
 
 		if (is_mobile())

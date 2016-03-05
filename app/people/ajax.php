@@ -204,8 +204,8 @@ class ajax extends AWS_CONTROLLER
 			}
 		}
 
-		TPL::assign('topic_list', $topic_list);
+		TPL::assign('topic_list_lite', $topic_list);
 
-		TPL::output('people/ajax/topics');
+		TPL::output('block/topic_list_lite');
 	}
 }

@@ -1,7 +1,7 @@
 <div class="listview">
     <div class="lv-body">
         <?php foreach ($this->article_list as $id => $article) { ?>
-            <a class="lv-item" href="article/<?php echo $id; ?>">
+            <a class="lv-item" href="article/<?php echo $article['id']; ?>">
                 <div class="media">
                     <div class="pull-left article-list-feature-img">
                         <img class="article-feature-img-sm responsive-img" 
@@ -14,6 +14,10 @@
                     </div>
                     <div class="media-body">
                         <div class="lv-title"><?php echo $article['title']; ?></div>
+                        <ul class="article-list-stats-items m-t-10">
+                            <li><i class="md md-local-florist"></i> 赞同 <?php echo $article['votes']; ?></li>
+                            <li><i class="md md-comment"></i> 评论 <?php echo $article['comments']; ?></li>
+                        </ul>
                     </div>
                 </div>
             </a>   
