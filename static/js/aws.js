@@ -1674,6 +1674,11 @@ AWS.User =
 	// 关注
 	follow: function(selector, type, data_id)
 	{
+		if(G_USER_ID <= 0) {
+			window.location = G_BASE_URL + '/account/login/';
+			return;
+		}
+
 		selector.addClass('disabled');
 
 		switch (type)

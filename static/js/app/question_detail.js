@@ -149,7 +149,7 @@ $(function()
 			$.each(result, function (i, e) {
 				if (e['uid'])
 				{
-					$('#focus_users').append('<a href="' + e['url'] + '"><img src="' + e['avatar_file'] + '" class="aw-user-name" data-id="' + e['uid'] + '" alt="' + e['user_name'] + '" /></a> ');
+					$('#focus_users').append('<a href="' + e['url'] + '"><img src="' + e['avatar_file'] + '" class="user-tag" data-id="' + e['uid'] + '" alt="' + e['user_name'] + '" /></a> ');
 				}
 				else
 				{

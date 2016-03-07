@@ -2508,7 +2508,7 @@ input.form-control {
 }
 
 .login-block input {
-	padding: 20px 10px;
+	height: 42px;
 }
 
 .login-block .form-control-feedback {
@@ -2914,7 +2914,11 @@ body #content {
 }
 
 .search-result-tag {
-
+	font-size: 12px;
+	padding: 2px 5px;
+	color: #fff;
+	border-radius: 2px;
+	margin-right: 10px;
 }
 
 /*移动版*/

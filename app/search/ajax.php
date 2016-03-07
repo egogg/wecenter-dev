@@ -50,7 +50,7 @@ class ajax extends AWS_CONTROLLER
 
 		$search_result = $this->model('search')->search(cjk_substr($_GET['q'], 0, 64), $_GET['search_type'], $_GET['page'], get_setting('contents_per_page'), null, $_GET['is_recommend']);
 
-		if ($this->user_id AND $search_result)
+		if ($search_result)
 		{
 			foreach ($search_result AS $key => $val)
 			{

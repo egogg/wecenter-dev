@@ -2,7 +2,7 @@
 	<!-- 作者信息 -->
 	<div class="question-publish-info">
 		<?php if ($this->question_info['user_info']) { ?>
-			<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" target="_blank" rel="nofollow">
+			<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag" data-id="<?php echo $this->question_info['user_info']['uid']; ?>">
 				<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($this->question_info['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($this->question_info['user_info']['verified']) { ?><?php if ($this->question_info['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
 					<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
 				<span class="publisher-user-name c-lightblue">

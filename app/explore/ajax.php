@@ -117,6 +117,7 @@ class ajax extends AWS_CONTROLLER
 			{
 				$user_quiz_messages[$key]['user_name'] = $user_info['user_name'];
 				$user_quiz_messages[$key]['user_url'] = $user_info['url_token'];
+				$user_quiz_messages[$key]['uid'] = $user_info['uid'];
 
 				$user_quiz_messages[$key]['question_id'] = $record['question_id'];
 				$user_quiz_messages[$key]['question_title'] = $question_info['question_content'];
