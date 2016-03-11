@@ -20,22 +20,25 @@
         <?php foreach ($this->user_rank_list as $key => $val) { ?>
             <a class="lv-item" href="people/<?php echo $val['url_token']; ?>">
                 <div class="media">
-                    <div class="pull-left user-tag" data-id="<?php echo $val['uid']; ?>">
-                        <span class="m-r-5 <?php echo $rank_colors[$key % 3]; ?>"><?php echo $key + 1; ?></span>
+                    <span class="user-rank-tag <?php echo $rank_colors[$key % 3]; ?>"><?php echo $key + 1; ?></span>
+                    <div class="user-tag user-img pull-left" data-id="<?php echo $val['uid']; ?>">
                         <img class="lv-img-sm" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="">
                     </div>
                     <div class="media-body">
                         <div class="lv-title">
-                            <span class="user-tag" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_name']; ?></span>
+                            <span class="user-tag user-name" data-id="<?php echo $val['uid']; ?>"><?php echo $val['user_name']; ?></span>
                             <?php if ($val['verified']) { ?><i class="icon-v<?php if ($val['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['verified'] == 'enterprise') { ?><?php _e('企业认证'); ?><?php } else { ?><?php _e('个人认证'); ?><?php } ?>"></i><?php } ?>
                         </div>
-                        <small class="lv-small">
-                            <?php if($this->rank_type == 'success_ratio') { ?>
+
+                        <?php if($this->rank_type == 'success_ratio') { ?>
+                            <small class="lv-small <?php if($val['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">
                                 正确率: <?php echo number_format($val['question_quiz_success_ratio'] * 100, 0); ?>%
-                            <?php } else if($this->rank_type == 'integral') { ?>
-                                积分：<?php echo $val['integral']; ?>
-                            <?php } ?>
-                        </small>
+                            </small>
+                        <?php } else if($this->rank_type == 'integral') { ?>
+                            <small class="lv-small">
+                            积分：<?php echo $val['integral']; ?>
+                            </small>
+                        <?php } ?>
                     </div>
                 </div>
             </a>

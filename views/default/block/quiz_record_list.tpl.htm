@@ -1,26 +1,27 @@
-<?php foreach($this->question_quiz_record_list AS $key => $val) { ?>
+<?php foreach($this->quiz_record_list AS $key => $val) { ?>
     <li class="lv-item">
         <div class="media">
-            <div class="pull-left">
+            <a class="user-tag user-img pull-left" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
                 <img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
             <?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-            </div>
+            </a>
             <div class="media-body">
                 <div class="lv-title">
-                    <a class="c-lightblue" href="people/<?php echo $val['user_info']['url_token']; ?>"><?php echo $val['user_info']['user_name']; ?></a> 回答了该问题<?php if($this->question_info['quiz_info']['countdown'] > 0 and $val['time_spend'] > 0) { ?><span class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</span><?php } ?>
+                    <a class="user-tag user-name" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>"><?php echo $val['user_info']['user_name']; ?></a>
                     <?php if($val['passed']) { ?>
-                        <span class="c-green pull-right">
+                        <span class="c-green">
                             答题通过
                         </span>
                     <?php } else if($this->question_info['quiz_info']['countdown'] > 0 and $val['time_spend'] <= 0) { ?>
-                        <span class="c-amber pull-right">
+                        <span class="c-amber">
                             答题超时
                         </span>
                     <?php } else { ?>
-                        <span class="c-red pull-right">
+                        <span class="c-red">
                             答题失败
                         </span>
                     <?php } ?>
+                    <?php if($this->question_info['quiz_info']['countdown'] > 0 and $val['time_spend'] > 0) { ?><span class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</span><?php } ?>
                 </div>
                 <small class="lv-small"><?php echo date_friendly($val['start_time']); ?></small>
             </div>

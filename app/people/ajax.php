@@ -28,15 +28,15 @@ class ajax extends AWS_CONTROLLER
 		$rule_action['rule_type'] = 'white'; //黑名单,黑名单中的检查  'white'白名单,白名单以外的检查
 
 		$rule_action['actions'] = array(
-			'user_info'
+			'user_info',
+			'questions',
+			'answers',
+			'topics'
 		);
 
 		if ($this->user_info['permission']['visit_people'])
 		{
 			$rule_action['actions'][] = 'user_actions';
-			$rule_action['actions'][] = 'follows';
-			$rule_action['actions'][] = 'topics';
-			$rule_action['actions'][] = 'answers';
 		}
 		
 		return $rule_action;

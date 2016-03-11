@@ -130,7 +130,6 @@
 					<div class="comment-list t-view">
 						<div class="tv-comments">
 							<div class="answer-items" data-load-answer="<?php if($this->show_answers) { ?>1<?php } else { ?>0<?php }?>">
-		                        
 							</div>
 							
 							<div class="<?php if(($this->answer_count <= 0) or $this->show_answers) { ?>hidden<?php } ?> load-question-answers-board m-b-20 m-t-20">
@@ -196,12 +195,12 @@
 				<div class="card-header card-padding p-b-0 question-publisher">
 					<div class="media">
 						<div class="pull-left">
-							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
+							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
 						</div>
 						<div class="media-body">
 	                        <div class="media-heading publisher-title">
 	                        	<h4>
-	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
+	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
 	                        		<span class="question-publisher-mark">出题</span>
 	                        		<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher pull-right <?php if ($this->user_follow_check) { ?>following<?php } ?>">
 	                        			<span>
@@ -264,35 +263,8 @@
 					</div>
 					<div class="listview">
 	            		<div class="lv-body">
-	            			<?php foreach($this->question_quiz_record AS $key => $val) { ?>
-								<a class="lv-item" href="people/<?php echo $val['user_info']['url_token']; ?>">
-									<div class="media">
-                                        <div class="pull-left">
-                                            <img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-										<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="lv-title">
-                                            	<strong class="c-lightblue m-r-5"><?php echo $val['user_info']['user_name']; ?></strong> 
-			                                    <?php if($val['passed']) { ?>
-													<span class="c-green">
-														答题成功<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?><em class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</em><?php } ?>
-													</span>
-												<?php } else if($this->question_info['question_quiz']['countdown'] > 0 and $val['time_spend'] <= 0) { ?>
-													<span class="c-deeporange">
-														答题超时
-													</span>
-												<?php } else { ?>
-													<span class="c-red">
-														答题失败<?php if($this->question_info['question_quiz']['countdown'] > 0) { ?><em class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</em><?php } ?>
-													</span>
-												<?php } ?>
-                                            </div>
-                                            <small class="lv-small"><?php echo date_friendly($val['start_time']); ?></small>
-                                        </div>
-                                    </div>
-								</a>
-							<?php } ?>
+	            			<?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
+                        	<?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
 							<div class="lv-footer"></div>
 	            		</div>
 	            	</div>

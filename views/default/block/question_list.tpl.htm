@@ -21,12 +21,12 @@
 				<div class="question-list-heading m-b-10 clearfix">
 					<div class="question-publish-info m-t-5 m-b-5">
 						<?php if ($question['user_info']) { ?>
-							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag" data-id="<?php echo $question['user_info']['uid']; ?>">
+							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-img" data-id="<?php echo $question['user_info']['uid']; ?>">
 								<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
 								<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-								<small class="c-lightblue">
-									<?php echo $question['user_info']['user_name']; ?>
-								</small>
+							</a>
+							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-name" data-id="<?php echo $question['user_info']['uid']; ?>">
+								<?php echo $question['user_info']['user_name']; ?>
 							</a>
 						<?php } ?>
 						<small class="c-gray">

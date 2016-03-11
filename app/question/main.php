@@ -334,7 +334,7 @@ class main extends AWS_CONTROLLER
 
 		if($question_info['quiz_id'])
 		{
-			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+			$question_info['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 		}
 
 		TPL::assign('question_info', $question_info);

@@ -1976,6 +1976,6 @@ class ajax extends AWS_CONTROLLER
 
 		TPL::assign('question_quiz_record_list', $question_quiz_record);
 
-		TPL::output('question/ajax/question_quiz_record.tpl.htm');
+		TPL::output('block/quiz_record_list.tpl.htm');
 	}
 }

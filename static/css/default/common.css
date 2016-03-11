@@ -680,7 +680,7 @@ header .main-nav ul li a.active {
 }
 
 .topic-details-content {
-	height: 96px;
+	height: 68px;
 	overflow: hidden;
 }
 
@@ -1160,7 +1160,8 @@ li.user-quiz-record-item.timeout:before {
 .comment-user-info .user-avatar {
 	width: 30px !important;
 	height: 30px !important;
-	margin-right: 15px;
+	margin-right: 5px;
+	display: inline-block;
 }
 
 .comment-list {
@@ -1177,10 +1178,6 @@ li.user-quiz-record-item.timeout:before {
 	border-bottom: none;
 }
 
-.comment-list a.user-name {
-	color: #03A9F4;
-}
-
 .load-question-answers-board {
 	padding: 15px 20px;
     border-left: 3px solid #eee;
@@ -1190,22 +1187,23 @@ li.user-quiz-record-item.timeout:before {
 
 .answer-actions {
 	margin: 10px 0;
-	padding-right: 15px;
 	font-size: 12px;
-}
-
-.answer-actions li {
-	display: inline-block;
-	padding-right: 15px;
 }
 
 .answer-actions a {
 	color: #9e9e9e;
 }
 
-ul.answer-actions-right li {
+.answer-actions-left li {
 	display: inline-block;
-	padding-left: 15px;
+	float: left;
+	margin-right: 15px;
+}
+
+.answer-actions-right li {
+	display: inline-block;
+	float: left;
+	margin-left: 15px;
 }
 
 .agree-answer.active {
@@ -1217,7 +1215,6 @@ ul.answer-actions-right li {
 	border-left: 3px solid #eee;
     padding-left: 5px !important;
     padding-right: 0 !important;
-    margin-right: 15px !important;
 }
 
 .sub-comment-actions {
@@ -1840,6 +1837,13 @@ li.action-item-link a:hover:before {
     color: #fff;
 }
 
+.user-rank-tag {
+	display: inline-block;
+	line-height: 35px;
+	float: left;
+	margin-right: 10px;
+}
+
 .global-message {
 	height: 150px;
 }
@@ -2224,6 +2228,10 @@ i.dot {
 
 /* user sort */
 
+.lv-small.user-signature {
+	min-height: 12px;
+}
+
 .user-list-sort-items {
 	display: inline-block;
 	border-left: 1px solid #e9e9e9;
@@ -2283,6 +2291,17 @@ i.dot {
 .user-list-rank-num {
 	text-align: center;
     margin-top: 15px;
+}
+
+
+/* user card */
+
+.user-tag.user-name {
+	color: #03A9F4;
+}
+
+.user-tag.user-img {
+	display: inline-block;
 }
 
 /* 重载bootstrap */

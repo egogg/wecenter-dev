@@ -45,15 +45,15 @@
                 </div>
                 <div class="listview">
                     <ul class="lv-body" id="question-quiz-record-items">
-                        <?php TPL::assign('question_quiz_record_list', $this->question_quiz_record); ?>
-                        <?php TPL::output('question/ajax/question_quiz_record.tpl.htm'); ?>
+                        <?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
+                        <?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
                     </ul>
                     <div class="lv-footer"></div>
                 </div>
             </div>
             <div class="card text-center">
                 <div class="card-body card-padding">
-                    <a href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
+                    <a class="load-more" href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
                 </div>
             </div>
         </div>

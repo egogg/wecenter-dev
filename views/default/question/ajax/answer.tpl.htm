@@ -1,17 +1,16 @@
 <li class="media comment-item" data-uninterested-count="<?php echo $this->answer_info['uninterested_count']; ?>" data-force-fold="<?php if ($this->answer_info['user_rated_uninterested']) { ?>1<?php } else { ?><?php echo $this->answer_info['force_fold']; ?><?php } ?>" id="comment-id-<?php echo $this->answer_info['answer_id']; ?>">
 	<div class="media-body">
 		<div class="comment-user-info clearfix">
-			<a href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="tvh-user pull-left">
-            	<img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($this->answer_info['uid'], 'mid'); ?>" alt="" />
+			<a class="user-tag user-img" data-id="<?php echo $this->answer_info['uid']; ?>" href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="pull-left">
+            	<img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($this->answer_info['uid'], 'mid'); ?>" alt="" /> 
         	</a>
-            <div class="d-block">
-            	<a class="user-name" href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" data-id="<?php echo $this->answer_info['uid']; ?>"><?php echo $this->answer_info['user_info']['user_name']; ?>
-            	</a>
-            	<?php if ($this->answer_info['user_info']['verified']) { ?>
-					<i class="icon-v<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
-				<?php } ?> 
-                 · <small class="c-gray"><?php echo date_friendly($this->answer_info['add_time'], 604800, 'Y-m-d'); ?></small>
-            </div>
+            <a class="user-tag user-name" data-id="<?php echo $this->answer_info['uid']; ?>" href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="tvh-user pull-left">
+                <?php echo $this->answer_info['user_info']['user_name']; ?>
+                <?php if ($this->answer_info['user_info']['verified']) { ?>
+                    <i class="icon-v<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+                <?php } ?>
+            </a>
+            <small class="c-gray">• <?php echo date_friendly($this->answer_info['add_time'], 604800, 'Y-m-d'); ?></small>
 		</div>
        
         <div class="m-t-10">
@@ -19,7 +18,7 @@
         </div>
         
         <div class="answer-actions clearfix">
-        	<ul class="pull-left">
+        	<ul class="answer-actions-left pull-left">
         		<li>
         			<a class="agree-answer <?php if ($this->user_info['user_name'] == $this->answer_info['user_info']['user_name']) { ?> disabled<?php } ?> <?php if ($this->answer_info['agree_status'] == 1) { ?>active<?php } ?> <?php if (!$this->user_id) { ?>disabled<?php } ?> c-gray" 
         				<?php if ($this->user_id && $this->user_info['user_name'] != $this->answer_info['user_info']['user_name']) { ?>onclick="AWS.User.agree_vote(this, '<?php echo $this->user_info['user_name']; ?>', <?php echo $this->answer_info['answer_id']; ?>);"<?php } ?> 
