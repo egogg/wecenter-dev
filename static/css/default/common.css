@@ -850,6 +850,10 @@ body {
 	margin-bottom: 0;
 }
 
+.question-publisher .send-mail {
+	line-height: 20px;
+}
+
 .question-publisher-followers {
 	line-height: 40px;
 }
@@ -858,8 +862,7 @@ body {
 	border-radius: 2px;
 	border: 1px solid #FF9800;
 	color: #FF9800;
-	padding: 0 3px;
-	margin-right: 2px;
+	padding: 1px 3px;
 	font-size: 12px;
 }
 
@@ -880,9 +883,8 @@ body {
 }
 
 .follow.question-publisher {
-	padding: 0 10px;
-	font-size: 12px;
-	line-height: 19px;
+	padding: 5px 24px;
+	font-size: 13px;
 }
 
 .question-quiz-board {

@@ -196,46 +196,54 @@
 					<div class="media">
 						<div class="pull-left">
 							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
+							<div class="text-center m-t-5">
+								<span class="question-publisher-mark">出题</span>
+							</div>
 						</div>
 						<div class="media-body">
 	                        <div class="media-heading publisher-title">
 	                        	<h4>
-	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
-	                        		<span class="question-publisher-mark">出题</span>
-	                        		<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher pull-right <?php if ($this->user_follow_check) { ?>following<?php } ?>">
-	                        			<span>
-	                        				<?php if ($this->user_follow_check) { ?>
-	                        					<i class="md md-check"></i> 正在关注
-	                        				<?php } else { ?>
-	                        					<i class="md md-add"></i> 添加关注
-	                        				<?php } ?>
-	                        			</span>
-	                        			
-	                        		</a>
+	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a><a class="c-gray m-l-5 send-mail" data-toggle="tooltip" data-original-title="发送私信" data-placement="right" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $this->question_info['user_info']['user_name']; ?>');"><i class="md md-email"></i></a>
 	                        	</h4>
-	                        	<div class="question-publisher-stats">
-		                        	<ul class="clearfix">
-		                        		<li>
-		                        			<a class="c-gray" href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-publish">出题 <span><?php echo $this->question_info['user_info']['question_count']; ?></span></a>
-		                        		</li>
-		                        		<li>
-		                        			<a class="c-gray" href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-answered">答题 <span><?php echo $this->question_info['user_info']['question_quiz_count_total']; ?></span></a>
-		                        		</li>
-		                        		<li>
-		                        			<a class="c-gray" href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-comments">讨论 <span><?php echo $this->question_info['user_info']['answer_count']; ?></span></a>
-		                        		</li>
-		                        		<li>
-		                        			<a class="c-gray" href="javascript:void(0);">正确率 <span><?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 0) ?>%</span></a>
-		                        		</li>
-		                        	</ul>
-		                        </div>
+								
+								<div class="user-succes-ratio m-b-5">
+									<span class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率：<?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 0) ?>%</span>
+									<em class="c-gray m-r-5 m-l-5">|</em>
+									<span class="c-green">一次通过：<?php echo number_format($this->question_info['user_info']['question_quiz_count_poft'], 0) ?> 题</span>
+								</div>
+
+								<div class="question-publisher-stats">
+			                    	<ul class="clearfix">
+			                    		<li>
+			                    			<a class="c-gray" href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-publish">出题 <span><?php echo $this->question_info['user_info']['question_count']; ?></span></a>
+			                    		</li>
+			                    		<li>
+			                    			<a class="c-gray" href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-answered">答题 <span><?php echo $this->question_info['user_info']['question_quiz_count_total']; ?></span></a>
+			                    		</li>
+			                    		<li>
+			                    			<a class="c-gray" href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-comments">讨论 <span><?php echo $this->question_info['user_info']['answer_count']; ?></span></a>
+			                    		</li>
+			                    	</ul>
+			                    </div>
 	                        </div>
 	                    </div>
 					</div>
 	            </div>
-	            <div class="card-body card-padding">
-					<div class="m-b-10">
+	            <div class="card-body p-t-0 card-padding">
+					<div class="m-t-10">
 						<?php echo $this->question_info['user_info']['signature']; ?>
+					</div>	
+
+					<div class="m-t-25">
+						<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher <?php if ($this->user_follow_check) { ?>following<?php } ?>">
+	            			<span>
+	            				<?php if ($this->user_follow_check) { ?>
+	            					<i class="md md-check"></i> 正在关注
+	            				<?php } else { ?>
+	            					<i class="md md-add"></i> 添加关注
+	            				<?php } ?>
+	            			</span>
+	            		</a>
 					</div>
 				</div>
 			</div>

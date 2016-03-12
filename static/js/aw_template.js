@@ -8,29 +8,33 @@ var AW_TEMPLATE = {
 		'<div id="aw-loading-mini-box"></div>',
 
 	'userCard':
-			'<div id="aw-card-tips" class="aw-card-tips aw-card-tips-user">'+
-				'<div class="aw-mod">'+
-					'<div class="mod-head">'+
-						'<a href="{{url}}" class="img">'+
-							'<img src="{{avatar_file}}" alt="" />'+
-						'</a>'+
-						'<p class="title clearfix">'+
-							'<a href="{{url}}" class="name pull-left" data-id="{{uid}}">{{user_name}}</a>'+
-							'<i class="{{verified_enterprise}} pull-left" title="{{verified_title}}"></i>'+
-						'</p>'+
-						'<p class="aw-user-center-follow-meta">'+
-							'<span>' + _t('威望') + ': <em class="aw-text-color-green">{{reputation}}</em></span>'+
-							'<span>' + _t('赞同') + ': <em class="aw-text-color-orange">{{agree_count}}</em></span>'+
-						'</p>'+
+			'<div id="aw-card-tips" class="card aw-card-tips aw-card-tips-user">'+
+				'<div class="card-header card-padding p-b-0">'+
+					'<div class="media">'+
+						'<div class="pull-left">'+
+							'<a href="{{url}}">'+
+								'<img class="img-circle" src="{{avatar_file}}" alt="{{user_name}}" />'+
+							'</a>'+
+						'</div>'+
+						'<div class="media-body">'+
+							'<div class="media-heading">'+
+								'<h4 class="m-b-0">'+
+									'<a href="{{url}}">'+
+										'{{user_name}}'+
+									'</a>'+
+								'</h4>'+
+								'<span class="c-gray">'+
+									'{{signature}}'+
+								'</span>'+
+							'</div>'+
+						'</div>'+
 					'</div>'+
-					'<div class="mod-body">'+
-						'<p>{{signature}}</p>'+
-					'</div>'+
-					'<div class="mod-footer clearfix">'+
-						'<span>'+
-							'<a class="text-color-999" onclick="AWS.dialog(\'inbox\', \'{{user_name}}\');"><i class="icon icon-inbox"></i> ' + _t('私信') + '</a>&nbsp;&nbsp;&nbsp;&nbsp;<a  class="text-color-999" onclick="AWS.dialog(\'publish\', {category_enable:{{category_enable}}, ask_user_id:{{uid}}, ask_user_name:{{ask_name}} });"><i class="icon icon-at"></i> ' + _t('问Ta') + '</a>'+
-						'</span>'+
-						'<a class="btn btn-normal btn-success follow {{focus}} pull-right" onclick="AWS.User.follow($(this), \'user\', {{uid}});"><span>{{focusTxt}}</span> <em>|</em> <b>{{fansCount}}</b></a>'+
+				'</div>'+
+				'<div class="card-body card-padding p-t-0">'+
+					'<div class="user-succes-ratio m-b-5">'+
+						'<span class="c-gray">正确率：100%</span>'+
+						'<em class="c-gray m-r-5 m-l-5">|</em>'+
+						'<span class="c-green">一次通过：100 题</span>'+
 					'</div>'+
 				'</div>'+
 			'</div>',

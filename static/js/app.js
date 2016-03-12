@@ -511,7 +511,7 @@ $(document).ready(function ()
     //小卡片mouseout
     $(document).on('mouseout', '#aw-card-tips', function ()
     {
-        $(this).hide();
+        // $(this).hide();
     });
 
     //用户小卡片关注更新缓存
