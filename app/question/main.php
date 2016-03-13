@@ -129,6 +129,7 @@ class main extends AWS_CONTROLLER
 		}
 
 		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
+		$questioin_info['user_info']['question_quiz_poft_ratio'] = $questioin_info['user_info']['question_quiz_count_total'] > 0 ? $questioin_info['user_info']['question_quiz_count_POFT'] / $questioin_info['user_info']['question_quiz_count_total'] : 0;
 
 		// if ($_GET['column'] != 'log')
 		// {

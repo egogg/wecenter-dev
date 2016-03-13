@@ -62,6 +62,8 @@ class main extends AWS_CONTROLLER
             $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
         }
 
+        $user['question_quiz_poft_ratio'] = $user['question_quiz_count_total'] > 0 ? $user['question_quiz_count_POFT'] / $user['question_quiz_count_total'] : 0;
+
         if (!$user)
         {
             H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');
@@ -299,6 +301,8 @@ class main extends AWS_CONTROLLER
             $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
         }
 
+        $user['question_quiz_poft_ratio'] = $user['question_quiz_count_total'] > 0 ? $user['question_quiz_count_POFT'] / $user['question_quiz_count_total'] : 0;
+
         if (!$user)
         {
             H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');
@@ -418,6 +422,8 @@ class main extends AWS_CONTROLLER
             $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
         }
 
+        $user['question_quiz_poft_ratio'] = $user['question_quiz_count_total'] > 0 ? $user['question_quiz_count_POFT'] / $user['question_quiz_count_total'] : 0;
+        
         if (!$user)
         {
             H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');

@@ -28,34 +28,37 @@
                 <div>
                     <h1>
                         <?php echo $this->user['user_name']; ?> <?php if ($this->user['verified']) { ?><i class="icon-v <?php if ($this->user['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->user['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i><?php } ?>
-                        <small>
-                            <ul class="user-info-stats">
-                                <li class="<?php if($this->user['question_quiz_success_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">正确率 <?php echo number_format($this->user['question_quiz_success_ratio'] * 100, 0); ?>%</li>
-                                <li>一次通过 <?php echo $this->user['question_quiz_count_POFT']; ?></li>
-                                <li>答题 <?php echo $this->user['question_quiz_count_total']; ?></li>
-                                <li>出题 <?php echo $this->user['question_count']; ?></li>
-                                <li>积分 <?php echo $this->user['integral']; ?></li>
-                            </ul>
-                        </small>
-                    </h1>
-                    <p class="user-signature">
-                        <span class="signature">
-                            <?php echo $this->user['signature']; ?>
-                        </span>
+                       
+                        <p class="user-signature m-t-10 m-b-0 c-gray">
+                            <span class="signature">
+                                <?php echo $this->user['signature']; ?>
+                            </span>
 
-                        <?php if($this->user_id && $this->user_id == $this->user['uid']) { ?>
-                            <div class="dropdown pmop-message user-signature-dialog">
-                                <a data-toggle="dropdown" href="#" class="c-lightblue" aria-expanded="false">
-                                    <i class="md md-create"></i> 编辑个人简介
-                                </a>
-                                
-                                <div class="dropdown-menu user-signature-dialog">
-                                    <textarea id="user-signature-input" placeholder="简短介绍一下自己"><?php echo $this->user['signature']; ?></textarea>
-                                    <button class="btn bgm-green btn-icon" onclick="AWS.User.update_signature();"><i class="md md-send"></i></button>
+                            <?php if($this->user_id && $this->user_id == $this->user['uid']) { ?>
+                                <div class="dropdown pmop-message user-signature-dialog">
+                                    <a data-toggle="dropdown" href="#" class="c-lightblue" aria-expanded="false">
+                                        <i class="md md-create"></i> 编辑个人简介
+                                    </a>
+                                    
+                                    <div class="dropdown-menu user-signature-dialog">
+                                        <textarea id="user-signature-input" placeholder="简短介绍一下自己"><?php echo $this->user['signature']; ?></textarea>
+                                        <button class="btn bgm-green btn-icon" onclick="AWS.User.update_signature();"><i class="md md-send"></i></button>
+                                    </div>
                                 </div>
-                            </div>
-                        <?php } ?>
-                    </p>
+                            <?php } ?>
+                        </p>
+                    </h1>
+
+                    <ul class="user-info-stats">
+                                <li class="<?php if($this->user['question_quiz_success_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">正确率 <?php echo number_format($this->user['question_quiz_success_ratio'] * 100, 0); ?>%</li>
+
+                                <li class="<?php if($this->user['question_quiz_count_total'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">一次通过率 <?php echo number_format($this->user['question_quiz_poft_ratio'] * 100, 0); ?>%</li>
+                    </ul>
+                    <ul class="user-info-stats">
+                        <li>答题 <?php echo $this->user['question_quiz_count_total']; ?></li>
+                        <li>出题 <?php echo $this->user['question_count']; ?></li>
+                        <li>积分 <?php echo $this->user['integral']; ?></li>
+                    </ul>
 
                     <div class="m-t-20">
                         <a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->user['uid']; ?>);" class="follow user-info-follow <?php if ($this->user_follow_check) { ?>following<?php } ?>">

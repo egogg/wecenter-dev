@@ -8,7 +8,7 @@ var AW_TEMPLATE = {
 		'<div id="aw-loading-mini-box"></div>',
 
 	'userCard':
-			'<div id="aw-card-tips" class="card aw-card-tips aw-card-tips-user">'+
+			'<div id="aw-card-tips" class="card aw-card-tips">'+
 				'<div class="card-header card-padding p-b-0">'+
 					'<div class="media">'+
 						'<div class="pull-left">'+
@@ -31,11 +31,35 @@ var AW_TEMPLATE = {
 					'</div>'+
 				'</div>'+
 				'<div class="card-body card-padding p-t-0">'+
-					'<div class="user-succes-ratio m-b-5">'+
-						'<span class="c-gray">正确率：100%</span>'+
-						'<em class="c-gray m-r-5 m-l-5">|</em>'+
-						'<span class="c-green">一次通过：100 题</span>'+
+					'<div class="col-sm-6 p-t-20 p-b-20 text-center">'+
+						'<div class="easy-pie user-pie-ratio" data-percent="100">'+
+							'<div class="percent">100</div>'+
+							'<div class="pie-title">正确率</div>'+
+						'</div>'+
 					'</div>'+
+					'<div class="col-sm-6 p-t-20 p-b-20 text-center">'+
+						'<div class="easy-pie user-pie-ratio" data-percent="56">'+
+							'<div class="percent">56</div>'+
+							'<div class="pie-title">一次通过率</div>'+
+						'</div>'+
+					'</div>'+
+					'<div>'+
+                    	'<ul class="user-stats">'+
+                    		'<li>'+
+                    			'<a href="{{question_count_url}}">出题 <span>{{question_count}}</span></a>'+
+                    		'</li>'+
+                    		'<li>'+
+                    			'<a href="{{quiz_count_url}}">答题 <span>{{quiz_count}}</span></a>'+
+                    		'</li>'+
+                    		'<li>'+
+                    			'<a href="{{answer_count_url}}">讨论 <span>{{answer_count}}</span></a>'+
+                    		'</li>'+
+                    	'</ul>'+
+                    '</div>'+
+                    '<div class="m-t-20 clearfix">'+
+                    	'<button type="button" class="btn btn-link pull-left" onclick="AWS.dialog(\'inbox\', \'{{user_name}}\');"><i class="md md-email"></i> 发送私信</button>'+
+                    	'<a class="follow {{focus}} pull-right" onclick="AWS.User.follow($(this), \'user\', {{uid}});"><span><i class="md {{focusIcon}}"></i> {{focusTxt}}</span></a>'+
+                    '</div>'+
 				'</div>'+
 			'</div>',
 

@@ -115,7 +115,12 @@ class ajax extends AWS_CONTROLLER
 			'url' => get_js_url('/people/' . $user_info['url_token']),
 			'category_enable' => ((get_setting('category_enable') == 'Y') ? 1 : 0),
 			'verified' => $user_info['verified'],
-			'fans_count' => $user_info['fans_count']
+			'fans_count' => $user_info['fans_count'],
+			'success_ratio' => ($user_info['question_quiz_count_total'] > 0 ? $user_info['question_quiz_count_passed'] / $user_info['question_quiz_count_total'] : 0),
+			'poft_ratio' => ($user_info['question_quiz_count_total'] > 0 ? $user_info['question_quiz_count_POFT'] / $user_info['question_quiz_count_total'] : 0),
+			'question_count' => $user_info['question_count'],
+			'quiz_count' => $user_info['question_quiz_count_total'],
+			'answer_count' => $user_info['answer_count']
 		));
 	}
 

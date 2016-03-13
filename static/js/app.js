@@ -511,29 +511,30 @@ $(document).ready(function ()
     //小卡片mouseout
     $(document).on('mouseout', '#aw-card-tips', function ()
     {
-        // $(this).hide();
+        $(this).hide();
     });
+
 
     //用户小卡片关注更新缓存
-    $(document).on('click', '.aw-card-tips-user .follow', function ()
-    {
-        var uid = $(this).parents('.aw-card-tips').find('.name').attr('data-id');
+    // $(document).on('click', '.aw-card-tips-user .follow', function ()
+    // {
+    //     var uid = $(this).parents('.aw-card-tips').find('.name').attr('data-id');
 
-        $.each(AWS.G.cashUserData, function (i, a)
-        {
-            if (a.match('data-id="' + uid + '"'))
-            {
-                if (AWS.G.cashUserData.length == 1)
-                {
-                    AWS.G.cashUserData = [];
-                }
-                else
-                {
-                    AWS.G.cashUserData[i] = '';
-                }
-            }
-        });
-    });
+    //     $.each(AWS.G.cashUserData, function (i, a)
+    //     {
+    //         if (a.match('data-id="' + uid + '"'))
+    //         {
+    //             if (AWS.G.cashUserData.length == 1)
+    //             {
+    //                 AWS.G.cashUserData = [];
+    //             }
+    //             else
+    //             {
+    //                 AWS.G.cashUserData[i] = '';
+    //             }
+    //         }
+    //     });
+    // });
 
     //话题小卡片关注更新缓存
     $(document).on('click', '.aw-card-tips-topic .follow', function ()

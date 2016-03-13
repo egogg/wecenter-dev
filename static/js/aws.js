@@ -1252,6 +1252,19 @@ var AWS =
 					}
 				}
 
+		        //显示pie控件
+
+		        function _showpie(id, trackColor, scaleColor, barColor, lineWidth, lineCap, size) {
+			        $('.'+id).easyPieChart({
+			            trackColor: trackColor,
+			            scaleColor: scaleColor,
+			            barColor: barColor,
+			            lineWidth: lineWidth,
+			            lineCap: lineCap,
+			            size: size
+			        });
+			    }
+
 				//获取数据
 				function _getdata(type, url)
 				{
@@ -1263,13 +1276,15 @@ var AWS =
 
 							if (focus == 1)
 							{
-								focus = 'active';
-								focusTxt = '取消关注';
+								focus = 'following';
+								focusIcon = 'md-check'
+								focusTxt = '正在关注';
 							}
 							else
 							{
 								focus = '';
-								focusTxt = '关注';
+								focusIcon = 'md-add';
+								focusTxt = '添加关注';
 							}
 
 							if(result.verified == 'enterprise')
@@ -1287,6 +1302,17 @@ var AWS =
 								verified_enterprise = verified_title = '';
 							}
 
+							if(result.success_ratio >= 0.5) {
+								var success_ratio_class = 'c-green b-green';
+							} else {
+								success_ratio_class = 'c-red b-red';
+							}
+
+							var question_count_url = (G_BASE_URL + '/people/questions/id-' + result.uid + '__type-publish');
+							var quiz_count_url = (G_BASE_URL + '/people/questions/id-' + result.uid + '__type-answered');
+							var answer_count_url = (G_BASE_URL + '/people/questions/id-' + result.uid + '__type-comments');
+							 
+
 							//动态插入盒子
 							$('#aw-ajax-box').html(Hogan.compile(AW_TEMPLATE.userCard).render(
 							{
@@ -1301,15 +1327,25 @@ var AWS =
 								'url' : result.url,
 								'category_enable' : result.category_enable,
 								'focus': focus,
+								'focusIcon': focusIcon,
 								'focusTxt': focusTxt,
 								'ask_name': "'" + result.user_name + "'",
-								'fansCount': result.fans_count
+								'fansCount': result.fans_count,
+								'success_ratio_class' : success_ratio_class,
+								'success_ratio': result.success_ratio,
+								'poft_ratio': result.poft_ratio,
+								'question_count': result.question_count,
+								'answer_count': result.answer_count,
+								'quiz_count': result.quiz_count,
+								'question_count_url': question_count_url,
+								'quiz_count_url': quiz_count_url,
+								'answer_count_url': answer_count_url
 							}));
 
 							//判断是否为游客or自己
 							if (G_USER_ID == '' || G_USER_ID == result.uid || result.uid < 0)
 							{
-								$('#aw-card-tips .mod-footer').hide();
+								$('#aw-card-tips-user .mod-footer').hide();
 							}
 							_init();
 							//缓存
@@ -1349,7 +1385,7 @@ var AWS =
 								//判断是否为游客
 								if (G_USER_ID == '')
 								{
-									$('#aw-card-tips .mod-footer .follow').hide();
+									$('#aw-card-tips .follow').hide();
 								}
 								_init();
 								//缓存
@@ -1393,6 +1429,11 @@ var AWS =
 				//初始化
 				function _init()
 				{
+
+					if ($('.user-pie-ratio')[0]) {
+			            _showpie('user-pie-ratio', '#eee', '#ccc', '#FFC107', 4, 'butt', 95);
+			        }
+
 					var left = _this.offset().left,
 						top = _this.offset().top + _this.height() + 5,
 						nTop = _this.offset().top - $(window).scrollTop();
