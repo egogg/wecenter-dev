@@ -207,9 +207,9 @@
 	                        	</h4>
 								
 								<ul class="question-publisher-stats m-b-5 clearfix">
-									<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率：<?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 0) ?>%</span>
+									<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率 <?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 1) ?>%</span>
 									
-									<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过：<?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'], 0) ?>%</span>
+									<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过率 <?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'], 1) ?>%</span>
 								</ul>
 
 		                    	<ul class="question-publisher-stats">

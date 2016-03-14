@@ -50,9 +50,9 @@
                     </h1>
 
                     <ul class="user-info-stats">
-                                <li class="<?php if($this->user['question_quiz_success_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">正确率 <?php echo number_format($this->user['question_quiz_success_ratio'] * 100, 0); ?>%</li>
+                        <li class="<?php if($this->user['question_quiz_success_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">正确率 <?php echo number_format($this->user['question_quiz_success_ratio'] * 100, 1); ?>%</li>
 
-                                <li class="<?php if($this->user['question_quiz_count_total'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">一次通过率 <?php echo number_format($this->user['question_quiz_poft_ratio'] * 100, 0); ?>%</li>
+                        <li class="<?php if($this->user['question_quiz_poft_ratio'] < 0.5) { ?>c-red<?php } else { ?>c-green<?php } ?>">一次通过率 <?php echo number_format($this->user['question_quiz_poft_ratio'] * 100, 1); ?>%</li>
                     </ul>
                     <ul class="user-info-stats">
                         <li>答题 <?php echo $this->user['question_quiz_count_total']; ?></li>

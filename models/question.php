@@ -1654,7 +1654,8 @@ class question_class extends AWS_MODEL
 			'quiz_count_passed' => intval($count_info['passed']),
 			'quiz_count_timeout' => intval($count_info['timeout']),
 			'quiz_count_POFT' => intval($count_info['POFT']),
-			'quiz_success_ratio' => floatval($count_info['success_ratio'])
+			'quiz_success_ratio' => floatval($count_info['success_ratio']),
+			'quiz_poft_ratio' => floatval($count_info['poft_ratio'])
 		), 'question_id = ' . intval($question_id));
 
 		return $count_info;

@@ -1254,13 +1254,22 @@ var AWS =
 
 		        //显示pie控件
 
-		        function _showpie(id, trackColor, scaleColor, barColor, lineWidth, lineCap, size) {
-			        $('.'+id).easyPieChart({
+		        function _showpie(id, size) {
+		        	var pie = $('.' + id);
+		        	var value = pie.attr('data-percent');
+		        	var trackColor = '#eee';
+		        	var scaleColor = '#ccc';
+		        	var barColor = '#4CAF50';
+		        	if(value <= 50) {
+		        		barColor = '#F44336';
+		        	}
+		        	
+			        pie.easyPieChart({
 			            trackColor: trackColor,
 			            scaleColor: scaleColor,
 			            barColor: barColor,
-			            lineWidth: lineWidth,
-			            lineCap: lineCap,
+			            lineWidth: 4,
+			            lineCap: 'butt',
 			            size: size
 			        });
 			    }
@@ -1302,12 +1311,6 @@ var AWS =
 								verified_enterprise = verified_title = '';
 							}
 
-							if(result.success_ratio >= 0.5) {
-								var success_ratio_class = 'c-green b-green';
-							} else {
-								success_ratio_class = 'c-red b-red';
-							}
-
 							var question_count_url = (G_BASE_URL + '/people/questions/id-' + result.uid + '__type-publish');
 							var quiz_count_url = (G_BASE_URL + '/people/questions/id-' + result.uid + '__type-answered');
 							var answer_count_url = (G_BASE_URL + '/people/questions/id-' + result.uid + '__type-comments');
@@ -1331,9 +1334,8 @@ var AWS =
 								'focusTxt': focusTxt,
 								'ask_name': "'" + result.user_name + "'",
 								'fansCount': result.fans_count,
-								'success_ratio_class' : success_ratio_class,
-								'success_ratio': result.success_ratio,
-								'poft_ratio': result.poft_ratio,
+								'success_ratio': (result.success_ratio * 100).toFixed(1),
+								'poft_ratio': (result.poft_ratio * 100).toFixed(1),
 								'question_count': result.question_count,
 								'answer_count': result.answer_count,
 								'quiz_count': result.quiz_count,
@@ -1431,7 +1433,7 @@ var AWS =
 				{
 
 					if ($('.user-pie-ratio')[0]) {
-			            _showpie('user-pie-ratio', '#eee', '#ccc', '#FFC107', 4, 'butt', 95);
+			            _showpie('user-pie-ratio', 95);
 			        }
 
 					var left = _this.offset().left,

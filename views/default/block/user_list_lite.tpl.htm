@@ -26,9 +26,9 @@
 					<small class="lv-small"><?php echo $val['signature']; ?></small>
                 </div>
                 
-                <ul class="lv-attrs">
-                	<li class="<?php if($this->sort_type == 'success_ratio') { ?>active<?php } ?>">正确率: <?php echo number_format($val['question_quiz_success_ratio'] * 100, 0); ?>%</li>
-                	<li class="<?php if($this->sort_type == 'poft') { ?>active<?php } ?>">一次通过: <?php echo $val['question_quiz_count_POFT']; ?></li>
+                <ul class="user-list-stats">
+                	<li class="<?php if($this->sort_type == 'success_ratio') { ?>active<?php } ?> <?php if($val['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php }else{ ?>c-red<?php } ?>">正确率: <?php echo number_format($val['question_quiz_success_ratio'] * 100, 1); ?>%</li>
+                	<li class="<?php if($this->sort_type == 'poft') { ?>active<?php } ?> <?php if($val['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php }else{ ?>c-red<?php } ?>">一次通过率: <?php echo number_format($val['question_quiz_poft_ratio'] * 100, 1); ?>%</li>
                 	<li class="<?php if($this->sort_type == 'quiz_count') { ?>active<?php } ?>">答题: <?php echo $val['question_quiz_count_total']; ?></li>
                 	<li class="<?php if($this->sort_type == 'question_count') { ?>active<?php } ?>">出题: <?php echo $val['question_count']; ?></li>
                     <li class="<?php if($this->sort_type == 'integral') { ?>active<?php } ?>">积分: <?php echo $val['integral']; ?></li>

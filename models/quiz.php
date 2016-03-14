@@ -204,7 +204,8 @@ class quiz_class extends AWS_MODEL
 		$count_info['passed'] = $this->get_question_quiz_count('question_id', $question_id, 'passed');
 		$count_info['timeout'] = $this->get_question_quiz_count('question_id', $question_id, 'timeout');
 		$count_info['POFT'] = $this->get_question_quiz_count_POFT('question_id', $question_id, 'uid');
-		$count_info['success_ratio'] = ($count_info['total'] == 0 ? 0 : $count_info['passed'] / $count_info['total']);
+		$count_info['success_ratio'] = ($count_info['total'] > 0 ? $count_info['passed'] / $count_info['total'] : 0);
+		$count_info['poft_ratio'] = ($count_info['total'] > 0 ? $count_info['POFT'] / $count_info['total'] : 0);
 
 		return $count_info;
 	}
@@ -242,8 +243,9 @@ class quiz_class extends AWS_MODEL
 		$count_info['total'] = $this->get_question_quiz_count('uid', $uid, 'total');
 		$count_info['passed'] = $this->get_question_quiz_count('uid', $uid, 'passed');
 		$count_info['timeout'] = $this->get_question_quiz_count('uid', $uid, 'timeout');
-		$count_info['POFT'] = $this->get_question_quiz_count_POFT('uid', $uid, 'uid');
-		$count_info['success_ratio'] = ($count_info['total'] == 0 ? 0 : $count_info['passed'] / $count_info['total']);
+		$count_info['POFT'] = $this->get_question_quiz_count_POFT('uid', $uid, 'question_id');
+		$count_info['success_ratio'] = ($count_info['total'] > 0 ? $count_info['passed'] / $count_info['total'] : 0);
+		$count_info['poft_ratio'] = ($count_info['total'] > 0 ? $count_info['POFT'] / $count_info['total'] : 0);
 
 		return $count_info;
 	}

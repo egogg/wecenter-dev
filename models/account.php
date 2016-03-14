@@ -1468,7 +1468,8 @@ class account_class extends AWS_MODEL
             'question_quiz_count_passed' => intval($count_info['passed']),
             'question_quiz_count_timeout' => intval($count_info['timeout']),
             'question_quiz_count_POFT' => intval($count_info['POFT']),
-            'question_quiz_success_ratio' => floatval($count_info['success_ratio'])
+            'question_quiz_success_ratio' => floatval($count_info['success_ratio']),
+            'question_quiz_poft_ratio' => floatval($count_info['poft_ratio'])
         ), 'uid = ' . intval($uid));
 
         return $count_info;

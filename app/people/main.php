@@ -62,8 +62,6 @@ class main extends AWS_CONTROLLER
             $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
         }
 
-        $user['question_quiz_poft_ratio'] = $user['question_quiz_count_total'] > 0 ? $user['question_quiz_count_POFT'] / $user['question_quiz_count_total'] : 0;
-
         if (!$user)
         {
             H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');
@@ -187,7 +185,7 @@ class main extends AWS_CONTROLLER
 						$sort_key = 'question_quiz_count_passed DESC';
 					break;
 					case 'poft':
-						$sort_key = 'question_quiz_count_POFT DESC';
+						$sort_key = 'question_quiz_poft_ratio DESC';
 					break;
 					case 'question_count':
 						$sort_key = 'question_count DESC';
@@ -211,8 +209,6 @@ class main extends AWS_CONTROLLER
 
 			$where[] = 'forbidden = 0 AND group_id >=4 AND group_id < 99';
 			$users_list = $this->model('account')->get_users_list(implode('', $where), calc_page_limit($_GET['page'], get_setting('user_rank_list_perpage')), true, false, $sort_key);
-
-			
 
 			TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 				'base_url' => get_js_url('/people/sort_type-' . $_GET['sort_type'] . '__group_id-' . $_GET['group_id']),
@@ -300,8 +296,6 @@ class main extends AWS_CONTROLLER
         {
             $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
         }
-
-        $user['question_quiz_poft_ratio'] = $user['question_quiz_count_total'] > 0 ? $user['question_quiz_count_POFT'] / $user['question_quiz_count_total'] : 0;
 
         if (!$user)
         {
@@ -422,8 +416,6 @@ class main extends AWS_CONTROLLER
             $user = $this->model('account')->get_user_info_by_url_token($_GET['id'], TRUE);
         }
 
-        $user['question_quiz_poft_ratio'] = $user['question_quiz_count_total'] > 0 ? $user['question_quiz_count_POFT'] / $user['question_quiz_count_total'] : 0;
-        
         if (!$user)
         {
             H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/');

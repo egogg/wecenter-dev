@@ -514,7 +514,6 @@ $(document).ready(function ()
         $(this).hide();
     });
 
-
     //用户小卡片关注更新缓存
     // $(document).on('click', '.aw-card-tips-user .follow', function ()
     // {
