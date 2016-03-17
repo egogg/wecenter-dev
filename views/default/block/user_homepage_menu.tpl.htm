@@ -75,12 +75,6 @@
             </div>
         </div> 
 
-        <div class="card">
-            <div class="card-body card-padding">
-                主页访问量 <strong class="pull-right"><?php echo $this->user['views_count']; ?></strong>  
-            </div>
-        </div>
-
         <div class="user-info-entry">
             <div class="list-group">
                 <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-topics" class="list-group-item <?php if($this->current_menu == 'following_topics') { ?>active<?php } ?>"> <i class="md md-add-to-photos"></i> 关注的专题 <span class="count-tag"><?php echo $this->user['topic_focus_count']; ?></span></a>
@@ -97,6 +91,12 @@
                 <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-publish" class="list-group-item <?php if($this->current_menu == 'questions_publish') { ?>active<?php } ?>"> <i class="md md-create"></i> 出题 <span class="count-tag"><?php echo $this->user['question_count']; ?></span></a>
                 <!-- <a href="#" class="list-group-item"> <i class="md md-school"></i> 投稿</a> -->
             </div>
-        </div>          
+        </div> 
+
+        <div class="card">
+            <div class="card-body card-padding">
+                主页访问量 <strong class="pull-right"><?php echo $this->user['views_count']; ?></strong>  
+            </div>
+        </div>         
     </div>
 </div>

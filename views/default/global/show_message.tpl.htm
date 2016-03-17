@@ -7,23 +7,67 @@
 		<?php if ($this->url_bit) { ?>
 		<meta http-equiv="refresh" content="<?php echo $this->interval; ?>; url=<?php echo $this->url_bit; ?>" />
 		<?php } ?>
-
-		<link rel="stylesheet" type="text/css" href="<?php echo G_STATIC_URL; ?>/css/icon.css" />
 		
 		<style type="text/css">
-		*{margin:0;padding:0;}
-		h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:400;}
-		body{background:#f1f1f1;color:#1c2837;font:normal 15px arial, verdana, tahoma, sans-serif;position:relative;}
-		a{color:#284b72;}
-		a:hover{color:#528f6c;text-decoration:underline;}
-		.aw-error-box{max-width: 400px;margin:80px auto 0;}
-		.aw-error-box .mod-head{position: relative;margin-bottom: 15px;padding-left: 10px;}
-		.aw-error-box .mod-head .icon-bubble{font-size: 60px;color: #66b7ff;}
-		.aw-error-box .mod-head .icon-i{position:absolute;left:15px;top:4px;font-size: 50px;color: #fff;}
-		.aw-error-box .mod-body{padding:40px;background-color: #ebebeb;border-radius: 10px;}
 		
-		@media (max-width:640px) {
-   			.aw-error-box{padding:0 20px;}
+		body{background:#f3f3f3;font:normal 15px arial, verdana, tahoma, sans-serif;}
+		
+		.alert-success {
+			background-color: #dff0d8;
+		    border-color: #dff0d8;
+		    color: #4caf50;
+		}
+		.alert-info {
+			background-color: #d9edf7;
+		    border-color: #d9edf7;
+		    color: #2196f3;
+		}
+		.alert-box{
+	    border-radius: 2px;
+	    position: absolute;
+	    top: 50%;
+	    margin-top: -150px;
+	    text-align: center;
+	    padding: 15px;
+	    height: 300px;
+	    width: 500px;
+	    left: 50%;
+	    margin-left: -250px;}
+
+	    .alert-box .message {
+	    	position: relative;
+			top: 50%;
+			-webkit-transform: translateY(-50%);
+			-ms-transform: translateY(-50%);
+			transform: translateY(-50%);
+	    }
+
+	    .alert-box .desc {
+	    	font-size: 12px;
+	    	margin-top: 5px;
+	    }
+
+	    .alert-box a {
+	    	font-weight: bold;
+	    	text-decoration: none;
+	    }
+
+	    .alert-success a {
+	    	color: #3d8b40;
+	    }
+
+	    .alert-info a {
+	    	color: #0c7cd5;
+	    }
+		
+		@media (max-width:767px) {
+   			.alert-box{
+				width: calc(100% - 70px);
+			    left: 20px;
+			    margin-left: 0;
+			    height: 260px;
+			    margin-top: -130px;
+   			}
 		}
 
 		</style>
@@ -42,7 +86,7 @@
 		
 		function moz_redirect()
 		{
-			var url_bit     = "<?php echo $this->url_bit; ?>";
+			var url_bit = "<?php echo $this->url_bit; ?>";
 			
 			window.location = url_bit.replace( new RegExp( "&amp;", "g" ) , '&' );
 		}
@@ -52,17 +96,12 @@
 	</head>
 
 	<body>
-		<div class="aw-error-box">
-			<div class="mod-head">
-				<i class="icon icon-bubble"></i>
-				<i class="icon icon-i"></i>
-			</div>
-			<div class="mod-body">
+		<div class="alert-box alert-info">
+			<div class="message">
 				<strong><?php echo $this->message; ?></strong>
-				<br />
+				
 				<?php if ($this->url_bit) { ?>
-				<br />
-				<span class='desc'>(<a href="<?php echo $this->url_bit; ?>"><?php _e('如果不想等待, 请点击这里'); ?></a>)</span>
+					<div class='desc'>(<a href="<?php echo $this->url_bit; ?>"><?php _e('如果不想等待, 请点击这里'); ?></a>)</div>
 				<?php } ?>
 			</div>
 		</div>
