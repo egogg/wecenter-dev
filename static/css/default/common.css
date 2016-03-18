@@ -15,7 +15,6 @@ header a {
 	height: 80px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 1000px\9
 }
 
 header .navbar-brand {
@@ -110,7 +109,7 @@ header .navbar-search {
 
 header .navbar-search-input {
 	display: inline-block;
-	width: 100%;
+	width: 300px;
 	padding-top: 22.5px;
 	float: right;
 }
@@ -164,8 +163,12 @@ header .navbar-mobile-search.open {
 header .navbar-mobile-search>div {
 	display: table-cell;
 	height: 80px;
-	padding-left: 15px;
-	padding-right: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+header .navbar-mobile-search>div:last-child {
+	padding-left: 0;
 }
 
 header #navbar-mobile-search-icon>span {
@@ -265,7 +268,7 @@ header .main-nav ul li a.active {
 }
 
 #nav-question-list-header.affix {
-	top: 0;
+	top: 118px;
 	left: 0;
 	padding-left: 0;
 	padding-right: 0;
@@ -315,11 +318,12 @@ header .main-nav ul li a.active {
 }
 
 
-.m-question-list-heading {
-	z-index: 1000;
+.m-question-list-heading.affix {
+	z-index: 100;
 	width: 100%;
-	top: 0;
+	top: 118px;
 	left: 0;
+	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .m-question-list-heading .card {
@@ -1856,7 +1860,7 @@ li.action-item-link a:hover:before {
 }
 
 .m-question-list-filter-bar {
-	margin: 0 -10px 10px -10px;
+	margin-bottom: 10px;
 }
 
 .sign-in-alert-hint {
@@ -2676,7 +2680,12 @@ input.form-control {
 	display: inline-block;
 }
 
-/*footer*/
+/* header & footer*/
+
+body #header {
+	padding-right: 0;
+	z-index: 100;
+}
 
 body #footer {
 	position: relative;
@@ -2684,6 +2693,7 @@ body #footer {
 
 body #content {
 	padding-bottom: 0;
+	margin-top: 120px;
 }
 
 /* user center page */
@@ -4046,8 +4056,19 @@ blockquote {padding: 0 15px;font-size: 14px;color: #777;border-left: 3px solid #
 	}
 }
 
-@media (max-width: 992px){
-	.container {width: 100% !important;}
+@media (max-width: 767px){
+	.container {
+		width: 100% !important;
+		padding: 0;
+	}
+
+	.header .container {
+		padding: 0 10px;
+	}
+
+	.header .navbar-search-input {
+		width: 100%;
+	}
 }
 /* ipad竖屏 */
 @media (max-width: 769px) {

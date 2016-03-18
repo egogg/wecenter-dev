@@ -1040,6 +1040,7 @@ function fetch_file_lists($dir, $file_type = null)
  */
 function is_mobile($ignore_cookie = false)
 {
+	return false;
 	if (HTTP::get_cookie('_ignore_ua_check') == 'TRUE' AND !$ignore_cookie)
 	{
 		return false;

@@ -1,6 +1,6 @@
 <?php TPL::output('global/header_meta.tpl.htm'); ?>
 <body>
-	<header>
+	<header id="header">
 		<div class="header">
 			<div class="container">
 				<a class="navbar-brand icon-logo" href="<?php echo base_url(); ?>" title="脑壳网">脑壳网</a>
@@ -140,7 +140,7 @@
         <nav class="main-nav">
         	<div class="container">
         		<ul>
-        			<li><a href="<?php echo base_url(); ?>" class="<?php if ($_GET['app'] == 'explore') { ?>active<?php } ?>">首页</a></li>
+        			<li><a href="<?php echo base_url(); ?>" class="<?php if ($_GET['app'] == 'explore') { ?>active<?php } ?>">精选</a></li>
         			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>"><?php _e('题库'); ?></a></li>
 					<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>"><?php _e('专题'); ?></a></li>
 					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>"><?php _e('知识'); ?></a></li>

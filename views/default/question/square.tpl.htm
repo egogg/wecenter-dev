@@ -1,11 +1,12 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<!-- 移动导航栏 -->
-
-<?php TPL::output('block/m_question_list_filter_bar.tpl.htm'); ?>
-
 <div id="content">
 	<div class="container">
+		<!-- 移动导航栏 -->
+		<div class="m-question-list-filter-bar">
+			<?php TPL::output('block/m_question_list_filter_bar.tpl.htm'); ?>
+		</div>
+
 		<div class="row">
 			<!-- 分类筛选 -->
 			

@@ -227,7 +227,7 @@ class ajax extends AWS_CONTROLLER
 			if (!$_POST['_is_mobile'])
 			{
 				H::ajax_json_output(AWS_APP::RSM(array(
-					'url' => get_js_url('/home/first_login-TRUE')
+					'url' => get_js_url('/first_login-TRUE')
 				), 1, null));
 			}
 		}
@@ -320,7 +320,7 @@ class ajax extends AWS_CONTROLLER
 				}
 				else if ($user_info['is_first_login'] AND !$_POST['_is_mobile'])
 				{
-					$url = get_js_url('/home/first_login-TRUE');
+					$url = get_js_url('/first_login-TRUE');
 				}
 				else if ($_POST['return_url'] AND !strstr($_POST['return_url'], '/logout') AND
 					($_POST['_is_mobile'] AND strstr($_POST['return_url'], '/m/') OR

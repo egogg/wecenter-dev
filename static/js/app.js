@@ -320,7 +320,7 @@ $(document).ready(function ()
         });
 
         navBar.affix({
-            offset: { top: navBar.offset().top}
+            offset: { top: navBar.offset().top - 120}
         });
     }
 
@@ -331,7 +331,7 @@ $(document).ready(function ()
     {
         $('#m-question-list-heading-wrap').height(mNavBar.height());
         mNavBar.affix({
-            offset: { top: mNavBar.offset().top}
+            offset: { top: mNavBar.offset().top - 120}
         });
     }
         
