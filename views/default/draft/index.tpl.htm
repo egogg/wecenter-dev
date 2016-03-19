@@ -9,7 +9,13 @@
             <div class="col-sm-9">
             	<div class="card clearfix">
             		<div class="card-header">
-            			<h2><i class="md md-description"></i> 我的草稿</h2>
+                        <h2 class="user-center-header">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                <i class="md md-description"></i> 我的草稿
+                                <i class="caret visible-xs-inline-block"></i>
+                            </button>
+                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                        </h2>
             			<ul class="actions">
                             <li data-toggle="tooltip" data-original-title="清空所有" data-placement="bottom">
                                 <a href="javascript:void(0);" onclick="AWS.User.delete_draft('', 'clean'); window.location.reload();">

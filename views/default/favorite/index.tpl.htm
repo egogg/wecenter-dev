@@ -9,7 +9,13 @@
             <div class="col-sm-9">
             	<div class="card clearfix">
             		<div class="card-header">
-            			<h2><i class="md md-bookmark"></i> 我的收藏（<?php echo count($this->list); ?>）</h2>			
+            			<h2 class="user-center-header">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                <i class="md md-bookmark"></i> 我的收藏（<?php echo count($this->list); ?>）
+                                <i class="caret visible-xs-inline-block"></i>
+                            </button>
+                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                        </h2>
             		</div>
             		<?php if (sizeof($this->favorite_tags) > 0) { ?>
 	            		<div class="card-header card-padding">

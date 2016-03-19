@@ -9,7 +9,13 @@
             <div class="col-sm-9">
             	<div class="card">
             		<div class="card-header">
-            			<h2><i class="md md-attach-money"></i> 我的积分</h2>	
+                        <h2 class="user-center-header">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                <i class="md md-attach-money"></i> 我的积分
+                                <i class="caret visible-xs-inline-block"></i>
+                            </button>
+                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                        </h2>
             		</div>
                     <div class="card-body card-padding p-t-0 table-responsive">
                         <table class="table">

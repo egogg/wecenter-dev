@@ -93,6 +93,14 @@
             </div>
         </div> 
 
+        <?php if($this->user_id && $this->user_id == $this->user['uid']) { ?>
+            <div class="user-info-entry">
+                <div class="list-group">
+                    <a href="account/setting/" class="list-group-item"> <i class="md md-settings"></i> 我的设置</a>
+                </div>
+            </div> 
+        <?php } ?>
+        
         <div class="card">
             <div class="card-body card-padding">
                 主页访问量 <strong class="pull-right"><?php echo $this->user['views_count']; ?></strong>  

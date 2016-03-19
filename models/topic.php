@@ -1537,8 +1537,7 @@ class topic_class extends AWS_MODEL
 			return false;
 		}
 
-		$questions = $this->fetch_all('question', 'question_id IN(' . implode(',', $question_ids) . ')');
-		
+		$questions = $this->fetch_all('question', 'question_id IN(' . implode(',', $question_ids) . ')', 'update_time DESC');
 
 		$question_list = array();
 		foreach ($questions as $key => $value) {

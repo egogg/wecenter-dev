@@ -1455,7 +1455,7 @@ var AWS =
 					$('#aw-card-tips').css(
 					{
 						left: left,
-						top: top
+						top: top - 120
 					}).fadeIn();
 				}
 			}, time);

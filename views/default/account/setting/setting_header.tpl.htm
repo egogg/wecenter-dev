@@ -6,8 +6,14 @@
             </div>
             <div class="col-sm-9">
             	<div class="card clearfix">
-            		<div class="card-header">
-            			<h2><i class="md md-settings"></i> 用户设置</h2>					
+            		<div class="card-header">	
+                        <h2 class="user-center-header">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                <i class="md md-settings"></i> 我的设置
+                                <i class="caret visible-xs-inline-block"></i>
+                            </button>
+                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                        </h2>				
             		</div>
             		<ul class="tab-nav tn-justified" role="tablist">
                         <li role="presentation" <?php if (!$_GET['act'] OR $_GET['act'] == 'profile') { ?> class="active"<?php } ?>>

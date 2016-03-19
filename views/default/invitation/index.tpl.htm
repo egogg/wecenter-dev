@@ -9,7 +9,13 @@
             <div class="col-sm-9">
             	<div class="card clearfix">
             		<div class="card-header">
-            			<h2><i class="md md-person-add"></i> 邀请好友注册</h2>					
+                        <h2 class="user-center-header">
+                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                <i class="md md-person-add"></i> 邀请好友注册
+                                <i class="caret visible-xs-inline-block"></i>
+                            </button>
+                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                        </h2>				
             		</div>
             		<div class="card-body card-padding">
             			<div class="alert alert-success" role="alert">你还有<strong><?php echo $this->user_info['invitation_available']; ?></strong>个邀请名额</div>

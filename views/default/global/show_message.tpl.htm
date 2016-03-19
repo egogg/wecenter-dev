@@ -10,7 +10,7 @@
 		
 		<style type="text/css">
 		
-		body{background:#f3f3f3;font:normal 15px arial, verdana, tahoma, sans-serif;}
+		body{background:#fff;font:normal 15px arial, verdana, tahoma, sans-serif;}
 		
 		.alert-success {
 			background-color: #dff0d8;
@@ -23,16 +23,19 @@
 		    color: #2196f3;
 		}
 		.alert-box{
-	    border-radius: 2px;
-	    position: absolute;
-	    top: 50%;
-	    margin-top: -150px;
-	    text-align: center;
-	    padding: 15px;
-	    height: 300px;
-	    width: 500px;
-	    left: 50%;
-	    margin-left: -250px;}
+		    position: absolute;
+		    top: 50%;
+		    margin-top: -150px;
+		    text-align: center;
+		    padding: 15px;
+		    height: 300px;
+		    width: 500px;
+		    left: 50%;
+		    margin-left: -250px;
+		    border-left: 3px solid #FFC107;
+		    background-color: #f9f9f9;
+		    color: #555;
+		}
 
 	    .alert-box .message {
 	    	position: relative;
@@ -40,6 +43,10 @@
 			-webkit-transform: translateY(-50%);
 			-ms-transform: translateY(-50%);
 			transform: translateY(-50%);
+	    }
+
+	    .alert-box a {
+	    	color: #03A9F4;
 	    }
 
 	    .alert-box .desc {
@@ -96,7 +103,7 @@
 	</head>
 
 	<body>
-		<div class="alert-box alert-info">
+		<div class="alert-box">
 			<div class="message">
 				<strong><?php echo $this->message; ?></strong>
 				

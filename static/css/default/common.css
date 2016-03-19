@@ -35,16 +35,12 @@ header .navbar-slogan {
 header .navbar-user {
 	display: inline-block;
 	float: right;
-	padding: 26px 0;
-}
-
-header .navbar-user .navbar-mobile-account {
-	font-size: 160%;
+	padding: 23px 0;
 }
 
 header .navbar-user .navbar-user-notification {
 	margin-right: 13px;
-	font-size: 160%;
+	font-size: 24px;
 }
 
 header .m-count {
@@ -87,7 +83,16 @@ header ul.navbar-user-actions>li {
 	float: right;
 	display: inline-block;
 	margin-left: 25px;
-	line-height: 28px;
+	line-height: 34px;
+}
+
+header ul.navbar-user-actions>li a {
+	display: block;
+}
+
+header ul.navbar-user-actions>li a i {
+	font-size: 24px;
+	vertical-align: middle;
 }
 
 header img.avatar {
@@ -95,8 +100,6 @@ header img.avatar {
 	height: 24px;
 	border-radius: 50%;
     box-sizing: content-box;
-    position: relative;
-    top: -2px;
 }
 
 header .navbar-search {
@@ -169,10 +172,6 @@ header .navbar-mobile-search>div {
 
 header .navbar-mobile-search>div:last-child {
 	padding-left: 0;
-}
-
-header #navbar-mobile-search-icon>span {
-	font-size: 160%;
 }
 
 header .navbar-mobile-search-form-wrap {
@@ -317,13 +316,15 @@ header .main-nav ul li a.active {
 	border-left-color: #03A9F4;
 }
 
-
 .m-question-list-heading.affix {
-	z-index: 100;
+	z-index: 500;
 	width: 100%;
 	top: 118px;
 	left: 0;
-	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.m-question-list-heading.affix>.card {
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .m-question-list-heading .card {
@@ -2330,7 +2331,7 @@ i.dot {
 .aw-card-tips {
     display: none;
     position: absolute;
-    z-index: 9999;
+    z-index: 999;
     width: 290px;
     background-color: #ffffff;
     border: 1px solid transparent;
@@ -2684,7 +2685,7 @@ input.form-control {
 
 body #header {
 	padding-right: 0;
-	z-index: 100;
+	z-index: 500;
 }
 
 body #footer {
@@ -2696,7 +2697,17 @@ body #content {
 	margin-top: 120px;
 }
 
-/* user center page */
+/* user center pages */
+
+.user-center-header {
+	position: relative;
+}
+
+.user-center-header>button {
+	padding-left: 0;
+	font-size: 16px;
+	color: #333;
+}
 
 .user-info-avatar {
 	border-radius: 50%;
