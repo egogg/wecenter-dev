@@ -286,8 +286,6 @@ class main extends AWS_CONTROLLER
 				{
 					$topics_list_total_rows = $this->user_info['topic_focus_count'];
 				}
-
-				TPL::assign('topics_list', $topics_list);
 			break;
 
             default:
@@ -309,8 +307,6 @@ class main extends AWS_CONTROLLER
 
 				$topics_list = $this->model('topic')->get_child_topic_list(null, $order, $per_page, $_GET['page']);
 				$topics_list_total_rows = $this->model('topic')->found_rows();
-
-				TPL::assign('topics_list', $topics_list);
 			break;
 
 			case 'topic':
@@ -326,12 +322,18 @@ class main extends AWS_CONTROLLER
 					$topics_list_total_rows = $this->model('topic')->found_rows();
 				}
 
-				TPL::assign('topics_list', $topics_list);
 			break;
 		}
 
-		TPL::assign('parent_topics', $this->model('topic')->get_parent_topics());
+		# get topic foucs info 
 
+		foreach ($topics_list as $key => $value) 
+		{
+			$topics_list[$key]['has_focus'] = $this->model('topic')->has_focus_topic($this->user_id, $value['topic_id']);;
+		}
+
+		TPL::assign('topics_list', $topics_list);
+		TPL::assign('parent_topics', $this->model('topic')->get_parent_topics());
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/topic/channel-' . $_GET['channel'] . '__topic_id-' . $_GET['topic_id'] . '__day-' . $_GET['day']),
 			'total_rows' => $topics_list_total_rows,

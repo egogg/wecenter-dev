@@ -16,12 +16,6 @@ $(function(){
         });
 	}
 
-	// 提示框
-
-	if ($('[data-toggle="tooltip"]')[0]) {
-        $('[data-toggle="tooltip"]').tooltip();
-    }
-
 	// 问题标签
 
 	$('.question-loader').on('click', '.question-tag',  function(e){
@@ -157,7 +151,7 @@ $(function(){
 			// 提示信息
 
 			if ($('[data-toggle="tooltip"]')[0]) {
-		        $('[data-toggle="tooltip"]').tooltip();
+		        $('[data-toggle="tooltip"]').tooltip({container: 'body'});
 		    }
 
 			// 提示添加答案解析
@@ -645,6 +639,12 @@ $(function(){
 	function reloadAnswers() {
 		$.get(G_BASE_URL + '/question/ajax/load_answers/question_id-' + QUESTION_ID, function (response) {
 			$('.answer-items').hide().html(response).fadeIn();
+
+			// 提示框
+
+			if ($('[data-toggle="tooltip"]')[0]) {
+		        $('[data-toggle="tooltip"]').tooltip({container: 'body'});
+		    }
 		});
 	}
 

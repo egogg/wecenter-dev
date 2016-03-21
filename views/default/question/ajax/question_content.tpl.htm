@@ -44,24 +44,26 @@
 	    <ul class="actions">
 	    	<li data-tigger="hover" data-toggle="tooltip" data-placement="bottom" data-content="编辑问题" title data-original-title="编辑问题"><a href="publish/<?php echo $this->question_info['question_id']; ?>"><i class="md md-create"></i></a></li>
 	    	<li data-tigger="hover" data-toggle="tooltip" data-placement="bottom" data-content="编写答案解析" title data-original-title="编写答案解析"><a href="javascript:void(0);" onclick="AWS.dialog('solutionEdit', {question_id:<?php echo $this->question_info['question_id']; ?>,solution_id:<?php echo $this->question_info['solution_id']; ?>,attach_access_key:'<?php echo $this->attach_access_key; ?>'});"><i class="md md-spellcheck"></i></a></li>
-	        <li class="dropdown">
-	            <a href="#" data-toggle="dropdown" aria-expanded="false">
-	                <i class="md md-more-vert"></i>
-	            </a>
-	            <ul class="dropdown-menu dropdown-menu-right">
-	                <li>
-	                    <a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/question/ajax/lock/', 'question_id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->question_info['lock']) { ?><?php _e('解除锁定'); ?><?php } else { ?><?php _e('锁定问题'); ?><?php } ?></a>
-	                </li>
-	                <?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
-						<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/question/ajax/set_recommend/', 'action=<?php if ($this->question_info['is_recommend']) { ?>un<?php } ?>set&question_id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->question_info['is_recommend']) { ?><?php _e('取消推荐'); ?><?php } else { ?><?php _e('推荐问题'); ?><?php } ?></a>
-						</li>
-						<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=question&id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->is_recommend_homepage) { ?><?php _e('取消精选'); ?><?php } else { ?><?php _e('首页精选'); ?><?php } ?></a>
-						</li>
-						<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=top_question&id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->is_top_question) { ?><?php _e('取消置顶'); ?><?php } else { ?><?php _e('首页置顶'); ?><?php } ?></a></li>
-						<li><a href="javascript:void(0);" onclick="AWS.dialog('addTopic', {question_id:<?php echo $this->question_info['question_id']; ?>});">收入专题</a></li>
-					<?php } ?>
-	            </ul>
-	        </li>
+	    	<?php if($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+		        <li class="dropdown">
+		            <a href="#" data-toggle="dropdown" aria-expanded="false">
+		                <i class="md md-more-vert"></i>
+		            </a>
+		            <ul class="dropdown-menu dropdown-menu-right">
+		                <li>
+		                    <a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/question/ajax/lock/', 'question_id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->question_info['lock']) { ?><?php _e('解除锁定'); ?><?php } else { ?><?php _e('锁定问题'); ?><?php } ?></a>
+		                </li>
+		                <?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
+							<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/question/ajax/set_recommend/', 'action=<?php if ($this->question_info['is_recommend']) { ?>un<?php } ?>set&question_id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->question_info['is_recommend']) { ?><?php _e('取消推荐'); ?><?php } else { ?><?php _e('推荐问题'); ?><?php } ?></a>
+							</li>
+							<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=question&id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->is_recommend_homepage) { ?><?php _e('取消精选'); ?><?php } else { ?><?php _e('首页精选'); ?><?php } ?></a>
+							</li>
+							<li><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/recommend/ajax/recommend_homepage/', 'type=top_question&id=<?php echo $this->question_info['question_id']; ?>');"><?php if ($this->is_top_question) { ?><?php _e('取消置顶'); ?><?php } else { ?><?php _e('首页置顶'); ?><?php } ?></a></li>
+							<li><a href="javascript:void(0);" onclick="AWS.dialog('addTopic', {question_id:<?php echo $this->question_info['question_id']; ?>});">收入专题</a></li>
+						<?php } ?>
+		            </ul>
+		        </li>
+		    <?php } ?>
 	    </ul>  
     <?php } ?>
 </div>

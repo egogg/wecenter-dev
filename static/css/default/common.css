@@ -71,8 +71,8 @@ header .unread-mail {
 }
 
 header .unread-total-mobile {
-	left: 14px;
-	top: 0px;
+	left: 15px;
+	top: -5px;
 }
 
 header .navbar-user .navbar-user-avatar {
@@ -646,18 +646,43 @@ header .main-nav ul li a.active {
 	color: #03A9F4;
 }
 
+.topic-item {
+	margin-bottom: 30px;
+}
+
 .topic-item h2 {
-	font-size: 14px !important;
+	font-size: 16px !important;
 }
 
 .topic-description {
-	font-size: 12px;
 	height: 3em;
 	overflow: hidden;
 }
 
 .topic-item .card-header {
 	padding-bottom: 0 !important;
+}
+
+.topic-item .topic-img {
+	display: block;
+	height: 134px;
+	width: auto;
+	overflow: hidden;
+	margin-bottom: 15px;
+}
+
+.topic-item .topic-item-add-foucs {
+	position: absolute;
+    right: 26px;
+    z-index: 2;
+    top: 15px;
+}
+
+@media screen and (max-width: 991px) {
+	.topic-item .topic-item-add-foucs {
+		right: 18px;
+		top: 10px;
+	}
 }
 
 /*话题详细列表*/
@@ -2568,6 +2593,7 @@ input.form-control {
 	height: 180px;
 	margin-left: auto; 
 	margin-right: auto;
+	display: block;
 }
 
 .login-block {
