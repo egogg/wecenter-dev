@@ -34,7 +34,7 @@
                                         <h2><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>" data-id="<?php echo $val['topic_id']; ?>"><?php echo $val['topic_title']; ?></a>
                                             <small><!-- 话题统计 -->
                                                 <ul class="topic-stats">
-                                                    <li class="topic-stats-item"><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>"><?php echo $val['question_count']; ?> 个问题</a> </li>
+                                                    <li class="topic-stats-item"><a target="_blank" href="topic/<?php echo $val['topic_id']; ?>">收录 <?php echo $val['question_count']; ?> 个问题</a> </li>
                                                     <li class="topic-stats-item"><?php echo $val['focus_count']; ?> 人关注</li>
                                                 </ul>
                                             </small>
@@ -68,8 +68,10 @@
         </div> 
 
         <div class="row">
-            <div class="clearfix">
-                <?php echo $this->pagination; ?>
+            <div class="card">
+                <div class="card-body card-padding">
+                    <?php echo $this->pagination; ?>
+                </div>
             </div>
         </div>
     </div>
