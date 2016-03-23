@@ -1,288 +1,290 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-	<div class="container">
-		<div class="card">
-			<div class="card-header ch-alt">
-				<h2>
-					编辑问题
-					<small>与大家分享你觉得有价值或者有意思的问题</small>
-				</h2>
-			</div>
-			<form action="publish/ajax/<?php if ($this->question_info['question_id']) { ?>modify<?php } else { ?>publish<?php } ?>_question/" method="post" id="question_form" onsubmit="return false;">
-				<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
-				<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
-				<input type="hidden" name="question_id" id="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
-				<input type="hidden" name="ask_user_id" value="<?php echo $_POST['ask_user_id']; ?>" />
-				<?php if ($this->question_category_list) { ?>
-				<select name="category_id" class="hide" id="category_id">
-					<option value="0">- <?php _e('请选择分类'); ?> -</option>
-					<?php echo $this->question_category_list; ?>
-				</select>
-				<?php } ?>
-				<div class="card">
-					<div class="card-body card-padding">
-						<div class="question-publish-group">
-							<p class="f-500 m-b-5 c-black">问题的分类 <small class="c-gray">你分享的问题属于以下哪种类型</small></p>
-							
-							<div class="question-publish-item">
-								<?php if($this->question_category_items) { ?>
-									<ul class="question-category-items">
-										<?php foreach ($this->question_category_items as $key => $value) { ?>
-											<li class="question-category-item <?php if($this->question_info['category_id'] == $key) { ?>active<?php } ?>" data-value="<?php echo $key; ?>">
-												<a href="javascript:void(0);"><?php echo $value['title']; ?></a>
-											</li>
-										<?php } ?>
-									</ul>
-								<?php } ?>
-							</div>
-						</div>
-						<div class="question-publish-group">
-							<p class="f-500 m-b-5 c-black">问题标题 <small class="c-gray">你分享的问题的标题</small></p>
-							
-							<div class="question-publish-item">
-								<input type="text" placeholder="<?php _e('问题标题'); ?>..." name="question_content" id="question_contents" value="<?php echo $this->question_info['question_content']; ?>" class="form-control" />
-								<div class="aw-publish-suggest-question hide">
-									<p class="text-color-999">你的问题可能已经有答案</p>
-									<ul class="aw-dropdown-list">
-									</ul>
+<section id="main">
+	<section id="content">
+		<div class="container">
+			<div class="card">
+				<div class="card-header ch-alt">
+					<h2>
+						编辑问题
+						<small>与大家分享你觉得有价值或者有意思的问题</small>
+					</h2>
+				</div>
+				<form action="publish/ajax/<?php if ($this->question_info['question_id']) { ?>modify<?php } else { ?>publish<?php } ?>_question/" method="post" id="question_form" onsubmit="return false;">
+					<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+					<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
+					<input type="hidden" name="question_id" id="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
+					<input type="hidden" name="ask_user_id" value="<?php echo $_POST['ask_user_id']; ?>" />
+					<?php if ($this->question_category_list) { ?>
+					<select name="category_id" class="hide" id="category_id">
+						<option value="0">- <?php _e('请选择分类'); ?> -</option>
+						<?php echo $this->question_category_list; ?>
+					</select>
+					<?php } ?>
+					<div class="card">
+						<div class="card-body card-padding">
+							<div class="question-publish-group">
+								<p class="f-500 m-b-5 c-black">问题的分类 <small class="c-gray">你分享的问题属于以下哪种类型</small></p>
+								
+								<div class="question-publish-item">
+									<?php if($this->question_category_items) { ?>
+										<ul class="question-category-items">
+											<?php foreach ($this->question_category_items as $key => $value) { ?>
+												<li class="question-category-item <?php if($this->question_info['category_id'] == $key) { ?>active<?php } ?>" data-value="<?php echo $key; ?>">
+													<a href="javascript:void(0);"><?php echo $value['title']; ?></a>
+												</li>
+											<?php } ?>
+										</ul>
+									<?php } ?>
 								</div>
 							</div>
-						</div>
-						<div class="question-publish-group">
-							<p class="f-500 m-b-5 c-black">问题内容 <small class="c-gray">你分享的问题的详细描述</small></p>
-							
-							<div class="question-publish-item">
-								<div class="aw-mod aw-editor-box">
-									<div class="mod-head">
-										<div class="wmd-panel">
-								            <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="question_detail"><?php echo $this->question_info['question_detail']; ?></textarea>
-								        </div>
+							<div class="question-publish-group">
+								<p class="f-500 m-b-5 c-black">问题标题 <small class="c-gray">你分享的问题的标题</small></p>
+								
+								<div class="question-publish-item">
+									<input type="text" placeholder="<?php _e('问题标题'); ?>..." name="question_content" id="question_contents" value="<?php echo $this->question_info['question_content']; ?>" class="form-control" />
+									<div class="aw-publish-suggest-question hide">
+										<p class="text-color-999">你的问题可能已经有答案</p>
+										<ul class="aw-dropdown-list">
+										</ul>
 									</div>
-									<div class="mod-body">
-										<span class="pull-right text-color-999" id="question_detail_message">&nbsp;</span>
-										<?php if (get_setting('upload_enable') == 'Y') { ?>
-										<div class="aw-upload-box">
-											<a class="btn btn-success btn-sm">上传附件</a>
-											<div class="upload-container"></div>
-											<small class="c-gray aw-upload-tips hidden-xs"><?php _e('允许'); ?> : <?php echo get_setting('allowed_upload_types'); ?></small>
+								</div>
+							</div>
+							<div class="question-publish-group">
+								<p class="f-500 m-b-5 c-black">问题内容 <small class="c-gray">你分享的问题的详细描述</small></p>
+								
+								<div class="question-publish-item">
+									<div class="aw-mod aw-editor-box">
+										<div class="mod-head">
+											<div class="wmd-panel">
+									            <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="question_detail"><?php echo $this->question_info['question_detail']; ?></textarea>
+									        </div>
 										</div>
-										<?php } ?>
+										<div class="mod-body">
+											<span class="pull-right text-color-999" id="question_detail_message">&nbsp;</span>
+											<?php if (get_setting('upload_enable') == 'Y') { ?>
+											<div class="aw-upload-box">
+												<a class="btn btn-success btn-sm">上传附件</a>
+												<div class="upload-container"></div>
+												<small class="c-gray aw-upload-tips hidden-xs"><?php _e('允许'); ?> : <?php echo get_setting('allowed_upload_types'); ?></small>
+											</div>
+											<?php } ?>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="question-publish-group">
-							<p class="f-500 m-b-5 c-black">问题难度 <small class="c-gray">估计一下问题的难度</small></p>
-							
-							<div>
-								<input id="question_difficulty" name="question_difficulty" type="number" class="rating" min=0 max=5 step=1 value = "<?php if($this->question_info['difficulty']) {echo $this->question_info['difficulty'];}else{ echo '2';} ?>">
+							<div class="question-publish-group">
+								<p class="f-500 m-b-5 c-black">问题难度 <small class="c-gray">估计一下问题的难度</small></p>
+								
+								<div>
+									<input id="question_difficulty" name="question_difficulty" type="number" class="rating" min=0 max=5 step=1 value = "<?php if($this->question_info['difficulty']) {echo $this->question_info['difficulty'];}else{ echo '2';} ?>">
+								</div>
 							</div>
-						</div>
-						<div class="question-publish-group">
-							<p class="f-500 m-b-5 c-black">答题选项 <small class="c-gray">你的问题可以包含单选、多选、字谜以及填空等选项</small></p>
-							
-							<div class="question-publish-item">
-								<input id="quiz_content" type="hidden" name="quiz_content" value='<?php echo $this->question_quiz['content']; ?>'></input>
-								<div class="question-quiz-panel">
-									<div id="quiz-summary">
-															
-									</div>
-									<div class="quiz-preview">
-										
-									</div>
-									<div>
-										<a id="edit-quiz-options" class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><i class="md md-create"></i> 编辑选项</a>
-										<a id="delete-quiz-options" class="btn btn-danger btn-sm" type="button" ><i class="md md-delete"></i> 删除选项</a>
-									</div>
-									<!-- 选项编辑对话框 -->
-									<div class="modal fade in" id="dlg-quiz-options" tabindex="-1" role="dialog" aria-labelledby="dlg-quiz-option-label">
-									  <div class="modal-dialog">
-									    <div class="modal-content">
-									    	<div class="modal-header">
-									    		
-									    	</div>
-											<div class="modal-body">
-												<div>
-													<div class="question-publish-group">
-														<p class="f-500 m-b-5 c-black">答题时限 <small class="c-gray">是否需要在指定的时间内完成答题</small></p>
-														<div class="question-publish-item">
-															<div id="enable-quiz-countdown" class="checkbox m-b-15">
-								                                <label>
-								                                    <input type="checkbox" value="">
-								                                    <i class="input-helper"></i>
-								                                    限时答题
-								                                </label>
-								                            </div>
-								                            <div class="quiz-countdown-input">
-													    		<input id="quiz-countdown-input" class="form-control" type="text" name="quiz-countdown" value="" placeholder="秒"></input>
-													    	</div>
+							<div class="question-publish-group">
+								<p class="f-500 m-b-5 c-black">答题选项 <small class="c-gray">你的问题可以包含单选、多选、字谜以及填空等选项</small></p>
+								
+								<div class="question-publish-item">
+									<input id="quiz_content" type="hidden" name="quiz_content" value='<?php echo $this->question_quiz['content']; ?>'></input>
+									<div class="question-quiz-panel">
+										<div id="quiz-summary">
+																
+										</div>
+										<div class="quiz-preview">
+											
+										</div>
+										<div>
+											<a id="edit-quiz-options" class="btn btn-success btn-sm" type="button" data-toggle="modal" data-target="#dlg-quiz-options"><i class="md md-create"></i> 编辑选项</a>
+											<a id="delete-quiz-options" class="btn btn-danger btn-sm" type="button" ><i class="md md-delete"></i> 删除选项</a>
+										</div>
+										<!-- 选项编辑对话框 -->
+										<div class="modal fade in" id="dlg-quiz-options" tabindex="-1" role="dialog" aria-labelledby="dlg-quiz-option-label">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										    	<div class="modal-header">
+										    		
+										    	</div>
+												<div class="modal-body">
+													<div>
+														<div class="question-publish-group">
+															<p class="f-500 m-b-5 c-black">答题时限 <small class="c-gray">是否需要在指定的时间内完成答题</small></p>
+															<div class="question-publish-item">
+																<div id="enable-quiz-countdown" class="checkbox m-b-15">
+									                                <label>
+									                                    <input type="checkbox" value="">
+									                                    <i class="input-helper"></i>
+									                                    限时答题
+									                                </label>
+									                            </div>
+									                            <div class="quiz-countdown-input">
+														    		<input id="quiz-countdown-input" class="form-control" type="text" name="quiz-countdown" value="" placeholder="秒"></input>
+														    	</div>
+															</div>
 														</div>
-													</div>
-													<div class="question-publish-group">
-														<p class="f-500 m-b-5 c-black">选项类型 <small class="c-gray">选择答题类型如单选、多选等等</small></p>
-														
-														<div class="question-publish-item">
-															<div id="quiz-type" class="dropdown">
-																<button type="button" class="btn btn-info quiz-type-select" data-toggle="dropdown" aria-expanded="true"><span>答题类型</span> <i class="caret"></i></button>
-																<ul class="dropdown-menu">
-															        <li><a href="javascript:void(0);" data-quiz-type="1"><?php _e('单项选择'); ?></a></li>
-															        <li><a href="javascript:void(0);" data-quiz-type="2"><?php _e('多项选择'); ?></a></li>
-															        <li><a href="javascript:void(0);" data-quiz-type="3"><?php _e('成语字谜'); ?></a></li>
-															        <li><a href="javascript:void(0);" data-quiz-type="4"><?php _e('完形填空'); ?></a></li>
-														    	</ul>
+														<div class="question-publish-group">
+															<p class="f-500 m-b-5 c-black">选项类型 <small class="c-gray">选择答题类型如单选、多选等等</small></p>
+															
+															<div class="question-publish-item">
+																<div id="quiz-type" class="dropdown">
+																	<button type="button" class="btn btn-info quiz-type-select" data-toggle="dropdown" aria-expanded="true"><span>答题类型</span> <i class="caret"></i></button>
+																	<ul class="dropdown-menu">
+																        <li><a href="javascript:void(0);" data-quiz-type="1"><?php _e('单项选择'); ?></a></li>
+																        <li><a href="javascript:void(0);" data-quiz-type="2"><?php _e('多项选择'); ?></a></li>
+																        <li><a href="javascript:void(0);" data-quiz-type="3"><?php _e('成语字谜'); ?></a></li>
+																        <li><a href="javascript:void(0);" data-quiz-type="4"><?php _e('完形填空'); ?></a></li>
+															    	</ul>
+																</div>
+															</div>
+														</div>
+															
+														<div class="question-publish-group">
+															<p class="f-500 m-b-5 c-black">选项内容 <small class="c-gray">请填写答题选项的内容</small></p>
+															
+															<div class="question-publish-item">
+																<ul class="quiz-option-pages">
+																	<li class="quiz-option-page hidden" data-quiz-type="1">
+																		<table class="table">
+																	        <thead>
+																	          <tr>
+																	            <th>选项</th>
+																	            <th class="column-answer">答案</th>
+																	            <th class="column-action">操作</th>
+																	          </tr>
+																	        </thead>
+																	        <tbody class="quiz-option-single-list">
+																	          <tr class="quiz-option-single">
+																	            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+																	            <td>
+																	            	<label class="radio radio-inline m-r-20">
+														                                <input type="radio" name="quiz-option-single-answer">
+														                                <i class="input-helper"></i>
+														                            </label>
+																	            </td>
+																	            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+																	          </tr>
+																	          <tr class="quiz-option-single">
+																	            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+																	            <td>
+																					<label class="radio radio-inline m-r-20">
+														                                <input type="radio" name="quiz-option-single-answer">
+														                                <i class="input-helper"></i>
+														                            </label>
+																	            </td>
+																	            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+																	          </tr>
+																	          <tr class="quiz-option-single-add">
+																	            <td colspan="2"><small class="c-gray">提示：选项个数不能少于2个，不能多于15个</small></td>
+																	            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+																	          </tr>
+																	        </tbody>
+																	    </table>
+																	</li>
+																	<li class="quiz-option-page hidden" data-quiz-type="2">
+																		<table class="table">
+																	        <thead>
+																	          <tr>
+																	            <th>选项</th>
+																	            <th class="column-answer">答案</th>
+																	            <th class="column-action">操作</th>
+																	          </tr>
+																	        </thead>
+																	        <tbody class="quiz-option-multiple-list">
+																	          <tr class="quiz-option-multiple">
+																	            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+																	            <td>
+																	            	<label class="checkbox checkbox-inline m-r-20">
+														                                <input type="checkbox" name="quiz-option-multiple-answer">
+														                                <i class="input-helper"></i>
+														                            </label>
+																	            </td>
+																	            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+																	          </tr>
+																	          <tr class="quiz-option-multiple">
+																	            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
+																	            <td>
+																	            	<label class="checkbox checkbox-inline m-r-20">
+														                                <input type="checkbox" name="quiz-option-multiple-answer">
+														                                <i class="input-helper"></i>
+														                            </label>
+																	            </td>
+																	            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+																	          </tr>
+																	          <tr class="quiz-option-multiple-add">
+																	            <td colspan="2"><small class="c-gray">提示：选项个数不能少于2个，不能多于15个</small></td>   
+																	            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+																	          </tr>
+																	        </tbody>
+																	    </table>
+																	</li>
+																	<li class="quiz-option-page hidden" data-quiz-type="3">
+																		<div class="quiz-option-crossword-answer">
+																			<input id="quiz-option-crossword-answer" type="text" class="form-control" name="quiz-option-crossword-answer" placeholder="字谜答案">
+																			<small class="c-gray">您设计的字谜答案，一般不要超过5个汉字</small>
+																		</div>
+																		<div class="quiz-option-crossword-words">
+																			<textarea id="quiz-option-crossword-words" class="form-control" name="quiz-option-crossword-words" id="quiz-option-crossword-words" rows="4" placeholder="字谜可选汉字"></textarea>
+																			<small id="quiz-option-crossword-words-hint" class="c-gray">可选汉字：答案长度 &times; 8</small>
+																		</div>
+																		<div class="quiz-option-crossword-toolbar clearfix">
+																			<button class="btn btn-success btn-sm" id="quiz-option-crossword-auto">自动生成</button>
+																			<button class="btn btn-success btn-sm" id="quiz-option-crossword-shuffle">随机打乱</button>
+																		</div>
+																	</li>
+																	<li class="quiz-option-page hidden" data-quiz-type="4">
+																		<table class="table">
+																	        <thead>
+																	          <tr>
+																	            <th>标签</th>
+																	            <th>答案</th>
+																	            <th class="column-action">操作</th>
+																	          </tr>
+																	        </thead>
+																	        <tbody class="quiz-option-textinput-list">
+																	          <tr class="quiz-option-textinput">
+																	          	<td><input class="form-control" type="text" placeholder="填空标签" data-textinput-field="label"></td>
+																	            <td><input class="form-control" type="text" placeholder="填空答案" data-textinput-field="answer"></td>
+																	            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
+																	          </tr>
+																	          <tr class="quiz-option-textinput-add">
+																	            <td colspan="2"><small class="c-gray">提示：填空个数不能多于6个</small></td>
+																	            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
+																	          </tr>
+																	        </tbody>
+																	    </table>
+																	</li>
+																</ul>
 															</div>
 														</div>
 													</div>
-														
-													<div class="question-publish-group">
-														<p class="f-500 m-b-5 c-black">选项内容 <small class="c-gray">请填写答题选项的内容</small></p>
-														
-														<div class="question-publish-item">
-															<ul class="quiz-option-pages">
-																<li class="quiz-option-page hidden" data-quiz-type="1">
-																	<table class="table">
-																        <thead>
-																          <tr>
-																            <th>选项</th>
-																            <th class="column-answer">答案</th>
-																            <th class="column-action">操作</th>
-																          </tr>
-																        </thead>
-																        <tbody class="quiz-option-single-list">
-																          <tr class="quiz-option-single">
-																            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
-																            <td>
-																            	<label class="radio radio-inline m-r-20">
-													                                <input type="radio" name="quiz-option-single-answer">
-													                                <i class="input-helper"></i>
-													                            </label>
-																            </td>
-																            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
-																          </tr>
-																          <tr class="quiz-option-single">
-																            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
-																            <td>
-																				<label class="radio radio-inline m-r-20">
-													                                <input type="radio" name="quiz-option-single-answer">
-													                                <i class="input-helper"></i>
-													                            </label>
-																            </td>
-																            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
-																          </tr>
-																          <tr class="quiz-option-single-add">
-																            <td colspan="2"><small class="c-gray">提示：选项个数不能少于2个，不能多于15个</small></td>
-																            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
-																          </tr>
-																        </tbody>
-																    </table>
-																</li>
-																<li class="quiz-option-page hidden" data-quiz-type="2">
-																	<table class="table">
-																        <thead>
-																          <tr>
-																            <th>选项</th>
-																            <th class="column-answer">答案</th>
-																            <th class="column-action">操作</th>
-																          </tr>
-																        </thead>
-																        <tbody class="quiz-option-multiple-list">
-																          <tr class="quiz-option-multiple">
-																            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
-																            <td>
-																            	<label class="checkbox checkbox-inline m-r-20">
-													                                <input type="checkbox" name="quiz-option-multiple-answer">
-													                                <i class="input-helper"></i>
-													                            </label>
-																            </td>
-																            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
-																          </tr>
-																          <tr class="quiz-option-multiple">
-																            <td><input type="text" class="form-control" placeholder="输入答题选项"></td>
-																            <td>
-																            	<label class="checkbox checkbox-inline m-r-20">
-													                                <input type="checkbox" name="quiz-option-multiple-answer">
-													                                <i class="input-helper"></i>
-													                            </label>
-																            </td>
-																            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
-																          </tr>
-																          <tr class="quiz-option-multiple-add">
-																            <td colspan="2"><small class="c-gray">提示：选项个数不能少于2个，不能多于15个</small></td>   
-																            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
-																          </tr>
-																        </tbody>
-																    </table>
-																</li>
-																<li class="quiz-option-page hidden" data-quiz-type="3">
-																	<div class="quiz-option-crossword-answer">
-																		<input id="quiz-option-crossword-answer" type="text" class="form-control" name="quiz-option-crossword-answer" placeholder="字谜答案">
-																		<small class="c-gray">您设计的字谜答案，一般不要超过5个汉字</small>
-																	</div>
-																	<div class="quiz-option-crossword-words">
-																		<textarea id="quiz-option-crossword-words" class="form-control" name="quiz-option-crossword-words" id="quiz-option-crossword-words" rows="4" placeholder="字谜可选汉字"></textarea>
-																		<small id="quiz-option-crossword-words-hint" class="c-gray">可选汉字：答案长度 &times; 8</small>
-																	</div>
-																	<div class="quiz-option-crossword-toolbar clearfix">
-																		<button class="btn btn-success btn-sm" id="quiz-option-crossword-auto">自动生成</button>
-																		<button class="btn btn-success btn-sm" id="quiz-option-crossword-shuffle">随机打乱</button>
-																	</div>
-																</li>
-																<li class="quiz-option-page hidden" data-quiz-type="4">
-																	<table class="table">
-																        <thead>
-																          <tr>
-																            <th>标签</th>
-																            <th>答案</th>
-																            <th class="column-action">操作</th>
-																          </tr>
-																        </thead>
-																        <tbody class="quiz-option-textinput-list">
-																          <tr class="quiz-option-textinput">
-																          	<td><input class="form-control" type="text" placeholder="填空标签" data-textinput-field="label"></td>
-																            <td><input class="form-control" type="text" placeholder="填空答案" data-textinput-field="answer"></td>
-																            <td><a href="#" class="btn btn-danger btn-sm delete">删除</a></td>
-																          </tr>
-																          <tr class="quiz-option-textinput-add">
-																            <td colspan="2"><small class="c-gray">提示：填空个数不能多于6个</small></td>
-																            <td><a href="#" class="btn btn-success btn-sm add">添加</a></td>
-																          </tr>
-																        </tbody>
-																    </table>
-																</li>
-															</ul>
-														</div>
-													</div>
 												</div>
-											</div>
-											<div class="modal-footer">
-												<button id="quiz-options-save" type="button" class="btn btn-primary"><?php _e('确认保存'); ?></button>
-												<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
-											</div>
-									    </div>
-									  </div>
+												<div class="modal-footer">
+													<button id="quiz-options-save" type="button" class="btn btn-primary"><?php _e('确认保存'); ?></button>
+													<button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+												</div>
+										    </div>
+										  </div>
+										</div>
+										<!-- end 选项编辑对话框-->
 									</div>
-									<!-- end 选项编辑对话框-->
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="card-body card-padding publish-question-footer clearfix">
-						<?php if ($this->human_valid) { ?>
-							<div class="aw-auth-img publish-question-footer-item m-r-25">
-								<input class="form-control pull-right" type="text" name="seccode_verify" placeholder="验证码" />
-								<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha"  /></em>
+						<div class="card-body card-padding publish-question-footer clearfix">
+							<?php if ($this->human_valid) { ?>
+								<div class="aw-auth-img publish-question-footer-item m-r-25">
+									<input class="form-control pull-right" type="text" name="seccode_verify" placeholder="验证码" />
+									<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha"  /></em>
+								</div>
+							<?php } ?>
+							<div class="publish-question-footer-item">
+								<a class="btn btn-large btn-primary btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
 							</div>
-						<?php } ?>
-						<div class="publish-question-footer-item">
-							<a class="btn btn-large btn-primary btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;"><?php _e('确认发起'); ?></a>
 						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
-	</div>
-</div>
+	</section>
+</section>
 
 <script type="text/javascript">
 	var ATTACH_ACCESS_KEY = '<?php echo $this->attach_access_key; ?>';

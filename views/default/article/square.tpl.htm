@@ -1,73 +1,75 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-	<div class="container">
-		<div class="row">
-			<!-- 热门推荐 -->
-			
-			<div class="article-hot hidden-xs">
-				<?php $hot_article_colors = array('bgm-teal', 'bgm-lime', 'bgm-amber', 'bgm-bluegray'); ?>
-				<?php foreach($this->hot_articles AS $key => $val) { ?>
-					<div class="col-sm-3">
-						<div class="article-hot-mark bgm-blue">
-							<span>热门</span>
+<section id="main">
+	<section id="content">
+		<div class="container">
+			<div class="row">
+				<!-- 热门推荐 -->
+				
+				<div class="article-hot hidden-xs">
+					<?php $hot_article_colors = array('bgm-teal', 'bgm-lime', 'bgm-amber', 'bgm-bluegray'); ?>
+					<?php foreach($this->hot_articles AS $key => $val) { ?>
+						<div class="col-sm-3">
+							<div class="article-hot-mark bgm-red">
+								<span>热门知识</span>
+							</div>
+							<div class="card">
+								<a href="article/<?php echo $val['id']; ?>">
+									<div class="card-body card-padding <?php echo $hot_article_colors[$key]; ?> c-white">
+					                    <p><?php echo $val['title']; ?></p>
+					                </div>
+				                </a>
+							</div>
 						</div>
-						<div class="card">
-							<a href="article/<?php echo $val['id']; ?>">
-								<div class="card-body card-padding <?php echo $hot_article_colors[$key]; ?> c-white">
-				                    <p><?php echo $val['title']; ?></p>
-				                </div>
-			                </a>
+					<?php } ?>
+				</div>
+			</div>
+			
+			<div class="row">
+				<!-- 文章列表 -->
+
+				<?php if ($this->article_list) { ?>
+					<?php foreach ($this->article_list AS $key => $val) { ?>
+					<div class="col-sm-3">
+						<div class="card blog-post">
+						    <div class="bp-header">
+						    	<div class="article-feature-cover">
+						    		<?php foreach ($val['attachs'] AS $attach) { ?>
+										<?php if ($attach['is_image']) { ?>
+											<a href="article/<?php echo $val['id']; ?>" target="_blank"><img class="article-feature-img responsive-img" target="_blank" src="<?php echo $attach['attachment']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
+										<?php break; } ?>
+									<?php } ?>
+						    	</div>
+							        	
+						        <a href="article/<?php echo $val['id']; ?>" target="_blank" class="bp-title">
+						            <h2 class="article-title"><?php echo $val['title']; ?></h2>
+						            <small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
+						        </a>
+						    </div>
+						    
+						    <div class="article-content p-20">
+						    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[attach\].*\[\/attach\]|si', '', strip_tags($val['message']))), 0, 120, 'UTF-8', '...'); ?>
+						    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
+						    </div>
+						    <div class="article-stats">
+						    	<ul class="clearfix">
+						    		<li>
+						    			<i class="md md-visibility"></i> <?php echo $val['views']; ?> 查看
+						    		</li>
+						    		<li>
+						    			<a href="article/<?php echo $val['id']; ?>"><i class="md md-comment"></i> <?php echo $val['comments']; ?> 评论</a>
+						    		</li>
+						    	</ul>
+						    </div>
 						</div>
 					</div>
+					<?php } ?>
+
+					<?php echo $this->pagination; ?>
 				<?php } ?>
 			</div>
 		</div>
-		
-		<div class="row">
-			<!-- 文章列表 -->
-
-			<?php if ($this->article_list) { ?>
-				<?php foreach ($this->article_list AS $key => $val) { ?>
-				<div class="col-sm-3">
-					<div class="card blog-post">
-					    <div class="bp-header">
-					    	<div class="article-feature-cover">
-					    		<?php foreach ($val['attachs'] AS $attach) { ?>
-									<?php if ($attach['is_image']) { ?>
-										<a href="article/<?php echo $val['id']; ?>" target="_blank"><img class="article-feature-img responsive-img" target="_blank" src="<?php echo $attach['attachment']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
-									<?php break; } ?>
-								<?php } ?>
-					    	</div>
-						        	
-					        <a href="article/<?php echo $val['id']; ?>" target="_blank" class="bp-title">
-					            <h2 class="article-title"><?php echo $val['title']; ?></h2>
-					            <small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
-					        </a>
-					    </div>
-					    
-					    <div class="article-content p-20">
-					    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[attach\].*\[\/attach\]|si', '', strip_tags($val['message']))), 0, 120, 'UTF-8', '...'); ?>
-					    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
-					    </div>
-					    <div class="article-stats">
-					    	<ul class="clearfix">
-					    		<li>
-					    			<i class="md md-visibility"></i> <?php echo $val['views']; ?> 查看
-					    		</li>
-					    		<li>
-					    			<a href="article/<?php echo $val['id']; ?>"><i class="md md-comment"></i> <?php echo $val['comments']; ?> 评论</a>
-					    		</li>
-					    	</ul>
-					    </div>
-					</div>
-				</div>
-				<?php } ?>
-
-				<?php echo $this->pagination; ?>
-			<?php } ?>
-		</div>	
-	</div>
-</div>
+	</section>
+</section>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>

@@ -1,14 +1,14 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div class="container">
-    <div id="content">
-        <div class="row">
+<section id="main">
+    <section id="content">
+        <div class="container">
             <div class="col-sm-3">
                 <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
             </div>
             <div class="col-sm-9">
-            	<div class="card">
-            		<div class="card-header">
+                <div class="card">
+                    <div class="card-header">
                         <h2 class="user-center-header">
                             <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
                                 <i class="md md-attach-money"></i> 我的积分
@@ -16,7 +16,7 @@
                             </button>
                             <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
                         </h2>
-            		</div>
+                    </div>
                     <div class="card-body card-padding p-t-0 table-responsive">
                         <table class="table">
                             <thead>
@@ -32,16 +32,16 @@
                             </tbody>
                         </table>
                     </div>
-            	</div>
-            	<div class="card text-center">
+                </div>
+                <div class="card text-center">
                     <div class="card-body card-padding">
                         <a href="javascript:void(0);" id="integral_more"><i class="md md-refresh"></i> 加载更多</a>
                     </div>
                 </div>
-            </div>						
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+</section>
 
 <script type="text/javascript">
 	$(document).ready(function () {

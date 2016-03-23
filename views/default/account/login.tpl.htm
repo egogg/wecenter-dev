@@ -1,63 +1,69 @@
 <?php TPL::output('global/header_meta.tpl.htm'); ?>
 
-<div class="row">
-	<div class="col-sm-2"></div>
-	<div class="col-sm-8">
-		<div class="card">
-			<div class="login-block">
-				<div class="card-header card-padding login-header p-b-0">
-					<a href="<?php echo base_url(); ?>" class="login-logo"></a>
-					<h1>欢迎回来</h1>
-					<span class="pull-right">
-						没有账号？<a href="account/register/" class="c-lightblue">马上注册</a>
-					</span>
-				</div>
-				<div class="card-body card-padding">
-					<div class="login-form">
-						<form id="login_form" method="post" onsubmit="return false" action="account/ajax/login_process/">
-							<input type="hidden" name="return_url" value="<?php echo $this->return_url; ?>" />
-							<ul>
-								<li class="m-b-20">
-									<input type="text" id="aw-login-user-name" class="form-control" placeholder="邮箱/用户名" name="user_name" />
-								</li>
-								<li class="m-b-20">
-									<input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password" />
-								</li>
+<section id="main" class="account-main">
+	<section id="content" class="account-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<div class="card">
+						<div class="login-block">
+							<div class="card-header card-padding login-header p-b-0">
+								<a href="<?php echo base_url(); ?>" class="login-logo"></a>
+								<h1>欢迎回来</h1>
+								<span class="pull-right">
+									没有账号？<a href="account/register/" class="c-lightblue">马上注册</a>
+								</span>
+							</div>
+							<div class="card-body card-padding">
+								<div class="login-form">
+									<form id="login_form" method="post" onsubmit="return false" action="account/ajax/login_process/">
+										<input type="hidden" name="return_url" value="<?php echo $this->return_url; ?>" />
+										<ul>
+											<li class="m-b-20">
+												<input type="text" id="aw-login-user-name" class="form-control" placeholder="邮箱/用户名" name="user_name" />
+											</li>
+											<li class="m-b-20">
+												<input type="password" id="aw-login-user-password" class="form-control" placeholder="密码" name="password" />
+											</li>
+											
+											<li class="last">
+												<div class="checkbox m-b-20">
+										            <label>
+										                <input type="checkbox" value="1" name="net_auto_login">
+										                <i class="input-helper"></i>
+										                记住我
+										            </label>
+										            <label class="pull-right">
+									            		<a href="account/find_password/">忘记密码？</a>
+									            	</label>
+										        </div>
+												<button onclick="AWS.ajax_post($('#login_form'), AWS.ajax_processer, 'error_message');" id="login_submit" class="btn btn-lg btn-primary submit">登录</button>
+											</li>
+										</ul>
+									</form>
+								</div>
 								
-								<li class="last">
-									<div class="checkbox m-b-20">
-							            <label>
-							                <input type="checkbox" value="1" name="net_auto_login">
-							                <i class="input-helper"></i>
-							                记住我
-							            </label>
-							            <label class="pull-right">
-						            		<a href="account/find_password/">忘记密码？</a>
-						            	</label>
-							        </div>
-									<button onclick="AWS.ajax_post($('#login_form'), AWS.ajax_processer, 'error_message');" id="login_submit" class="btn btn-lg btn-primary submit">登录</button>
-								</li>
-							</ul>
-						</form>
-					</div>
-					
-					<div class="login-sns">
-						<div class="login-sns-title">
-							<h2>使用其他账号登录</h2>
+								<div class="login-sns">
+									<div class="login-sns-title">
+										<h2>使用其他账号登录</h2>
+									</div>
+									
+									<ul class="sns-login-items">
+										<li><a class="bgm-blue" href="#"><i class="icon icon-qq"></i></a></li>
+										<li><a class="bgm-green" href="#"><i class="icon icon-wechat"></i></a></li>
+										<li><a class="bgm-red" href="#"><i class="icon icon-weibo"></i></a></li>
+									</ul>
+								</div>
+						    </div>
 						</div>
-						
-						<ul class="sns-login-items">
-							<li><a class="bgm-blue" href="#"><i class="icon icon-qq"></i></a></li>
-							<li><a class="bgm-green" href="#"><i class="icon icon-wechat"></i></a></li>
-							<li><a class="bgm-red" href="#"><i class="icon icon-weibo"></i></a></li>
-						</ul>
 					</div>
-			    </div>
+				</div>
+				<div class="col-sm-2"></div>
 			</div>
 		</div>
-	</div>
-	<div class="col-sm-2"></div>
-</div>
+	</section>
+</section>	
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/login.js"></script>
 

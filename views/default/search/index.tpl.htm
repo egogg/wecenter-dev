@@ -1,39 +1,40 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                <h2><strong class="c-lightblue"><?php echo addslashes($this->keyword); ?></strong> 的搜索结果</h2>
-            </div>
-            <div class="card-body">
-                <div role="tabpanel">
-                    <ul class="tab-nav" role="tablist" id="search-type">
-                        <li><a href="#questions">问题</a></li>
-                        <li><a href="#topics">专题</a></li>
-                        <li><a href="#articles">知识</a></li>
-                        <li><a href="#users">用户</a></li>
-                    </ul>
-                    <div class="tab-content">
-                    	<div class="listview">
-        					<div class="lv-body" id="search_result">
-        					</div>
-        				</div>
+<section id="main">
+    <section id="content">
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h2><strong class="c-lightblue"><?php echo addslashes($this->keyword); ?></strong> 的搜索结果</h2>
+                </div>
+                <div class="card-body">
+                    <div role="tabpanel">
+                        <ul class="tab-nav" role="tablist" id="search-type">
+                            <li><a href="#questions">问题</a></li>
+                            <li><a href="#topics">专题</a></li>
+                            <li><a href="#articles">知识</a></li>
+                            <li><a href="#users">用户</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="listview">
+                                <div class="lv-body" id="search_result">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="card text-center">
-            <div class="card-body card-padding">
-                <a class="load-more" href="javascript:void(0);" id="search_result_more" data-page="1">
-                	<i class="md md-refresh"></i> 加载更多
-                </a>
+            <div class="card text-center">
+                <div class="card-body card-padding">
+                    <a class="load-more" href="javascript:void(0);" id="search_result_more" data-page="1">
+                        <i class="md md-refresh"></i> 加载更多
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
+    </section>
+</section>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/search.js"></script>
 

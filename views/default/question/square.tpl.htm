@@ -1,94 +1,96 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-	<div class="container">
-		<!-- 移动导航栏 -->
-		<div class="m-question-list-filter-bar">
-			<?php TPL::output('block/m_question_list_filter_bar.tpl.htm'); ?>
-		</div>
+<section id="main">
+	<section id="content">
+		<div class="container">
+			<!-- 移动导航栏 -->
+			<div class="m-question-list-filter-bar">
+				<?php TPL::output('block/m_question_list_filter_bar.tpl.htm'); ?>
+			</div>
 
-		<div class="row">
-			<!-- 分类筛选 -->
+			<div class="row">
+				<!-- 分类筛选 -->
+				
+				<div class="col-sm-12">
+					<div class="card hidden-xs">
+						<div class="card-body card-padding">
+							<?php TPL::output('block/question_filters.tpl.htm'); ?>
+						</div>
+				    </div>
+				</div>
+			</div>
 			
-			<div class="col-sm-12">
-				<div class="card hidden-xs">
-					<div class="card-body card-padding">
-						<?php TPL::output('block/question_filters.tpl.htm'); ?>
-					</div>
+			<!-- 排序bar -->
+
+			<div class="row hidden-xs" id="nav-question-list-header-wrap">
+			    <div class="question-list-heading col-sm-12" id="nav-question-list-header">
+			    	<div class="card">
+			    		<div class="card-body card-padding clearfix">
+			    			<div class="question-list-sort">
+				        		<?php TPL::output('block/question_list_filter_bar.tpl.htm'); ?>
+			    			</div>
+				            <div class="user-quiz-message">
+				            	<i class="md md-volume-up pull-left message-icon"></i>
+	                            <div id="slide-user-quiz-message" class="carousel vertical slide">
+	                                <?php TPL::output('block/user_quiz_message.tpl.htm'); ?>
+	                            </div>
+				            </div>
+			            </div>       
+			    	</div>
 			    </div>
 			</div>
-		</div>
 		
-		<!-- 排序bar -->
+			<div class="row">
+				<!-- 问题列表 -->
+				<div class="question-list col-sm-8">
+		    		<?php TPL::output('block/question_list.tpl.htm'); ?>
 
-		<div class="row hidden-xs" id="nav-question-list-header-wrap">
-		    <div class="question-list-heading col-sm-12" id="nav-question-list-header">
-		    	<div class="card">
-		    		<div class="card-body card-padding clearfix">
-		    			<div class="question-list-sort">
-			        		<?php TPL::output('block/question_list_filter_bar.tpl.htm'); ?>
-		    			</div>
-			            <div class="user-quiz-message">
-			            	<i class="md md-volume-up pull-left message-icon"></i>
-                            <div id="slide-user-quiz-message" class="carousel vertical slide">
-                                <?php TPL::output('block/user_quiz_message.tpl.htm'); ?>
-                            </div>
-			            </div>
-		            </div>       
+		    		<!-- 分页 -->
+					<?php if($this->pagination) { ?>
+				        <div class="card">
+				        	<div class="card-body card-padding">
+				        		<?php echo $this->pagination; ?>
+				        	</div>
+				        </div>
+				    <?php } ?>
 		    	</div>
-		    </div>
-		</div>
-	
-		<div class="row">
-			<!-- 问题列表 -->
-			<div class="question-list col-sm-8">
-	    		<?php TPL::output('block/question_list.tpl.htm'); ?>
-
-	    		<!-- 分页 -->
-				<?php if($this->pagination) { ?>
-			        <div class="card">
-			        	<div class="card-body card-padding">
-			        		<?php echo $this->pagination; ?>
-			        	</div>
-			        </div>
-			    <?php } ?>
-	    	</div>
-			
-			<div class="sidebar col-sm-4 hidden-xs">
-				<!-- 推荐专题 -->
-				<div class="card sidebar-hot-topics">
-					<div class="card-header">
-		                <h2>热门专题</h2>
-		                <ul class="actions">
-		                    <li class="action-item-link">
-	                            <a href="topic/">所有专题<i class="md md-chevron-right c-lightblue"></i></a>
-	                        </li>
-		                </ul>
-		            </div>
-					<div class="card-body card-padding">
-						<?php TPL::output('block/sidebar_hot_topics.tpl.htm'); ?>
-					</div>
-		        </div>
 				
-				<!-- 热门用户 -->	
+				<div class="sidebar col-sm-4 hidden-xs">
+					<!-- 推荐专题 -->
+					<div class="card sidebar-hot-topics">
+						<div class="card-header">
+			                <h2>热门专题</h2>
+			                <ul class="actions">
+			                    <li class="action-item-link">
+		                            <a href="topic/">所有专题<i class="md md-chevron-right c-lightblue"></i></a>
+		                        </li>
+			                </ul>
+			            </div>
+						<div class="card-body card-padding">
+							<?php TPL::output('block/sidebar_hot_topics.tpl.htm'); ?>
+						</div>
+			        </div>
+					
+					<!-- 热门用户 -->	
 
-		        <div class="card sidebar-hot-users">
-					<div class="card-header">
-		                <h2>热门用户</h2>
-		                <ul class="actions">
-		                    <li>
-		                       <a href="people/"><i class="md md-chevron-right"></i></a>
-		                    </li>
-		                </ul>
-		            </div>
-					<div class="card-body card-padding">
-						<?php TPL::output('block/sidebar_hot_users.tpl.htm'); ?>
-					</div>
-		        </div>
+			        <div class="card sidebar-hot-users">
+						<div class="card-header">
+			                <h2>热门用户</h2>
+			                <ul class="actions">
+			                    <li>
+			                       <a href="people/"><i class="md md-chevron-right"></i></a>
+			                    </li>
+			                </ul>
+			            </div>
+						<div class="card-body card-padding">
+							<?php TPL::output('block/sidebar_hot_users.tpl.htm'); ?>
+						</div>
+			        </div>
+				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</section>
+</section>
 
 <?php TPL::output('block/fixed_side_toolbar.tpl.htm'); ?>
 <?php TPL::output('global/footer.tpl.htm'); ?>

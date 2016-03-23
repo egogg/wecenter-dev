@@ -1,8 +1,8 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-    <div class="container">
-        <div class="row">
+<section id="main">
+    <section id="content">
+        <div class="container">
             <!-- 文章内容 -->
             <div class="col-sm-8">
                 <div class="card article-body" data-id="<?php echo $this->article_info['id']; ?>">
@@ -233,8 +233,8 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+</section>
 
 <script type="text/javascript">
     var ANSWER_EDIT_TIME = <?php echo get_setting('answer_edit_time'); ?>;

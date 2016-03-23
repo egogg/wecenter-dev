@@ -1,9 +1,9 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div class="container">
-    <div id="content">
-        <div class="row">
-            <div class="col-sm-3">
+<section id="main">
+	<section id="content">
+		<div class="container">
+			<div class="col-sm-3">
                 <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
             </div>
             <div class="col-sm-9">
@@ -141,15 +141,15 @@
             			</div>
             			<div class="lv-footer"></div>
             		</div>
-            		<div class="m-b-10">
+            		<div class="m-b-30">
             			<?php if($this->pagination) { ?>
 			            	<?php echo $this->pagination; ?>
 		            	<?php } ?>
             		</div>
             	</div>
-            </div>						
-        </div>
-    </div>
-</div>
+            </div>	
+		</div>
+	</section>
+</section>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>

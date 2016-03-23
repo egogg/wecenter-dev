@@ -1,58 +1,58 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div class="container">
-    <div id="content">
-        <div class="row">
+<section id="main">
+    <section id="content">
+        <div class="container">
             <div class="col-sm-3">
                 <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
             </div>
             <div class="col-sm-9">
-            	<div class="card clearfix">
-            		<div class="card-header">
-            			<h2><span class="hidden-xs"><i class="md md-email"></i> 私信：</span><a class="user-tag user-name" data-id="<?php echo $this->recipient_user['uid']; ?>" href="people/<?php echo $this->recipient_user['url_token']; ?>">@<?php echo $this->recipient_user['user_name']; ?></a></h2>
-            			<ul class="actions">
+                <div class="card clearfix">
+                    <div class="card-header">
+                        <h2><span class="hidden-xs"><i class="md md-email"></i> 私信：</span><a class="user-tag user-name" data-id="<?php echo $this->recipient_user['uid']; ?>" href="people/<?php echo $this->recipient_user['url_token']; ?>">@<?php echo $this->recipient_user['user_name']; ?></a></h2>
+                        <ul class="actions">
                             <li class="action-item-link">
                                 <a href="inbox/">
                                     <i class="md md-chevron-left c-lightblue"></i> 返回<span class="hidden-xs">私信列表</span>
                                 </a>
                             </li>
-                        </ul>							
-            		</div>
-            		<div class="listview">
-            			<div class="lv-footer ms-reply">
-            				<!-- 私信内容输入框　-->
-							<form action="inbox/ajax/send/" method="post" id="recipient_form">
-				        		<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
-				        		<input type="hidden" name="recipient" value="<?php echo $this->recipient_user['user_name']; ?>" />
-								<textarea type="text" name="message" id="inbox-reply-message" placeholder="你的回复……"></textarea>
-							</form>
-							<!-- end 私信内容输入框 -->
-							<button onclick="AWS.ajax_post($('#recipient_form'));"><i class="md md-send"></i></button>
+                        </ul>                           
+                    </div>
+                    <div class="listview">
+                        <div class="lv-footer ms-reply">
+                            <!-- 私信内容输入框　-->
+                            <form action="inbox/ajax/send/" method="post" id="recipient_form">
+                                <input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+                                <input type="hidden" name="recipient" value="<?php echo $this->recipient_user['user_name']; ?>" />
+                                <textarea type="text" name="message" id="inbox-reply-message" placeholder="你的回复……"></textarea>
+                            </form>
+                            <!-- end 私信内容输入框 -->
+                            <button onclick="AWS.ajax_post($('#recipient_form'));"><i class="md md-send"></i></button>
                         </div>
-            			<div class="lv-body lv-message m-b-30 m-t-30">
-            				<?php if ($this->list) { ?>
-								<?php foreach($this->list AS $key => $val) { ?>
-									<div class="lv-item media <?php if ($val['uid'] != $this->user_id) { ?>right<?php } ?>">
-										<a data-id="<?php echo $val['uid']; ?>" href="people/<?php if ($val['uid'] == $this->user_id) { ?><?php echo $this->user_info['url_token']; ?><?php } else { ?><?php echo $val['url_token']; ?><?php } ?>" data-id="<?php echo $val['uid']; ?>" class="user-tag user-img lv-avatar <?php if ($val['uid'] == $this->user_id) { ?>pull-left<?php  } else { ?>pull-right<?php } ?>">
-	                                        <img src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="" />
-	                                    </a>
-										<div class="media-body">
-	                                        <div class="ms-item">
-	                                            <a class="ms-user user-tag user-name" data-id="<?php echo $val['uid']; ?>" href="people/<?php if ($val['uid'] == $this->user_id) { ?><?php echo $this->user_info['url_token']; ?><?php } else { ?><?php echo $val['url_token']; ?><?php } ?>"><strong><?php if ($val['uid'] == $this->user_id) { ?><?php _e('我'); ?><?php } else { ?><?php echo $val['user_name']; ?><?php } ?></strong></a>: <?php echo nl2br($val['message']); ?>
-	                                        </div>
-	                                        <small class="ms-date"><i class="md md-access-time"></i> <?php if ($val['uid'] != $this->user_id) { ?><span class="pull-right m-l-15"> 
-	                                        	<a class="c-lightblue" href="javascript:;" onclick="$.scrollTo(($('#recipient_form').offset()['top']) - 100, 600, {queue:true}); $('#inbox-reply-message').focus();">回复</a></span><?php } ?>
-												<?php echo date_friendly($val['add_time']); ?><?php if ($val['receipt'] AND $val['uid'] == $this->user_id) { ?> (<?php _e('对方于 %s 已读', date_friendly($val['receipt'])); ?>)<?php } ?></small>
-	                                    </div>
-									</div>
-								<?php } ?>
-							<?php } ?>
-            			</div>
-            		</div>
-            	</div>
-            </div>						
+                        <div class="lv-body lv-message m-b-30 m-t-30">
+                            <?php if ($this->list) { ?>
+                                <?php foreach($this->list AS $key => $val) { ?>
+                                    <div class="lv-item media <?php if ($val['uid'] != $this->user_id) { ?>right<?php } ?>">
+                                        <a data-id="<?php echo $val['uid']; ?>" href="people/<?php if ($val['uid'] == $this->user_id) { ?><?php echo $this->user_info['url_token']; ?><?php } else { ?><?php echo $val['url_token']; ?><?php } ?>" data-id="<?php echo $val['uid']; ?>" class="user-tag user-img lv-avatar <?php if ($val['uid'] == $this->user_id) { ?>pull-left<?php  } else { ?>pull-right<?php } ?>">
+                                            <img src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="" />
+                                        </a>
+                                        <div class="media-body">
+                                            <div class="ms-item">
+                                                <a class="ms-user user-tag user-name" data-id="<?php echo $val['uid']; ?>" href="people/<?php if ($val['uid'] == $this->user_id) { ?><?php echo $this->user_info['url_token']; ?><?php } else { ?><?php echo $val['url_token']; ?><?php } ?>"><strong><?php if ($val['uid'] == $this->user_id) { ?><?php _e('我'); ?><?php } else { ?><?php echo $val['user_name']; ?><?php } ?></strong></a>: <?php echo nl2br($val['message']); ?>
+                                            </div>
+                                            <small class="ms-date"><i class="md md-access-time"></i> <?php if ($val['uid'] != $this->user_id) { ?><span class="pull-right m-l-15"> 
+                                                <a class="c-lightblue" href="javascript:;" onclick="$.scrollTo(($('#recipient_form').offset()['top']) - 100, 600, {queue:true}); $('#inbox-reply-message').focus();">回复</a></span><?php } ?>
+                                                <?php echo date_friendly($val['add_time']); ?><?php if ($val['receipt'] AND $val['uid'] == $this->user_id) { ?> (<?php _e('对方于 %s 已读', date_friendly($val['receipt'])); ?>)<?php } ?></small>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>  
         </div>
-    </div>
-</div>
+    </section>
+</section>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>

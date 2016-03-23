@@ -1,14 +1,14 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div class="container">
-    <div id="content">
-        <div class="row">
+<section id="main">
+    <section id="content">
+        <div class="container">
             <div class="col-sm-3">
                 <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
             </div>
             <div class="col-sm-9">
-            	<div class="card clearfix">
-            		<div class="card-header">
+                <div class="card clearfix">
+                    <div class="card-header">
                         <h2 class="user-center-header">
                             <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
                                 <i class="md md-description"></i> 我的草稿
@@ -16,30 +16,30 @@
                             </button>
                             <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
                         </h2>
-            			<ul class="actions">
+                        <ul class="actions">
                             <li data-toggle="tooltip" data-original-title="清空所有" data-placement="bottom">
                                 <a href="javascript:void(0);" onclick="AWS.User.delete_draft('', 'clean'); window.location.reload();">
                                     <i class="md md-delete"></i>
                                 </a>
                             </li>
-                        </ul>							
-            		</div>
-            		<div class="listview">
-            			<div class="lv-body" id="draft_list">
-            				
-            			</div>
-            			<div class="lv-footer"></div>
-            		</div>
-            	</div>
+                        </ul>                           
+                    </div>
+                    <div class="listview">
+                        <div class="lv-body" id="draft_list">
+                            
+                        </div>
+                        <div class="lv-footer"></div>
+                    </div>
+                </div>
                 <div class="card text-center">
                     <div class="card-body card-padding">
                         <a href="javascript:void(0);" id="draft_more"><i class="md md-refresh"></i> 加载更多</a>
                     </div>
                 </div>
-            </div>						
+            </div>
         </div>
-    </div>
-</div>
+    </section>
+</section>
 
 <script type="text/javascript">
     $(document).ready(function () {

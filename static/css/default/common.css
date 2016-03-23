@@ -11,12 +11,6 @@ header a {
 	color: #03A9F4;
 }
 
-.main-header .container {
-	height: 80px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
 header .navbar-brand {
 	background: url("img/logo.png") no-repeat;
 	background-position: center;
@@ -2296,7 +2290,7 @@ i.dot {
     padding: 2px 0px 3px;
     background: #fff;
     color: #5e5e5e;
-    width: 15%;
+    width: 18%;
     margin-right: 10px;
 }
 
@@ -2590,6 +2584,16 @@ input.form-control {
 
 
 /*注册登录*/
+
+.account-main {
+	margin-top: -120px;
+}
+
+@media (max-width: 767px) {
+	.account-content {
+		padding-top: 0 !important;
+	}
+}
 
 .login-logo {
 	background: url("img/login_logo.png") no-repeat;

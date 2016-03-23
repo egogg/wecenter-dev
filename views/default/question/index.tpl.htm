@@ -1,301 +1,303 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-	<div class="container">
-		<div class="col-sm-8">
-			<!-- 题目信息  -->
-			<div class="card">
-				<!-- 问题内容 -->
-				<div class="question-loader clearfix">
-					
-				</div>
+<section id="main">
+	<section id="content">
+		<div class="container">
+			<div class="col-sm-8">
+				<!-- 题目信息  -->
+				<div class="card">
+					<!-- 问题内容 -->
+					<div class="question-loader clearfix">
+						
+					</div>
 
-				<div class="question-quiz-actions card-body card-padding">
-					<ul class="question-quiz-action-items">
-						<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
-						<?php if($this->question_info['quiz_id']) { ?>
-							<li class="question-quiz-action-item question-discuss"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
-						<?php } ?>
-						<li class="question-quiz-action-item email-invite"><a data-toggle="modal" href="#modalInviteFriend" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
-					</ul>
-				</div>
+					<div class="question-quiz-actions card-body card-padding">
+						<ul class="question-quiz-action-items">
+							<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
+							<?php if($this->question_info['quiz_id']) { ?>
+								<li class="question-quiz-action-item question-discuss"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+							<?php } ?>
+							<li class="question-quiz-action-item email-invite"><a data-toggle="modal" href="#modalInviteFriend" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
+						</ul>
+					</div>
 
-				<div class="modal fade" id="modalInviteFriend" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title">邀请朋友答题</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>你可以邀请朋友回答问题</p>
-		                            <form method="post" action="question/ajax/email_invite/question_id-<?php echo $this->question_info['question_id']; ?>" onsubmit="return false;" id="email_invite_form">
-		                            	<input class="form-control" type="text" name="email" placeholder="@邮件地址"/>
-									</form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" onclick="AWS.ajax_post($('#email_invite_form'), 'ajax_processer', 'invite_friend');">发送邀请</button>
-                                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+					<div class="modal fade" id="modalInviteFriend" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+	                    <div class="modal-dialog">
+	                        <div class="modal-content">
+	                            <div class="modal-header">
+	                                <h4 class="modal-title">邀请朋友答题</h4>
+	                            </div>
+	                            <div class="modal-body">
+	                                <p>你可以邀请朋友回答问题</p>
+			                            <form method="post" action="question/ajax/email_invite/question_id-<?php echo $this->question_info['question_id']; ?>" onsubmit="return false;" id="email_invite_form">
+			                            	<input class="form-control" type="text" name="email" placeholder="@邮件地址"/>
+										</form>
+	                            </div>
+	                            <div class="modal-footer">
+	                                <button type="button" class="btn btn-primary" onclick="AWS.ajax_post($('#email_invite_form'), 'ajax_processer', 'invite_friend');">发送邀请</button>
+	                                <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
 
-				<div class="card-body card-padding question-quiz-footer clearfix">
-					<div class="pull-left clearfix footer-stats">
-						<ul class="footer-stats-items">
-							<li class="footer-stats-item">
-								<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
-									<i class="md md-visibility"></i> 
-									<span class="quiz-stats-text">
-										<span class="hidden-xs">查看</span>
-										<?php echo $this->question_info['view_count']; ?>
-									</span>
-								</a>
-							</li>
-							<?php if($this->question_info['quiz_id'] > 0) { ?>
+					<div class="card-body card-padding question-quiz-footer clearfix">
+						<div class="pull-left clearfix footer-stats">
+							<ul class="footer-stats-items">
 								<li class="footer-stats-item">
 									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
-										<i class="md md-equalizer"> </i>
+										<i class="md md-visibility"></i> 
 										<span class="quiz-stats-text">
-											<span class="hidden-xs">答题</span>
-											<?php echo $this->question_info['quiz_count_total']; ?>
-										</span> 
-									</a>
-								</li>
-								<li class="footer-stats-item">
-									<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
-										<i class="md md-flag"></i>
-										<span class="quiz-stats-text">
-											<span class="hidden-xs">正确率</span>
-											<?php echo number_format($this->question_info['quiz_success_ratio'] * 100, 0); ?>%
+											<span class="hidden-xs">查看</span>
+											<?php echo $this->question_info['view_count']; ?>
 										</span>
 									</a>
 								</li>
-							<?php } ?>
-						</ul>
-					</div>
-					<div class="pull-right footer-share">
-						<span class="footer-share-title">分享到</span>
-						<ul class="footer-share-list">
-							<li class="footer-share-item weibo">
-								<a class="bgm-red" onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});">	<i class="icon icon-weibo"></i>
-								</a>
-							</li>
-							<li class="footer-share-item qzone">
-								<a class="bgm-indigo" onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
-							</li>
-							<li class="footer-share-item wechat">
-								<a class="bgm-green" onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
-							</li>
-							<!-- <li class="footer-share-item">
-								<a href="javascript:void(0);">
-									<i class="md md-more-horiz"></i>
-								</a>
-							</li> -->
-						</ul>
+								<?php if($this->question_info['quiz_id'] > 0) { ?>
+									<li class="footer-stats-item">
+										<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
+											<i class="md md-equalizer"> </i>
+											<span class="quiz-stats-text">
+												<span class="hidden-xs">答题</span>
+												<?php echo $this->question_info['quiz_count_total']; ?>
+											</span> 
+										</a>
+									</li>
+									<li class="footer-stats-item">
+										<a href="question/record/<?php echo $this->question_info['question_id']; ?>">
+											<i class="md md-flag"></i>
+											<span class="quiz-stats-text">
+												<span class="hidden-xs">正确率</span>
+												<?php echo number_format($this->question_info['quiz_success_ratio'] * 100, 0); ?>%
+											</span>
+										</a>
+									</li>
+								<?php } ?>
+							</ul>
+						</div>
+						<div class="pull-right footer-share">
+							<span class="footer-share-title">分享到</span>
+							<ul class="footer-share-list">
+								<li class="footer-share-item weibo">
+									<a class="bgm-red" onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});">	<i class="icon icon-weibo"></i>
+									</a>
+								</li>
+								<li class="footer-share-item qzone">
+									<a class="bgm-indigo" onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
+								</li>
+								<li class="footer-share-item wechat">
+									<a class="bgm-green" onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
+								</li>
+								<!-- <li class="footer-share-item">
+									<a href="javascript:void(0);">
+										<i class="md md-more-horiz"></i>
+									</a>
+								</li> -->
+							</ul>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="card">
-				<div class="card-body card-padding question-focus text-center">
-					<div class="question-add-foucs">
-						<a class="question-follow follow <?php if ($this->question_focus) { ?>following<?php } ?>" href="javascript:void(0);" onclick="AWS.User.follow($(this), 'question', <?php echo $this->question_info['question_id']; ?>);">
-						<span>
-							<?php if ($this->question_focus) { ?>
-								<i class="md md-check"></i> 正在关注
-							<?php } else { ?>
-								<i class="md md-add"></i> 添加关注
-							<?php } ?>
-						</span>
-						</a>
+				<div class="card">
+					<div class="card-body card-padding question-focus text-center">
+						<div class="question-add-foucs">
+							<a class="question-follow follow <?php if ($this->question_focus) { ?>following<?php } ?>" href="javascript:void(0);" onclick="AWS.User.follow($(this), 'question', <?php echo $this->question_info['question_id']; ?>);">
+							<span>
+								<?php if ($this->question_focus) { ?>
+									<i class="md md-check"></i> 正在关注
+								<?php } else { ?>
+									<i class="md md-add"></i> 添加关注
+								<?php } ?>
+							</span>
+							</a>
+						</div>
+						
+						<div class="follow-user-header">共<span><?php echo $this->question_info['focus_count']; ?></span>人正在关注该问题</div>
+		                <div class="follow-user-list" id="focus_users">
+		                </div>
 					</div>
-					
-					<div class="follow-user-header">共<span><?php echo $this->question_info['focus_count']; ?></span>人正在关注该问题</div>
-	                <div class="follow-user-list" id="focus_users">
-	                </div>
 				</div>
-			</div>
-			
-			<!-- 答题讨论 -->
-			<div class="card question-comments" id="question-comments">
-				<div class="card-header card-padding question-comment-header clearfix">
-					<h3>
-						<i class="md md-comment"></i>
-						<span><?php echo $this->answer_count; ?></span>条答题讨论
-					</h3>
-				</div>
-				<!-- 回复内容 -->
-				<div class="card-body card-padding question-comment p-t-0">			
-					<div class="comment-list t-view">
-						<div class="tv-comments">
-							<div class="answer-items" data-load-answer="<?php if($this->show_answers) { ?>1<?php } else { ?>0<?php }?>">
-							</div>
-							
-							<div class="<?php if(($this->answer_count <= 0) or $this->show_answers) { ?>hidden<?php } ?> load-question-answers-board m-b-20 m-t-20">
-								<p>答题讨论中可能包含答题线索，是否再继续独立思考一下？</p>
-								<a class="load-question-answers btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论</a>
-							</div>
+				
+				<!-- 答题讨论 -->
+				<div class="card question-comments" id="question-comments">
+					<div class="card-header card-padding question-comment-header clearfix">
+						<h3>
+							<i class="md md-comment"></i>
+							<span><?php echo $this->answer_count; ?></span>条答题讨论
+						</h3>
+					</div>
+					<!-- 回复内容 -->
+					<div class="card-body card-padding question-comment p-t-0">			
+						<div class="comment-list t-view">
+							<div class="tv-comments">
+								<div class="answer-items" data-load-answer="<?php if($this->show_answers) { ?>1<?php } else { ?>0<?php }?>">
+								</div>
+								
+								<div class="<?php if(($this->answer_count <= 0) or $this->show_answers) { ?>hidden<?php } ?> load-question-answers-board m-b-20 m-t-20">
+									<p>答题讨论中可能包含答题线索，是否再继续独立思考一下？</p>
+									<a class="load-question-answers btn btn-warning" href="javascript:void(0);"><i class="md md-arrow-forward"></i> 查看答题讨论</a>
+								</div>
 
-							<!-- 回复编辑器 -->
-							<div class="comment-box m-t-15">
-								<a name="answer_form"></a>
-								<?php if (!$this->question_info['lock'] and $this->user_id) { ?>
-								<form action="question/ajax/save_answer/" onsubmit="return false;" method="post" id="answer_form" class="question_answer_form">
-					        	<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
-					        	<input type="hidden" name="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
-					        	<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
-					        	<input type="checkbox" checked="checked" value="1" name="auto_focus" style="display:none;" />
-								<div class="mod-body">
-									<div class="aw-mod aw-editor-box">
-										<div class="mod-head">
-											<div class="wmd-panel">
-									           <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="answer_content"><?php echo htmlspecialchars($this->draft_content['message']); ?></textarea>
-									        </div>
-										</div>
-										<div class="mod-body clearfix">
-											<?php if ($this->human_valid) { ?>
-											<div class="aw-auth-img clearfix">
-													<input class="pull-right form-control" type="text" name="seccode_verify" placeholder="<?php _e('验证码'); ?>" />
-													<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha" /></em>
+								<!-- 回复编辑器 -->
+								<div class="comment-box m-t-15">
+									<a name="answer_form"></a>
+									<?php if (!$this->question_info['lock'] and $this->user_id) { ?>
+									<form action="question/ajax/save_answer/" onsubmit="return false;" method="post" id="answer_form" class="question_answer_form">
+						        	<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+						        	<input type="hidden" name="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
+						        	<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
+						        	<input type="checkbox" checked="checked" value="1" name="auto_focus" style="display:none;" />
+									<div class="mod-body">
+										<div class="aw-mod aw-editor-box">
+											<div class="mod-head">
+												<div class="wmd-panel">
+										           <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="answer_content"><?php echo htmlspecialchars($this->draft_content['message']); ?></textarea>
+										        </div>
 											</div>
-											<?php } ?>
-											<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-primary pull-right btn-reply">提交讨论</a>
-											<span class="pull-right c-gray" id="answer_content_message">&nbsp;</span>
-											<?php if (get_setting('upload_enable') == 'Y') { ?>
-											<div class="aw-upload-box">
-												<a class="btn btn-success btn-sm">上传附件</a>
-												<div class="upload-container"></div>
-												<small class="c-gray aw-upload-tips hidden-xs"><?php _e('允许'); ?> : <?php echo get_setting('allowed_upload_types'); ?></small>
+											<div class="mod-body clearfix">
+												<?php if ($this->human_valid) { ?>
+												<div class="aw-auth-img clearfix">
+														<input class="pull-right form-control" type="text" name="seccode_verify" placeholder="<?php _e('验证码'); ?>" />
+														<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha" /></em>
+												</div>
+												<?php } ?>
+												<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-primary pull-right btn-reply">提交讨论</a>
+												<span class="pull-right c-gray" id="answer_content_message">&nbsp;</span>
+												<?php if (get_setting('upload_enable') == 'Y') { ?>
+												<div class="aw-upload-box">
+													<a class="btn btn-success btn-sm">上传附件</a>
+													<div class="upload-container"></div>
+													<small class="c-gray aw-upload-tips hidden-xs"><?php _e('允许'); ?> : <?php echo get_setting('allowed_upload_types'); ?></small>
+												</div>
+												<?php } ?>
 											</div>
-											<?php } ?>
 										</div>
 									</div>
+									</form>
+									<?php } ?>
 								</div>
-								</form>
-								<?php } ?>
-							</div>
-	                    </div>
-					</div>
-
-					<?php if ($this->question_info['lock']) { ?>
-						<p class="question-comment-message"><?php _e('该题目被锁定，暂时无法参加讨论'); ?></p>
-					<?php } else if (!$this->user_id) { ?>
-						<p class="question-comment-message">
-							<a href="account/login/">登录</a>后参与答题讨论
-						</p>
-					<?php } ?>
-				</div>
-			</div>
-		</div>
-		<div class="col-sm-4">
-			<!-- 侧边栏 -->
-			<!-- 发起人卡片 -->
-			<div class="card hidden-xs">
-				<div class="card-header card-padding p-b-0 question-publisher">
-					<div class="media">
-						<div class="pull-left">
-							<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
-							<div class="text-center m-t-5">
-								<span class="question-publisher-mark">出题</span>
-							</div>
+		                    </div>
 						</div>
-						<div class="media-body">
-	                        <div class="media-heading publisher-title">
-	                        	<h4>
-	                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a><a class="c-gray m-l-5 send-mail" data-toggle="tooltip" data-original-title="发送私信" data-placement="right" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $this->question_info['user_info']['user_name']; ?>');"><i class="md md-email"></i></a>
-	                        	</h4>
-								
-								<ul class="question-publisher-stats m-b-5 clearfix">
-									<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率 <?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 1) ?>%</span>
-									
-									<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过率 <?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'], 1) ?>%</span>
-								</ul>
 
-		                    	<ul class="question-publisher-stats">
-		                    		<li>
-		                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-publish">出题 <span><?php echo $this->question_info['user_info']['question_count']; ?></span></a>
-		                    		</li>
-		                    		<li>
-		                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-answered">答题 <span><?php echo $this->question_info['user_info']['question_quiz_count_total']; ?></span></a>
-		                    		</li>
-		                    		<li>
-		                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-comments">讨论 <span><?php echo $this->question_info['user_info']['answer_count']; ?></span></a>
-		                    		</li>
-		                    	</ul>
-			                    
+						<?php if ($this->question_info['lock']) { ?>
+							<p class="question-comment-message"><?php _e('该题目被锁定，暂时无法参加讨论'); ?></p>
+						<?php } else if (!$this->user_id) { ?>
+							<p class="question-comment-message">
+								<a href="account/login/">登录</a>后参与答题讨论
+							</p>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<!-- 侧边栏 -->
+				<!-- 发起人卡片 -->
+				<div class="card hidden-xs">
+					<div class="card-header card-padding p-b-0 question-publisher">
+						<div class="media">
+							<div class="pull-left">
+								<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
+								<div class="text-center m-t-5">
+									<span class="question-publisher-mark">出题</span>
+								</div>
+							</div>
+							<div class="media-body">
+		                        <div class="media-heading publisher-title">
+		                        	<h4>
+		                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a><a class="c-gray m-l-5 send-mail" data-toggle="tooltip" data-original-title="发送私信" data-placement="right" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $this->question_info['user_info']['user_name']; ?>');"><i class="md md-email"></i></a>
+		                        	</h4>
+									
+									<ul class="question-publisher-stats m-b-5 clearfix">
+										<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率 <?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 1) ?>%</span>
+										
+										<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过率 <?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'], 1) ?>%</span>
+									</ul>
+
+			                    	<ul class="question-publisher-stats">
+			                    		<li>
+			                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-publish">出题 <span><?php echo $this->question_info['user_info']['question_count']; ?></span></a>
+			                    		</li>
+			                    		<li>
+			                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-answered">答题 <span><?php echo $this->question_info['user_info']['question_quiz_count_total']; ?></span></a>
+			                    		</li>
+			                    		<li>
+			                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-comments">讨论 <span><?php echo $this->question_info['user_info']['answer_count']; ?></span></a>
+			                    		</li>
+			                    	</ul>
+				                    
+		                        </div>
+		                    </div>
+						</div>
+		            </div>
+		            <div class="card-body p-t-0 card-padding">
+						<div class="m-t-10">
+							<?php echo $this->question_info['user_info']['signature']; ?>
+						</div>	
+
+						<div class="m-t-25">
+							<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher <?php if ($this->user_follow_check) { ?>following<?php } ?>">
+		            			<span>
+		            				<?php if ($this->user_follow_check) { ?>
+		            					<i class="md md-check"></i> 正在关注
+		            				<?php } else { ?>
+		            					<i class="md md-add"></i> 添加关注
+		            				<?php } ?>
+		            			</span>
+		            		</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- 分享问题 -->
+				<div class="card question-publish-question hidden-xs">
+					<div class="card-body card-padding">
+						<span class="hidden-xs">如果你知道一些不错的题目，你可以</span> 
+						<div class="m-t-15">
+							<a href="publish/" class="btn btn-primary"><i class="md md-create"></i> 出题考考别人</a>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 答题动态 -->
+				<?php if ($this->question_quiz_record) { ?>
+					<div class="card hidden-xs">
+						<div class="card-header">
+							<h2>答题纪录</h2>
+							<ul class="actions">
+			                    <li class="action-item-link">
+			                       <a href="question/record/<?php echo $this->question_info['question_id']; ?>">所有记录<i class="md md-chevron-right c-lightblue"></i></a>
+			                    </li>
+			                </ul>
+						</div>
+						<div class="listview">
+		            		<div class="lv-body">
+		            			<?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
+	                        	<?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
+								<div class="lv-footer"></div>
+		            		</div>
+		            	</div>
+					</div>
+				<?php } ?>
+
+				<!-- 相关问题 -->
+				<?php if ($this->question_related_list) { ?>
+					<div class="card hidden-xs">
+						<div class="card-header">
+							<h2>你可能喜欢的问题</h2>
+						</div>
+						<div class="listview">
+	                        <div class="lv-body">
+								<?php TPL::assign('question_list_lite', $this->question_related_list); ?>
+								<?php TPL::output('block/question_list_lite'); ?>
 	                        </div>
+	                        <div class="lv-footer"></div>
 	                    </div>
 					</div>
-	            </div>
-	            <div class="card-body p-t-0 card-padding">
-					<div class="m-t-10">
-						<?php echo $this->question_info['user_info']['signature']; ?>
-					</div>	
-
-					<div class="m-t-25">
-						<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher <?php if ($this->user_follow_check) { ?>following<?php } ?>">
-	            			<span>
-	            				<?php if ($this->user_follow_check) { ?>
-	            					<i class="md md-check"></i> 正在关注
-	            				<?php } else { ?>
-	            					<i class="md md-add"></i> 添加关注
-	            				<?php } ?>
-	            			</span>
-	            		</a>
-					</div>
-				</div>
+				<?php } ?>
 			</div>
-
-			<!-- 分享问题 -->
-			<div class="card question-publish-question hidden-xs">
-				<div class="card-body card-padding">
-					<span class="hidden-xs">如果你知道一些不错的题目，你可以</span> 
-					<div class="m-t-15">
-						<a href="publish/" class="btn btn-primary"><i class="md md-create"></i> 出题考考别人</a>
-					</div>
-				</div>
-			</div>
-			
-			<!-- 答题动态 -->
-			<?php if ($this->question_quiz_record) { ?>
-				<div class="card hidden-xs">
-					<div class="card-header">
-						<h2>答题纪录</h2>
-						<ul class="actions">
-		                    <li class="action-item-link">
-		                       <a href="question/record/<?php echo $this->question_info['question_id']; ?>">所有记录<i class="md md-chevron-right c-lightblue"></i></a>
-		                    </li>
-		                </ul>
-					</div>
-					<div class="listview">
-	            		<div class="lv-body">
-	            			<?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
-                        	<?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
-							<div class="lv-footer"></div>
-	            		</div>
-	            	</div>
-				</div>
-			<?php } ?>
-
-			<!-- 相关问题 -->
-			<?php if ($this->question_related_list) { ?>
-				<div class="card hidden-xs">
-					<div class="card-header">
-						<h2>你可能喜欢的问题</h2>
-					</div>
-					<div class="listview">
-                        <div class="lv-body">
-							<?php TPL::assign('question_list_lite', $this->question_related_list); ?>
-							<?php TPL::output('block/question_list_lite'); ?>
-                        </div>
-                        <div class="lv-footer"></div>
-                    </div>
-				</div>
-			<?php } ?>
 		</div>
-	</div>
-</div>
+	</section>
+</section>
 
 <script type="text/javascript">
 	var ATTACH_ACCESS_KEY = '<?php echo $this->attach_access_key; ?>';

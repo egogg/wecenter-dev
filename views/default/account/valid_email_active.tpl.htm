@@ -1,28 +1,34 @@
 <?php TPL::output('global/header_meta.tpl.htm'); ?>
 
-<div class="row">
-	<div class="col-sm-2"></div>
-	<div class="col-sm-8">
-		<div class="card">
-			<div class="text-center login-block">
-				<div class="card-header card-padding text-center p-b-0">
-					<h1>邮箱验证</h1>
-				</div>
-				<div class="card-body card-padding">
-					<div class="alert alert-success" role="alert">
-						<p>感谢您的注册! 请点击下一步激活你的账户</p>
-						<p class="m-t-20">
-							<form action="account/ajax/valid_email_active/" method="post" id="active_form">
-								<input type="hidden" name="active_code" value="<?php echo $this->active_code; ?>" />
-								<button class="btn btn-primary btn-normal" onclick="AWS.ajax_post($('#active_form')); return false;">下一步</button>
-							</form>	
-						</p>
+<section id="main" class="account-main">
+	<section id="content" class="account-content">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-8">
+					<div class="card">
+						<div class="text-center login-block">
+							<div class="card-header card-padding text-center p-b-0">
+								<h1>邮箱验证</h1>
+							</div>
+							<div class="card-body card-padding">
+								<div class="alert alert-success" role="alert">
+									<p>感谢您的注册! 请点击下一步激活你的账户</p>
+									<p class="m-t-20">
+										<form action="account/ajax/valid_email_active/" method="post" id="active_form">
+											<input type="hidden" name="active_code" value="<?php echo $this->active_code; ?>" />
+											<button class="btn btn-primary btn-normal" onclick="AWS.ajax_post($('#active_form')); return false;">下一步</button>
+										</form>	
+									</p>
+								</div>
+						    </div>
+						</div>
 					</div>
-			    </div>
+				</div>
+				<div class="col-sm-2"></div>
 			</div>
 		</div>
-	</div>
-	<div class="col-sm-2"></div>
-</div>
+	</section>
+</section>	
 
 <?php TPL::output('global/footer.tpl.htm'); ?>

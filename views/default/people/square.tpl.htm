@@ -1,108 +1,110 @@
 <?php TPL::output('global/header.tpl.htm'); ?>
 
-<div id="content">
-	<div class="container">
-		<div class="card">
-			<div class="listview lv-bordered lv-lg">
-	            <div class="lv-header-alt">
-	                <h2 class="lvh-label"><i class="md md-people"></i> 用户排行榜</h2>
-	                <ul class="user-list-sort-items hidden-xs">
-	                	<li class="user-list-sort-item <?php if(!$this->sort_type || $this->sort_type == 'success_ratio') { ?>active<?php } ?>">
-	                		<a href="javascript:void(0);" data-sort-type="success_ratio">正确率</a> <i class="dot"></i>
-	                	</li>
-	                	<li class="user-list-sort-item <?php if($this->sort_type == "poft"){ ?>active<?php } ?>">
-	                		<a href="javascript:void(0);" data-sort-type="poft">一次通过率</a> <i class="dot"></i>
-	                	</li>
-	                	<li class="user-list-sort-item <?php if($this->sort_type == "quiz_count"){ ?>active<?php } ?>">
-	                		<a href="javascript:void(0);" data-sort-type="quiz_count">答题</a> <i class="dot"></i>
-	                	</li>
-	                	<li class="user-list-sort-item <?php if($this->sort_type == "question_count"){ ?>active<?php } ?>">
-	                		<a href="javascript:void(0);" data-sort-type="question_count">出题</a> <i class="dot"></i>
-	                	</li>
-	                	<li class="user-list-sort-item <?php if($this->sort_type == "integral"){ ?>active<?php } ?>">
-	                		<a href="javascript:void(0);" data-sort-type="integral">积分</a>
-	                	</li>
-	                </ul>
-	                <ul class="lv-actions actions visible-xs">
-	                    <li class="dropdown">
-	                        <a href="#" data-toggle="dropdown" aria-expanded="true">
-	                            <i class="md md-sort"></i>
-	                        </a>
-	            
-	                        <ul class="dropdown-menu dropdown-menu-right">
-	                            <li class="user-list-sort-item">
-			                		<a href="javascript:void(0);" data-sort-type="success_ratio">正确率</a>
-			                	</li>
-			                	<li class="user-list-sort-item">
-			                		<a href="javascript:void(0);" data-sort-type="poft">一次通过率</a>
-			                	</li>
-			                	<li class="user-list-sort-item">
-			                		<a href="javascript:void(0);" data-sort-type="quiz_count">答题</a>
-			                	</li>
-			                	<li class="user-list-sort-item">
-			                		<a href="javascript:void(0);" data-sort-type="question_count">出题</a>
-			                	</li>
-			                	<li class="user-list-sort-item">
-			                		<a href="javascript:void(0);" data-sort-type="integral">积分</a>
-			                	</li>
-	                        </ul>
-	                    </li>
-	                </ul>
-	            </div>
-	            
-	            <div class="lv-body">
-	            	<?php if ($this->users_list) { ?>
-						<?php foreach($this->users_list as $key => $val) { ?>
-							<div class="lv-item media">
-			                    <div class="pull-left">
-			                    	<a class="user-tag user-img c-black" data-id="<?php echo $val['uid']; ?>" href="people/<?php echo $val['url_token']; ?>">
-			                        	<img class="user-list-avatar" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="">
-			                        </a>
-			                        <div class="user-list-rank-num">
-			                        	<?php if (($key + 1 + ((intval($_GET['page']) - 1) * get_setting('user_rank_list_perpage'))) < get_setting('user_rank_list_total')) { echo ($key + 1 + ((intval($_GET['page']) - 1) * get_setting('user_rank_list_perpage'))); } else { echo '*'; }; ?>
-			                        </div>
-			                    </div>
-			                    <div class="media-body">
-			                    	<div class="user-list-add-foucs">
-			                        	<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $val['uid']; ?>);" class="follow <?php if ($val['focus']) { ?>following<?php } ?>">
-		                        			<span>
-		                        				<?php if ($val['focus']) { ?>
-		                        					<i class="md md-check"></i> 正在关注
-		                        				<?php } else { ?>
-		                        					<i class="md md-add"></i> 添加关注
-		                        				<?php } ?>
-		                        			</span>
-		                        		</a>
-			                        </div>
+<section id="main">
+	<section id="content">
+		<div class="container">
+			<div class="card">
+				<div class="listview lv-bordered lv-lg">
+		            <div class="lv-header-alt">
+		                <h2 class="lvh-label"><i class="md md-people"></i> 用户排行榜</h2>
+		                <ul class="user-list-sort-items hidden-xs">
+		                	<li class="user-list-sort-item <?php if(!$this->sort_type || $this->sort_type == 'success_ratio') { ?>active<?php } ?>">
+		                		<a href="javascript:void(0);" data-sort-type="success_ratio">正确率</a> <i class="dot"></i>
+		                	</li>
+		                	<li class="user-list-sort-item <?php if($this->sort_type == "poft"){ ?>active<?php } ?>">
+		                		<a href="javascript:void(0);" data-sort-type="poft">一次通过率</a> <i class="dot"></i>
+		                	</li>
+		                	<li class="user-list-sort-item <?php if($this->sort_type == "quiz_count"){ ?>active<?php } ?>">
+		                		<a href="javascript:void(0);" data-sort-type="quiz_count">答题</a> <i class="dot"></i>
+		                	</li>
+		                	<li class="user-list-sort-item <?php if($this->sort_type == "question_count"){ ?>active<?php } ?>">
+		                		<a href="javascript:void(0);" data-sort-type="question_count">出题</a> <i class="dot"></i>
+		                	</li>
+		                	<li class="user-list-sort-item <?php if($this->sort_type == "integral"){ ?>active<?php } ?>">
+		                		<a href="javascript:void(0);" data-sort-type="integral">积分</a>
+		                	</li>
+		                </ul>
+		                <ul class="lv-actions actions visible-xs">
+		                    <li class="dropdown">
+		                        <a href="#" data-toggle="dropdown" aria-expanded="true">
+		                            <i class="md md-sort"></i>
+		                        </a>
+		            
+		                        <ul class="dropdown-menu dropdown-menu-right">
+		                            <li class="user-list-sort-item">
+				                		<a href="javascript:void(0);" data-sort-type="success_ratio">正确率</a>
+				                	</li>
+				                	<li class="user-list-sort-item">
+				                		<a href="javascript:void(0);" data-sort-type="poft">一次通过率</a>
+				                	</li>
+				                	<li class="user-list-sort-item">
+				                		<a href="javascript:void(0);" data-sort-type="quiz_count">答题</a>
+				                	</li>
+				                	<li class="user-list-sort-item">
+				                		<a href="javascript:void(0);" data-sort-type="question_count">出题</a>
+				                	</li>
+				                	<li class="user-list-sort-item">
+				                		<a href="javascript:void(0);" data-sort-type="integral">积分</a>
+				                	</li>
+		                        </ul>
+		                    </li>
+		                </ul>
+		            </div>
+		            
+		            <div class="lv-body">
+		            	<?php if ($this->users_list) { ?>
+							<?php foreach($this->users_list as $key => $val) { ?>
+								<div class="lv-item media">
+				                    <div class="pull-left">
+				                    	<a class="user-tag user-img c-black" data-id="<?php echo $val['uid']; ?>" href="people/<?php echo $val['url_token']; ?>">
+				                        	<img class="user-list-avatar" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="">
+				                        </a>
+				                        <div class="user-list-rank-num">
+				                        	<?php if (($key + 1 + ((intval($_GET['page']) - 1) * get_setting('user_rank_list_perpage'))) < get_setting('user_rank_list_total')) { echo ($key + 1 + ((intval($_GET['page']) - 1) * get_setting('user_rank_list_perpage'))); } else { echo '*'; }; ?>
+				                        </div>
+				                    </div>
+				                    <div class="media-body">
+				                    	<div class="user-list-add-foucs">
+				                        	<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $val['uid']; ?>);" class="follow <?php if ($val['focus']) { ?>following<?php } ?>">
+			                        			<span>
+			                        				<?php if ($val['focus']) { ?>
+			                        					<i class="md md-check"></i> 正在关注
+			                        				<?php } else { ?>
+			                        					<i class="md md-add"></i> 添加关注
+			                        				<?php } ?>
+			                        			</span>
+			                        		</a>
+				                        </div>
 
-			                        <div class="lv-title">
-			                        	<a class="user-tag user-name c-black" data-id="<?php echo $val['uid']; ?>" href="people/<?php echo $val['url_token']; ?>"><?php echo $val['user_name']; ?></a>
-										<?php if ($val['verified']) { ?><i class="icon-v<?php if ($val['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['verified'] == 'enterprise') { ?><?php _e('企业认证'); ?><?php } else { ?><?php _e('个人认证'); ?><?php } ?>"></i><?php } ?>
-										<a class="c-gray" data-toggle="tooltip" data-original-title="发送私信" data-placement="right" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $val['user_name']; ?>');"><i class="md md-email"></i></a>
-										<small class="lv-small user-signature"><?php echo $val['signature']; ?></small>
-			                        </div>
-			                        
-			                        <ul class="user-list-stats">
-			                        	<li class="<?php if(!$this->sort_type || $this->sort_type == 'success_ratio') { ?>active<?php } ?> <?php if($val['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php }else{ ?>c-red<?php } ?>">正确率 <?php echo number_format($val['question_quiz_success_ratio'] * 100, 1); ?>%</li>
-			                        	<li class="<?php if($this->sort_type == 'poft') { ?>active<?php } ?> <?php if($val['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php }else{ ?>c-red<?php } ?>">一次通过率 <?php echo number_format($val['question_quiz_poft_ratio'] * 100, 1); ?>%</li>
-			                        	<li class="<?php if($this->sort_type == 'quiz_count') { ?>active<?php } ?>">答题 <?php echo $val['question_quiz_count_total']; ?></li>
-			                        	<li class="<?php if($this->sort_type == 'question_count') { ?>active<?php } ?>">出题 <?php echo $val['question_count']; ?></li>
-			                            <li class="<?php if($this->sort_type == 'integral') { ?>active<?php } ?>">积分 <?php echo $val['integral']; ?></li>
-			                        </ul>
-			                    </div>
-			                </div>
+				                        <div class="lv-title">
+				                        	<a class="user-tag user-name c-black" data-id="<?php echo $val['uid']; ?>" href="people/<?php echo $val['url_token']; ?>"><?php echo $val['user_name']; ?></a>
+											<?php if ($val['verified']) { ?><i class="icon-v<?php if ($val['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['verified'] == 'enterprise') { ?><?php _e('企业认证'); ?><?php } else { ?><?php _e('个人认证'); ?><?php } ?>"></i><?php } ?>
+											<a class="c-gray" data-toggle="tooltip" data-original-title="发送私信" data-placement="right" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $val['user_name']; ?>');"><i class="md md-email"></i></a>
+											<small class="lv-small user-signature"><?php echo $val['signature']; ?></small>
+				                        </div>
+				                        
+				                        <ul class="user-list-stats">
+				                        	<li class="<?php if(!$this->sort_type || $this->sort_type == 'success_ratio') { ?>active<?php } ?> <?php if($val['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php }else{ ?>c-red<?php } ?>">正确率 <?php echo number_format($val['question_quiz_success_ratio'] * 100, 1); ?>%</li>
+				                        	<li class="<?php if($this->sort_type == 'poft') { ?>active<?php } ?> <?php if($val['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php }else{ ?>c-red<?php } ?>">一次通过率 <?php echo number_format($val['question_quiz_poft_ratio'] * 100, 1); ?>%</li>
+				                        	<li class="<?php if($this->sort_type == 'quiz_count') { ?>active<?php } ?>">答题 <?php echo $val['question_quiz_count_total']; ?></li>
+				                        	<li class="<?php if($this->sort_type == 'question_count') { ?>active<?php } ?>">出题 <?php echo $val['question_count']; ?></li>
+				                            <li class="<?php if($this->sort_type == 'integral') { ?>active<?php } ?>">积分 <?php echo $val['integral']; ?></li>
+				                        </ul>
+				                    </div>
+				                </div>
+							<?php } ?>
 						<?php } ?>
-					<?php } ?>
 
-					<div class="card">
-			        	<div class="card-body card-padding">
-			        		<?php echo $this->pagination; ?>
-			        	</div>
-			        </div>
-	            </div>
-	        </div>
+						<div class="card">
+				        	<div class="card-body card-padding">
+				        		<?php echo $this->pagination; ?>
+				        	</div>
+				        </div>
+		            </div>
+		        </div>
+			</div>
 		</div>
-	</div>
-</div>
+	</section>
+</section>
 
 <?php TPL::output('global/footer.tpl.htm'); ?>
