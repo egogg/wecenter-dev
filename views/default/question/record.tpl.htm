@@ -3,58 +3,60 @@
 <section id="main">
     <section id="content">
         <div class="container">
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>答题统计</h2>
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>答题统计</h2>
+                        </div>
+                        <div class="card-body card-padding">
+                            <div id="question-quiz-stats-chart" style="width:100%;height:250px;">
+                                
+                            </div>
+                            <ul class="p-20">
+                                <li class="question-quiz-record-stats-item">
+                                    <span><i class="md md-equalizer"></i> 答题总数</span> <strong><?php echo $this->question_info['quiz_count_total']; ?></strong>
+                                </li>
+
+                                <li class="question-quiz-record-stats-item">
+                                    <span><i class="md md-check"></i> 答题成功</span> <strong><?php echo $this->question_info['quiz_count_passed']; ?></strong>
+                                </li>
+
+                                <li class="question-quiz-record-stats-item">
+                                    <span><i class="md md-clear"></i> 答题失败</span> <strong><?php echo $this->question_info['quiz_count_total'] - $this->question_info['quiz_count_passed']; ?></strong>
+                                </li>
+
+                                <li class="question-quiz-record-stats-item">
+                                    <span><i class="md md-alarm-off"></i> 答题超时</span> <strong><?php echo $this->question_info['quiz_count_timeout']; ?></strong>
+                                </li>
+
+                                <li class="question-quiz-record-stats-item">
+                                    <span><i class="md md-flag"></i> 一次通过</span> <strong><?php echo $this->question_info['quiz_count_POFT']; ?></strong>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="card-body card-padding">
-                        <div id="question-quiz-stats-chart" style="width:100%;height:250px;">
+                </div>
+                <div class="col-sm-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>答题记录（<?php echo $this->question_info['quiz_count_total']; ?>）</h2>
+                        </div>
+                        <div class="card-body">
                             
                         </div>
-                        <ul class="p-20">
-                            <li class="question-quiz-record-stats-item">
-                                <span><i class="md md-equalizer"></i> 答题总数</span> <strong><?php echo $this->question_info['quiz_count_total']; ?></strong>
-                            </li>
-
-                            <li class="question-quiz-record-stats-item">
-                                <span><i class="md md-check"></i> 答题成功</span> <strong><?php echo $this->question_info['quiz_count_passed']; ?></strong>
-                            </li>
-
-                            <li class="question-quiz-record-stats-item">
-                                <span><i class="md md-clear"></i> 答题失败</span> <strong><?php echo $this->question_info['quiz_count_total'] - $this->question_info['quiz_count_passed']; ?></strong>
-                            </li>
-
-                            <li class="question-quiz-record-stats-item">
-                                <span><i class="md md-alarm-off"></i> 答题超时</span> <strong><?php echo $this->question_info['quiz_count_timeout']; ?></strong>
-                            </li>
-
-                            <li class="question-quiz-record-stats-item">
-                                <span><i class="md md-flag"></i> 一次通过</span> <strong><?php echo $this->question_info['quiz_count_POFT']; ?></strong>
-                            </li>
-                        </ul>
+                        <div class="listview">
+                            <ul class="lv-body" id="question-quiz-record-items">
+                                <?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
+                                <?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
+                            </ul>
+                            <div class="lv-footer"></div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col-sm-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>答题记录（<?php echo $this->question_info['quiz_count_total']; ?>）</h2>
-                    </div>
-                    <div class="card-body">
-                        
-                    </div>
-                    <div class="listview">
-                        <ul class="lv-body" id="question-quiz-record-items">
-                            <?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
-                            <?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
-                        </ul>
-                        <div class="lv-footer"></div>
-                    </div>
-                </div>
-                <div class="card text-center">
-                    <div class="card-body card-padding">
-                        <a class="load-more" href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
+                    <div class="card text-center">
+                        <div class="card-body card-padding">
+                            <a class="load-more" href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
+                        </div>
                     </div>
                 </div>
             </div>

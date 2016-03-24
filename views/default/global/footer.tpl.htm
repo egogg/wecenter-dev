@@ -1,23 +1,18 @@
 <footer id="footer" class="clearfix">
-	<div class="footer-wrap">
-		<div class="logo pull-left">
-			
-		</div>
-		<ul class="f-menu">
-			<li><a href="#">商务合作</a></li>
-			<li><a href="#">意见反馈</a></li>
-			<li class="hidden-xs"><a href="#">关于我们</a></li>
-			<li><a href="#">联系我们</a></li>
-			<li><a href="#">版权申明</a></li>	
-		</ul>
-		    
-		<div class="copyright m-t-5 m-b-20">
-			<?php if(get_setting('icp_beian')){ ?>
-		    	<span class="hidden-xs"><?php echo get_setting('icp_beian'); ?> <em>/</em> </span>
-		    <?php } ?>
-	    	<span>Copyright © <?php echo date('Y'); ?> 脑壳网</span>
-	    </div>
-	</div>
+	<ul class="f-menu">
+		<li><a href="#">商务合作</a></li>
+		<li><a href="#">意见反馈</a></li>
+		<li class="hidden-xs"><a href="#">关于我们</a></li>
+		<li><a href="#">联系我们</a></li>
+		<li><a href="#">版权申明</a></li>	
+	</ul>
+	    
+	<div class="copyright m-t-10">
+		<?php if(get_setting('icp_beian')){ ?>
+	    	<span class="hidden-xs"><?php echo get_setting('icp_beian'); ?> <em>/</em> </span>
+	    <?php } ?>
+    	<span>Copyright © <?php echo date('Y'); ?> 脑壳网</span>
+    </div>
 </footer>
 
 <?php echo get_setting('statistic_code'); ?>

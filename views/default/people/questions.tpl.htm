@@ -3,85 +3,83 @@
 <section id="main">
     <section id="content">
         <div class="container">
-            <div class="col-sm-3 hidden-xs">
-                <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
-            </div>
-            
-            <div class="col-sm-9">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <?php if($this->current_menu == 'questions_answered') { ?>
-                                        <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
-                                    <?php } else if ($this->current_menu == 'questions_comments') { ?>
-                                        <i class="md md-comment"></i> 讨论 （<?php echo $this->user['answer_count']; ?>） 
-                                    <?php } else if ($this->current_menu == 'questions_failed') { ?>
-                                        <i class="md md-assignment"></i> 错题 （<?php echo $this->user_failed_question_count; ?>）
-                                    <?php } else if ($this->current_menu == 'questions_publish') { ?>
-                                        <i class="md md-create"></i> 出题 （<?php echo $this->user['question_count']; ?>）
-                                    <?php } else { ?>
-                                        <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
-                                    <?php } ?>
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/<?php echo $this->user['url_token']; ?>"><i class="md md-chevron-left c-lightblue"></i>返回</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <?php if($this->current_menu == 'questions_answered') { ?>
-                                <div class="listview">
-                                    <div class="lv-body" id="user-questions-answered-list">
-                                        <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
-                                        <?php TPL::output('block/question_list_lite'); ?>
-                                    </div>
-                                    <div class="lv-footer"></div>
-                                </div>
-                            <?php } else if ($this->current_menu == 'questions_comments') { ?>
-                                <div class="listview">
-                                    <div class="lv-body" id="user-questions-comment-list">
-                                        <?php TPL::assign('comments', $this->user_answer_list); ?>
-                                        <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>  
-                                    </div>
-                                    <div class="lv-footer"></div>
-                                </div>
-                            <?php } else if ($this->current_menu == 'questions_failed') { ?>
-                                <div class="listview">
-                                    <div class="lv-body" id="user-questions-failed-list">
-                                        <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
-                                        <?php TPL::output('block/question_list_lite'); ?>
-                                    </div>
-                                    <div class="lv-footer"></div>
-                                </div>
-                            <?php } else if ($this->current_menu == 'questions_publish') { ?>
-                                <div class="listview">
-                                    <div class="lv-body" id="user-questions-publish-list">
-                                        <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
-                                        <?php TPL::output('block/question_list_lite'); ?>
-                                    </div>
-                                    <div class="lv-footer"></div>
-                                </div>
-                            <?php } else { ?>
-                                <div class="listview">
-                                    <div class="lv-body" id="user-questions-answered-list">
-                                        <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
-                                        <?php TPL::output('block/question_list_lite'); ?>
-                                    </div>
-                                    <div class="lv-footer"></div>
-                                </div>
-                            <?php } ?>
+            <div class="row">
+                <div class="col-sm-3 hidden-xs">
+                    <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
+                </div>
+                
+                <div class="col-sm-9">
+                   <div class="card">
+                        <div class="card-header card-padding">
+                            <h2>
+                                <?php if($this->current_menu == 'questions_answered') { ?>
+                                    <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
+                                <?php } else if ($this->current_menu == 'questions_comments') { ?>
+                                    <i class="md md-comment"></i> 讨论 （<?php echo $this->user['answer_count']; ?>） 
+                                <?php } else if ($this->current_menu == 'questions_failed') { ?>
+                                    <i class="md md-assignment"></i> 错题 （<?php echo $this->user_failed_question_count; ?>）
+                                <?php } else if ($this->current_menu == 'questions_publish') { ?>
+                                    <i class="md md-create"></i> 出题 （<?php echo $this->user['question_count']; ?>）
+                                <?php } else { ?>
+                                    <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
+                                <?php } ?>
+                            </h2>
+                            <ul class="actions">
+                                <li class="action-item-link">
+                                   <a href="people/<?php echo $this->user['url_token']; ?>"><i class="md md-chevron-left c-lightblue"></i>返回</a>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="card text-center">
-                            <div class="card-body card-padding">
-                                <a href="javascript:void(0);" id="<?php if($this->current_menu == 'questions_answered') { ?>load-more-user-questions-answered<?php } else if($this->current_menu == 'questions_comments') { ?>load-more-user-questions-comments<?php } else if($this->current_menu == 'questions_failed') { ?>load-more-user-questions-failed<?php } else if($this->current_menu == 'questions_publish') { ?>load-more-user-questions-publish<?php } else { ?>load-more-user-questions-publish<?php } ?>" auto-load="false" data-page="1"><i class="md md-refresh"></i> 加载更多</a>
+
+                        <?php if($this->current_menu == 'questions_answered') { ?>
+                            <div class="listview">
+                                <div class="lv-body" id="user-questions-answered-list">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
                             </div>
+                        <?php } else if ($this->current_menu == 'questions_comments') { ?>
+                            <div class="listview">
+                                <div class="lv-body" id="user-questions-comment-list">
+                                    <?php TPL::assign('comments', $this->user_answer_list); ?>
+                                    <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>  
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>
+                        <?php } else if ($this->current_menu == 'questions_failed') { ?>
+                            <div class="listview">
+                                <div class="lv-body" id="user-questions-failed-list">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>
+                        <?php } else if ($this->current_menu == 'questions_publish') { ?>
+                            <div class="listview">
+                                <div class="lv-body" id="user-questions-publish-list">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>
+                        <?php } else { ?>
+                            <div class="listview">
+                                <div class="lv-body" id="user-questions-answered-list">
+                                    <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="card text-center">
+                        <div class="card-body card-padding">
+                            <a href="javascript:void(0);" id="<?php if($this->current_menu == 'questions_answered') { ?>load-more-user-questions-answered<?php } else if($this->current_menu == 'questions_comments') { ?>load-more-user-questions-comments<?php } else if($this->current_menu == 'questions_failed') { ?>load-more-user-questions-failed<?php } else if($this->current_menu == 'questions_publish') { ?>load-more-user-questions-publish<?php } else { ?>load-more-user-questions-publish<?php } ?>" auto-load="false" data-page="1"><i class="md md-refresh"></i> 加载更多</a>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </section>
 </section>

@@ -3,41 +3,43 @@
 <section id="main">
     <section id="content">
         <div class="container">
-            <div class="col-sm-3">
-                <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
-            </div>
-            <div class="col-sm-9">
-                <div class="card clearfix">
-                    <div class="card-header">
-                        <h2 class="user-center-header">
-                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
-                                <i class="md md-notifications"></i> 我的消息 
-                                <i class="caret visible-xs-inline-block"></i>
-                            </button>
-                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
-                        </h2>
-                        <ul class="actions">
-                            <li data-toggle="tooltip" data-original-title="消息设置" data-placement="bottom">
-                                <a href="account/setting/privacy/#!notifications">
-                                    <i class="md md-settings"></i>
-                                </a>
-                            </li>
-                            <li data-toggle="tooltip" data-original-title="全部已读" data-placement="bottom">
-                                <a href="javascript:;" onclick="AWS.Message.read_notification(true, 0, true);">
-                                    <i class="md md-done-all"></i>
-                                </a>
-                            </li>
-                        </ul>                           
-                    </div>
-                    <div class="listview">
-                        <div class="lv-body" id="notifications_list">
-                        </div>
-                        <div class="lv-footer"></div>
-                    </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
                 </div>
-                <div class="card text-center">
-                    <div class="card-body card-padding">
-                        <a href="javascript:void(0);" id="notifications_more"><i class="md md-refresh"></i> 加载更多</a>
+                <div class="col-sm-9">
+                    <div class="card clearfix">
+                        <div class="card-header">
+                            <h2 class="user-center-header">
+                                <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="md md-notifications"></i> 我的消息 
+                                    <i class="caret visible-xs-inline-block"></i>
+                                </button>
+                                <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                            </h2>
+                            <ul class="actions">
+                                <li data-toggle="tooltip" data-original-title="消息设置" data-placement="bottom">
+                                    <a href="account/setting/privacy/#!notifications">
+                                        <i class="md md-settings"></i>
+                                    </a>
+                                </li>
+                                <li data-toggle="tooltip" data-original-title="全部已读" data-placement="bottom">
+                                    <a href="javascript:;" onclick="AWS.Message.read_notification(true, 0, true);">
+                                        <i class="md md-done-all"></i>
+                                    </a>
+                                </li>
+                            </ul>                           
+                        </div>
+                        <div class="listview">
+                            <div class="lv-body" id="notifications_list">
+                            </div>
+                            <div class="lv-footer"></div>
+                        </div>
+                    </div>
+                    <div class="card text-center">
+                        <div class="card-body card-padding">
+                            <a href="javascript:void(0);" id="notifications_more"><i class="md md-refresh"></i> 加载更多</a>
+                        </div>
                     </div>
                 </div>
             </div>

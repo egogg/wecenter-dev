@@ -53,10 +53,10 @@
 					</ul>
                 </div>
 				<div class="navbar-user hidden-xs">
-		            <ul class="navbar-user-actions">
+		            <ul class="navbar-user-actions clearfix">
 		            	<!-- 登陆&注册栏 -->
 						<?php if ($this->user_id) { ?>
-							<li class="dropdown navbar-user-avatar">
+							<li class="dropdown">
 								<a href="#" data-toggle="dropdown" aria-expanded="false">
 									<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?>" />
 									<span class="caret"></span>

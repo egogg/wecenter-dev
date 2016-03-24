@@ -3,163 +3,165 @@
 <section id="main">
     <section id="content">
         <div class="container">
-            <div class="col-sm-3">
-                <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
-            </div>
-                
-            <div class="col-sm-9">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <i class="md md-add-to-photos"></i> 关注的专题 （<?php echo $this->user['topic_focus_count']; ?>）
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-topics">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body card-padding p-t-0">
-                                <div class="topic-square-lite clearfix">
-                                    <?php if ($this->focus_topics) { ?>
-                                        <?php foreach ($this->focus_topics AS $key => $val) { ?>
-                                            <div class="col-xs-3">
-                                                <a class="" href="topic/<?php echo $val['topic_id'];?>"><img class="img-responsive" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
-                                                    <div class="topic-title">
-                                                        <?php echo $val['topic_title'];?>
-                                                    </div>
-                                                </a>
-                                            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <?php TPL::output('block/user_homepage_menu.tpl.htm'); ?>
+                </div>
+                    
+                <div class="col-sm-9">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-add-to-photos"></i> 关注的专题 （<?php echo $this->user['topic_focus_count']; ?>）
+                                    </h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-topics">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body card-padding p-t-0">
+                                    <div class="topic-square-lite clearfix">
+                                        <?php if ($this->focus_topics) { ?>
+                                            <?php foreach ($this->focus_topics AS $key => $val) { ?>
+                                                <div class="col-xs-3">
+                                                    <a class="" href="topic/<?php echo $val['topic_id'];?>"><img class="img-responsive" alt="" src="<?php echo get_topic_pic_url('max', $val['topic_pic']); ?>" />
+                                                        <div class="topic-title">
+                                                            <?php echo $val['topic_title'];?>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            <?php } ?>
                                         <?php } ?>
-                                    <?php } ?>
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <i class="md md-person-add"></i> 关注 <?php echo $this->user['friend_count']; ?> 人
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-friends">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body card-padding p-t-0">
-                                <?php if ($this->friends_list) { ?>
-                                    <div class="follow-user-list">
-                                        <?php TPL::assign('users', $this->friends_list); ?>
-                                        <?php TPL::output('block/user_list_square'); ?>
                                     </div> 
-                                <?php } ?>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-person-add"></i> 关注 <?php echo $this->user['friend_count']; ?> 人
+                                    </h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-friends">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body card-padding p-t-0">
+                                    <?php if ($this->friends_list) { ?>
+                                        <div class="follow-user-list">
+                                            <?php TPL::assign('users', $this->friends_list); ?>
+                                            <?php TPL::output('block/user_list_square'); ?>
+                                        </div> 
+                                    <?php } ?>
+                                </div>
+                            </div>
 
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-answered">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="listview">
-                                <div class="lv-body">
-                                    <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
-                                    <?php TPL::output('block/question_list_lite'); ?>
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-assignment-turned-in"></i> 答题 （<?php echo $this->user_answered_question_count; ?>）
+                                    </h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-answered">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="lv-footer"></div>
-                            </div>
-                        </div>
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <i class="md md-comment"></i> 讨论 （<?php echo $this->user['answer_count']; ?>）
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-comments">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="listview">
-                                <div class="lv-body">
-                                    <?php TPL::assign('comments', $this->user_answer_list); ?>
-                                    <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>
-                                </div>
-                                <div class="lv-footer"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <i class="md md-people"></i> 被 <?php echo $this->user['fans_count']; ?> 人关注
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-fans">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="card-body card-padding p-t-0">
-                                <?php if ($this->fans_list) { ?>
-                                    <div class="follow-user-list">
-                                        <?php TPL::assign('users', $this->fans_list); ?>
-                                        <?php TPL::output('block/user_list_square'); ?>
+                                <div class="listview">
+                                    <div class="lv-body">
+                                        <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
+                                        <?php TPL::output('block/question_list_lite'); ?>
                                     </div>
-                                <?php } ?>
+                                    <div class="lv-footer"></div>
+                                </div>
+                            </div>
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-comment"></i> 讨论 （<?php echo $this->user['answer_count']; ?>）
+                                    </h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-comments">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="listview">
+                                    <div class="lv-body">
+                                        <?php TPL::assign('comments', $this->user_answer_list); ?>
+                                        <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>
+                                    </div>
+                                    <div class="lv-footer"></div>
+                                </div>
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-people"></i> 被 <?php echo $this->user['fans_count']; ?> 人关注
+                                    </h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/following/id-<?php echo $this->user['uid']; ?>__type-fans">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body card-padding p-t-0">
+                                    <?php if ($this->fans_list) { ?>
+                                        <div class="follow-user-list">
+                                            <?php TPL::assign('users', $this->fans_list); ?>
+                                            <?php TPL::output('block/user_list_square'); ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
 
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2>
-                                    <i class="md md-assignment"></i> 错题 （<?php echo $this->user_failed_question_count; ?>）
-                                </h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-failed">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="listview">
-                                <div class="lv-body">
-                                    <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
-                                    <?php TPL::output('block/question_list_lite'); ?>
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2>
+                                        <i class="md md-assignment"></i> 错题 （<?php echo $this->user_failed_question_count; ?>）
+                                    </h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-failed">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="lv-footer"></div>
-                            </div>    
-                        </div>
-                        <div class="card hidden-xs">
-                            <div class="card-header card-padding">
-                                <h2><i class="md md-create"></i> 出题 （<?php echo $this->user['question_count']; ?>）</h2>
-                                <ul class="actions">
-                                    <li class="action-item-link">
-                                       <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-publish">更多<i class="md md-chevron-right c-lightblue"></i></a>
-                                    </li>
-                                </ul>
+                                <div class="listview">
+                                    <div class="lv-body">
+                                        <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
+                                        <?php TPL::output('block/question_list_lite'); ?>
+                                    </div>
+                                    <div class="lv-footer"></div>
+                                </div>    
                             </div>
-                            <div class="listview">
-                                <div class="lv-body">
-                                    <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
-                                    <?php TPL::output('block/question_list_lite'); ?>
+                            <div class="card hidden-xs">
+                                <div class="card-header card-padding">
+                                    <h2><i class="md md-create"></i> 出题 （<?php echo $this->user['question_count']; ?>）</h2>
+                                    <ul class="actions">
+                                        <li class="action-item-link">
+                                           <a href="people/questions/id-<?php echo $this->user['uid']; ?>__type-publish">更多<i class="md md-chevron-right c-lightblue"></i></a>
+                                        </li>
+                                    </ul>
                                 </div>
-                                <div class="lv-footer"></div>
-                            </div>   
+                                <div class="listview">
+                                    <div class="lv-body">
+                                        <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
+                                        <?php TPL::output('block/question_list_lite'); ?>
+                                    </div>
+                                    <div class="lv-footer"></div>
+                                </div>   
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> 
         </div>
     </section>
 </section>

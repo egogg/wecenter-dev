@@ -4,8 +4,7 @@
 	<section id="content">
 		<div class="container">
 			<div class="row">
-				<!-- 热门推荐 -->
-				
+				<!-- 热门推荐 -->				
 				<div class="article-hot hidden-xs">
 					<?php $hot_article_colors = array('bgm-teal', 'bgm-lime', 'bgm-amber', 'bgm-bluegray'); ?>
 					<?php foreach($this->hot_articles AS $key => $val) { ?>
@@ -27,7 +26,6 @@
 			
 			<div class="row">
 				<!-- 文章列表 -->
-
 				<?php if ($this->article_list) { ?>
 					<?php foreach ($this->article_list AS $key => $val) { ?>
 					<div class="col-sm-3">

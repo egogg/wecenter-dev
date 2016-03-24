@@ -3,39 +3,41 @@
 <section id="main">
     <section id="content">
         <div class="container">
-            <div class="col-sm-3">
-                <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
-            </div>
-            <div class="col-sm-9">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="user-center-header">
-                            <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
-                                <i class="md md-attach-money"></i> 我的积分
-                                <i class="caret visible-xs-inline-block"></i>
-                            </button>
-                            <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
-                        </h2>
-                    </div>
-                    <div class="card-body card-padding p-t-0 table-responsive">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>时间</th>
-                                    <th>积分</th>
-                                    <th>余额</th>
-                                    <th>描述</th>
-                                    <th width="30%">相关信息</th>
-                                </tr>
-                            </thead>
-                            <tbody id="integral_list">
-                            </tbody>
-                        </table>
-                    </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
                 </div>
-                <div class="card text-center">
-                    <div class="card-body card-padding">
-                        <a href="javascript:void(0);" id="integral_more"><i class="md md-refresh"></i> 加载更多</a>
+                <div class="col-sm-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="user-center-header">
+                                <button type="button" class="btn btn-link" data-toggle="dropdown" aria-expanded="true">
+                                    <i class="md md-attach-money"></i> 我的积分
+                                    <i class="caret visible-xs-inline-block"></i>
+                                </button>
+                                <?php TPL::output('block/m_user_center_menu.tpl.htm'); ?>
+                            </h2>
+                        </div>
+                        <div class="card-body card-padding p-t-0 table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>时间</th>
+                                        <th>积分</th>
+                                        <th>余额</th>
+                                        <th>描述</th>
+                                        <th width="30%">相关信息</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="integral_list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card text-center">
+                        <div class="card-body card-padding">
+                            <a href="javascript:void(0);" id="integral_more"><i class="md md-refresh"></i> 加载更多</a>
+                        </div>
                     </div>
                 </div>
             </div>
