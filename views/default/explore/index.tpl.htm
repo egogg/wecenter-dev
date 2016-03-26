@@ -5,6 +5,12 @@
 <section id="main">
    <section id="content">
         <div class="container">
+            <!-- 网站公告 -->
+            
+            <?php TPL::output("block/site_announce.tpl.htm"); ?>
+
+            <!-- 首页幻灯片 -->
+            
             <div class="row top-slider hidden-xs">
                 <div class="col-sm-8">
                     <div class="row">
@@ -94,30 +100,10 @@
                                         </a>
                                     </div>      
                                 </li>
-
-                                <!-- <li class="explore-feature-item bgm-orange">
-                                    <div class="clearfix">
-                                        <a class="c-white" href="#">
-                                            <div class="card">
-                                                <div class="card-body card-padding">
-                                                    <div class="media">
-                                                        <div class="pull-left">
-                                                            <i class="md md-access-alarm feature-item-icon countdown"></i>
-                                                        </div>
-                                                        <div class="media-body">
-                                                            <strong class="d-block">限时答题</strong>
-                                                            <small>极限脑力训练</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>      
-                                </li> -->
-
+                                
                                 <li class="explore-feature-item bgm-deeporange">
                                     <div class="clearfix">
-                                        <a class="c-white" href="#">
+                                        <a class="c-white" href="<?php if($this->user_id) { ?>people/questions/id-<?php echo $this->user_id; ?>__type-failed <?php } else { ?>account/login<?php } ?>">
                                             <div class="card">
                                                 <div class="card-body card-padding ">
                                                     <div class="media">

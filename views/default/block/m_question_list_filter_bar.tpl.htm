@@ -1,10 +1,10 @@
 <div id="m-question-list-heading-wrap" class="visible-xs">
 	<div class="m-question-list-heading" id="m-question-list-heading">
 		<div class="card">
-			<div class="card-body card-padding">
+			<div class="card-body card-padding p-l-10 p-r-10">
 				<ul class="m-question-filter clearfix">
 					<li>
-						<a id="m-question-filter" href="#m-question-filter-dlg" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-toggle="modal"><i class="md md-filter-list"></i> 筛选 <i class="caret"></i></a>
+						<a id="m-question-filter" href="#m-question-filter-dlg" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-toggle="modal"><i class="md md-filter-list"></i> 筛选 <span class="caret"></span></a>
 					</li>
 					<li class="dropdown">
 						<a class="m-question-sort-type" id="m-question-sort-type" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-sort-type="<?php echo $this->filter_info['sort_type']; ?>" href="javascript:void(0);" data-toggle="dropdown" aria-expanded="true">
@@ -23,7 +23,7 @@
 				            <?php } else { ?>
 				                <i class="md md-access-time"></i> 最新发布
 				            <?php } ?>
-							<i class="caret"></i>
+							<span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu m-question-sort-items">
 				            <li><a href="javascript:void(0);" data-sort-type=""><i class="md md-access-time"></i> 最新发布</a></li>
@@ -46,7 +46,7 @@
 				            <?php } else { ?>
 				                不限记录
 				            <?php } ?>
-				            <i class="caret"></i>
+				            <span class="caret"></span>
 				        </a>
 				        <ul class="dropdown-menu pull-right m-question-urecord-filter-items">
 				            <li><a href="javascript:void(0);" data-filter-type="">不限纪录</a></li>

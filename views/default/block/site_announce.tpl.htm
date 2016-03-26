@@ -1,0 +1,20 @@
+<?php if (get_setting('site_announce')) { ?>
+	<?php if ($_COOKIE['announce_close'] != substr(md5(get_setting('site_announce')), 0, 10)) { ?>
+		<script type="text/javascript">
+		var ANNOUNCE_CLOSE = '<?php echo substr(md5(get_setting('site_announce')), 0, 10); ?>';
+
+		$(document).ready(function()
+		{
+			if (ANNOUNCE_CLOSE != $.cookie('announce_close'))
+			{
+				$('#site-announce').show();
+			}
+		});
+		</script>
+		
+		<div class="alert alert-warning alert-dismissible" role="alert" id="site-announce" >
+            <button type="button" class="close" onclick="$('#site-announce').fadeOut(); $.cookie('announce_close', ANNOUNCE_CLOSE, { expires: 30 });" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            公告：<?php echo get_setting('site_announce'); ?>
+        </div>
+	<?php } ?>
+<?php } ?>

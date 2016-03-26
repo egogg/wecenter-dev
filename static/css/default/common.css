@@ -1,12 +1,5 @@
 @charset "UTF-8";
 
-header {
-	/*position: absolute;
-	top: 0;*/
-	width: 100%;
-	background: #fff;
-}
-
 header a {
 	color: #03A9F4;
 }
@@ -193,7 +186,7 @@ header .main-nav ul li {
 header .main-nav ul li a {
     display: block;
     padding: 11px 18px;
-	color: #eee;
+	color: #e6e6e6;
 }
 
 header .main-nav ul li a:hover {
@@ -202,6 +195,7 @@ header .main-nav ul li a:hover {
 
 header .main-nav ul li a.active {
 	background: #03A9F4;
+	color: #fff;
 }
 
 /*首页幻灯片区域*/
@@ -253,7 +247,7 @@ header .main-nav ul li a.active {
 	padding-left: 0;
 	padding-right: 0;
 	width: 100%;
-	z-index: 500;
+	z-index: 99;
 }
 
 #nav-question-list-header.affix .card {
@@ -317,10 +311,21 @@ header .main-nav ul li a.active {
 	margin-bottom: 0;
 }
 
-.m-question-list-heading .m-question-filter>li {
+.m-question-filter>li {
 	display: inline-block;
 	float: left;
 	padding-right: 15px;
+}
+
+.m-question-filter>li:last-child {
+	padding-right: 0;
+}
+
+.m-question-filter i {
+	font-size: 18px;
+	width: 18px;
+	line-height: 100%;
+    vertical-align: top;
 }
 
 .m-question-list-publish {
@@ -672,6 +677,10 @@ header .main-nav ul li a.active {
 @media screen and (max-width: 991px) {
 	.topic-item .topic-item-add-foucs {
 		right: 18px;
+	}
+
+	header .navbar-slogan {
+		display: none;
 	}
 }
 
@@ -2058,6 +2067,11 @@ li.action-item-link a:hover:before {
 	margin-right: 0;	
 }
 
+.question-list-filter-item i {
+	width: 28px;
+	font-size: 18px;
+}
+
 .user-quiz-status-filter-item {
 	display: inline-block;
 	float: left;
@@ -2208,7 +2222,7 @@ i.dot {
 	float: left;
 	line-height: 30px;
 	margin-right: 10px;
-	font-size: 17px;
+	font-size: 18px;
 	color: #9e9e9e;
 }
 
@@ -2671,7 +2685,7 @@ input.form-control {
 
 .fixed-side-toolbar {
 	position: fixed;
-    right: 1%;
+    right: 0.5%;
     bottom: 5%;
     border: 1px solid #eee;
     background-color: white;
@@ -3219,11 +3233,6 @@ blockquote {padding: 0 15px;font-size: 14px;color: #777;border-left: 3px solid #
 }
 
 @media (max-width: 767px){
-	.container {
-		width: 100% !important;
-		padding: 0;
-	}
-
 	.main-header .container {
 		padding: 0 10px;
 	}

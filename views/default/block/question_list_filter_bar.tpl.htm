@@ -2,34 +2,33 @@
     <li class="question-list-filter-item sort dropdown">
         <a class="question-list-sort-type" id="question-list-sort-type" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-sort-type="<?php echo $this->filter_info['sort_type']; ?>" href="javascript:void(0);" data-toggle="dropdown" aria-expanded="true">
             <?php if($this->filter_info['sort_type'] == 'update_time') { ?>
-                <i class="md md-access-time"></i> 最新发布 
+                <i class="md md-access-time"></i>最新发布 
             <?php } else if($this->filter_info['sort_type'] == 'quiz_count') { ?>
-                <i class="md md-equalizer"></i> 最多答题 
+                <i class="md md-equalizer"></i>最多答题 
             <?php } else if($this->filter_info['sort_type'] == 'quiz_count_failed') { ?>
-                <i class="md md-close"></i> 最多失败 
+                <i class="md md-close"></i>最多失败 
             <?php } else if($this->filter_info['sort_type'] == 'answer_count') { ?>
-                <i class="md md-comment"></i> 最多讨论 
+                <i class="md md-comment"></i>最多讨论 
             <?php } else if($this->filter_info['sort_type'] == 'success_ratio_up') { ?>
-                <i class="md md-trending-up"></i> 低正确率 
+                <i class="md md-trending-up"></i>低正确率 
             <?php } else if($this->filter_info['sort_type'] == 'success_ratio_down') { ?>
-                <i class="md md-trending-down"></i> 高正确率 
+                <i class="md md-trending-down"></i>高正确率 
             <?php } else { ?>
-                <i class="md md-access-time"></i> 最新发布
+                <i class="md md-access-time"></i>最新发布
             <?php } ?>
-            <i class="caret"></i>
+            <span class="caret"></span>
         </a>
-        <ul class="dropdown-menu">
-            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type=""><i class="md md-access-time"></i> 最新发布</a></li>
-            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="quiz_count"><i class="md md-equalizer"></i> 最多答题</a></li>
-            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="quiz_count_failed"><i class="md md-close"></i> 最多失败</a></li>
-            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="answer_count"><i class="md md-comment"></i> 最多讨论</a></li>
-            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="success_ratio_up"><i class="md md-trending-up"></i> 低正确率</a></li>
-            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="success_ratio_down"><i class="md md-trending-down"></i> 高正确率</a></li>
+        <ul class="dropdown-menu dm-icon">
+            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type=""><i class="md md-access-time"></i>最新发布</a></li>
+            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="quiz_count"><i class="md md-equalizer"></i>最多答题</a></li>
+            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="quiz_count_failed"><i class="md md-close"></i>最多失败</a></li>
+            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="answer_count"><i class="md md-comment"></i>最多讨论</a></li>
+            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="success_ratio_up"><i class="md md-trending-up"></i>低正确率</a></li>
+            <li class="question-list-sort-item"><a href="javascript:void(0);" data-sort-type="success_ratio_down"><i class="md md-trending-down"></i>高正确率</a></li>
         </ul>
     </li>
     <li class="question-list-filter-item urecord dropdown">
-        <i class="md md-assignment-ind"></i> 
-        <a href="javascript:void(0);" id="question-list-filter-urecord" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-filter-type="<?php echo $this->filter_info['urecord']; ?>" data-toggle="dropdown" aria-expanded="true">
+        <i class="md md-assignment-ind"></i><a href="javascript:void(0);" id="question-list-filter-urecord" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-filter-type="<?php echo $this->filter_info['urecord']; ?>" data-toggle="dropdown" aria-expanded="true">
             <?php if($this->filter_info['urecord'] == 'none') { ?>
                 不限记录
             <?php } else if($this->filter_info['urecord'] == 'answered') { ?>
@@ -39,7 +38,7 @@
             <?php } else { ?>
                 不限记录
             <?php } ?>
-            <i class="caret"></i>
+            <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
             <li class="question-filter-urecord"><a href="javascript:void(0);" data-filter-type="">不限纪录</a></li>
@@ -48,8 +47,7 @@
         </ul>
     </li>
     <li class="question-list-filter-item date dropdown hidden-xs">
-        <i class="md md-today"></i>
-        <a href="javascript:void(0);" class="question-list-filter-date" id="question-list-filter-date" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-filter-type="<?php echo $this->filter_info['date']; ?>" data-toggle="dropdown" aria-expanded="true"> 
+        <i class="md md-today"></i><a href="javascript:void(0);" class="question-list-filter-date" id="question-list-filter-date" data-url-base="<?php echo $this->filter_info['url_base']; ?>" data-filter-type="<?php echo $this->filter_info['date']; ?>" data-toggle="dropdown" aria-expanded="true"> 
             <?php if($this->filter_info['date'] == 'none') { ?>
                 不限日期
             <?php } else if($this->filter_info['date'] == 'week') { ?>
@@ -61,7 +59,7 @@
             <?php } else { ?>
                 不限日期
             <?php } ?>
-            <i class="caret"></i>
+            <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
             <li class="question-filter-date"><a href="javascript:void(0);" data-filter-type="">不限日期</a></li>

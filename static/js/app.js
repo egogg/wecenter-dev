@@ -305,22 +305,27 @@ $(document).ready(function ()
     // 排序bar sticky
 
     var navBar = $('#nav-question-list-header');
+    var header = $('#header');
     if(navBar.length != 0)
     {
-        var navBarPadding = navBar.offset().left + 15;
+        // var navBarPadding = navBar.offset().left + 15;
         
         $('#nav-question-list-header-wrap').height(navBar.height());
         
         navBar.on('affixed.bs.affix', function () {
-            $('#nav-question-list-header > .card').css({"padding-left": navBarPadding, "padding-right": navBarPadding});
+            // $('#nav-question-list-header > .card').css({"padding-left": navBarPadding, "padding-right": navBarPadding});
+            $('#nav-question-list-header .card-body').addClass('container p-l-0');
+            header.css({"box-shadow": "none"});
         });
 
         navBar.on('affixed-top.bs.affix', function() {
-            $('#nav-question-list-header > .card').css({"padding-left": 0, "padding-right": 0});
+            // $('#nav-question-list-header > .card').css({"padding-left": 0, "padding-right": 0});
+            $('#nav-question-list-header .card-body').removeClass('container p-l-0');
+            // header.css({"box-shadow": "0px 1px 4px rgba(0, 0, 0, 0.3)"});
         });
 
         navBar.affix({
-            offset: { top: navBar.offset().top - 120}
+            offset: { top: navBar.offset().top - header.height()}
         });
     }
 
