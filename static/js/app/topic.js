@@ -20,11 +20,9 @@ $(function()
 		$.get(G_BASE_URL + '/topic/ajax/get_focus_users/topic_id-' + TOPIC_ID, function (data) {
 			if (data != null)
 			{
-				$.each(data, function (i, e) {		
-					$('#focus_users').append('<a class="user-tag user-img" data-id="' + e['uid'] + '" href="' + e['url'] + '"><img class="img-circle" src="' + e['avatar_file'] + '" alt="' + e['user_name'] + '" /></a> ');
-				});
+				$('#focus_users').append(data);
 			}
-		}, 'json');
+		}, 'html');
 	}
 	
 	//问题添加评论

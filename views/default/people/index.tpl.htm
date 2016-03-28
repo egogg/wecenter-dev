@@ -53,10 +53,10 @@
                                 </div>
                                 <div class="card-body card-padding p-t-0">
                                     <?php if ($this->friends_list) { ?>
-                                        <div class="follow-user-list">
+                                        <ul class="user-list-square">
                                             <?php TPL::assign('users', $this->friends_list); ?>
-                                            <?php TPL::output('block/user_list_square'); ?>
-                                        </div> 
+                                            <?php TPL::output('block/user_list_square'); ?> 
+                                        </ul>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -114,10 +114,10 @@
                                 </div>
                                 <div class="card-body card-padding p-t-0">
                                     <?php if ($this->fans_list) { ?>
-                                        <div class="follow-user-list">
+                                        <ul class="user-list-square">
                                             <?php TPL::assign('users', $this->fans_list); ?>
                                             <?php TPL::output('block/user_list_square'); ?>
-                                        </div>
+                                        </ul>
                                     <?php } ?>
                                 </div>
                             </div>

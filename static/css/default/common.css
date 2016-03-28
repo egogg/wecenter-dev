@@ -186,10 +186,11 @@ header .main-nav ul li {
 header .main-nav ul li a {
     display: block;
     padding: 11px 18px;
-	color: #e6e6e6;
+    color: #fff;
 }
 
 header .main-nav ul li a:hover {
+	background: #03A9F4;
 	color: #fff;
 }
 
@@ -502,6 +503,17 @@ header .main-nav ul li a.active {
 	padding: 0 !important;
 }
 
+.user-list-square li {
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
+.user-list-square li img {
+	width: 35px;
+	height: 35px;
+}
+
 /*移动版筛选列表*/
 
 .m-question-filter-list {
@@ -550,7 +562,7 @@ header .main-nav ul li a.active {
 
 .sidebar-topic-title {
 	position: absolute;
-	top: 101px;
+	top: 104px;
     z-index: 1;
     background:rgba(0, 0, 0, 0.5);
     font-size: 12px;
@@ -777,18 +789,6 @@ header .main-nav ul li a.active {
     height: 1px;
     content: "";
     background-color: #eee;
-}
-
-.follow-user-list a {
-	margin-right: 5px;
-    margin-bottom: 5px;
-    display: inline-block;
-}
-
-.follow-user-list img {
-	height: 32px !important;
-    width: 32px !important;
-    border-radius: 50%;
 }
 
 /*文章列表*/
@@ -1437,18 +1437,6 @@ li.user-quiz-record-item.timeout:before {
 .article-action-agree a.active {
 	color: #fff;
 	background-color: #607D8B;
-}
-
-.article-agree-users a {
-	margin-right: 5px;
-	margin-bottom: 5px;
-	display: inline-block;
-}
-
-.article-agree-users a img {
-	height: 32px !important;
-	width: 32px !important;
-	border-radius: 50%;
 }
 
 .agree-user-message {

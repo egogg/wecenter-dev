@@ -42,7 +42,12 @@ class ajax extends AWS_CONTROLLER
 
 	public function get_focus_users_action()
 	{
-		H::ajax_json_output($this->model('topic')->get_focus_users_by_topic($_GET['topic_id'], 18));
+		$user_list = $this->model('topic')->get_focus_users_by_topic($_GET['topic_id'], 18);
+		if($user_list)
+		{
+			TPL::assign('users', $user_list);
+			TPL::output('block/user_list_square');
+		}
 	}
 
 	public function question_list_action()

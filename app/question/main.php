@@ -532,10 +532,8 @@ class main extends AWS_CONTROLLER
 		}
 
 		//边栏热门用户
-		if (TPL::is_output('block/sidebar_hot_users.tpl.htm', 'question/square'))
-		{
-			TPL::assign('sidebar_hot_users', $this->model('module')->sidebar_hot_users($this->user_id, 10));
-		}
+
+		TPL::assign('sidebar_hot_users', $this->model('module')->sidebar_hot_users($this->user_id, 10));
 
 		//边栏热门话题
 		if (TPL::is_output('block/sidebar_hot_topics.tpl.htm', 'question/square'))

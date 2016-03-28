@@ -93,11 +93,10 @@
                                
                                <div class="article-agree-users m-t-10">
                                    <div class="follow-user-header">Ta们同意该文章的观点</div>
-                                   <div class="follow-user-list">
-                                        <?php foreach ($this->article_info['vote_users'] AS $key => $val) { ?>
-                                            <a href="people/<?php echo $val['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $val['uid']; ?>"><img alt="<?php echo $val['user_name']; ?>" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" /></a>
-                                        <?php } ?>
-                                   </div>
+                                   <ul class="user-list-square">
+                                        <?php TPL::assign('users', $this->article_info['vote_users']); ?>
+                                        <?php TPL::output('block/user_list_square'); ?>
+                                   </ul>
                                </div>
                             </div>
                         </div>

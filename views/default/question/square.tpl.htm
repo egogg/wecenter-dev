@@ -72,20 +72,24 @@
 			        </div>
 					
 					<!-- 热门用户 -->	
-
-			        <div class="card sidebar-hot-users">
-						<div class="card-header">
-			                <h2>热门用户</h2>
-			                <ul class="actions">
-			                    <li>
-			                       <a href="people/"><i class="md md-chevron-right"></i></a>
-			                    </li>
-			                </ul>
-			            </div>
-						<div class="card-body card-padding">
-							<?php TPL::output('block/sidebar_hot_users.tpl.htm'); ?>
-						</div>
-			        </div>
+					<?php if($this->sidebar_hot_users) { ?>
+				        <div class="card sidebar-hot-users">
+							<div class="card-header">
+				                <h2>热门用户</h2>
+				                <ul class="actions">
+				                    <li>
+				                       <a href="people/"><i class="md md-chevron-right"></i></a>
+				                    </li>
+				                </ul>
+				            </div>
+							<div class="card-body card-padding">
+								<ul class="user-list-square">
+									<?php TPL::assign('users', $this->sidebar_hot_users); ?>
+									<?php TPL::output('block/user_list_square.tpl.htm'); ?>
+								</ul>
+							</div>
+				        </div>
+				    <?php } ?>
 				</div>
 			</div>
 		</div>

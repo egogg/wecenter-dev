@@ -82,31 +82,9 @@ class ajax extends AWS_CONTROLLER
 	{
 		if ($focus_users_info = $this->model('question')->get_focus_users_by_question($_GET['question_id'], 18))
 		{
-			$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']);
-
-			foreach($focus_users_info as $key => $val)
-			{
-				if ($val['uid'] == $question_info['published_uid'] and $question_info['anonymous'] == 1)
-				{
-					$focus_users[$key] = array(
-						'uid' => 0,
-						'user_name' => AWS_APP::lang()->_t('匿名用户'),
-						'avatar_file' => get_avatar_url(0, 'mid'),
-					);
-				}
-				else
-				{
-					$focus_users[$key] = array(
-						'uid' => $val['uid'],
-						'user_name' => $val['user_name'],
-						'avatar_file' => get_avatar_url($val['uid'], 'mid'),
-						'url' => get_js_url('/people/' . $val['url_token'])
-					);
-				}
-			}
+			TPL::assign('users', $focus_users_info);
+			TPL::output('block/user_list_square');
 		}
-
-		H::ajax_json_output($focus_users);
 	}
 
 	public function save_invite_action()

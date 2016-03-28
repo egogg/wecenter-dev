@@ -145,18 +145,19 @@ $(function()
 	//关注用户列表
 	$.get(G_BASE_URL + '/question/ajax/get_focus_users/question_id-' + QUESTION_ID, function (result) {
 		if (result) {
-			$.each(result, function (i, e) {
-				if (e['uid'])
-				{
-					$('#focus_users').append('<a href="' + e['url'] + '"><img src="' + e['avatar_file'] + '" class="user-tag user-img" data-id="' + e['uid'] + '" alt="' + e['user_name'] + '" /></a> ');
-				}
-				else
-				{
-					$('#focus_users').append('<a href="javascript:;" title="' + _t('匿名用户') + '"><img src="' + e['avatar_file'] + '" alt="' + _t('匿名用户') + '" /></a> ');
-				}
-			});
+			$('#focus_users').append(result);
+			// $.each(result, function (i, e) {
+			// 	if (e['uid'])
+			// 	{
+			// 		$('#focus_users').append('<a href="' + e['url'] + '"><img src="' + e['avatar_file'] + '" class="user-tag user-img" data-id="' + e['uid'] + '" alt="' + e['user_name'] + '" /></a> ');
+			// 	}
+			// 	else
+			// 	{
+			// 		$('#focus_users').append('<a href="javascript:;" title="' + _t('匿名用户') + '"><img src="' + e['avatar_file'] + '" alt="' + _t('匿名用户') + '" /></a> ');
+			// 	}
+			// });
 		}
-	}, 'json');
+	}, 'html');
 
     //邀请回答按钮操作
     $('.aw-question-detail .aw-invite-replay').click(function()
