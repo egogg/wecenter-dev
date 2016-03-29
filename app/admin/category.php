@@ -34,9 +34,10 @@ class category extends AWS_ADMIN_CONTROLLER
 
     public function list_action()
     {
-        TPL::assign('list', json_decode($this->model('system')->build_category_json('question'), true));
+        TPL::assign('list', json_decode($this->model('system')->build_category_json(null), true));
 
-        TPL::assign('category_option', $this->model('system')->build_category_html('question', 0, 0, null, false));
+        TPL::assign('category_option_question', $this->model('system')->build_category_html('question', 0, 0, null, false));
+        TPL::assign('category_option_article', $this->model('system')->build_category_html('article', 0, 0, null, false));
 
         TPL::assign('target_category', $this->model('system')->build_category_html('question', 0, null));
 
@@ -51,7 +52,7 @@ class category extends AWS_ADMIN_CONTROLLER
         }
 
         TPL::assign('category', $category_info);
-        TPL::assign('category_option', $this->model('system')->build_category_html($category_info['type'], 0, $category['parent_id'], null, false));
+        TPL::assign('category_option', $this->model('system')->build_category_html($category_info['type'], 0, $category_info['parent_id'], null, false));
 
         TPL::output('admin/category/edit');
     }

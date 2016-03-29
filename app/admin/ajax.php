@@ -370,6 +370,11 @@ class ajax extends AWS_ADMIN_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请输入分类名称')));
         }
 
+        if (($_POST['category_type']) == '')
+        {
+            H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请选择分类类型')));
+        }
+
         if ($_POST['url_token'])
         {
             if (!preg_match("/^(?!__)[a-zA-Z0-9_]+$/i", $_POST['url_token']))
@@ -394,7 +399,7 @@ class ajax extends AWS_ADMIN_CONTROLLER
         }
         else
         {
-            $category_id = $this->model('category')->add_category('question', $_POST['title'], $_POST['parent_id']);
+            $category_id = $this->model('category')->add_category($_POST['category_type'], $_POST['title'], $_POST['parent_id']);
         }
 
         $category = $this->model('system')->get_category_info($category_id);
