@@ -10,7 +10,7 @@
                             <?php if ($this->parent_topics) { ?>
                                 <ul class="clearfix">
                                     <li>
-                                        <a <?php if (!$_GET['topic_id']) { ?>class="active"<?php } ?> href="topic/"><?php _e('全部专题'); ?></a>
+                                        <a <?php if (!$_GET['topic_id']) { ?>class="active"<?php } ?> href="topic/">全部专题</a>
                                     </li>
                                     <?php foreach ($this->parent_topics AS $key => $val) { ?>
                                         <li class="topic-category-item">

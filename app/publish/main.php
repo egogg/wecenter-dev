@@ -176,7 +176,7 @@ class main extends AWS_CONTROLLER
 		if (get_setting('category_enable') == 'Y')
 		{
 			// TPL::assign('article_category_list', $this->model('system')->build_category_html('question', 0, $article_info['category_id']));
-			TPL::assign('article_category_items', $this->model('system')->fetch_category('question', 0));
+			TPL::assign('article_category_items', $this->model('system')->fetch_category('article', 0));
 		}
 
 		TPL::assign('human_valid', human_valid('question_valid_hour'));

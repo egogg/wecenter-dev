@@ -20,16 +20,16 @@ $(function()
 		var editor = CKEDITOR.replace( 'wmd-input' );
 	}
 
-    if (ATTACH_ACCESS_KEY != '' && $('.aw-upload-box').length)
+    if (ATTACH_ACCESS_KEY != '' && $('.upload-box').length)
     {
     	if (G_ADVANCED_EDITOR_ENABLE == 'Y')
 		{
-	    	var fileupload = new FileUpload('file', '.aw-editor-box .aw-upload-box .btn', '.aw-editor-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-' + PUBLISH_TYPE + '__attach_access_key-' + ATTACH_ACCESS_KEY, {
+	    	var fileupload = new FileUpload('file', '.upload-box .btn', '.upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-' + PUBLISH_TYPE + '__attach_access_key-' + ATTACH_ACCESS_KEY, {
 					'editor' : editor
 				});
 	    }
 	    else {
-	    	var fileupload = new FileUpload('file', '.aw-editor-box .aw-upload-box .btn', '.aw-editor-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-' + PUBLISH_TYPE + '__attach_access_key-' + ATTACH_ACCESS_KEY, {
+	    	var fileupload = new FileUpload('file', '.upload-box .btn', '.upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-' + PUBLISH_TYPE + '__attach_access_key-' + ATTACH_ACCESS_KEY, {
 					'editor' : $('.wmd-input')
 				});
 	    }
@@ -37,7 +37,7 @@ $(function()
 
     if (ITEM_ID && G_UPLOAD_ENABLE == 'Y' && ATTACH_ACCESS_KEY != '')
     {
-        if ($(".aw-upload-box .upload-list").length) {
+        if ($(".upload-box .upload-list").length) {
             $.post(G_BASE_URL + '/publish/ajax/' + PUBLISH_TYPE + '_attach_edit_list/', PUBLISH_TYPE + '_id=' + ITEM_ID, function (data) {
                 if (data['err'] || !data['rsm']['attachs']) {
                     return false;
@@ -52,52 +52,6 @@ $(function()
 
     AWS.Dropdown.bind_dropdown_list($('.aw-mod-publish #question_contents'), 'publish');
 
-    //初始化分类
-	if ($('#category_id').length)
-	{
-		var category_data = '', category_id;
-
-		$.each($('#category_id option').toArray(), function (i, field) {
-			if ($(field).attr('selected') == 'selected')
-			{
-				category_id = $(this).attr('value');
-			}
-			if (i > 0)
-			{
-				if (i > 1)
-				{
-					category_data += ',';
-				}
-
-				category_data += "{'title':'" + $(field).text() + "', 'id':'" + $(field).val() + "'}";
-			}
-		});
-
-		if(category_id == undefined)
-		{
-			category_id = CATEGORY_ID;
-		}
-
-		$('#category_id').val(category_id);
-
-		AWS.Dropdown.set_dropdown_list('.aw-publish-title .dropdown', eval('[' + category_data + ']'), category_id);
-
-		$('.aw-publish-title .dropdown li a').click(function() {
-			$('#category_id').val($(this).attr('data-value'));
-		});
-
-		$.each($('.aw-publish-title .dropdown .aw-dropdown-list li a'),function(i, e)
-		{
-			if ($(e).attr('data-value') == $('#category_id').val())
-			{
-				$('#aw-topic-tags-select').html($(e).html());
-			}
-		});
-	}
-
-	//自动展开话题选择
-	$('.aw-edit-topic').click();
-
     // 自动保存草稿
 	$('textarea.wmd-input').bind('blur', function() {
 		if ($(this).val() != '')
@@ -110,7 +64,7 @@ $(function()
 
 	// 分类选择
 
-	$('.question-category-items').on('click', '.question-category-item', function(e) {
+	$('.category-items').on('click', 'li', function(e) {
 		var elmCategory = $(this);
 		elmCategory.addClass('active').siblings().removeClass('active');
 		$('#category_id').val(elmCategory.attr('data-value'));
@@ -118,26 +72,29 @@ $(function()
 
 	// 难度控件
 
-	$('#question_difficulty').rating({
-		showClear:false, 
-		ratingClass: ' md md-star',
-		size: 'xs',
-		clearCaption : '',
-		starCaptions:{
-		    1: '休闲',
-		    2: '简单',
-		    3: '中等',
-		    4: '困难',
-		    5: '超难'
-		},
-		starCaptionClasses : {
-		    1: 'label label-success',
-		    2: 'label label-info',
-		    3: 'label label-primary',
-		    4: 'label label-warning',
-		    5: 'label label-danger'
-		}
-	});
+	elmQuestionDifficulty = $('#question_difficulty');
+	if(elmQuestionDifficulty.length) {
+		elmQuestionDifficulty.rating({
+			showClear:false, 
+			ratingClass: ' md md-star',
+			size: 'xs',
+			clearCaption : '',
+			starCaptions:{
+			    1: '休闲',
+			    2: '简单',
+			    3: '中等',
+			    4: '困难',
+			    5: '超难'
+			},
+			starCaptionClasses : {
+			    1: 'label label-success',
+			    2: 'label label-info',
+			    3: 'label label-primary',
+			    4: 'label label-warning',
+			    5: 'label label-danger'
+			}
+		});
+	}
 
 	// 解析答案
 

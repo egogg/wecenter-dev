@@ -260,12 +260,6 @@ class main extends AWS_CONTROLLER
 			}
 		}
 
-		// 导航
-		if (TPL::is_output('block/content_nav_menu.tpl.htm', 'article/square'))
-		{
-			TPL::assign('content_nav_menu', $this->model('menu')->get_nav_menu_list('article'));
-		}
-
 		//边栏热门话题
 		if (TPL::is_output('block/sidebar_hot_topics.tpl.htm', 'article/square'))
 		{
@@ -288,6 +282,7 @@ class main extends AWS_CONTROLLER
 			TPL::set_meta('description', $meta_description);
 		}
 
+		TPL::assign('article_categories', $this->model('system')->fetch_category('article', 0));
 		TPL::assign('article_list', $article_list);
 		TPL::assign('article_topics', $article_topics);
 

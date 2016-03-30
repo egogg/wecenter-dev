@@ -4,18 +4,39 @@
 	<section id="content">
 		<div class="container">
 			<div class="row">
+				<div class="article-category col-sm-12">
+					<div class="card ">
+						<div class="card-header card-padding">
+							<?php if ($this->article_categories) { ?>
+                                <ul class="article-category-items clearfix">
+                                    <li>
+                                        <a <?php if (!$_GET['category']) { ?>class="active"<?php } ?> href="article/">全部知识</a>
+                                    </li>
+                                    <?php foreach ($this->article_categories AS $key => $val) { ?>
+                                        <li>
+                                            <a <?php if ($_GET['category'] == $val['id']) { ?> class="active"<?php } ?> href="article/category-<?php echo $val['id']; ?>"> <?php echo $val['title']; ?></a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            <?php } ?>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
 				<!-- 热门推荐 -->				
 				<div class="article-hot hidden-xs">
-					<?php $hot_article_colors = array('bgm-teal', 'bgm-lime', 'bgm-amber', 'bgm-bluegray'); ?>
+					<?php $hot_article_colors = array('bgm-amber', 'bgm-blue', 'bgm-green', 'bgm-red'); ?>
 					<?php foreach($this->hot_articles AS $key => $val) { ?>
 						<div class="col-sm-3">
-							<div class="article-hot-mark bgm-red">
+							<div class="article-hot-mark">
 								<span>热门知识</span>
 							</div>
 							<div class="card">
 								<a href="article/<?php echo $val['id']; ?>">
 									<div class="card-body card-padding <?php echo $hot_article_colors[$key]; ?> c-white">
-					                    <p><?php echo $val['title']; ?></p>
+					                    <p class="article-hot-title"><?php echo $val['title']; ?></p>
 					                </div>
 				                </a>
 							</div>
@@ -41,12 +62,15 @@
 							        	
 						        <a href="article/<?php echo $val['id']; ?>" target="_blank" class="bp-title">
 						            <h2 class="article-title"><?php echo $val['title']; ?></h2>
-						            <small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
+						           <!--  <small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small> -->
 						        </a>
 						    </div>
-						    
-						    <div class="article-content p-20">
-						    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[attach\].*\[\/attach\]|si', '', strip_tags($val['message']))), 0, 120, 'UTF-8', '...'); ?>
+						    <div class="article-publish-date">
+						    		<small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
+						    </div>
+						    <div class="article-content">
+						    	
+						    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[attach\].*\[\/attach\]|si', '', strip_tags($val['message']))), 0, 60, 'UTF-8', '...'); ?>
 						    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
 						    </div>
 						    <div class="article-stats">
@@ -55,7 +79,10 @@
 						    			<i class="md md-visibility"></i> <?php echo $val['views']; ?> 查看
 						    		</li>
 						    		<li>
-						    			<a href="article/<?php echo $val['id']; ?>"><i class="md md-comment"></i> <?php echo $val['comments']; ?> 评论</a>
+						    			<i class="md md-comment"></i> <?php echo $val['comments']; ?> 评论
+						    		</li>
+						    		<li>
+						    			<i class="md md-local-florist"></i> <?php echo $val['votes']; ?> 赞同
 						    		</li>
 						    	</ul>
 						    </div>

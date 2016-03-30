@@ -139,7 +139,7 @@
 .question-solution {
 	display: none;
 	border: 1px solid #00bcd4;
-	border-radius: 4px;
+	border-radius: 2px;
 }
 
 .quiz-answer blockquote {
@@ -148,6 +148,13 @@
 
 .question-solution-body {
 	padding-left: 0.5em;
+}
+
+.question-solution-body img {
+	display: block;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
 }
 
 .text-input-answer {
@@ -169,13 +176,13 @@
     color: #999;
     text-decoration: none;
     background-color: #f5f5f5;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 .question-comment-toolbar .comment-tool-toggle:hover {
 	background-color: #499ef3;
     color: #fff;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
 .question-comment-section {

@@ -14307,8 +14307,8 @@ body.sw-toggled #footer {
   color: #FFF;
   font-weight: 400;
   margin: 0 0 2px;
-  line-height: 100%;
-  font-size: 21px;
+  line-height: 1.5;
+  font-size: 17px;
 }
 
 /*

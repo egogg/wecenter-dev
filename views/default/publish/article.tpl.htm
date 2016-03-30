@@ -15,11 +15,12 @@
 						<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
 						<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
 						<input type="hidden" name="article_id" id="article_id" value="<?php echo $this->article_info['id']; ?>" />
+						<input type="hidden" name="category_id" id="category_id" value="<?php echo $this->question_info['category_id']; ?>" />
 
 						<div class="question-publish-group">
 							<p class="f-500 m-b-5 c-black">知识的分类 <small class="c-gray">你分享的知识属于以下哪种类型</small></p>
 							<div class="question-publish-item">
-								<!-- <?php if ($this->article_category_items) { ?>
+								<?php if ($this->article_category_items) { ?>
 									<?php if($this->article_category_items) { ?>
 										<ul class="category-items">
 											<?php foreach ($this->article_category_items as $key => $value) { ?>
@@ -29,7 +30,11 @@
 											<?php } ?>
 										</ul>
 									<?php } ?>
-								<?php } ?> -->
+								<?php } else { ?>
+									<div class="alert alert-danger" role="alert">
+		                                暂时没有知识分类，请联系系统管理员在后台添加。
+		                            </div>
+								<?php } ?>
 							</div>
 						</div>
 
@@ -48,17 +53,10 @@
 						        </div>
 						        <p class="text-color-999"><span class="pull-right" id="question_detail_message">&nbsp;</span></p>
 								<?php if (get_setting('upload_enable') == 'Y' AND get_setting('advanced_editor_enable' == 'Y')) { ?>
-									<div class="aw-upload-box">
-										<a class="btn btn-default">上传附件</a>
+									<div class="upload-box hidden-xs">
+										<a class="btn btn-success btn-sm">上传附件</a>
+										<small class="c-gray m-l-15">允许: <?php echo get_setting('allowed_upload_types'); ?></small>
 										<div class="upload-container"></div>
-										<small class="c-gray hidden-xs"><?php _e('允许的附件文件类型'); ?>: <?php echo get_setting('allowed_upload_types'); ?></small>
-									</div>
-								<?php } ?>
-
-								<?php if ($this->human_valid) { ?>
-									<div class="aw-auth-img clearfix">
-										<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha"  /></em>
-										<input class="pull-right form-control" type="text" name="seccode_verify" placeholder="验证码" />
 									</div>
 								<?php } ?>
 							</div>
@@ -67,6 +65,13 @@
 				</div>
 				<div class="card-body card-padding publish-question-footer clearfix">
 					<button class="btn btn-primary btn-publish-submit" id="publish_submit" onclick="AWS.ajax_post($('#question_form')); return false;">确认发布</button>
+
+					<?php if ($this->human_valid) { ?>
+						<div class="aw-auth-img clearfix">
+							<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha"  /></em>
+							<input class="pull-right form-control" type="text" name="seccode_verify" placeholder="验证码" />
+						</div>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
