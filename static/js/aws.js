@@ -939,7 +939,7 @@ var AWS =
 
 						if (UPLOAD_ENABLE == 'Y')
 						{
-							var fileupload = new FileUpload('file', '.aw-edit-comment-box .aw-upload-box .btn', '.aw-edit-comment-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-answer__attach_access_key-' + ATTACH_ACCESS_KEY, {'insertTextarea': '.aw-edit-comment-box #editor_reply', 'editor' : editor});
+							var fileupload = new FileUpload('file', '.aw-edit-comment-box .upload-box .btn', '.aw-edit-comment-box .upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-answer__attach_access_key-' + ATTACH_ACCESS_KEY, {'insertTextarea': '.aw-edit-comment-box #editor_reply', 'editor' : editor});
 
 							$.post(G_BASE_URL + '/publish/ajax/answer_attach_edit_list/', 'answer_id=' + data.answer_id, function (data) {
 								if (data['err']) {
@@ -953,7 +953,7 @@ var AWS =
 						}
 						else
 						{
-							$('.aw-edit-comment-box .aw-file-upload-box').hide();
+							$('.aw-edit-comment-box .file-upload-box').hide();
 						}
 					}, 'json');
 				break;
@@ -968,7 +968,7 @@ var AWS =
 
 						if (UPLOAD_ENABLE == 'Y')
 						{
-							var fileupload = new FileUpload('file', '.aw-edit-solution-box .aw-upload-box .btn', '.aw-edit-solution-box .aw-upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-solution__attach_access_key-' + attachAccessKey, {'insertTextarea': '.aw-edit-solution-box #editor_solution', 'editor' : editor});
+							var fileupload = new FileUpload('file', '.edit-solution-box .upload-box .btn', '.edit-solution-box .upload-box .upload-container', G_BASE_URL + '/publish/ajax/attach_upload/id-solution__attach_access_key-' + attachAccessKey, {'insertTextarea': '.aw-edit-solution-box #editor_solution', 'editor' : editor});
 
 							$.post(G_BASE_URL + '/publish/ajax/solution_attach_edit_list/', 'solution_id=' + data.solution_id, function (data) {
 								if (data['err'] || !data['rsm']['attachs']) {
@@ -982,7 +982,7 @@ var AWS =
 						}
 						else
 						{
-							$('.aw-edit-solution-box .aw-file-upload-box').hide();
+							$('.edit-solution-box .upload-box').hide();
 						}
 					}, 'json');
 				break;

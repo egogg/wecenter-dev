@@ -112,11 +112,9 @@ var AW_TEMPLATE = {
 							'<div class="alert alert-danger hide error_message"><i class="icon icon-delete"></i> <em></em></div>'+
 							'<input type="hidden" name="attach_access_key" value="{{attach_access_key}}" />'+
 							'<textarea name="answer_content" id="editor_reply" class="form-control" rows="10"></textarea>'+
-							'<div class="aw-file-upload-box">'+
-								'<div class="aw-upload-box">'+
-									'<a class="btn btn-default">上传附件</a>'+
-									'<div class="upload-container"></div>'+
-								'</div>'+
+							'<div class="upload-box">'+
+								'<a class="btn btn-default">上传附件</a>'+
+								'<div class="upload-container"></div>'+
 							'</div>'+
 						'</div>'+
 						'<div class="modal-footer">'+
@@ -129,7 +127,7 @@ var AW_TEMPLATE = {
 			'</div>',
 
 	'editSolutionBox' :
-				'<div class="modal fade alert-box aw-edit-solution-box aw-editor-box">'+
+				'<div class="modal fade alert-box edit-solution-box">'+
 				'<div class="modal-dialog">'+
 					'<div class="modal-content">'+
 						'<div class="modal-header">'+
@@ -142,13 +140,10 @@ var AW_TEMPLATE = {
 								'<p class="f-500 m-b-5 c-black">编辑答案解析 <small class="c-gray">参考答案的详细解答分析</small></p>' +
 								'<div class="question-publish-item">' +
 									'<textarea name="solution_content" id="editor_solution" class="form-control" rows="10"></textarea>'+
-									'<p></p>' +
-									'<div class="aw-file-upload-box">'+
-										'<div class="aw-upload-box">'+
-											'<a class="btn btn-success btn-sm">上传附件</a>'+
-											'<div class="upload-container"></div>'+
-										'</div>'+
-									'</div>' +
+									'<div class="upload-box">'+
+										'<a class="btn btn-success btn-sm">上传附件</a>'+
+										'<div class="upload-container"></div>'+
+									'</div>'+
 								'</div>' +
 							'</div>' +
 							'<div class="question-publish-group">' +

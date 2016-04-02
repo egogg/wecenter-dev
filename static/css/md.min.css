@@ -12854,7 +12854,7 @@ a.thumbnail.active {
   bottom: 0;
   width: 100%;
   padding: 0 0 6px;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.15);
 }
 
 .carousel .carousel-indicators li {
