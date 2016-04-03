@@ -413,7 +413,7 @@ class main extends AWS_CONTROLLER
 
 		if ($_GET['column'] == 'log')
 		{
-			$this->crumb(AWS_APP::lang()->_t('日志'), '/question/id-' . $question_info['question_id'] . '__column-log');
+			// $this->crumb(AWS_APP::lang()->_t('日志'), '/question/id-' . $question_info['question_id'] . '__column-log');
 		}
 		else
 		{

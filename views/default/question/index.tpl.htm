@@ -140,40 +140,39 @@
 									</div>
 
 									<!-- 回复编辑器 -->
-									<div class="comment-box m-t-15">
+									<div class="comment-box clearfix m-t-15">
 										<a name="answer_form"></a>
 										<?php if (!$this->question_info['lock'] and $this->user_id) { ?>
 										<form action="question/ajax/save_answer/" onsubmit="return false;" method="post" id="answer_form" class="question_answer_form">
-							        	<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
-							        	<input type="hidden" name="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
-							        	<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
-							        	<input type="checkbox" checked="checked" value="1" name="auto_focus" style="display:none;" />
-										<div class="mod-body">
-											<div class="aw-mod aw-editor-box">
-												<div class="mod-head">
-													<div class="wmd-panel">
-											           <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="answer_content"><?php echo htmlspecialchars($this->draft_content['message']); ?></textarea>
-											        </div>
-												</div>
-												<div class="mod-body clearfix">
+								        	<input type="hidden" name="post_hash" value="<?php echo new_post_hash(); ?>" />
+								        	<input type="hidden" name="question_id" value="<?php echo $this->question_info['question_id']; ?>" />
+								        	<input type="hidden" name="attach_access_key" value="<?php echo $this->attach_access_key; ?>" />
+								        	<input type="checkbox" checked="checked" value="1" name="auto_focus" class="hidden" />
+											<div>
+												<div class="wmd-panel">
+										           <textarea class="wmd-input form-control autosize editor" id="wmd-input" rows="15" name="answer_content"><?php echo htmlspecialchars($this->draft_content['message']); ?></textarea>
+										        </div>
+												
+												<div>
 													<?php if ($this->human_valid) { ?>
 													<div class="aw-auth-img clearfix">
 															<input class="pull-right form-control" type="text" name="seccode_verify" placeholder="<?php _e('验证码'); ?>" />
 															<em class="auth-img pull-right"><img src="" onclick="this.src = G_BASE_URL + '/account/captcha/' + Math.floor(Math.random() * 10000);" id="captcha" /></em>
 													</div>
 													<?php } ?>
-													<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-primary pull-right btn-reply">提交讨论</a>
-													<span class="pull-right c-gray" id="answer_content_message">&nbsp;</span>
+
 													<?php if (get_setting('upload_enable') == 'Y') { ?>
-													<div class="upload-box">
-														<a class="btn btn-success btn-sm">上传附件</a>
+													<div class="upload-box hidden-xs pull-left">
+														<a class="btn btn-success btn-sm">上传附件</a><small class="c-gray m-l-10">允许 : <?php echo get_setting('allowed_upload_types'); ?></small>
 														<div class="upload-container"></div>
-														<small class="c-gray hidden-xs">允许 : <?php echo get_setting('allowed_upload_types'); ?></small>
 													</div>
 													<?php } ?>
+													<div class="m-t-10 pull-right">
+														<small class="c-gray m-r-5" id="answer_content_message"></small>
+														<a href="javascript:;" onclick="AWS.ajax_post($('#answer_form'), AWS.ajax_processer, 'reply_question');" class="btn btn-primary btn-reply">提交讨论</a>
+													</div>
 												</div>
 											</div>
-										</div>
 										</form>
 										<?php } ?>
 									</div>
