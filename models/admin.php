@@ -1,16 +1,4 @@
 <?php
-/*
-+--------------------------------------------------------------------------
-|   WeCenter [#RELEASE_VERSION#]
-|   ========================================
-|   by WeCenter Software
-|   © 2011 - 2014 WeCenter. All Rights Reserved
-|   http://www.wecenter.com
-|   ========================================
-|   Support: WeCenter@qq.com
-|
-+---------------------------------------------------------------------------
-*/
 
 if (!defined('IN_ANWSION'))
 {
@@ -65,8 +53,6 @@ class admin_class extends AWS_MODEL
 
     public function notifications_crond()
     {
-        $last_version = json_decode(curl_get_contents('http://wenda.wecenter.com/api/version_check.php'), true);
-
         $admin_notifications = AWS_APP::cache()->get('admin_notifications');
 
         if (!$admin_notifications)
@@ -90,12 +76,6 @@ class admin_class extends AWS_MODEL
 
                                 // 认证审核
                                 'verify_approval' => $this->count('verify_apply', 'status = 0'),
-
-                                // 程序更新
-                                'last_version' => array(
-                                                        'version' => $last_version['version'],
-                                                        'build_day' => $last_version['build_day']
-                                                    ),
 
                                 // 新浪微博 Access Token 更新
                                 'sina_users' => $admin_notifications['sina_users'],
@@ -212,14 +192,6 @@ class admin_class extends AWS_MODEL
             $notifications_texts[] = array(
                                             'url' => 'admin/user/verify_approval_list/',
                                             'text' => AWS_APP::lang()->_t('有 %s 个认证申请待审核', $notifications['verify_approval'])
-                                        );
-        }
-
-        if ($notifications['last_version']['build_day'] > G_VERSION_BUILD)
-        {
-            $notifications_texts[] = array(
-                                            'url' => 'http://www.wecenter.com/downloads/',
-                                            'text' => AWS_APP::lang()->_t('程序需要更新，最新版本为 %s', $notifications['last_version']['version'])
                                         );
         }
 

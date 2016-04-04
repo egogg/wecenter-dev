@@ -1898,7 +1898,7 @@ li.action-item-link a:hover:before {
 
 .sign-in-alert-hint {
 	padding: 25px;
-    border-left: 3px solid #e0e0e0;
+    border-left: 3px solid #eee;
     background-color: #f9f9f9;
     margin-top: 25px;
 }
@@ -2077,7 +2077,7 @@ li.action-item-link a:hover:before {
 	line-height: 30px;
 	border-right: 1px solid #eee;
 	margin-right: 15px;
-	color: #818181;
+	color: #333;
 }
 
 .question-list-filter-item:last-child {
@@ -3193,29 +3193,6 @@ a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radiu
 .cke_button__maximize{position: absolute !important;right: 0;top: 0;}
 .cke_button__maximize_icon:before {content: "\e65d";}
 .cke_button__removeformat_icon:before {content: "\e65f";}
-
-/*.aw-editor-box .mod-head{border:1px solid #e0e0e0;}*/
-.aw-editor-box textarea{border: none;}
-.aw-editor-box .mod-body{position:relative;margin-top: 15px;line-height: 28px;}
-.aw-editor-box .mod-body #question_detail_message{line-height: 34px;}
-.aw-editor-box .mod-body #answer_content_message{margin-right: 10px;}
-.aw-editor-box .aw-upload-tips, .aw-replay-box .aw-upload-tips{position: absolute;left: 100px;top: 3px;}
-.markitup-box{position:relative;z-index:1;line-height: 1.6;word-wrap: break-word !important;}
-.markitup-box .aw-user-name{font-size: 14px;}
-.markitup-box p{padding: 5px;}
-.markitup-box em{font-style: italic;}
-.markitup-box img{max-width: 540px;}
-.markitup-box pre {margin:10px 0;padding: 16px;line-height: 20px;overflow: hidden; border: none; border-radius: 3px; background-color: #f7f7f7;font-size: 14px;font-family: monospace; white-space: pre-wrap;}
-blockquote {padding: 0 15px;font-size: 14px;color: #777;border-left: 3px solid #ddd;}
-.markitup-box pre br, .markitup-box ul + br, .markitup-box ol + br {display: none;}
-/*.markitup-box b, .markitup-box strong {color: #333;}*/
-.markitup-box ol, .markitup-box ul, .markitup-box dl{padding: 0 40px;}
-.markitup-box ol{list-style: decimal;}
-.markitup-box ul{list-style: disc;}
-.markitup-box .aw-upload-img-list img{margin-bottom: 10px;}
-
-/* 附件列表  */
-.aw-upload-file-list{margin-bottom: 10px;}
 
 /* @用户下拉 */
 .content_cursor{position: absolute;z-index:-1;max-width:600px;font-size: 14px;font-family: "Helvetica Neue",Helvetica,Arial,'微软雅黑','Microsoft YaHei',sans-serif;word-wrap: break-word;opacity: 0;}

@@ -1,17 +1,4 @@
 <?php
-/*
-+--------------------------------------------------------------------------
-|   WeCenter [#RELEASE_VERSION#]
-|   ========================================
-|   by WeCenter Software
-|   © 2011 - 2014 WeCenter. All Rights Reserved
-|   http://www.wecenter.com
-|   ========================================
-|   Support: WeCenter@qq.com
-|
-+---------------------------------------------------------------------------
-*/
-
 
 if (!defined('IN_ANWSION'))
 {
@@ -249,9 +236,9 @@ class main extends AWS_CONTROLLER
 
 		H::redirect_msg(AWS_APP::lang()->_t('正在执行升级脚本 %s, 请耐心等待...', $script_version), '/upgrade/script/' . rand(100000, 666666));
 	}
-
+	
 	public function final_action()
 	{
-		H::redirect_msg(AWS_APP::lang()->_t('升级完成, 您的程序已经是最新版本, 如遇搜索功能异常, 请进入后台更新搜索索引') . '<!-- Analytics --><img src="http://www.wecenter.com/analytics/?build=' . G_VERSION_BUILD . '&amp;site_name=' . urlencode(get_setting('site_name')) . '&amp;base_url=' . urlencode(base_url()) . '&amp;php=' . PHP_VERSION . '" alt="" width="1" height="1" /><!-- / Analytics -->', '/');
+		H::redirect_msg(AWS_APP::lang()->_t('升级完成, 您的程序已经是最新版本, 如遇搜索功能异常, 请进入后台更新搜索索引'));
 	}
 }

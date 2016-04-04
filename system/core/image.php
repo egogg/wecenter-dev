@@ -1,16 +1,4 @@
 <?php
-/*
-+--------------------------------------------------------------------------
-|   WeCenter [#RELEASE_VERSION#]
-|   ========================================
-|   by WeCenter Software
-|   © 2011 - 2014 WeCenter. All Rights Reserved
-|   http://www.wecenter.com
-|   ========================================
-|   Support: WeCenter@qq.com
-|
-+---------------------------------------------------------------------------
-*/
 
 define(IMAGE_CORE_OP_TO_FILE, 1);              // Output to file
 define(IMAGE_CORE_OP_OUTPUT, 2);               // Output to browser

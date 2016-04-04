@@ -1,16 +1,4 @@
 <?php
-/*
-+--------------------------------------------------------------------------
-|   WeCenter [#RELEASE_VERSION#]
-|   ========================================
-|   by WeCenter Software
-|   © 2011 - 2014 WeCenter. All Rights Reserved
-|   http://www.wecenter.com
-|   ========================================
-|   Support: WeCenter@qq.com
-|
-+---------------------------------------------------------------------------
-*/
 
 class TPL
 {
@@ -120,7 +108,10 @@ class TPL
 				}
 			}
 
-			if (get_setting('url_rewrite_enable') == 'Y' AND $template_dirs[0] != 'admin')			{				$output = preg_replace('/(href|action)=([\"|\'])(?!mailto)(?!file)(?!ftp)(?!http)(?!javascript)(?![\/|\#])(?!\.\/)([^\"\']+)([\"|\'])/is', '\1=\2' . base_url() . '/' . '\3\4', $output);			}
+			if (get_setting('url_rewrite_enable') == 'Y' AND $template_dirs[0] != 'admin')
+			{
+				$output = preg_replace('/(href|action)=([\"|\'])(?!mailto)(?!file)(?!ftp)(?!http)(?!javascript)(?![\/|\#])(?!\.\/)([^\"\']+)([\"|\'])/is', '\1=\2' . base_url() . '/' . '\3\4', $output);
+			}
 
 			//$output = preg_replace("/([a-zA-Z0-9]+_?[a-zA-Z0-9]+)-__|(__[a-zA-Z0-9]+_?[a-zA-Z0-9]+)-$/i", '', $output);
 			

@@ -4,7 +4,7 @@
 		<div class="main-header">
 			<div class="container">
 				<a class="navbar-brand icon-logo" href="<?php echo base_url(); ?>" title="脑壳网">脑壳网</a>
-				<a class="navbar-slogan hidden-xs" href="<?php echo base_url(); ?>">中文最大智力问答社区</a>
+				<a class="navbar-slogan hidden-xs" href="<?php echo base_url(); ?>">发现全球最全智力题</a>
 				<div class="navbar-user visible-xs">
 					<ul class="navbar-user-actions clearfix">
 						<li class="dropdown">
@@ -124,9 +124,9 @@
 						<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、专题、知识或人'); ?>" autocomplete="off" name="q" id="aw-search-query" />
 						<div class="dropdown-menu dropdown-menu-lg pull-left">
 							<div class="mod-body listview">
-								<div class="title lv-header"><?php _e('输入关键字进行搜索'); ?></div>
+								<div class="title lv-header">输入关键字进行搜索</div>
 								<div class="aw-dropdown-list lv-body c-overflow" tabindex="1"></div>
-								<div class="search lv-footer"><span><?php _e('搜索'); ?>: </span><a onClick="$('#global_search_form').submit();"></a></div>
+								<div class="search lv-footer"><span>搜索: </span><a onClick="$('#global_search_form').submit();"></a></div>
 							</div>
 						</div>
 					</div>
@@ -137,9 +137,9 @@
 				<div class="navbar-mobile-search-form-wrap">
 					<form class="navbar-search" action="search/" id="navbar-mobile-search-form" method="post">
 						<div class="navbar-search-input">
-							<input class="form-control search-query" type="text" placeholder="<?php _e('搜索问题、话题或人'); ?>" autocomplete="off" name="q" />
+							<input class="form-control search-query" type="text" placeholder="搜索问题、专题或人" autocomplete="off" name="q" />
 						</div>
-						<span class="navbar-search-icon" title="<?php _e('搜索'); ?>" id="navbar-mobile-search-btns" onClick="$('#navbar-mobile-search-form').submit();"><a class="icon icon-search"></a></span>
+						<span class="navbar-search-icon" title="搜索" id="navbar-mobile-search-btns" onClick="$('#navbar-mobile-search-form').submit();"><a class="icon icon-search"></a></span>
 					</form>
 				</div>
 				<div>
@@ -151,10 +151,10 @@
         	<div class="container">
         		<ul>
         			<li><a href="<?php echo base_url(); ?>" class="<?php if ($_GET['app'] == 'explore') { ?>active<?php } ?>">精选</a></li>
-        			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>"><?php _e('题库'); ?></a></li>
-					<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>"><?php _e('专题'); ?></a></li>
-					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>"><?php _e('知识'); ?></a></li>
-					<li><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>"><?php _e('排行'); ?></a></li>
+        			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>">题库</a></li>
+					<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>">专题</a></li>
+					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>">知识</a></li>
+					<li><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>">排行</a></li>
 				</ul>
         	</div>
         </nav>

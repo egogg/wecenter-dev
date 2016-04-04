@@ -1,17 +1,4 @@
 <?php
-/*
-+--------------------------------------------------------------------------
-|   WeCenter [#RELEASE_VERSION#]
-|   ========================================
-|   by WeCenter Software
-|   © 2011 - 2014 WeCenter. All Rights Reserved
-|   http://www.wecenter.com
-|   ========================================
-|   Support: WeCenter@qq.com
-|
-+---------------------------------------------------------------------------
-*/
-
 
 if (!defined('IN_ANWSION'))
 {
@@ -60,7 +47,8 @@ class reputation_class extends AWS_MODEL
 
 					unset($article_topics_query);
 				}
-			}	
+			}
+	
 			foreach ($user_articles as $articles_key => $articles_val)
 			{
 				// 赞同的用户
@@ -81,7 +69,9 @@ class reputation_class extends AWS_MODEL
 					}
 				}
 			}
-						$article_reputation = $s_agree_value - $s_against_value;			
+			
+			$article_reputation = $s_agree_value - $s_against_value;
+			
 			$reputation_log_factor = get_setting('reputation_log_factor');
 
 			if ($article_reputation < 0)
