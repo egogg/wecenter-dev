@@ -1,5 +1,36 @@
 @charset "UTF-8";
 
+.m-header {
+	background-color: #2196f3 !important;
+}
+
+.top-menu i {
+	font-size: 21px;
+	color: #fff;
+}
+
+.top-menu li {
+	display: inline-block;
+	margin-right: 15px;
+}
+
+#header-title {
+	font-size: 22px;
+    color: #fff;
+    text-align: center;
+    line-height: 0;
+    top: 28px;
+    position: relative;
+    margin: 0;
+}
+
+.header-logo {
+	font-size: 50px;
+    position: relative;
+    height: 0;
+    top: -25px;
+}
+
 /* 公共部分 */
 *{margin:0; padding:0;}
 body{padding-bottom:49px;font-family: "Helvetica Neue",Helvetica,Arial,'Microsoft YaHei',sans-serif;background:url('../img/bg.gif') repeat;font-size: 14px;}

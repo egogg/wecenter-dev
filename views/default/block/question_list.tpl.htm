@@ -18,8 +18,8 @@
 			<?php } ?>
 			
 			<div class="card-body card-padding">
-				<div class="question-list-heading m-b-10 clearfix">
-					<div class="question-publish-info m-t-5 m-b-5">
+				<div class="question-list-header m-b-10 clearfix">
+					<div class="question-publish-info">
 						<?php if ($question['user_info']) { ?>
 							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-img" data-id="<?php echo $question['user_info']['uid']; ?>">
 								<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
@@ -33,7 +33,7 @@
 							• <?php echo date_friendly($question['update_time']); ?>
 						</small>
 					</div>
-					<div class="question-tags m-t-5 m-b-5">
+					<div class="question-tags">
 	            		<ul class="question-tag-list">
 	            			<!-- 问题分类 -->
 		            		<?php if ($question['category_info']) { ?>
@@ -92,23 +92,24 @@
 			            		</div>
 			            	<?php } else { ?>
 			            		<p>
-			            			<span class="hidden-xs"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 120, 'UTF-8', '...'); ?></span>
+			            			<span class="hidden-xs"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 68, 'UTF-8', '...'); ?></span>
 			            			<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题 <i class="md md-chevron-right"></i></a>
 			            		</p>
 			            	<?php } ?>
 			            </div>
+			            <div class="question-list-footer">
+					    	<ul class="question-stats">
+				            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
+								<?php if($question['quiz_id'] > 0) { ?>
+		                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['quiz_count_total']; ?> <span class="hidden-xs">次答题</span></li>
+		                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['quiz_success_ratio'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
+		                    	<?php } ?>
+		                    	<li class="question-stat"><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
+		                    </ul>
+					    </div>
 			        </div>
 			    </div>
-			    <div class="m-t-10">
-			    	<ul class="question-stats">
-		            	<li class="question-stat"><i class="md md-remove-red-eye"> </i><?php echo $question['view_count']; ?> <span class="hidden-xs">次浏览</span></li>
-						<?php if($question['quiz_id'] > 0) { ?>
-                            <li class="question-stat"><i class="md md-equalizer"> </i><?php echo $question['quiz_count_total']; ?> <span class="hidden-xs">次答题</span></li>
-                            <li class="question-stat"><i class="md md-flag"> </i><?php echo number_format($question['quiz_success_ratio'] * 100, 0); ?>% <span class="hidden-xs">正确率</span></li>
-                    	<?php } ?>
-                    	<li class="question-stat"><i class="md md-comment"> </i><?php echo $question['answer_count']; ?> <span class="hidden-xs">条讨论</span></li>
-                    </ul>
-			    </div>
+				    
             </div>
 		</div> 
 	<?php } ?>

@@ -311,7 +311,7 @@ class ajax extends AWS_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('请选择分类')));
         }
 
-        if (cjk_strlen($_POST['question_content']) < 5)
+        if (cjk_strlen($_POST['question_content']) < 3)
         {
             H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('问题标题字数不得少于 5 个字')));
         }

@@ -1,6 +1,6 @@
 <?php TPL::output('m/header_meta.tpl.htm'); ?>
 <!-- header -->
-<div class="header">
+<!-- <div class="header">
 	<a class="logo" href="m/"><img src="<?php echo G_STATIC_URL; ?>/mobile/img/logo.png" alt="" width="52" /></a>
 	<span class="pull-right">
 		<?php if ($this->user_id) { ?>
@@ -13,5 +13,58 @@
 			<?php if (get_setting('register_type') == 'open') { ?><a href="m/register/" class="btn btn-mini btn-success btn-normal"><?php _e('注册'); ?></a><?php } ?>
 		<?php } ?>
 	</span>
-</div>
+</div> -->
 <!-- end header -->
+<header id="header" class="m-header">
+	<h1 id="header-title">
+		<!-- <div class="header-logo">
+			<i class="icon icon-naokr"></i>
+		</div> -->
+		<?php if ($_GET['app'] == 'topic') { ?>话题<?php } else { ?>精选<?php } ?>
+    </h1>
+	<ul class="header-inner">
+        <li id="menu-trigger" data-trigger="#sidebar" class="">
+            <div class="line-wrap">
+                <div class="line top"></div>
+                <div class="line center"></div>
+                <div class="line bottom"></div>
+            </div>
+        </li>
+        <li class="pull-right">
+	        <ul class="top-menu">
+		        <li id="top-search">
+		            <a class="tm-search" href="#"><i class="md md-search"></i></a>
+		        </li>
+		        <li class="dropdown">
+		            <a data-toggle="dropdown" class="tm-settings" href="#"><i class="md md-person"></i></a>
+		            <ul class="dropdown-menu dm-icon pull-right">
+		                <li>
+		                    <a data-action="fullscreen" href="#"><i class="md md-fullscreen"></i> Toggle Fullscreen</a>
+		                </li>
+		                <li>
+		                    <a data-action="clear-localstorage" href="#"><i class="md md-delete"></i> Clear Local Storage</a>
+		                </li>
+		                <li>
+		                    <a href="#"><i class="md md-person"></i> Privacy Settings</a>
+		                </li>
+		                <li>
+		                    <a href="#"><i class="md md-settings"></i> Other Settings</a>
+		                </li>
+		            </ul>
+		        </li>
+		    </ul>
+		</li>
+    </ul>
+</header>
+
+<aside id="sidebar">
+	<div class="sidebar-inner c-overflow" tabindex="3">
+	    <ul class="main-menu">
+	        <li><a href="#"><i class="md md-home"></i> 精选</a></li>
+	        <li><a href="#"><i class="md md-now-widgets"></i> 题库</a></li>
+	        <li><a href="#"><i class="md md-apps"></i> 专题</a></li>
+	        <li><a href="#"><i class="md md-school"></i> 知识</a></li>
+	        <li><a href="#"><i class="md md-people"></i> 排行</a></li>
+	    </ul>
+	</div>
+</aside>

@@ -68,9 +68,8 @@
 						    <div class="article-publish-date">
 						    		<small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
 						    </div>
-						    <div class="article-content">
-						    	
-						    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[attach\].*\[\/attach\]|si', '', strip_tags($val['message']))), 0, 60, 'UTF-8', '...'); ?>
+						    <div class="article-excerpt">
+						    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['message']))), 0, 50, 'UTF-8', '...'); ?>
 						    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
 						    </div>
 						    <div class="article-stats">

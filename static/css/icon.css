@@ -24,12 +24,6 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-douban:before {
-    content: "\e903";
-}
-.icon-qrcode:before {
-    content: "\e904";
-}
 .icon-wechat:before {
     content: "\e900";
 }
@@ -42,9 +36,6 @@
 .icon-activity:before {
     content: "\e66b";
 }
-.icon-wegene:before {
-    content: "\e667";
-}
 .icon-contact:before {
     content: "\e668";
 }
@@ -56,18 +47,6 @@
 }
 .icon-drug:before {
     content: "\e666";
-}
-.icon-hear:before {
-    content: "\e663";
-}
-.icon-ear:before {
-    content: "\e664";
-}
-.icon-beat:before {
-    content: "\e665";
-}
-.icon-23:before {
-    content: "\e662";
 }
 .icon-good:before {
     content: "\e660";
@@ -83,9 +62,6 @@
 }
 .icon-full:before {
     content: "\e65d";
-}
-.icon-gene:before {
-    content: "\e600";
 }
 .icon-count:before {
     content: "\e65a";
@@ -353,4 +329,16 @@
 }
 .icon-edit:before {
     content: "\e65c";
+}
+.icon-douban:before {
+    content: "\e903";
+}
+.icon-qrcode:before {
+    content: "\e904";
+}
+.icon-nao:before {
+    content: "\e906";
+}
+.icon-naokr:before {
+    content: "\e905";
 }

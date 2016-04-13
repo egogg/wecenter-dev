@@ -50,6 +50,7 @@
 .quiz-multiple-selection .quiz-option .quiz-option-index {
 	width: 28px;
 	display: inline-block;
+	font-style: normal;
 }
 
 .quiz-single-selection .quiz-option.checked .quiz-option-index,

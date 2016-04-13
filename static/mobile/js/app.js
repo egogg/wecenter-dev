@@ -2,6 +2,18 @@ var document_title = document.title;
 
 $(document).ready(function () {
 
+	/*
+     * Sidebar
+     */
+    $('body').on('click', '#menu-trigger', function(e){            
+        e.preventDefault();
+        var x = $(this).data('trigger');
+    
+        $(x).toggleClass('toggled');
+        $(this).toggleClass('open');
+        $('body').toggleClass('modal-open');
+    });
+    
 	// 检测首页动态更新
 	var checkactionsnew_handle = setInterval(function ()
 	{

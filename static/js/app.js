@@ -305,7 +305,6 @@ $(document).ready(function ()
     // 排序bar sticky
 
     var navBar = $('#nav-question-list-header');
-    var header = $('#header');
     if(navBar.length != 0)
     {
         // var navBarPadding = navBar.offset().left + 15;
@@ -315,7 +314,6 @@ $(document).ready(function ()
         navBar.on('affixed.bs.affix', function () {
             // $('#nav-question-list-header > .card').css({"padding-left": navBarPadding, "padding-right": navBarPadding});
             $('#nav-question-list-header .card-body').addClass('container p-l-0');
-            header.css({"box-shadow": "none"});
         });
 
         navBar.on('affixed-top.bs.affix', function() {
@@ -325,7 +323,7 @@ $(document).ready(function ()
         });
 
         navBar.affix({
-            offset: { top: navBar.offset().top - header.height()}
+            offset: { top: navBar.offset().top}
         });
     }
 
@@ -336,7 +334,7 @@ $(document).ready(function ()
     {
         $('#m-question-list-heading-wrap').height(mNavBar.height());
         mNavBar.affix({
-            offset: { top: mNavBar.offset().top - 120}
+            offset: { top: mNavBar.offset().top}
         });
     }
         

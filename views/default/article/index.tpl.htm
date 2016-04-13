@@ -64,28 +64,31 @@
                         <div class="card-header p-t-0">
                             <h1><?php echo $this->article_info['title']; ?></h1>
                         </div>
-                        <div class="card-body card-padding markitup-box">
-                            <?php echo $this->article_info['message']; ?>
+                        <div class="card-body card-padding">
+                            <div class="article-detail">
+                                <?php echo $this->article_info['message']; ?>
 
-                            <?php if ($this->article_info['attachs']) {  ?>
-                            <div class="aw-upload-img-list">
-                            <?php foreach ($this->article_info['attachs'] AS $attach) { ?>
-                            <?php if ($attach['is_image'] AND (!$this->article_info['attachs_ids'] OR !in_array($attach['id'], $this->article_info['attachs_ids']))) { ?>
-                                <a href="<?php echo $attach['attachment']; ?>" target="_blank" data-fancybox-group="thumb" rel="lightbox"><img src="<?php echo $attach['attachment']; ?>" class="img-polaroid" alt="<?php echo $attach['file_name']; ?>" /></a>
-                            <?php } ?>
-                            <?php } ?>
+                                <?php if ($this->article_info['attachs']) {  ?>
+                                    <div class="aw-upload-img-list">
+                                        <?php foreach ($this->article_info['attachs'] AS $attach) { ?>
+                                        <?php if ($attach['is_image'] AND (!$this->article_info['attachs_ids'] OR !in_array($attach['id'], $this->article_info['attachs_ids']))) { ?>
+                                            <a href="<?php echo $attach['attachment']; ?>" target="_blank" data-fancybox-group="thumb" rel="lightbox"><img src="<?php echo $attach['attachment']; ?>" class="img-polaroid" alt="<?php echo $attach['file_name']; ?>" /></a>
+                                        <?php } ?>
+                                        <?php } ?>
+                                    </div>
+                                <?php } ?>
+
+                                <?php if ($this->article_info['attachs']) {  ?>
+                                <ul class="aw-upload-file-list">
+                                    <?php foreach ($this->article_info['attachs'] AS $attach) { ?>
+                                    <?php if (!$attach['is_image'] AND (!$this->article_info['attachs_ids'] OR !in_array($attach['id'], $this->article_info['attachs_ids']))) { ?>
+                                        <li><a href="<?php echo download_url($attach['file_name'], $attach['attachment']); ?>"><i class="icon icon-attach"></i> <?php echo $attach['file_name']; ?></a></li>
+                                    <?php } ?>
+                                    <?php } ?>
+                                </ul>
+                                <?php } ?>
                             </div>
-                            <?php } ?>
-
-                            <?php if ($this->article_info['attachs']) {  ?>
-                            <ul class="aw-upload-file-list">
-                                <?php foreach ($this->article_info['attachs'] AS $attach) { ?>
-                                <?php if (!$attach['is_image'] AND (!$this->article_info['attachs_ids'] OR !in_array($attach['id'], $this->article_info['attachs_ids']))) { ?>
-                                    <li><a href="<?php echo download_url($attach['file_name'], $attach['attachment']); ?>"><i class="icon icon-attach"></i> <?php echo $attach['file_name']; ?></a></li>
-                                <?php } ?>
-                                <?php } ?>
-                            </ul>
-                            <?php } ?>
+                            
                             <div class="article-actions m-t-30 text-center clearfix">
                                 <div class="article-action-agree <?php if (!$this->user_id OR $this->user_id == $this->article_info['uid']) { ?> disabled<?php } ?>">
                                     <a href="javascript:;" class="agree<?php if ($this->article_info['vote_info']['rating'] == 1) { ?> active <?php } ?> " onclick="AWS.User.article_vote($(this), <?php echo $this->article_info['id']; ?>, 1);"><i class="md md-local-florist"></i> 赞同 <em>|</em> <b><?php echo $this->article_info['votes']; ?></b></a>
