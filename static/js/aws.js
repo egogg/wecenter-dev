@@ -2181,6 +2181,11 @@ AWS.User =
 	// 文章赞同
 	article_vote: function(selector, article_id, rating)
 	{
+		if(G_USER_ID <= 0) {
+			window.location = G_BASE_URL + '/account/login/';
+			return;
+		}
+
 		AWS.loading('show');
 
 		if (selector.hasClass('active'))
@@ -2224,6 +2229,11 @@ AWS.User =
 	// 文章评论赞同
 	article_comment_vote: function(selector, comment_id, rating)
 	{
+		if(G_USER_ID <= 0) {
+			window.location = G_BASE_URL + '/account/login/';
+			return;
+		}
+
 		AWS.loading('show');
 
 		var textSelector = selector.find('span');

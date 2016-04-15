@@ -107,27 +107,17 @@ class main extends AWS_CONTROLLER
 
 		// 最新推荐文章
 
-		$recommend_articles = $this->model('article')->get_recommend_article_list($article_info['id'], 10);
-		if($recommend_articles)
-		{
-			foreach ($recommend_articles as $key => $val) {
-				$article_ids[] = $val['id'];;
-			}
-
-			// 获取文章缩略图
-
-			$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
-
-			foreach ($recommend_articles AS $key => $val)
-			{
-				$recommend_article_list[$val['id']] = $val;
-				if ($val['has_attach'])
-				{
-					$recommend_article_list[$val['id']]['attachs'] = $article_attachs[$val['id']];
-				}
-			}
+		$hot_articles = $this->model('article')->get_articles_list(null, 1, 5, 'votes DESC', null);
+		foreach ($hot_articles as $key => $val) {
+			$article_ids[] = $val['id'];;
 		}
-		TPL::assign('recommend_article_list', $recommend_article_list);
+
+		$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
+
+		foreach ($hot_articles as $key => $val) {
+			$hot_articles[$key]['attachs'] = $article_attachs[$val['id']];
+		}
+		TPL::assign('hot_articles', $hot_articles);
 
 		// 推荐专题
 
@@ -244,6 +234,10 @@ class main extends AWS_CONTROLLER
 				{
 					$article_list[$key]['attachs'] = $article_attachs[$val['id']];
 				}
+
+				// 文章分类信息
+
+				$article_list[$key]['category_info'] = $this->model('system')->get_category_info($val['category_id']);
 			}
 		}
 
@@ -273,7 +267,23 @@ class main extends AWS_CONTROLLER
 		TPL::assign('article_list', $article_list);
 		TPL::assign('article_topics', $article_topics);
 
-		TPL::assign('hot_articles', $this->model('article')->get_articles_list(null, 1, 4, 'votes DESC', null));
+		// 推荐文章
+		
+		TPL::assign('recommend_articles', $this->model('article')->get_recommend_article_list(null, 4));
+		
+		// 热门文章
+		
+		$hot_articles = $this->model('article')->get_articles_list(null, 1, 8, 'votes DESC', null);
+		foreach ($hot_articles as $key => $val) {
+			$article_ids[] = $val['id'];;
+		}
+
+		$article_attachs = $this->model('publish')->get_attachs('article', $article_ids, 'min');
+
+		foreach ($hot_articles as $key => $val) {
+			$hot_articles[$key]['attachs'] = $article_attachs[$val['id']];
+		}
+		TPL::assign('hot_articles', $hot_articles);
 
 		TPL::assign('pagination', AWS_APP::pagination()->initialize(array(
 			'base_url' => get_js_url('/article/category_id-' . $_GET['category_id'] . '__feature_id-' . $_GET['feature_id']),

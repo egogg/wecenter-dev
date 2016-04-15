@@ -23,20 +23,20 @@
 					</div>
 				</div>
 			</div>
-
+			
 			<div class="row">
 				<!-- 热门推荐 -->				
-				<div class="article-hot hidden-xs">
-					<?php $hot_article_colors = array('bgm-amber', 'bgm-blue', 'bgm-green', 'bgm-red'); ?>
-					<?php foreach($this->hot_articles AS $key => $val) { ?>
+				<div class="article-recommend hidden-xs">
+					<?php $recommend_article_colors = array('bgm-amber', 'bgm-blue', 'bgm-green', 'bgm-red'); ?>
+					<?php foreach($this->recommend_articles AS $key => $val) { ?>
 						<div class="col-sm-3">
-							<div class="article-hot-mark">
-								<span>热门知识</span>
-							</div>
 							<div class="card">
+								<div class="article-recommend-mark">
+									<span>推荐知识</span>
+								</div>
 								<a href="article/<?php echo $val['id']; ?>">
-									<div class="card-body card-padding <?php echo $hot_article_colors[$key]; ?> c-white">
-					                    <p class="article-hot-title"><?php echo $val['title']; ?></p>
+									<div class="card-body card-padding <?php echo $recommend_article_colors[$key]; ?> c-white">
+					                    <p class="article-recommend-title"><?php echo $val['title']; ?></p>
 					                </div>
 				                </a>
 							</div>
@@ -47,50 +47,70 @@
 			
 			<div class="row">
 				<!-- 文章列表 -->
-				<?php if ($this->article_list) { ?>
-					<?php foreach ($this->article_list AS $key => $val) { ?>
-					<div class="col-sm-3">
-						<div class="card blog-post">
-						    <div class="bp-header">
-						    	<div class="article-feature-cover">
-						    		<?php foreach ($val['attachs'] AS $attach) { ?>
-										<?php if ($attach['is_image']) { ?>
-											<a href="article/<?php echo $val['id']; ?>" target="_blank"><img class="article-feature-img responsive-img" target="_blank" src="<?php echo $attach['attachment']; ?>" alt="<?php echo $attach['attach_name']; ?>"></a>
-										<?php break; } ?>
-									<?php } ?>
-						    	</div>
-							        	
-						        <a href="article/<?php echo $val['id']; ?>" target="_blank" class="bp-title">
-						            <h2 class="article-title"><?php echo $val['title']; ?></h2>
-						           <!--  <small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small> -->
-						        </a>
-						    </div>
-						    <div class="article-publish-date">
-						    		<small><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
-						    </div>
-						    <div class="article-excerpt">
-						    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['message']))), 0, 50, 'UTF-8', '...'); ?>
-						    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
-						    </div>
-						    <div class="article-stats">
-						    	<ul class="clearfix">
-						    		<li>
-						    			<i class="md md-visibility"></i> <?php echo $val['views']; ?> 查看
-						    		</li>
-						    		<li>
-						    			<i class="md md-comment"></i> <?php echo $val['comments']; ?> 评论
-						    		</li>
-						    		<li>
-						    			<i class="md md-local-florist"></i> <?php echo $val['votes']; ?> 赞同
-						    		</li>
-						    	</ul>
-						    </div>
-						</div>
-					</div>
-					<?php } ?>
+				<div class="col-sm-8 article-list">
+					<?php if ($this->article_list) { ?>
+						<?php foreach ($this->article_list AS $key => $val) { ?>
+							<div class="card">
+						    	<div class="media">
+                                    <div class="pull-left">
+                                    	<a href="article/category-<?php echo $val['category_id']; ?>" class="article-category-mark bgm-category-<?php echo ($val['category_id'] + 1) % 19; ?> c-white">
+											<?php echo $val['category_info']['title']; ?>
+                                    	</a>
+                                        <a href="article/<?php echo $val['id']; ?>">
+                                            <div class="article-feature-cover">
+									    		<?php foreach ($val['attachs'] AS $attach) { ?>
+													<?php if ($attach['is_image']) { ?>
+														<img src="<?php echo $attach['attachment']; ?>" alt="<?php echo $attach['attach_name']; ?>">
+													<?php break; } ?>
+												<?php } ?>
+									    	</div>
+                                        </a>
+                                    </div>
+                                    <div class="media-body p-l-10">
+                                        <h4 class="media-heading">
+                                        	<a class="article-title" href="article/<?php echo $val['id']; ?>" target="_blank" class="bp-title">
+									            <?php echo $val['title']; ?>
+									        </a>
+									        <small class="c-gray article-date"><i class="md md-access-time"></i> <?php echo date_friendly($val['add_time']); ?></small>
+                                        </h4>
+                                        
+                                        <div class="article-excerpt">
+									    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['message']))), 0, 60, 'UTF-8', '...'); ?>
+									    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
+									    </div>
+									    <div class="article-stats">
+									    	<ul class="clearfix">
+									    		<li>
+									    			<i class="md md-visibility"></i> <?php echo $val['views']; ?> 查看
+									    		</li>
+									    		<li>
+									    			<i class="md md-comment"></i> <?php echo $val['comments']; ?> 评论
+									    		</li>
+									    		<li>
+									    			<i class="md md-local-florist"></i> <?php echo $val['votes']; ?> 赞同
+									    		</li>
+									    	</ul>
+									    </div>
+                                    </div>
+                                </div>
+							</div>
+						<?php } ?>
 
-					<?php echo $this->pagination; ?>
-				<?php } ?>
+						<?php echo $this->pagination; ?>
+					<?php } ?>
+				</div>
+				<!-- 热门文章 -->
+				<div class="col-sm-4">
+					<div class="card">
+                        <div class="card-header">
+                            <h2>热门知识</h2>
+                        </div>
+                        <div class="card-body">
+                            <?php TPL::assign('article_list', $this->hot_articles); ?>
+                            <?php TPL::output('block/sidebar_article_list.tpl.htm'); ?>
+                        </div>
+                    </div>
+				</div>
 			</div>
 		</div>
 	</section>

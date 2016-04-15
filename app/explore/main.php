@@ -171,7 +171,7 @@ class main extends AWS_CONTROLLER
 
 		$recommend_items = $this->model('recommend')->get_recommend_homepage_items('article', $limit = 5);
 		foreach ($recommend_items as $key => $item) {
-			$article_ids[] = $item['item_id'];;
+			$article_ids[] = $item['item_id'];
 		}
 
 		// 获取文章缩略图

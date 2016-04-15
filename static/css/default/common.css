@@ -435,6 +435,7 @@ header .main-nav ul li a.active {
 	font-size: 12px;
 	padding: 0.1em 0.3em;
 	border: 1px solid #eee;
+	border-radius: 2px;
 }
 
 .question-tag:hover {
@@ -587,7 +588,7 @@ header .main-nav ul li a.active {
 	top: 104px;
     z-index: 1;
     background:rgba(0, 0, 0, 0.15);
-    font-size: 12px;
+    font-size: 13px;
     color: #fff;
     line-height: 32px;
     display: inline-block;
@@ -634,7 +635,7 @@ header .main-nav ul li a.active {
 	border: 1px solid #e0e0e0;
 	border-radius: 16px;
 	box-sizing: border-box;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .topic-category li a.active {
@@ -769,11 +770,12 @@ header .main-nav ul li a.active {
 }
 
 .follow, .follow:active, .follow:focus {
-	padding: 3px 15px;
+	padding: 3px 8px;
     color: #4CAF50;
-    border-radius: 20px;
+    border-radius: 2px;
     border: 1px solid #4CAF50;
     display: inline-block;
+    font-size: 13px;
 }
 
 .follow:hover {
@@ -815,48 +817,52 @@ header .main-nav ul li a.active {
 
 /*文章列表*/
 
-.article-hot-mark {
-	position: relative;
+.article-recommend-mark {
+	position: absolute;
     z-index: 10;
     color: white;
     display: inline-block;
-    float: right;
+    top: 5px;
+    right: 5px;
+    border-radius: 2px;
     font-size: 10px;
     padding: 2px 3px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.article-hot {
+.article-recommend {
 	font-size: 18px;
 }
 
-.article-hot-title {
+.article-recommend-title {
 	display: block;
-	height: 48px;
+	height: 50px;
+	padding-top: 5px;
 	overflow: hidden;
 }
 
 .article-feature-cover {
-	height: 135px;
+	width: 280px;
+	height: 173px;
     overflow: hidden;
 }
 
-.article-feature-img {
-	width: 100%;
+.article-title {
+	display: block;
+	font-size: 18px;
+	line-height: 1.4;
+	padding: 10px 15px 0 0;
 }
 
-.article-title {
-	height: 2.5em;
+.article-date i.md {
+	vertical-align: middle;
+	position: relative;
+    top: -1px;
 }
 
 .article-excerpt {
-	height: 100px;
-	overflow: hidden;
-	padding: 0 20px;
-}
-
-.article-publish-date {
-	padding: 5px 20px;
+	margin-bottom: 10px;
+	padding-right: 15px;
 }
 
 .article-excerpt a {
@@ -864,7 +870,7 @@ header .main-nav ul li a.active {
 }
 
 .article-stats {
-	padding: 10px 20px;
+	margin-bottom: 10px;
 }
 
 .article-stats ul li {
@@ -890,7 +896,7 @@ header .main-nav ul li a.active {
     border: 1px solid #e0e0e0;
     border-radius: 16px;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .article-category-items li a.active {
@@ -954,11 +960,6 @@ header .main-nav ul li a.active {
 	float: left;
 	padding-right: 10px;
 	font-size: 12px;
-}
-
-.follow.question-publisher {
-	padding: 5px 24px;
-	font-size: 13px;
 }
 
 .question-quiz-board {
@@ -1482,9 +1483,9 @@ li.user-quiz-record-item.timeout:before {
 .article-action-agree a {
 	display: inline-block;
 	border: 1px solid #607D8B;
-	padding: 8px 20px;
+	padding: 5px 15px;
 	font-size: 16px;
-	border-radius: 22px;
+	border-radius: 2px;
 	color: #607D8B;
 }
 
@@ -1545,6 +1546,15 @@ li.user-quiz-record-item.timeout:before {
 
 .article-footer {
 	border-top: 1px solid #eee;
+}
+
+.article-category-mark {
+	position: absolute;
+    font-size: 12px;
+    padding: 3px 5px;
+    border-radius: 2px;
+    left: 10px;
+    top: 10px;
 }
 
 .article-list-feature-img {
@@ -1771,8 +1781,9 @@ li.user-quiz-record-item.timeout:before {
 
 .topic-category-mark {
 	position: absolute;
-    top: 0;
-    left: 0;
+    top: 10px;
+    right: 10px;
+    border-radius: 2px;
     color: #fff;
     padding: 3px 5px;
     margin: 0;
@@ -1842,7 +1853,9 @@ li.action-item-link a:hover:before {
 	background-color: #FFC107;
 	color: #fff;
 	padding: 0 3px;
-	top: 0;
+	top: 5px;
+	left: 5px;
+	border-radius: 2px;
 	z-index: 5;
 	font-size: 11px;
 	position: absolute;

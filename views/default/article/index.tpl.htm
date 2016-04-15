@@ -61,7 +61,7 @@
                             </ul>
                             <?php } ?> 
                         </div>
-                        <div class="card-header p-t-0">
+                        <div class="card-header p-t-0 p-b-0">
                             <h1><?php echo $this->article_info['title']; ?></h1>
                         </div>
                         <div class="card-body card-padding">
@@ -209,16 +209,37 @@
                 </div>
                 <!-- 侧边栏 -->
                 <div class="col-sm-4 hidden-xs">
-                    <!-- 推荐文章 -->
+                    <!-- 热门知识 -->
                     <div class="card recommend-articles">
                         <div class="card-header card-padding">
                             <h2>热门知识</h2>
+                            <ul class="actions">
+                                <li class="action-item-link">
+                                    <a href="article/">更多知识<i class="md md-chevron-right c-lightblue"></i></a>
+                                </li>
+                            </ul>
                         </div>
                         <div class="card-body">
-                            <?php TPL::assign('article_list', $this->recommend_article_list); ?>
+                            <?php TPL::assign('article_list', $this->hot_articles); ?>
                             <?php TPL::output('block/sidebar_article_list.tpl.htm'); ?>
                         </div>
                     </div>
+
+                    <!-- 相关答题 -->
+                    <?php if ($this->question_related_list) { ?>
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>相关答题</h2>
+                            </div>
+                            <div class="listview">
+                                <div class="lv-body">
+                                    <?php TPL::assign('question_list_lite', $this->question_related_list); ?>
+                                    <?php TPL::output('block/question_list_lite'); ?>
+                                </div>
+                                <div class="lv-footer"></div>
+                            </div>
+                        </div>
+                    <?php } ?>
 
                     <!-- 推荐专题 -->
                     <div class="card sidebar-hot-topics">
