@@ -1024,6 +1024,7 @@ header .main-nav ul li a.active {
 	display: block;
     max-width: 100%;
     height: auto;
+    margin: 10px auto;
 }
 
 .question-detail {
@@ -1469,9 +1470,15 @@ li.user-quiz-record-item.timeout:before {
 	font-weight: 600;
 }
 
-.article-detail {
+.article-content {
 	font-size: 16px;
 	line-height: 1.7;
+}
+
+.article-content img {
+	display: block;
+	max-width: 100%;
+	margin: 10px auto;
 }
 
 .article-publisher-info .publisher-img-sm {
