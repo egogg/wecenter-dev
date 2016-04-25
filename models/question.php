@@ -859,7 +859,7 @@ class question_class extends AWS_MODEL
 		return $this->fetch_row('question_invite', 'question_id = ' . intval($question_id) . ' AND email = \'' . $email . '\'');
 	}
 
-	public function get_invite_users($question_id, $limit = 10)
+	public function get_invited_users($question_id, $limit = 10)
 	{
 		if ($invites = $this->fetch_all('question_invite', 'question_id = ' . intval($question_id), 'question_invite_id DESC', $limit))
 		{
@@ -873,6 +873,8 @@ class question_class extends AWS_MODEL
 				return $this->model('account')->get_user_info_by_uids($invite_users);
 			}
 		}
+
+		// return $this->fetch_all('question_invite', 'question_id = ' . intval($question_id), 'question_invite_id DESC', $limit);
 	}
 
 	public function get_invite_question_list($uid, $limit = 10)
@@ -1961,5 +1963,32 @@ class question_class extends AWS_MODEL
 		}
 
 		return $question_list;
+	}
+
+	public function get_quized_uids($question_id)
+	{
+		return $this->query_all("SELECT DISTINCT uid FROM " . get_table('question_quiz_record') . " WHERE question_id = " . intval($question_id));
+	}
+
+	public function get_commented_uids($question_id)
+	{
+		return $this->query_all("SELECT DISTINCT uid FROM " . get_table('answer') . " WHERE question_id = " . intval($question_id));
+	}
+
+	public function get_helpful_users_by_category_id($category_id, $exclude_uids = null, $limit = 20)
+	{
+		$quiz_record_table = get_table('question_quiz_record');
+		$question_table = get_table('question');
+		$query_uid = $quiz_record_table . ".uid";
+
+		$where = " WHERE category_id = " . intval($category_id);
+		if($exclude_uids)
+		{
+			$where .= " AND " . $quiz_record_table . ".uid NOT IN (" . implode(',', $exclude_uids) . ")";
+		}
+
+		$users = $this->query_all("SELECT " . $query_uid . " AS uid, COUNT(" . $query_uid. ") AS count" . " FROM " . $quiz_record_table . " INNER JOIN " . $question_table . " ON " . $quiz_record_table . ".question_id = " . $question_table .".question_id" . $where . " GROUP BY " . $query_uid . " ORDER BY count DESC LIMIT " . $limit);
+		
+		return $users;
 	}
 }

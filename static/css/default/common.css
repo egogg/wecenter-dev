@@ -744,7 +744,7 @@ header .main-nav ul li a.active {
 }
 
 .topic-details-content {
-	height: 74px;
+	height: 76px;
 	overflow: hidden;
 }
 
@@ -1341,7 +1341,188 @@ li.user-quiz-record-item.timeout:before {
 	background-color: transparent;
 }
 
-/* 问题页面：侧边栏 */
+/* 问题页面 */
+
+.question-publish-info .publisher-img-sm {
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+}
+
+.question-title .question-publish-info {
+	display: inline-block;
+	float: left;
+}
+
+.question-header {
+	height: 40px;
+}
+
+.question-content h1 {
+	margin: 0 0 15px 0;
+  	font-size: 20px;
+ 	line-height: 30px;
+}
+
+.countdown-question-message h1 {
+	font-size: 20px;
+	line-height: 20px;
+}
+
+.countdown-question-message p {
+	padding: 0;
+	font-size: 16px;
+}
+
+.countdown-question-message .action-button {
+	margin-right: 15px;
+	width: 130px;
+    margin-bottom: 15px;
+    border: 1px solid transparent !important;
+}
+
+.question-info {
+	overflow: hidden;
+	margin-top: -10px;
+	padding: 10px 0 10px 0;
+}
+
+.question-quiz-info {
+	margin-bottom: 6px;
+}
+
+.question-quiz-info span {
+	margin-right: 6px;
+}
+
+.question-quiz-content {
+	padding: 1px;
+	display: inline-block;
+	width: 100%;
+}
+
+.question-quiz-answer-result .answer-success {
+	color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.question-quiz-answer-result .answer-failed {
+	color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.post-answer-actions {
+	position: absolute;
+  	top: 50%;
+  	transform: translateY(-50%);
+  	width: 100%;
+  	padding: 0 !important;
+}
+
+.post-answer-action {
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	list-style: none;
+	width: 50%;
+}
+
+.post-answer-action:last-child {
+	margin-bottom: 0px;
+}
+
+.question-stats {
+	margin: 15px 0;
+}
+.question-stats-item li {
+	display: inline-block;
+	margin-right: 15px;
+	margin: 6px 15px 6px 0;
+}
+
+.question-solution {
+	display: none;
+	border: 1px solid #00bcd4;
+	border-radius: 2px;
+}
+
+.quiz-answer blockquote {
+	margin: 0 0 20px;
+}
+
+.question-solution-body {
+	padding-left: 0.5em;
+}
+
+.question-solution-body img {
+	display: block;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+.text-input-answer {
+	padding: 0 10px;
+	border-bottom: 1px solid;
+}
+
+.question-pager-nav {
+	padding: 0 20px;
+}
+
+.question-comment-toolbar {
+	padding: 10px 20px 0;
+}
+
+.question-comment-toolbar .comment-tool-toggle {
+	float: left;
+    padding: 6px 12px;
+    color: #999;
+    text-decoration: none;
+    background-color: #f5f5f5;
+    border-radius: 2px;
+}
+
+.question-comment-toolbar .comment-tool-toggle:hover {
+	background-color: #499ef3;
+    color: #fff;
+    border-radius: 2px;
+}
+
+.question-comment-section {
+	display: none;
+}
+
+.alert-get-integral {
+	padding: 25px;
+	border-left: 3px solid #e0e0e0;
+	background-color: #f9f9f9;
+}
+
+.alert-edit-solution {
+	border-left: 3px solid #e0e0e0;
+    padding: 15px;
+    background-color: #f9f9f9;
+}
+
+.help-button {
+	width: 30px;
+    height: 30px;
+    line-height: 29px;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin: 0 5px;
+}
+
+.aw-edit-solution-box .aw-file-upload-box {
+	margin-top: 10px;
+}
 
 .question-content-publish {
 	padding: 23px 26px;
@@ -1354,6 +1535,29 @@ li.user-quiz-record-item.timeout:before {
 .question-content-publish:hover {
 	background-color: #03A9F4;
 	color: #fff;
+}
+
+.help-user-search-box {
+	border: 1px solid #eee;
+}
+
+.help-user-search-box .search-field {
+	border: none !important;
+}
+
+.help-user-search-box i {
+	font-size: 18px;
+	vertical-align: middle !important;
+}
+
+.help-user-email-invite {
+	line-height: 37px;
+}
+
+.help-user-item {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px dashed #eee;
 }
 
 /* 发表问题 */

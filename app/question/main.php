@@ -15,7 +15,8 @@ class main extends AWS_CONTROLLER
 		{
 			$rule_action['actions'] = array(
 				'index',
-				'square'
+				'square',
+				'record'
 			);
 		}
 
@@ -306,7 +307,7 @@ class main extends AWS_CONTROLLER
 		{
 			TPL::assign('question_thanks', $this->model('question')->get_question_thanks($question_info['question_id'], $this->user_id));
 
-			TPL::assign('invite_users', $this->model('question')->get_invite_users($question_info['question_id']));
+			// TPL::assign('invite_users', $this->model('question')->get_invite_users($question_info['question_id']));
 
 			TPL::assign('user_follow_check', $this->model('follow')->user_follow_check($this->user_id, $question_info['published_uid']));
 
@@ -366,35 +367,111 @@ class main extends AWS_CONTROLLER
 		}
 		TPL::assign('question_related_links', $this->model('related')->get_related_links('question', $question_info['question_id']));
 
-		if ($this->user_id)
+
+		// 推荐用户答题功能
+
+		$invited_users = $this->model('question')->get_invited_users($question_info['question_id']);
+		if($invited_users)
 		{
-			if ($question_topics)
+			foreach ($invited_users as $key => $val) 
 			{
-				foreach ($question_topics AS $key => $val)
-				{
-					$question_topic_ids[] = $val['topic_id'];
-				}
+				$invited_uids[] = $val['recipients_uid'];
+				$uids[] = $val['recipients_uid'];
+				$uids[] = $val['sender_uid'];
 			}
 
-			if ($helpful_users = $this->model('topic')->get_helpful_users_by_topic_ids($question_topic_ids, 17))
+			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
+			foreach ($invited_users as $key => $val) 
 			{
-				foreach ($helpful_users AS $key => $val)
-				{
-					if ($val['user_info']['uid'] == $this->user_id)
-					{
-						unset($helpful_users[$key]);
-					}
-					else
-					{
-						$helpful_users[$key]['has_invite'] = $this->model('question')->has_question_invite($question_info['question_id'], $val['user_info']['uid'], $this->user_id);
+				$invited_users[$key]['recipient_info'] = $users_info[$val['recipients_uid']];
+				$invited_users[$key]['sender_info'] = $users_info[$val['sender_uid']]; 
 
-						$helpful_users[$key]['experience'] = end($helpful_users[$key]['experience']);
-					}
-				}
+				// 答题状态及记录
 
-				TPL::assign('helpful_users', $helpful_users);
+				// if($question_info['quiz_id'])
+				// {
+				// 	// 获取答题记录
+
+
+				// }
+				// else 
+				// {
+				// 	// 是否评论
+
+				// 	$invited_users[$key]['answered'] = $this->model('question')->user_commented_question($val['recipients_uid'], $question_info['question_id']);
+				// }
 			}
 		}
+		TPL::assign('invited_users', $invited_users);
+		
+		if($question_info['quiz_id'])
+		{
+			$answered_uids = $this->model('question')->get_quized_uids($question_info['question_id']);
+		}
+		else 
+		{
+			$answered_uids = $this->model('question')->get_commented_uids($question_info['question_id']);
+		}
+
+		$exclude_uids = $invited_uids;
+		if($answered_uids)
+		{
+			foreach ($answered_uids as $val) 
+			{
+				if(!in_array($val, $exclude_uids))
+				{
+					$exclude_uids[] = $val['uid'];
+				}
+			}
+		}
+		TPL::assign('exclude_uids', $exclude_uids);
+
+		$helpful_users = $this->model('question')->get_helpful_users_by_category_id($question_info['category_id'], $exclude_uids, 20);
+		if($helpful_users)
+		{
+			$uids = null;
+			foreach ($helpful_users as $key => $val) 
+			{
+				$uids[] = $val['uid'];
+			}
+			
+			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
+			foreach ($helpful_users as $key => $val) 
+			{
+				$helpful_users[$key]['user_info'] = $users_info[$val['uid']];
+			}
+		}
+		TPL::assign('helpful_users', $helpful_users);
+
+		// if ($this->user_id)
+		// {
+		// 	if ($question_topics)
+		// 	{
+		// 		foreach ($question_topics AS $key => $val)
+		// 		{
+		// 			$question_topic_ids[] = $val['topic_id'];
+		// 		}
+		// 	}
+
+		// 	if ($helpful_users = $this->model('topic')->get_helpful_users_by_topic_ids($question_topic_ids, 17))
+		// 	{
+		// 		foreach ($helpful_users AS $key => $val)
+		// 		{
+		// 			if ($val['user_info']['uid'] == $this->user_id)
+		// 			{
+		// 				unset($helpful_users[$key]);
+		// 			}
+		// 			else
+		// 			{
+		// 				$helpful_users[$key]['has_invite'] = $this->model('question')->has_question_invite($question_info['question_id'], $val['user_info']['uid'], $this->user_id);
+
+		// 				$helpful_users[$key]['experience'] = end($helpful_users[$key]['experience']);
+		// 			}
+		// 		}
+
+		// 		TPL::assign('helpful_users', $helpful_users);
+		// 	}
+		// }
 
 		$this->crumb($question_info['question_content'], '/question/' . $question_info['question_id']);
 
@@ -490,7 +567,6 @@ class main extends AWS_CONTROLLER
 
 		TPL::import_js('js/app/question.js');
 		TPL::import_js('js/bootstrap-growl.min.js');
-		TPL::import_css('css/question.css');
 		TPL::import_js('js/quiz.js');
 		TPL::import_css('css/quiz.css');
 		TPL::import_js('js/sweetalert.min.js');

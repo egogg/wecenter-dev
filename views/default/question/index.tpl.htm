@@ -98,7 +98,93 @@
 							</div>
 						</div>
 					</div>
+					
+					<!-- 答题邀请 -->
+					<div class="card">
+						<div class="card-body">
+                            <ul class="tab-nav tn-justified tn-icon" role="tablist" tabindex="1">
+                                <li role="presentation" class="active">
+                                    <a class="col-sx-4" href="#tab-1" aria-controls="tab-1" role="tab" data-toggle="tab" aria-expanded="true">
+                                        <i class="md md-group"></i> 被邀答题
+                                    </a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a class="col-xs-4" href="#tab-2" aria-controls="tab-2" role="tab" data-toggle="tab" aria-expanded="false">
+                                        <i class="md md-person-add"></i> 发送邀请
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content p-20">
+                                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab-1">
+                                   <div class="invite-list pull-left<?php if (!$this->invite_users) { ?> hide<?php } ?>">
+										<?php _e('已邀请'); ?>:
+										<?php if ($this->invite_users) { ?>
+										<?php foreach($this->invite_users as $key => $val) { ?>
+											<a class="text-color-999 invite-list-user" data-id="<?php echo $val['uid']; ?>" href="people/<?php echo $val['url_token']; ?>" data-id="<?php echo $val['uid']; ?>" data-original-title="<?php echo $val['user_name']; ?>" data-placement="bottom" data-toggle="tooltip"><img src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" /></a>
+										<?php } ?>
+										<?php } ?>
+									</div>
+                                </div>
+                                
+                                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-2">
+                                	<div class="help-user-header clearfix">
+                                		<div class="help-user-search form-group col-xs-6">
+                                			<div class="input-group help-user-search-box">
+                                				<input id="invite-input" type="text" class="search-field form-control" placeholder="站内搜索你想邀请的人">
+                                				<i class="md input-group-addon md-search c-gray"></i> 
+                                			</div>
+                                		</div>
+                                		<div class="col-xs-6">
+                                			<div class="help-user-email-invite">
+                                				或者通过
+	                                			<a class="c-lightblue" data-toggle="modal" href="#modalInviteFriend"><i class="md md-email"></i> 邮件邀请</a> 朋友答题
+                                			</div>
+                                		</div>
+                                	</div>
+                                    <?php if ($this->helpful_users) { ?>
+										<div class="help-user-invite-list clearfix">
+											<?php foreach ($this->helpful_users AS $key => $val) { ?>
+												<div class="col-xs-6 help-user-item">
+													<div class="media">
+														<div class="help-user-invite pull-right">
+															<?php if ($val['has_invite']) { ?>
+																<?php if($val['sender_uid'] == $this->user_id) { ?>
+																	<a class="btn btn-sm btn-success active" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.disinvite_user($(this))">取消邀请</a>
+																<?php } else { ?>
+																	<a class="btn btn-sm btn-default" href="javascript:void(0);" disabled="disabled">已被邀请</a>
+																<?php } ?>
+															<?php } else { ?>
+																<a class="btn btn-sm btn-success" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.invite_user($(this),$(this).parents('li').find('img').attr('src'));">发送邀请</a>
+															<?php } ?>
+														</div>
+															
+					                                    <div class="pull-left">
+					                                        <a class="user-tag user-img" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
+					                                        	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['user_info']['uid'], 'mid'); ?>" />
+					                                        </a>
+					                                    </div>
+					                                    <div class="media-body">
+					                                        <h4 class="media-heading">
+					                                        	<a class="user-tag user-name" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
+					                                        		<?php echo $val['user_info']['user_name']; ?><?php if ($val['user_info']['verified']) { ?>
+					                                        			<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+					                                        		<?php } ?>
+					                                        	</a>
+					                                        </h4>
+					                                        在答题分类中答题<?php echo $val['count']; ?>次
+					                                    </div>
+					                                </div>
+												</div>
+											<?php } ?>
+										</div>
+									<?php } ?>
+                                </div>
+                            </div>
+                        </div>
+					</div>
 
+					<!-- 答题关注 -->
 					<div class="card">
 						<div class="card-body card-padding question-focus text-center">
 							<div class="question-add-foucs">

@@ -10801,9 +10801,10 @@ input:focus {
 }
 
 .tab-nav.tn-icon > li .md {
-  font-size: 22px;
+  font-size: 21px;
   line-height: 100%;
   min-height: 25px;
+  vertical-align: middle;
 }
 
 .tab-nav:not([data-tab-color]) > li > a:after {
