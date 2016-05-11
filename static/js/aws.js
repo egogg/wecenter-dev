@@ -444,7 +444,7 @@ var AWS =
 		{
 			var _this = $(this);
 
-			var spinner = $('<div class="spinner m-t-0"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
+			var spinner = $('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
 			spinner.insertBefore(_this.hide());
 			_this.addClass('loading');
 
@@ -2047,6 +2047,11 @@ AWS.User =
 	// 邀请用户回答问题
 	invite_user: function(selector, img)
 	{
+		if(G_USER_ID <= 0) {
+			window.location = G_BASE_URL + '/account/login/';
+			return;
+		}
+		
 		$.post(G_BASE_URL + '/question/ajax/save_invite/',
 		{
 			'question_id': QUESTION_ID,

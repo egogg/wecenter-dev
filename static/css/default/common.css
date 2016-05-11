@@ -8,7 +8,7 @@ header .navbar-brand {
 	background: url("img/logo.png") no-repeat;
 	background-position: center;
 	background-size: 100%;
-	width: 188px;
+	width: 170px;
 	height: 80px;
 	text-indent: -99999px;
 }
@@ -982,6 +982,10 @@ header .main-nav ul li a.active {
 	font-size: 16px;
 }
 
+.question-quiz-title i.md {
+	vertical-align: middle;
+}
+
 .question-quiz-title.info {
 	font-size: 14px;
 	margin-bottom: 10px;
@@ -1039,26 +1043,41 @@ header .main-nav ul li a.active {
 	padding: 25px;
 }
 
-.user-quiz-record-item {
-	font-size: 12px;
-    padding: 5px 0 0 40px;
-    margin-bottom: 5px;
+.user-quiz-record-items li {
+	margin: 15px 0;
+}
+
+.user-quiz-record-items li:first-child {
+	margin-top: 0;
+}
+
+.user-quiz-record-items li:last-child {
+	margin-bottom: 0;
 }
 
 .user-quiz-record-time {
 	display: inline-block;
 }
 
-.user-quiz-record-message {
-	margin: 15px 0;
+.user-record .user-quiz-record-items {
+	width: 60%;
+	margin-left: 40%;
 }
 
-.user-quiz-record-items {
-	display: none;
+.my-quiz-record-toggle:before {
+	font-family: 'Material Design Iconic Font';
+	vertical-align: middle;
+	content: '\f29d';
+	margin-right: 5px;
 }
 
-.user-quiz-record-item {
-	/*color: #9e9e9e;*/
+.my-quiz-record-toggle.collapsed:before {
+	content: '\f29e';
+}
+
+li.user-quiz-record-item:before {
+	font-family: 'Material Design Iconic Font';
+	vertical-align: middle;
 }
 
 li.user-quiz-record-item.success:before {
@@ -1555,9 +1574,100 @@ li.user-quiz-record-item.timeout:before {
 }
 
 .help-user-item {
-	padding-top: 15px;
-	padding-bottom: 15px;
-	border-bottom: 1px dashed #eee;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	-webkit-animation-duration: 300ms;
+    animation-duration: 300ms;
+}
+
+.help-user-item img {
+	width: 40px;
+	height: 40px;
+}
+
+.help-user-invite {
+	float: right;
+	position: absolute;
+	right: 15px;
+}
+
+.cancel_invite {
+	font-size: 12px;
+}
+
+.invited_by {
+	font-size: 12px;
+	line-height: 16px;
+}
+
+.invited_by .user-img {
+	float: left;
+	margin: 0 5px;
+}
+
+.invited_by img {
+	width: 16px;
+	height: 16px;
+}
+
+.invited_by span {
+	float: left;
+	line-height: 19px;
+}
+
+.help-user-invite-list-nav i {
+	font-size: 17px;
+    line-height: 17px;
+}
+
+.quiz-record-toggle {
+	line-height: 20px;
+}
+
+.user-invited-users-list {
+	padding-left: 15px;
+	border-left: 3px solid #ff9800;
+    margin-bottom: 15px;
+}
+
+.user-invited-users-items {
+	display: inline-block;
+}
+
+.user-invited-users-items li {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.cancel-user-invitations li {
+	padding: 5px 0;
+}
+
+.user-invitations-img {
+	width: 24px;
+	height: 24px;
+}
+
+.user-invitations-username {
+	margin-right: 15px;
+	line-height: 24px;
+}
+
+.user-invitations-action {
+	line-height: 24px;
+}
+
+.no-invited-users {
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
+.add-user-invitations {
+	padding: 10px 20px;
+	border: 1px solid #03a9f4;
+    color: #03a9f4;
+	border-radius: 2px;
+	font-size: 16px;
 }
 
 /* 发表问题 */
@@ -2160,6 +2270,7 @@ li.action-item-link a:hover:before {
 .spinner {
   margin: 30px auto 0;
   text-align: center;
+  padding: 3px 0;
 }
 
 .spinner > div {
@@ -2871,8 +2982,8 @@ input.form-control {
 	background: url("img/login_logo.png") no-repeat;
 	background-size: 100%;
 	background-position: center;
-	width: 120px;
-	height: 95px;
+	width: 111px;
+	height: 94px;
 	margin-left: auto; 
 	margin-right: auto;
 	display: block;
@@ -3293,7 +3404,11 @@ input.form-control {
 }
 
 .load-more {
-	line-height: 23px;
+	line-height: 22px;
+}
+
+.load-more a.disabled {
+	background: none;
 }
 
 .search-result-tag {

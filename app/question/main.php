@@ -117,7 +117,6 @@ class main extends AWS_CONTROLLER
 		}
 
 		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
-		$questioin_info['user_info']['question_quiz_poft_ratio'] = $questioin_info['user_info']['question_quiz_count_total'] > 0 ? $questioin_info['user_info']['question_quiz_count_POFT'] / $questioin_info['user_info']['question_quiz_count_total'] : 0;
 
 		// if ($_GET['column'] != 'log')
 		// {
@@ -370,39 +369,19 @@ class main extends AWS_CONTROLLER
 
 		// 推荐用户答题功能
 
-		$invited_users = $this->model('question')->get_invited_users($question_info['question_id']);
-		if($invited_users)
+		if($this->user_id)
 		{
-			foreach ($invited_users as $key => $val) 
+			$exclude_uids[] = $this->user_id;
+		}
+
+		$invited_uids = $this->model('question')->get_invited_user_ids($question_info['question_id']);
+		if($invited_uids)
+		{
+			foreach ($invited_uids as $key => $val) 
 			{
-				$invited_uids[] = $val['recipients_uid'];
-				$uids[] = $val['recipients_uid'];
-				$uids[] = $val['sender_uid'];
-			}
-
-			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
-			foreach ($invited_users as $key => $val) 
-			{
-				$invited_users[$key]['recipient_info'] = $users_info[$val['recipients_uid']];
-				$invited_users[$key]['sender_info'] = $users_info[$val['sender_uid']]; 
-
-				// 答题状态及记录
-
-				// if($question_info['quiz_id'])
-				// {
-				// 	// 获取答题记录
-
-
-				// }
-				// else 
-				// {
-				// 	// 是否评论
-
-				// 	$invited_users[$key]['answered'] = $this->model('question')->user_commented_question($val['recipients_uid'], $question_info['question_id']);
-				// }
+				$exclude_uids[] = $val['uid'];
 			}
 		}
-		TPL::assign('invited_users', $invited_users);
 		
 		if($question_info['quiz_id'])
 		{
@@ -413,7 +392,6 @@ class main extends AWS_CONTROLLER
 			$answered_uids = $this->model('question')->get_commented_uids($question_info['question_id']);
 		}
 
-		$exclude_uids = $invited_uids;
 		if($answered_uids)
 		{
 			foreach ($answered_uids as $val) 
@@ -426,7 +404,7 @@ class main extends AWS_CONTROLLER
 		}
 		TPL::assign('exclude_uids', $exclude_uids);
 
-		$helpful_users = $this->model('question')->get_helpful_users_by_category_id($question_info['category_id'], $exclude_uids, 20);
+		$helpful_users = $this->model('question')->get_helpful_users_by_category_id($question_info['category_id'], $exclude_uids, get_setting('user_question_invite_recommend'));
 		if($helpful_users)
 		{
 			$uids = null;
@@ -442,6 +420,8 @@ class main extends AWS_CONTROLLER
 			}
 		}
 		TPL::assign('helpful_users', $helpful_users);
+
+		TPL::assign('invited_user_count', $this->model('question')->get_invited_user_count($question_info['question_id']));
 
 		// if ($this->user_id)
 		// {
@@ -564,7 +544,7 @@ class main extends AWS_CONTROLLER
 		// $question_info_previous = $this->model('question')->get_previous_question_info($question_info['question_id']);
 		// TPL::assign('question_info_next', $question_info_next);
 		// TPL::assign('question_info_previous', $question_info_previous);
-
+		
 		TPL::import_js('js/app/question.js');
 		TPL::import_js('js/bootstrap-growl.min.js');
 		TPL::import_js('js/quiz.js');
@@ -736,22 +716,44 @@ class main extends AWS_CONTROLLER
 			H::redirect_msg(AWS_APP::lang()->_t('问题不存在或已被删除'), '/question/');
 		}
 
-		if($question_info['quiz_id'] > 0) 
-		{
-			$question_info['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
-		}
-
 		TPL::assign('question_info', $question_info);
 
-		// 获取问题答题纪录及统计
+		if ($_GET['uid'])
+		{
+			if(! $user_info = $this->model('account')->get_user_info_by_uid($_GET['uid']))
+			{
+				H::redirect_msg(AWS_APP::lang()->_t('用户不存在'), '/question/' . $_GET['id']);
+			}
 
-		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_list_page($question_info['question_id'], $_GET['page'], 10);
+			TPL::assign('quiz_user_info', $user_info);
 
-		TPL::assign('question_quiz_record', $question_quiz_record);
+			// 获取用户在该问题下的答题记录
 
-		TPL::import_js('js/flot/jquery.flot.js');
-		TPL::import_js('js/flot/jquery.flot.pie.js');
-		TPL::import_js('js/flot/jquery.flot.resize.js');
-		TPL::output('question/record');
+			$user_quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $user_info['uid'], $_GET['page'], 10);
+
+			TPL::assign('user_quiz_record', $user_quiz_record);
+			TPL::assign('user_quiz_record_count', $this->model('quiz')->get_question_quiz_record_user_count());
+			TPL::assign('user_quiz_passed', $this->model('quiz')->user_question_quiz_passed($question_info['question_id'], $user_info['uid']));
+
+			TPL::output('question/record_user');
+		}
+		else 
+		{
+			if($question_info['quiz_id'] > 0) 
+			{
+				$question_info['quiz_info'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+			}
+
+			// 获取问题答题纪录及统计
+
+			$question_quiz_record = $this->model('quiz')->get_question_quiz_record_list_page($question_info['question_id'], $_GET['page'], 10);
+
+			TPL::assign('question_quiz_record', $question_quiz_record);
+
+			TPL::import_js('js/flot/jquery.flot.js');
+			TPL::import_js('js/flot/jquery.flot.pie.js');
+			TPL::import_js('js/flot/jquery.flot.resize.js');
+			TPL::output('question/record');
+		}	
 	}
 }

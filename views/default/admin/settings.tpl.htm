@@ -729,6 +729,26 @@
                 <tr>
                     <td>
                         <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('每个问题用户最大可邀请答题的人数'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="user_question_invite_limit" class="form-control" type="text" value="<?php echo $this->setting['user_question_invite_limit']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('每个问题系统推荐的可供邀请的人数'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="user_question_invite_recommend" class="form-control" type="text" value="<?php echo $this->setting['user_question_invite_recommend']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
                             <span class="col-sm-4 col-xs-3 control-label"><?php _e('新问题强制要求添加话题'); ?>:</span>
                             <div class="col-sm-6 col-xs-8">
                                 <div class="btn-group mod-btn">

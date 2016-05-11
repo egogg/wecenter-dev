@@ -46,7 +46,7 @@ $(function()
 			var request_url = request_url + '__is_recommend-1';
 		}
 
-		var spinner = $('<div class="spinner m-t-0"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
+		var spinner = $('<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>');
 		spinner.insertBefore(_this.hide());
 
 		$.get(request_url, function (response)

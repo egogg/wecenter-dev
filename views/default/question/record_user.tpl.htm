@@ -1,0 +1,74 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<section id="main">
+    <section id="content">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card text-center">
+                        <div class="card-header f-16">
+                            <a class="user-tag user-img" data-id="<?php echo $this->quiz_user_info['uid']; ?>" href="people/<?php echo $this->quiz_user_info['url_token']; ?>">
+                                <img class="img-circle" alt="" src="<?php echo get_avatar_url($this->quiz_user_info['uid'], 'min'); ?>" />
+                            </a>
+                            <a class="user-tag user-name" data-id="<?php echo $this->quiz_user_info['uid']; ?>" href="people/<?php echo $this->quiz_user_info['url_token']; ?>">
+                                <?php echo $this->quiz_user_info['user_name']; ?><?php if ($this->quiz_user_info['verified']) { ?>
+                                    <i class="icon-v<?php if ($this->quiz_user_info['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->quiz_user_info['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+                                <?php } ?>
+                            </a>
+                            <span>回答</span>
+                            <a href="question/<?php echo $this->question_info['question_id']; ?>" class="c-lightblue">
+                                <?php echo $this->question_info['question_content']; ?>
+                            </a>
+                        </div>
+                        <div class="card-body card-padding f-18 p-t-0">
+                            <?php if($this->user_quiz_record_count) { ?>
+                                <?php if($this->user_quiz_passed) { ?>
+                                    <div class="c-green">
+                                        答题正确 <i class="md md-check"></i>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="c-red">
+                                        答题失败 <i class="md md-close"></i>
+                                    </div>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <div class="c-gray">
+                                    尚未答题
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card user-record">
+                        <div class="card-header text-center">
+                            <h2><?php echo $this->user_quiz_record_count; ?> 次答题</h2>
+                        </div>
+                        <div class="card-body card-padding p-t-0">
+                            <ul class="user-quiz-record-items" id="user-quiz-record-items">
+                                <?php TPL::assign('quiz_record', $this->user_quiz_record); ?>
+                                <?php TPL::output('question/ajax/user_quiz_record_list'); ?>
+                            </ul>
+                            <div class="load-more">
+                                <a href="#" id="load-more-question-quiz-record-user" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+<script type="text/javascript">
+    $(function(){
+
+        // 绑定加载更多
+
+        AWS.load_list_view(G_BASE_URL + "/question/ajax/load_more_question_quiz_record_user/question_id-<?php echo $this->question_info['question_id']; ?>__uid-<?php echo $this->quiz_user_info['uid']; ?>", $('#load-more-question-quiz-record-user'), $('#user-quiz-record-items'), 2);
+    });
+</script>
+
+<?php TPL::output('global/footer.tpl.htm'); ?>

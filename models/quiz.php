@@ -94,9 +94,17 @@ class quiz_class extends AWS_MODEL
 		return $question_quiz_info;
 	}
 
-	public function get_question_quiz_record_by_user($question_id, $uid)
+	public function get_question_quiz_record_by_user($question_id, $uid, $page = 1, $per_page = 10)
 	{
-		return $this->fetch_all('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC');
+		$records = $this->fetch_page('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC', $page, $per_page);
+		$this->user_record_list_total = $this->found_rows();
+
+		return $records;
+	}
+
+	public function get_question_quiz_record_user_count()
+	{
+		return $this->user_record_list_total;
 	}
 
 	public function get_question_quiz_record_by_question($question_id, $limit = 10)

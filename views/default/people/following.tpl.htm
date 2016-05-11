@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="col-sm-9">
-                    <div class="card">
+                    <div class="card clearfix">
                         <div class="card-header card-padding">
                             <h2>
                                 <?php if($this->current_menu == 'following_friends') { ?>
@@ -35,7 +35,6 @@
                                             <?php TPL::assign('user_list_lite', $this->friends_list); ?>
                                             <?php TPL::output('block/user_list_lite.tpl.htm'); ?>
                                         </div>
-                                        <div class="lv-footer"></div>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -47,7 +46,6 @@
                                             <?php TPL::assign('user_list_lite', $this->fans_list); ?>
                                             <?php TPL::output('block/user_list_lite.tpl.htm'); ?>
                                         </div>
-                                        <div class="lv-footer"></div>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -58,16 +56,14 @@
                                             <?php TPL::assign('topic_list_lite', $this->focus_topics); ?>
                                             <?php TPL::output('block/topic_list_lite.tpl.htm'); ?>
                                         </div>
-                                        <div class="lv-footer"></div>
                                     </div>
                                 <?php } ?>
                         <?php } ?>
-                    </div>
-                    <div class="card text-center">
-                        <div class="card-body card-padding">
-                            <a class="load-more" href="javascript:void(0);" id="<?php if($this->current_menu == 'following_friends') { ?>load-more-foucs-friends-list-lite<?php } else if($this->current_menu == 'following_fans') { ?>load-more-focus-fans-list-lite<?php } else { ?>load-more-focus-topics-list-lite<?php } ?>" auto-load="false" data-page="1"><i class="md md-refresh"></i> 加载更多</a>
+
+                        <div class="load-more m-b-25">
+                            <a href="javascript:void(0);" id="<?php if($this->current_menu == 'following_friends') { ?>load-more-foucs-friends-list-lite<?php } else if($this->current_menu == 'following_fans') { ?>load-more-focus-fans-list-lite<?php } else { ?>load-more-focus-topics-list-lite<?php } ?>" auto-load="false" data-page="1"><i class="md md-refresh"></i> 加载更多</a>
                         </div>
-                    </div> 
+                    </div>
                 </div>
             </div> 
         </div>

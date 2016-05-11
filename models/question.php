@@ -859,22 +859,38 @@ class question_class extends AWS_MODEL
 		return $this->fetch_row('question_invite', 'question_id = ' . intval($question_id) . ' AND email = \'' . $email . '\'');
 	}
 
-	public function get_invited_users($question_id, $limit = 10)
+	public function get_invited_user_ids($question_id)
 	{
-		if ($invites = $this->fetch_all('question_invite', 'question_id = ' . intval($question_id), 'question_invite_id DESC', $limit))
-		{
-			foreach ($invites as $key => $val)
-			{
-				$invite_users[] = $val['recipients_uid'];
-			}
+		return $this->query_all("SELECT DISTINCT recipients_uid as uid FROM " . $this->get_table('question_invite') . " WHERE question_id = " . intval($question_id));
+	}
 
-			if ($invite_users)
-			{
-				return $this->model('account')->get_user_info_by_uids($invite_users);
-			}
+	public function get_invited_users($question_id, $uid = null, $limit = 10)
+	{
+		$where = 'question_id = ' . intval($question_id);
+
+		if($uid)
+		{
+			$where .= ' AND sender_uid = ' . intval($uid);
 		}
 
-		// return $this->fetch_all('question_invite', 'question_id = ' . intval($question_id), 'question_invite_id DESC', $limit);
+		return $this->fetch_all('question_invite', $where, 'question_invite_id DESC', $limit);
+	}
+
+	public function get_invited_user_list($question_id, $page = 1, $per_page = 8, $order = 'add_time DESC')
+	{
+		return $this->fetch_page('question_invite', 'question_id = ' . intval($question_id), $order, $page, $per_page);
+	}
+
+	public function get_invited_user_count($question_id, $uid = null)
+	{
+		$where = 'question_id = ' . intval($question_id);
+
+		if($uid)
+		{
+			$where .= ' AND sender_uid = ' . intval($uid);
+		}
+
+		return $this->count('question_invite', $where);
 	}
 
 	public function get_invite_question_list($uid, $limit = 10)
@@ -1975,20 +1991,84 @@ class question_class extends AWS_MODEL
 		return $this->query_all("SELECT DISTINCT uid FROM " . get_table('answer') . " WHERE question_id = " . intval($question_id));
 	}
 
-	public function get_helpful_users_by_category_id($category_id, $exclude_uids = null, $limit = 20)
+	public function get_helpful_users_by_category_id($category_id, $exclude_uids = null, $limit = 24)
 	{
 		$quiz_record_table = get_table('question_quiz_record');
 		$question_table = get_table('question');
 		$query_uid = $quiz_record_table . ".uid";
 
+		// 1. 按照分类用户答题数进行推荐
+
+		$fetched_uids = $exclude_uids;
+		$count = $limit;
 		$where = " WHERE category_id = " . intval($category_id);
-		if($exclude_uids)
+		if($fetched_uids)
 		{
-			$where .= " AND " . $quiz_record_table . ".uid NOT IN (" . implode(',', $exclude_uids) . ")";
+			$where .= " AND " . $quiz_record_table . ".uid NOT IN (" . implode(',', $fetched_uids) . ")";
 		}
 
-		$users = $this->query_all("SELECT " . $query_uid . " AS uid, COUNT(" . $query_uid. ") AS count" . " FROM " . $quiz_record_table . " INNER JOIN " . $question_table . " ON " . $quiz_record_table . ".question_id = " . $question_table .".question_id" . $where . " GROUP BY " . $query_uid . " ORDER BY count DESC LIMIT " . $limit);
+		$users = $this->query_all("SELECT " . $query_uid . " AS uid, COUNT(" . $query_uid. ") AS count" . " FROM " . $quiz_record_table . " INNER JOIN " . $question_table . " ON " . $quiz_record_table . ".question_id = " . $question_table .".question_id" . $where . " GROUP BY " . $query_uid . " ORDER BY count DESC LIMIT " . $count);
+
+		foreach ($users as $key => $val) 
+		{
+			$fetched_uids[] = $val['uid'];
+
+			$val['recommend'] = 'CATEGORY_QUIZ';
+			$recommend_users[] = $val;
+		}
+
+		$count = $limit - count($recommend_users);
+		if($count <= 0)
+		{
+			return $recommend_users;
+		}
+
+		// 2. 按照分类用户讨论数推荐
+
+		$question_table = get_table('question');
+		$answer_table = get_table('answer');
+		$query_uid = $answer_table . ".uid";
+
+		$where = " WHERE " . $question_table . ".category_id = " . intval($category_id);
+		if($fetched_uids)
+		{
+			$where .= " AND " . $answer_table . ".uid NOT IN (" . implode(',', $fetched_uids) . ")";
+		}
+
+		$users = $this->query_all("SELECT " . $query_uid . " AS uid, COUNT(" . $query_uid. ") AS count" . " FROM " . $answer_table . " INNER JOIN " . $question_table . " ON " . $answer_table . ".question_id = " . $question_table .".question_id" . $where . " GROUP BY " . $query_uid . " ORDER BY count DESC LIMIT " . $count);
+
+		foreach ($users as $key => $val) 
+		{
+			$fetched_uids[] = $val['uid'];
+
+			$val['recommend'] = 'CATEGORY_COMMENT';
+			$recommend_users[] = $val;
+		}
+
+		$count = $limit - count($recommend_users);
+		if($count <= 0)
+		{
+			return $recommend_users;
+		}
+
+		// 3. 按照总答题次数进行推荐
+
+		$user_table = get_table('users');
+		if($fetched_uids)
+		{
+			$where = " WHERE uid NOT IN (" . implode(',', $fetched_uids) . ")";
+		}
+
+		$users = $this->query_all("SELECT uid, question_quiz_count_total + answer_count AS count FROM " . $user_table . $where . " ORDER BY count DESC LIMIT " . $count);
 		
-		return $users;
+		foreach ($users as $key => $val) 
+		{
+			$fetched_uids[] = $val['uid'];
+
+			$val['recommend'] = 'TOTAL_COUNT';
+			$recommend_users[] = $val;
+		}
+		
+		return $recommend_users;
 	}
 }

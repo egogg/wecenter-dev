@@ -45,14 +45,15 @@
 								</div>
 								
 								<div class="login-sns">
+									<?php if ($this->return_url) $return_url = 'return_url-' . base64_encode($this->return_url); ?>
 									<div class="login-sns-title">
 										<h2>使用其他账号登录</h2>
 									</div>
 									
 									<ul class="sns-login-items">
-										<li><a class="bgm-blue" href="#"><i class="icon icon-qq"></i></a></li>
+										<li><a class="bgm-blue" href="account/openid/qq/bind/<?php echo $return_url; ?>"><i class="icon icon-qq"></i></a></li>
 										<li><a class="bgm-green" href="#"><i class="icon icon-wechat"></i></a></li>
-										<li><a class="bgm-red" href="#"><i class="icon icon-weibo"></i></a></li>
+										<li><a class="bgm-red" href="account/openid/weibo/bind/<?php echo $return_url; ?>"><i class="icon icon-weibo"></i></a></li>
 									</ul>
 								</div>
 						    </div>

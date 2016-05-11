@@ -1,0 +1,63 @@
+<?php if($this->invited_users) { ?>
+	<?php foreach ($this->invited_users AS $key => $val) { ?>
+		<li class="col-xs-6 help-user-item">
+			<div class="media">
+				<div class="help-user-invite">
+					<div class="invited_by">
+						<span class="c-gray">由</span> <a class="user-tag user-img" data-id="<?php echo $val['sender_info']['uid']; ?>" href="people/<?php echo $val['sender_info']['url_token']; ?>">
+                        	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['sender_info']['uid'], 'min'); ?>" />
+                        </a> <span class="c-gray">邀请</span>
+					</div>
+				</div>
+					
+                <div class="pull-left">
+                    <a class="user-tag user-img" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">
+                    	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['recipient_info']['uid'], 'mid'); ?>" />
+                    </a>
+                </div>
+                <div class="media-body">
+                    <div class="media-heading">
+                    	<a class="user-tag user-name" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">
+                    		<?php echo $val['recipient_info']['user_name']; ?><?php if ($val['recipient_info']['verified']) { ?>
+                    			<i class="icon-v<?php if ($val['recipient_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['recipient_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+                    		<?php } ?>
+                    	</a>
+                    	
+                    	<div class="answer-state m-b-15">
+                    		<?php if($this->question_info['quiz_id']) { ?>
+                        		<?php if($val['quiz_count']) { ?>
+                        			<?php if($val['quiz_passed']) { ?>
+                        				<span class="c-green">答题通过 <i class="md md-check"></i></span>
+                        			<?php } else { ?>
+                        				<span class="c-red">答题失败 <i class="md md-close"></i></span>
+                        			<?php } ?>
+                        			<a href="javascript:void(0);" class="pull-right c-lightblue f-12 quiz-record-toggle content-popover" data-placement="bottom" data-original-title="答题记录" data-content='<ul class="user-quiz-record-items f-12">
+										<?php TPL::assign("quiz_record", $val["quiz_record"]); ?>
+				                        <?php TPL::output("question/ajax/user_quiz_record_list"); ?>
+				                        <?php if($val["quiz_count"] > count($val["quiz_record"])) { ?>
+				                        	<li class="p-l-15">
+				                        		<a class="c-lightblue" href="question/record/id-<?php echo $this->question_info["question_id"]; ?>__uid-<?php echo $val["recipient_info"]["uid"]; ?>">
+													更多记录
+				                        		</a>
+				                        	</li>
+				                        <?php } ?>
+									</ul>'>
+										<?php echo $val['quiz_count']; ?> 次答题
+									</a>
+                        		<?php } else { ?>
+									<span class="c-gray">尚未答题</span>
+                        		<?php } ?>
+                        	<?php } else { ?>
+                        		<?php if($val['comment_count']) { ?>
+                        			<span class="c-green">已发表<?php echo $val['comment_count']; ?>条回答</span>
+                        		<?php } else { ?>
+                        			<span class="c-gray">尚未答题</span>
+                        		<?php } ?>
+                        	<?php } ?>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+		</li>
+	<?php } ?>
+<?php } ?>

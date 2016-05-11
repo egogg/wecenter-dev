@@ -33,7 +33,10 @@ class ajax extends AWS_CONTROLLER
 			'get_question_view_solution_integral',
 			'save_question_view_solution_integral',
 			'question_quiz_timeout',
-			'load_more_question_quiz_record'
+			'load_more_question_quiz_record',
+			'load_more_question_quiz_record_user',
+			'invited_users',
+			'user_invited_users'
 		);
 
 		return $rule_action;
@@ -92,15 +95,15 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('不能邀请自己回复问题')));
 		}
 
-		if ($this->user_info['integral'] < 0 and get_setting('integral_system_enabled') == 'Y')
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你的剩余积分已经不足以进行此操作')));
-		}
+		// if ($this->user_info['integral'] < 0 and get_setting('integral_system_enabled') == 'Y')
+		// {
+		// 	H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你的剩余积分已经不足以进行此操作')));
+		// }
 
-		if ($this->model('answer')->has_answer_by_uid($_POST['question_id'], $invite_user_info['uid']))
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('该用户已经回答过该问题')));
-		}
+		// if ($this->model('answer')->has_answer_by_uid($_POST['question_id'], $invite_user_info['uid']))
+		// {
+		// 	H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('该用户已经回答过该问题')));
+		// }
 
 		if ($question_info['published_uid'] == $invite_user_info['uid'])
 		{
@@ -123,7 +126,7 @@ class ajax extends AWS_CONTROLLER
 
 		if ($weixin_user = $this->model('openid_weixin_weixin')->get_user_info_by_uid($invite_user_info['uid']) AND $invite_user_info['weixin_settings']['QUESTION_INVITE'] != 'N')
 		{
-			$this->model('weixin')->send_text_message($weixin_user['openid'], "有会员在问题 [" . $question_info['question_content'] . "] 邀请了你进行回答", $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_info['question_id']));
+			$this->model('weixin')->send_text_message($weixin_user['openid'], "有用户邀请你回答问题 [" . $question_info['question_content'] . "]", $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_info['question_id']));
 		}
 
 		$notification_id = $this->model('notify')->send($this->user_id, $invite_user_info['uid'], notify_class::TYPE_INVITE_QUESTION, notify_class::CATEGORY_QUESTION, intval($_POST['question_id']), array(
@@ -1401,17 +1404,15 @@ class ajax extends AWS_CONTROLLER
 
 		// 用户答题记录
 
-		$try_count = 0;
 		$passed_quiz = false;
-		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id))
+		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id, 1, 5))
 		{
-			$try_count = count($quiz_record);
 			$passed_quiz = $quiz_record[0]['passed'];
+			TPL::assign('quiz_record_count', $this->model('quiz')->get_question_quiz_record_user_count());
 		}
 
 		TPL::assign('quiz_record', $quiz_record);
 		TPL::assign('passed_quiz', $passed_quiz);
-		TPL::assign('try_count', $try_count);
 
 		// 是否显示答题选项
 
@@ -1942,6 +1943,106 @@ class ajax extends AWS_CONTROLLER
 
 		TPL::assign('question_quiz_record_list', $question_quiz_record);
 
-		TPL::output('block/quiz_record_list.tpl.htm');
+		TPL::output('block/quiz_record_list');
+	}
+
+	public function load_more_question_quiz_record_user_action()
+	{
+		if (! $question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
+		{
+			return;
+		}
+
+		$records = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $_GET['uid'], $_GET['page'], 10);
+		TPL::assign('quiz_record', $records);
+		TPL::output('question/ajax/user_quiz_record_list');
+	}
+
+	public function invited_users_action()
+	{
+		$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']);
+		if(!$question_info)
+		{
+			return;
+		}
+
+		$invited_users = $this->model('question')->get_invited_user_list($question_info['question_id'], $_GET['page'], 8);
+		if($invited_users)
+		{
+			foreach ($invited_users as $key => $val) 
+			{
+				$exclude_uids[] = $val['recipients_uid'];
+				$uids[] = $val['recipients_uid'];
+				$uids[] = $val['sender_uid'];
+			}
+
+			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
+
+			foreach ($invited_users as $key => $val) 
+			{
+				$invited_users[$key]['recipient_info'] = $users_info[$val['recipients_uid']];
+				$invited_users[$key]['sender_info'] = $users_info[$val['sender_uid']]; 
+
+				// 答题状态及记录
+
+				if($question_info['quiz_id'])
+				{
+					// 获取答题记录
+
+					$quiz_count = 0;
+					$passed_quiz = false;
+					if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $val['recipients_uid'], 1, 5))
+					{
+						$quiz_count = count($quiz_record);
+						$passed_quiz = $quiz_record[0]['passed'];
+					}
+
+					$invited_users[$key]['quiz_record'] = $quiz_record;
+					$invited_users[$key]['quiz_passed'] = $passed_quiz;
+					$invited_users[$key]['quiz_count'] = $quiz_count;
+				}
+				else 
+				{
+					// 是否评论
+
+					$invited_users[$key]['answered'] = $this->model('answer')->has_answer_by_uid($question_info['question_id'], $val['recipients_uid']);
+				}
+			}
+		}
+
+		TPL::assign('question_info', $question_info);
+		TPL::assign('invited_users', $invited_users);
+		TPL::output('question/ajax/invited_users');
+	}
+
+	public function user_invited_users_action()
+	{
+		if($this->user_id)
+		{
+			$invite_limit = get_setting('user_question_invite_limit');
+			$user_invitations = $this->model('question')->get_invited_users($_GET['question_id'], $_GET['uid'], 5);
+			$user_invite_count = $this->model('question')->get_invited_user_count($_GET['question_id'], $_GET['uid']);
+			$remaind_invite_count = $invite_limit - $user_invite_count;
+
+			$user_invitations_all = $this->model('question')->get_invited_users($_GET['question_id'], $_GET['uid'], $invite_limit);
+			$uids = null;
+			foreach ($user_invitations_all as $key => $val) 
+			{
+				$uids[] = $val['recipients_uid'];
+			}
+			
+			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
+			foreach ($user_invitations_all as $key => $val) 
+			{
+				$user_invitations_all[$key]['recipient_info'] = $users_info[$val['recipients_uid']];
+			}
+
+			TPL::assign('user_invite_count', $user_invite_count);
+			TPL::assign('user_invitations', $user_invitations);
+			TPL::assign('user_invitations_all', $user_invitations_all);
+			TPL::assign('remaind_invite_count', $remaind_invite_count);
+
+			TPL::output('question/ajax/user_invited_users');
+		}
 	}
 }

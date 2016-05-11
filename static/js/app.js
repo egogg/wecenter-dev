@@ -599,7 +599,7 @@ $(document).ready(function ()
     // popover提示
 
     if ($('[data-toggle="popover"]')[0]) {
-        $('[data-toggle="popover"]').popover({html : true});
+        $('[data-toggle="popover"]').popover({html : true, container: 'body'});
     }
 
     // 底部侧边工具条

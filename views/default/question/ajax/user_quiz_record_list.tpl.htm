@@ -1,0 +1,22 @@
+<?php if($this->quiz_record) { ?>
+    <?php foreach ($this->quiz_record as $key => $record) { ?>
+    <?php if($record['passed']) { ?> 
+        <li class="user-quiz-record-item success">
+            <span class="quiz-record-mark c-green">答题成功</span>
+    <?php } else if($this->question_info['question_quiz']['countdown'] > 0 and $record['time_spend'] <= 0) { ?>
+        <li class="user-quiz-record-item timeout">
+            <span class="quiz-record-mark c-deeporange">答题超时</span> 
+    <?php } else { ?>
+        <li class="user-quiz-record-item failed">
+            <span class="quiz-record-mark c-red">答题失败</span>
+    <?php } ?>
+        
+        <?php if($record['time_spend'] > 0) { ?>
+            ，用时 <?php echo $record['time_spend']; ?> 秒 
+        <?php } ?>
+        <span class="c-gray user-quiz-record-time">
+            （<?php echo date_friendly($record['start_time'], 604800, 'Y-m-d'); ?>）
+        </span>
+        </li>
+    <?php } ?>
+<?php } ?>

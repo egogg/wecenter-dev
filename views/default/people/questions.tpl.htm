@@ -9,7 +9,7 @@
                 </div>
                 
                 <div class="col-sm-9">
-                   <div class="card">
+                   <div class="card clearfix">
                         <div class="card-header card-padding">
                             <h2>
                                 <?php if($this->current_menu == 'questions_answered') { ?>
@@ -37,7 +37,6 @@
                                     <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
                                     <?php TPL::output('block/question_list_lite'); ?>
                                 </div>
-                                <div class="lv-footer"></div>
                             </div>
                         <?php } else if ($this->current_menu == 'questions_comments') { ?>
                             <div class="listview">
@@ -45,7 +44,6 @@
                                     <?php TPL::assign('comments', $this->user_answer_list); ?>
                                     <?php TPL::output('block/comment_list_lite.tpl.htm'); ?>  
                                 </div>
-                                <div class="lv-footer"></div>
                             </div>
                         <?php } else if ($this->current_menu == 'questions_failed') { ?>
                             <div class="listview">
@@ -53,7 +51,6 @@
                                     <?php TPL::assign('question_list_lite', $this->user_question_list_failed); ?>
                                     <?php TPL::output('block/question_list_lite'); ?>
                                 </div>
-                                <div class="lv-footer"></div>
                             </div>
                         <?php } else if ($this->current_menu == 'questions_publish') { ?>
                             <div class="listview">
@@ -61,7 +58,6 @@
                                     <?php TPL::assign('question_list_lite', $this->user_question_list_publish); ?>
                                     <?php TPL::output('block/question_list_lite'); ?>
                                 </div>
-                                <div class="lv-footer"></div>
                             </div>
                         <?php } else { ?>
                             <div class="listview">
@@ -69,12 +65,10 @@
                                     <?php TPL::assign('question_list_lite', $this->user_question_list_answered); ?>
                                     <?php TPL::output('block/question_list_lite'); ?>
                                 </div>
-                                <div class="lv-footer"></div>
                             </div>
                         <?php } ?>
-                    </div>
-                    <div class="card text-center">
-                        <div class="card-body card-padding">
+
+                        <div class="load-more m-b-25">
                             <a href="javascript:void(0);" id="<?php if($this->current_menu == 'questions_answered') { ?>load-more-user-questions-answered<?php } else if($this->current_menu == 'questions_comments') { ?>load-more-user-questions-comments<?php } else if($this->current_menu == 'questions_failed') { ?>load-more-user-questions-failed<?php } else if($this->current_menu == 'questions_publish') { ?>load-more-user-questions-publish<?php } else { ?>load-more-user-questions-publish<?php } ?>" auto-load="false" data-page="1"><i class="md md-refresh"></i> 加载更多</a>
                         </div>
                     </div>

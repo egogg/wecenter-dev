@@ -42,20 +42,15 @@
                         <div class="card-header">
                             <h2>答题记录（<?php echo $this->question_info['quiz_count_total']; ?>）</h2>
                         </div>
-                        <div class="card-body">
-                            
-                        </div>
-                        <div class="listview">
+                        <div class="listview clearfix">
                             <ul class="lv-body" id="question-quiz-record-items">
                                 <?php TPL::assign('quiz_record_list', $this->question_quiz_record); ?>
                                 <?php TPL::output('block/quiz_record_list.tpl.htm'); ?>
                             </ul>
-                            <div class="lv-footer"></div>
-                        </div>
-                    </div>
-                    <div class="card text-center">
-                        <div class="card-body card-padding">
-                            <a class="load-more" href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
+                            
+                            <div class="load-more m-b-30">
+                                <a href="#" id="load-more-question-quiz-record" auto-load="false"><i class="md md-refresh"></i> 加载更多</a>
+                            </div>
                         </div>
                     </div>
                 </div>

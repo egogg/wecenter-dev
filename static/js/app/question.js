@@ -1,5 +1,104 @@
 $(function(){
 
+	// 答题记录popover
+
+	function initPopover(sel) {
+		sel.popover({
+        		html : true, 
+        		container: 'body',
+        		trigger: 'manual'
+        }).on("mouseenter", function () {
+        	var _this = this;
+        	$(this).popover("show");
+        	$(".popover").on("mouseleave", function () {
+            	$(_this).popover('hide');
+        	});
+    	}).on("mouseleave", function () {
+        	var _this = this;
+	        setTimeout(function () {
+	            if (!$(".popover:hover").length) {
+	                $(_this).popover("hide");
+	            }
+	    	}, 300)
+	    });
+	}
+
+	if ($('.content-popover')[0]) {
+        initPopover($('.content-popover'));
+    }
+
+    // 邀请用户列表
+
+    function updateInvitedUsers() {
+    	$.get(G_BASE_URL + '/question/ajax/invited_users/question_id-' + QUESTION_ID + '__page-1', function (response) {
+			$('#invited-user-list').html(response);
+			initPopover($('#invited-user-list .content-popover'));
+
+			// 重置加载更多按钮
+
+			$('.load-more .invited-users').html('<a href="javascript:void(0);" auto-load="false" id="load-more-invited-users"><i class="md md-refresh"></i> 加载更多</a>');
+		});
+    }
+
+    updateInvitedUsers();
+
+    $('.add-user-invitations').click(function(e) {
+    	e.preventDefault();
+    	$('#add-user-invitation-tab').click();
+    });
+
+    // 邀请用户分页
+
+    //邀请初始化
+    var pgnum = $('.help-user-invite-list').attr('data-page');
+    var perpg = $('.help-user-invite-list').attr('data-perpage');
+    var helpuserlist = $('.help-user-invite-list .help-user-item');
+    var maxpg = parseInt(helpuserlist.length / perpg);
+    function updateHelpUserItems(pagenum, perpage) {
+    	helpuserlist.hide();
+
+    	$('.help-user-invite-list').attr('data-page', pagenum);
+    	$('.help-user-invite-list-nav .prev').prop("disabled", pagenum <= 1);
+    	$('.help-user-invite-list-nav .next').prop("disabled", pagenum >= maxpg);
+
+    	for (var i = (pagenum - 1) * perpage; i < pagenum * perpage; i++)
+	    {
+	    	helpuserlist.eq(i).show();
+	    }
+    }
+   	
+	updateHelpUserItems(pgnum, perpg);
+
+    //邀请上一页
+
+    $('.help-user-invite-list-nav .prev').click(function()
+    {
+    	pgnum--;
+    	helpuserlist.removeClass('slideInLeft slideInRight').addClass('slideInLeft');
+
+    	updateHelpUserItems(pgnum, perpg);
+    });
+
+    //邀请下一页
+    $('.help-user-invite-list-nav .next').click(function()
+    {
+    	pgnum++;
+    	helpuserlist.removeClass('slideInLeft slideInRight').addClass('slideInRight');
+
+    	updateHelpUserItems(pgnum, perpg);
+    });
+
+    // 用户邀请的用户列表
+
+    function updateUserInvitations() {
+    	$.get(G_BASE_URL + '/question/ajax/user_invited_users/uid-' + G_USER_ID + '__question_id-' + QUESTION_ID, function (response) {
+			$('#user-invited-users-list').html(response);
+			initPopover($('#user-invited-users-list .content-popover'));
+		});
+    }
+
+    updateUserInvitations();
+
 	// 发表问题成功检测 
 
 	if(PUBLISH_SUCCESS_HINT) {

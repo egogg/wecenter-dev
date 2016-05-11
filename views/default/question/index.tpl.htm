@@ -99,91 +99,6 @@
 						</div>
 					</div>
 					
-					<!-- 答题邀请 -->
-					<div class="card">
-						<div class="card-body">
-                            <ul class="tab-nav tn-justified tn-icon" role="tablist" tabindex="1">
-                                <li role="presentation" class="active">
-                                    <a class="col-sx-4" href="#tab-1" aria-controls="tab-1" role="tab" data-toggle="tab" aria-expanded="true">
-                                        <i class="md md-group"></i> 被邀答题
-                                    </a>
-                                </li>
-                                <li role="presentation" class="">
-                                    <a class="col-xs-4" href="#tab-2" aria-controls="tab-2" role="tab" data-toggle="tab" aria-expanded="false">
-                                        <i class="md md-person-add"></i> 发送邀请
-                                    </a>
-                                </li>
-                            </ul>
-                            
-                            <div class="tab-content p-20">
-                                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab-1">
-                                   <div class="invite-list pull-left<?php if (!$this->invite_users) { ?> hide<?php } ?>">
-										<?php _e('已邀请'); ?>:
-										<?php if ($this->invite_users) { ?>
-										<?php foreach($this->invite_users as $key => $val) { ?>
-											<a class="text-color-999 invite-list-user" data-id="<?php echo $val['uid']; ?>" href="people/<?php echo $val['url_token']; ?>" data-id="<?php echo $val['uid']; ?>" data-original-title="<?php echo $val['user_name']; ?>" data-placement="bottom" data-toggle="tooltip"><img src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" /></a>
-										<?php } ?>
-										<?php } ?>
-									</div>
-                                </div>
-                                
-                                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-2">
-                                	<div class="help-user-header clearfix">
-                                		<div class="help-user-search form-group col-xs-6">
-                                			<div class="input-group help-user-search-box">
-                                				<input id="invite-input" type="text" class="search-field form-control" placeholder="站内搜索你想邀请的人">
-                                				<i class="md input-group-addon md-search c-gray"></i> 
-                                			</div>
-                                		</div>
-                                		<div class="col-xs-6">
-                                			<div class="help-user-email-invite">
-                                				或者通过
-	                                			<a class="c-lightblue" data-toggle="modal" href="#modalInviteFriend"><i class="md md-email"></i> 邮件邀请</a> 朋友答题
-                                			</div>
-                                		</div>
-                                	</div>
-                                    <?php if ($this->helpful_users) { ?>
-										<div class="help-user-invite-list clearfix">
-											<?php foreach ($this->helpful_users AS $key => $val) { ?>
-												<div class="col-xs-6 help-user-item">
-													<div class="media">
-														<div class="help-user-invite pull-right">
-															<?php if ($val['has_invite']) { ?>
-																<?php if($val['sender_uid'] == $this->user_id) { ?>
-																	<a class="btn btn-sm btn-success active" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.disinvite_user($(this))">取消邀请</a>
-																<?php } else { ?>
-																	<a class="btn btn-sm btn-default" href="javascript:void(0);" disabled="disabled">已被邀请</a>
-																<?php } ?>
-															<?php } else { ?>
-																<a class="btn btn-sm btn-success" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.invite_user($(this),$(this).parents('li').find('img').attr('src'));">发送邀请</a>
-															<?php } ?>
-														</div>
-															
-					                                    <div class="pull-left">
-					                                        <a class="user-tag user-img" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
-					                                        	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['user_info']['uid'], 'mid'); ?>" />
-					                                        </a>
-					                                    </div>
-					                                    <div class="media-body">
-					                                        <h4 class="media-heading">
-					                                        	<a class="user-tag user-name" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
-					                                        		<?php echo $val['user_info']['user_name']; ?><?php if ($val['user_info']['verified']) { ?>
-					                                        			<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
-					                                        		<?php } ?>
-					                                        	</a>
-					                                        </h4>
-					                                        在答题分类中答题<?php echo $val['count']; ?>次
-					                                    </div>
-					                                </div>
-												</div>
-											<?php } ?>
-										</div>
-									<?php } ?>
-                                </div>
-                            </div>
-                        </div>
-					</div>
-
 					<!-- 答题关注 -->
 					<div class="card">
 						<div class="card-body card-padding question-focus text-center">
@@ -203,6 +118,117 @@
 			                <ul class="user-list-square" id="focus_users">
 			                </ul>
 						</div>
+					</div>
+
+					<!-- 答题邀请 -->
+					<div class="card question-invitation">
+						<div class="card-body">
+                            <ul class="tab-nav tn-justified tn-icon" role="tablist" tabindex="1">
+                                <li role="presentation" class="active">
+                                    <a class="col-sx-4" href="#tab-1" aria-controls="tab-1" role="tab" data-toggle="tab" aria-expanded="true">
+                                        <i class="md md-group"></i> 被邀答题
+                                    </a>
+                                </li>
+                                <li role="presentation">
+                                    <a class="col-xs-4" id="add-user-invitation-tab" href="#tab-2" aria-controls="tab-2" role="tab" data-toggle="tab" aria-expanded="false">
+                                        <i class="md md-person-add"></i> 邀请答题
+                                    </a>
+                                </li>
+                            </ul>
+                            
+                            <div class="tab-content p-20">
+                                <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab-1">
+                                	<?php if($this->invited_user_count) { ?>
+	                            		<ul class="invite-list clearfix" id="invited-user-list">
+										</ul>
+										<div class="load-more invited-users">
+			                                <a href="javascript:void(0);" auto-load="false" id="load-more-invited-users"><i class="md md-refresh"></i> 加载更多</a>
+			                            </div>
+		                            <?php } else { ?>
+		                            	<div class="text-center no-invited-users">
+		                            		<p class="c-gray">目前还没有被邀请的用户</p>
+		                            		<a href="javascript:void(0);" class="c-blue add-user-invitations"><i class="md md-person-add"></i> 邀请答题</a>
+		                            	</div>
+		                            <?php } ?>
+                                </div>
+                                
+                                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-2">
+                                	<div class="help-user-header clearfix">
+                                		<div class="help-user-search form-group col-xs-6">
+                                			<div class="input-group help-user-search-box">
+                                				<input id="invite-input" type="text" class="search-field form-control" placeholder="站内搜索你想邀请的人">
+                                				<i class="md input-group-addon md-search c-gray"></i> 
+                                			</div>
+                                		</div>
+                                		<div class="col-xs-6">
+                                			<div class="help-user-email-invite">
+                                				或者通过
+	                                			<a class="c-lightblue" data-toggle="modal" href="#modalInviteFriend"><i class="md md-email"></i> 邮件邀请</a> 朋友答题
+                                			</div>
+                                		</div>
+                                	</div>
+                                	
+                            		<div class="col-xs-12">
+                            			<div class="user-invited-users-list" id="user-invited-users-list">
+                            			</div>
+                            		</div>
+                                	
+                                    <?php if ($this->helpful_users) { ?>
+										<div class="help-user-invite-list clearfix" data-page="1" data-perpage="6">
+											<?php foreach ($this->helpful_users AS $key => $val) { ?>
+												<div class="col-xs-6 help-user-item animated">
+													<div class="media">
+														<div class="help-user-invite pull-right">
+															<?php if ($val['has_invite']) { ?>
+																<?php if($val['sender_uid'] == $this->user_id) { ?>
+																	<a class="btn btn-xs bgm-gray" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.disinvite_user($(this))">取消邀请</a>
+																<?php } else { ?>
+																	<a class="btn btn-xs btn-green" href="javascript:void(0);" disabled="disabled">已被邀请</a>
+																<?php } ?>
+															<?php } else { ?>
+																<a class="btn btn-xs bgm-green" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.invite_user($(this), <?php echo $val['user_info']['uid']; ?>);">发送邀请</a>
+															<?php } ?>
+														</div>
+															
+					                                    <div class="pull-left">
+					                                        <a class="user-tag user-img" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
+					                                        	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['user_info']['uid'], 'mid'); ?>" />
+					                                        </a>
+					                                    </div>
+					                                    <div class="media-body">
+					                                    	<div class="media-heading">
+				                                    			<a class="user-tag user-name" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
+					                                        		<?php echo $val['user_info']['user_name']; ?><?php if ($val['user_info']['verified']) { ?>
+					                                        			<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
+					                                        		<?php } ?>
+					                                        	</a>
+					                                    		
+					                                        	<p class="helpful-comment c-gray">
+					                                        		<?php if($val['recommend'] == 'CATEGORY_QUIZ') { ?>
+					                                        			在 <strong><a href="question/category-<?php echo $this->question_info['category_info']['id']; ?>"><?php echo $this->question_info['category_info']['title']; ?></a></strong> 分类中答题 <?php echo $val['count']; ?> 次
+					                                        		<?php } else if($val['recommend'] == 'CATEGORY_COMMENT') { ?>
+					                                        			在 <strong><a href="question/category-<?php echo $this->question_info['category_info']['id']; ?>"><?php echo $this->question_info['category_info']['title']; ?></a></strong> 分类中讨论 <?php echo $val['count']; ?> 次
+					                                        		<?php } else { ?>
+					                                        			参与答题 <?php echo $val['count']; ?> 次
+					                                        		<?php } ?>
+					                                        	</p>
+					                                    	</div>
+					                                    </div>
+					                                </div>
+												</div>
+											<?php } ?>
+
+											<div class="col-xs-12 help-user-invite-list-nav">
+												<div class="pull-right">
+													<button class="btn btn-xs bgm-lightblue prev"><i class="md md-chevron-left"></i></button>
+													<button class="btn btn-xs bgm-lightblue next"><i class="md md-chevron-right"></i></button>
+												</div>
+											</div>
+										</div>
+									<?php } ?>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 					
 					<!-- 答题讨论 -->
@@ -294,9 +320,9 @@
 			                        	</h4>
 										
 										<ul class="question-publisher-stats m-b-5 clearfix">
-											<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率 <?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'], 1) ?>%</span>
+											<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率 <?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'] * 100, 1) ?>%</span>
 											
-											<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过率 <?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'], 1) ?>%</span>
+											<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过率 <?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'] * 100, 1) ?>%</span>
 										</ul>
 
 				                    	<ul class="question-publisher-stats">
