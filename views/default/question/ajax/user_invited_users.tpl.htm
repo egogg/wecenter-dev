@@ -1,5 +1,5 @@
 <?php if($this->user_id and $this->user_invitations) { ?>
-	<span>已邀请：</span>
+	<span>你已邀请：</span>
 	<ul class="user-invited-users-items">
 		<?php foreach($this->user_invitations as $key => $val) { ?>
 			<li>
@@ -9,21 +9,39 @@
 			</li>
 		<?php } ?>
 	</ul>
-	<?php if($this->user_invite_count > 5) { ?>
-		<span>等 <?php echo $this->user_invite_count; ?> 人</span>
-	<?php } ?>
-	<span>（<strong><a href="javascript:void(0);" class="content-popover" data-placement="bottom" data-original-title="取消答题邀请" data-content='
-		<ul class="cancel-user-invitations">
-			<?php foreach($this->user_invitations_all as $key => $val) { ?>
-				<li class="clearfix">
-                    <span class="pull-left m-r-10">
-                        <img class="user-invitations-img img-circle" alt="" src="<?php echo get_avatar_url($val["recipients_uid"], "min"); ?>" />
-                    </span>
-                   
-                    <span class="user-invitations-username c-lightblue m-r-15"><?php echo $val["recipient_info"]["user_name"]; ?></span>
-                    <small class="user-invitations-action pull-right"><a href="javascript:void(0);" class="c-gray">取消邀请</a></small>
-				</li>
-			<?php } ?>
-		</ul>
-	'>取消邀请</a></strong>），还可以邀请 <?php echo $this->remaind_invite_count; ?> 人</span>
+		
+	<span>
+		<?php if($this->user_invite_count > 5) { ?>
+			等
+		<?php } else { ?>
+			共
+		<?php } ?>
+		<?php echo $this->user_invite_count; ?> 人
+	</span>
+	<span>，还可以邀请 <?php echo $this->remaind_invite_count; ?> 人</span>
+
+	<span class="dropdown pull-right">
+        <a href="#" data-toggle="dropdown" aria-expanded="false" class="f-13 user-invited-user-message c-gray">
+            取消邀请
+        </a>
+
+        <div class="dropdown-menu cancel-user-invitations-dropdown pull-right">
+            <div class="listview">
+            	<div class="lv-body">
+            		<?php foreach($this->user_invitations_all as $key => $val) { ?>
+						<div class="lv-item">
+		                    <div class="pull-left m-r-10">
+		                        <img class="user-invitations-img img-circle" alt="" src="<?php echo get_avatar_url($val["recipients_uid"], "min"); ?>" />
+		                    </div>
+		                   
+		                    <span class="user-invitations-username c-lightblue"><?php echo $val["recipient_info"]["user_name"]; ?></span>
+		                    <span class="user-invitations-action pull-right"><a href="javascript:void(0);" class="cancel-user-invitation c-gray" data-id="<?php echo $val["recipients_uid"]; ?>">取消邀请</a></span>
+						</div>
+					<?php } ?>
+            	</div>
+			</ul>
+        </div>
+    </span>
+<?php } else { ?>
+	<span class="user-invited-user-message c-gray">你还没有邀请任何人，你可以邀请 <?php echo $this->remaind_invite_count; ?> 个人回答这个题</span>
 <?php } ?>

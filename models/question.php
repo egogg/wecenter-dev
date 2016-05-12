@@ -876,7 +876,7 @@ class question_class extends AWS_MODEL
 		return $this->fetch_all('question_invite', $where, 'question_invite_id DESC', $limit);
 	}
 
-	public function get_invited_user_list($question_id, $page = 1, $per_page = 8, $order = 'add_time DESC')
+	public function get_invited_user_list($question_id, $page = 1, $per_page = 8, $order = 'add_time ASC')
 	{
 		return $this->fetch_page('question_invite', 'question_id = ' . intval($question_id), $order, $page, $per_page);
 	}

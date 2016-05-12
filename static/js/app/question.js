@@ -23,9 +23,12 @@ $(function(){
 	    });
 	}
 
-	if ($('.content-popover')[0]) {
-        initPopover($('.content-popover'));
-    }
+	function setupPopover()
+	{
+		if ($('.content-popover')[0]) {
+	        initPopover($('.content-popover'));
+	    }
+	}
 
     // 邀请用户列表
 
@@ -88,16 +91,84 @@ $(function(){
     	updateHelpUserItems(pgnum, perpg);
     });
 
+    // 加载更多邀请用户
+
+    AWS.load_list_view(G_BASE_URL + "/question/ajax/invited_users/question_id-" + QUESTION_ID, $('#load-more-invited-users'), $('#invited-user-list'), 2, setupPopover);
+
     // 用户邀请的用户列表
 
     function updateUserInvitations() {
     	$.get(G_BASE_URL + '/question/ajax/user_invited_users/uid-' + G_USER_ID + '__question_id-' + QUESTION_ID, function (response) {
 			$('#user-invited-users-list').html(response);
-			initPopover($('#user-invited-users-list .content-popover'));
 		});
     }
 
     updateUserInvitations();
+
+    $('.toggle-invitation').click(function(e) {
+    	e.preventDefault();
+
+    	if(G_USER_ID <= 0) {
+			window.location = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+    	var $this = $(this);
+    	if($this.hasClass('active')) {
+    		$.post(G_BASE_URL + '/question/ajax/save_invite/question_id-' + QUESTION_ID + '__uid-' + $this.attr('data-id'), function (result) {
+				if(result.errno == -1) {
+					AWS.alert(result.err);
+				} else {
+					updateInvitedUsers();
+					updateUserInvitations();
+					$this.removeClass('active').text('取消邀请');
+				}
+			}, 'json');
+    	} else {
+    		$.post(G_BASE_URL + '/question/ajax/cancel_question_invite/question_id-' + QUESTION_ID + "__recipients_uid-" + $this.attr('data-id'), function (result) {
+				if(result.errno == -1) {
+					AWS.alert(result.err);
+				} else {
+					updateInvitedUsers();
+					updateUserInvitations();
+					$this.addClass('active').text('发送邀请');
+				}
+			}, 'json');
+    	}
+    });
+
+    // 用户邀请的用户列表取消邀请
+
+    $('#user-invited-users-list').on('click', '.cancel-user-invitation', function(e) {
+    	e.preventDefault();
+
+    	var $this = $(this);
+    	var invitedUser = $('.toggle-invitation[data-id="' + $this.attr('data-id') + '"]')[0];
+    	if(invitedUser) {
+    		
+    		// 如果用户还在推荐列表中，直接通过点击取消	
+
+    		invitedUser.click();
+    	} else {
+
+    		// 直接发送删除用户请求
+
+    		$.post(G_BASE_URL + '/question/ajax/cancel_question_invite/question_id-' + QUESTION_ID + "__recipients_uid-" + $this.attr('data-id'), function (result) {
+				if(result.errno == -1) {
+					AWS.alert(result.err);
+				} else {
+					updateInvitedUsers();
+					updateUserInvitations();
+				}
+			}, 'json');
+    	}
+
+    	$this.closest('li').remove();
+    	$this.closest('.popover').remove();
+    	if(!$this.parents('.cancel-user-invitations li')[0]) {
+    		$this.closest('.popover').remove();
+    	}
+    });
 
 	// 发表问题成功检测 
 

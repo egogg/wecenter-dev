@@ -80,12 +80,19 @@ class ajax extends AWS_CONTROLLER
 
 	public function save_invite_action()
 	{
-		if (!$question_info = $this->model('question')->get_question_info_by_id($_POST['question_id']))
+		$invited_user_count = $this->model('question')->get_invited_user_count($_GET['question_id'], $this->user_id);
+		$invitation_limit = get_setting('user_question_invite_limit');
+		if($invited_user_count >= $invitation_limit)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你已经邀请了' . $invited_user_count . '个用户，不能邀请更多用户了')));
+		}
+
+		if (!$question_info = $this->model('question')->get_question_info_by_id($_GET['question_id']))
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('问题不存在或已被删除')));
 		}
 
-		if (!$invite_user_info = $this->model('account')->get_user_info_by_uid($_POST['uid']))
+		if (!$invite_user_info = $this->model('account')->get_user_info_by_uid($_GET['uid']))
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('用户不存在')));
 		}
@@ -110,17 +117,17 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('不能邀请问题的发起者回答问题')));
 		}
 
-		if ($this->model('question')->has_question_invite($_POST['question_id'], $invite_user_info['uid']))
+		if ($this->model('question')->has_question_invite($_GET['question_id'], $invite_user_info['uid']))
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('该用户已接受过邀请')));
 		}
 
-		if ($this->model('question')->has_question_invite($_POST['question_id'], $invite_user_info['uid'], $this->user_id))
+		if ($this->model('question')->has_question_invite($_GET['question_id'], $invite_user_info['uid'], $this->user_id))
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('已邀请过该用户')));
 		}
 
-		$this->model('question')->add_invite($_POST['question_id'], $this->user_id, $invite_user_info['uid']);
+		$this->model('question')->add_invite($_GET['question_id'], $this->user_id, $invite_user_info['uid']);
 
 		$this->model('account')->update_question_invite_count($invite_user_info['uid']);
 
@@ -129,12 +136,12 @@ class ajax extends AWS_CONTROLLER
 			$this->model('weixin')->send_text_message($weixin_user['openid'], "有用户邀请你回答问题 [" . $question_info['question_content'] . "]", $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_info['question_id']));
 		}
 
-		$notification_id = $this->model('notify')->send($this->user_id, $invite_user_info['uid'], notify_class::TYPE_INVITE_QUESTION, notify_class::CATEGORY_QUESTION, intval($_POST['question_id']), array(
+		$notification_id = $this->model('notify')->send($this->user_id, $invite_user_info['uid'], notify_class::TYPE_INVITE_QUESTION, notify_class::CATEGORY_QUESTION, intval($_GET['question_id']), array(
 			'from_uid' => $this->user_id,
-			'question_id' => intval($_POST['question_id'])
+			'question_id' => intval($_GET['question_id'])
 		));
 
-		$this->model('email')->action_email('QUESTION_INVITE', $_POST['uid'], get_js_url('/question/' . $question_info['question_id'] . '?notification_id-' . $notification_id), array(
+		$this->model('email')->action_email('QUESTION_INVITE', $_GET['uid'], get_js_url('/question/' . $question_info['question_id'] . '?notification_id-' . $notification_id), array(
 			'user_name' => $this->user_info['user_name'],
 			'question_title' => $question_info['question_content'],
 		));
@@ -1966,7 +1973,7 @@ class ajax extends AWS_CONTROLLER
 			return;
 		}
 
-		$invited_users = $this->model('question')->get_invited_user_list($question_info['question_id'], $_GET['page'], 8);
+		$invited_users = $this->model('question')->get_invited_user_list($question_info['question_id'], $_GET['page'], 10);
 		if($invited_users)
 		{
 			foreach ($invited_users as $key => $val) 

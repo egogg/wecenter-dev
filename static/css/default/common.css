@@ -1581,14 +1581,15 @@ li.user-quiz-record-item.timeout:before {
 }
 
 .help-user-item img {
-	width: 40px;
-	height: 40px;
+	width: 35px;
+	height: 35px;
 }
 
-.help-user-invite {
-	float: right;
-	position: absolute;
-	right: 15px;
+.helpful-comment {
+	font-size: 12px;
+	max-height: 17px;
+	overflow: hidden;
+	padding-right: 5px;
 }
 
 .cancel_invite {
@@ -1596,6 +1597,7 @@ li.user-quiz-record-item.timeout:before {
 }
 
 .invited_by {
+	float: right;
 	font-size: 12px;
 	line-height: 16px;
 }
@@ -1625,8 +1627,10 @@ li.user-quiz-record-item.timeout:before {
 }
 
 .user-invited-users-list {
-	padding-left: 15px;
+	padding: 10px 0 10px 15px;
 	border-left: 3px solid #ff9800;
+	border-bottom: 1px dashed #eee;
+	border-top: 1px dashed #eee;
     margin-bottom: 15px;
 }
 
@@ -1639,8 +1643,8 @@ li.user-quiz-record-item.timeout:before {
 	margin-right: 5px;
 }
 
-.cancel-user-invitations li {
-	padding: 5px 0;
+.cancel-user-invitations-dropdown {
+	width: 250px;
 }
 
 .user-invitations-img {
@@ -1649,8 +1653,10 @@ li.user-quiz-record-item.timeout:before {
 }
 
 .user-invitations-username {
-	margin-right: 15px;
 	line-height: 24px;
+	max-width: 50%;
+    overflow: hidden;
+    display: inline-block;
 }
 
 .user-invitations-action {
@@ -1668,6 +1674,33 @@ li.user-quiz-record-item.timeout:before {
     color: #03a9f4;
 	border-radius: 2px;
 	font-size: 16px;
+}
+
+.toggle-invitation {
+	background-color: #9e9e9e;
+	color: #fff !important;
+}
+
+.toggle-invitation.active {
+	background-color: #4caf50;
+}
+
+.user-invited-user-message {
+	line-height: 32px;
+}
+
+.question-invitation {
+	z-index: 10;
+}
+
+.help-user-invite-list-nav {
+	margin-top: 6px;
+}
+
+.help-user-invite-list-nav .btn-icon {
+	width: 32px;
+	height: 32px;
+	margin: 0 5px;
 }
 
 /* 发表问题 */

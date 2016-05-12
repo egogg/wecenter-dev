@@ -185,11 +185,6 @@ $(function()
 
     //回复内容超链接新窗口打开
     $('.markitup-box a').attr('target','_blank');
-
-    // 加载更多答题邀请
-
-    AWS.load_list_view(G_BASE_URL + "/question/ajax/invited_users/question_id-" + QUESTION_ID, $('#load-more-invited-users'), $('#invited-user-list'), 2);
-
 });
 
 function one_click_add_topic(selector, topic_title, question_id)

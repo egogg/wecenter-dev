@@ -2,14 +2,6 @@
 	<?php foreach ($this->invited_users AS $key => $val) { ?>
 		<li class="col-xs-6 help-user-item">
 			<div class="media">
-				<div class="help-user-invite">
-					<div class="invited_by">
-						<span class="c-gray">由</span> <a class="user-tag user-img" data-id="<?php echo $val['sender_info']['uid']; ?>" href="people/<?php echo $val['sender_info']['url_token']; ?>">
-                        	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['sender_info']['uid'], 'min'); ?>" />
-                        </a> <span class="c-gray">邀请</span>
-					</div>
-				</div>
-					
                 <div class="pull-left">
                     <a class="user-tag user-img" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">
                     	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['recipient_info']['uid'], 'mid'); ?>" />
@@ -17,13 +9,18 @@
                 </div>
                 <div class="media-body">
                     <div class="media-heading">
+                    	<div class="invited_by">
+							<span class="c-gray">由</span> <a class="user-tag user-img" data-id="<?php echo $val['sender_info']['uid']; ?>" href="people/<?php echo $val['sender_info']['url_token']; ?>">
+		                    	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['sender_info']['uid'], 'min'); ?>" />
+		                    </a> <span class="c-gray">邀请</span>
+						</div>
                     	<a class="user-tag user-name" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">
                     		<?php echo $val['recipient_info']['user_name']; ?><?php if ($val['recipient_info']['verified']) { ?>
                     			<i class="icon-v<?php if ($val['recipient_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['recipient_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
                     		<?php } ?>
                     	</a>
                     	
-                    	<div class="answer-state m-b-15">
+                    	<div class="answer-state f-12">
                     		<?php if($this->question_info['quiz_id']) { ?>
                         		<?php if($val['quiz_count']) { ?>
                         			<?php if($val['quiz_passed']) { ?>
@@ -41,8 +38,7 @@
 				                        		</a>
 				                        	</li>
 				                        <?php } ?>
-									</ul>'>
-										<?php echo $val['quiz_count']; ?> 次答题
+									</ul>'> <?php echo $val['quiz_count']; ?> 次答题
 									</a>
                         		<?php } else { ?>
 									<span class="c-gray">尚未答题</span>

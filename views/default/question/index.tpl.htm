@@ -152,7 +152,7 @@
 		                            <?php } ?>
                                 </div>
                                 
-                                <div role="tabpanel" class="tab-pane animated fadeIn" id="tab-2">
+                                <div role="tabpanel" class="tab-pane animated fadeIn clearfix" id="tab-2">
                                 	<div class="help-user-header clearfix">
                                 		<div class="help-user-search form-group col-xs-6">
                                 			<div class="input-group help-user-search-box">
@@ -167,29 +167,17 @@
                                 			</div>
                                 		</div>
                                 	</div>
-                                	
-                            		<div class="col-xs-12">
-                            			<div class="user-invited-users-list" id="user-invited-users-list">
-                            			</div>
-                            		</div>
+									
+									<div class="col-xs-12 clearfix">
+										<div class="user-invited-users-list" id="user-invited-users-list">
+	                        			</div>
+									</div>
                                 	
                                     <?php if ($this->helpful_users) { ?>
-										<div class="help-user-invite-list clearfix" data-page="1" data-perpage="6">
+										<ul class="help-user-invite-list clearfix" data-page="1" data-perpage="6">
 											<?php foreach ($this->helpful_users AS $key => $val) { ?>
-												<div class="col-xs-6 help-user-item animated">
-													<div class="media">
-														<div class="help-user-invite pull-right">
-															<?php if ($val['has_invite']) { ?>
-																<?php if($val['sender_uid'] == $this->user_id) { ?>
-																	<a class="btn btn-xs bgm-gray" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.disinvite_user($(this))">取消邀请</a>
-																<?php } else { ?>
-																	<a class="btn btn-xs btn-green" href="javascript:void(0);" disabled="disabled">已被邀请</a>
-																<?php } ?>
-															<?php } else { ?>
-																<a class="btn btn-xs bgm-green" data-value="<?php echo $val['user_info']['user_name']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" onclick="AWS.User.invite_user($(this), <?php echo $val['user_info']['uid']; ?>);">发送邀请</a>
-															<?php } ?>
-														</div>
-															
+												<li class="col-xs-6 help-user-item animated">
+													<div class="media">	
 					                                    <div class="pull-left">
 					                                        <a class="user-tag user-img" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
 					                                        	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['user_info']['uid'], 'mid'); ?>" />
@@ -197,13 +185,25 @@
 					                                    </div>
 					                                    <div class="media-body">
 					                                    	<div class="media-heading">
+					                                    		<div class="pull-right">
+																	<?php if ($val['has_invite']) { ?>
+																		<?php if($val['sender_uid'] == $this->user_id) { ?>
+																			<a class="btn btn-sm toggle-invitation" data-id="<?php echo $val['user_info']['uid']; ?>">取消邀请</a>
+																		<?php } else { ?>
+																			<a class="btn btn-sm btn-green" href="javascript:void(0);" disabled="disabled">已被邀请</a>
+																		<?php } ?>
+																	<?php } else { ?>
+																		<a class="btn btn-sm toggle-invitation active" data-id="<?php echo $val['user_info']['uid']; ?>">发送邀请</a>
+																	<?php } ?>
+																</div>
+
 				                                    			<a class="user-tag user-name" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
 					                                        		<?php echo $val['user_info']['user_name']; ?><?php if ($val['user_info']['verified']) { ?>
 					                                        			<i class="icon-v<?php if ($val['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($val['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
 					                                        		<?php } ?>
 					                                        	</a>
 					                                    		
-					                                        	<p class="helpful-comment c-gray">
+					                                        	<div class="helpful-comment c-gray">
 					                                        		<?php if($val['recommend'] == 'CATEGORY_QUIZ') { ?>
 					                                        			在 <strong><a href="question/category-<?php echo $this->question_info['category_info']['id']; ?>"><?php echo $this->question_info['category_info']['title']; ?></a></strong> 分类中答题 <?php echo $val['count']; ?> 次
 					                                        		<?php } else if($val['recommend'] == 'CATEGORY_COMMENT') { ?>
@@ -211,18 +211,18 @@
 					                                        		<?php } else { ?>
 					                                        			参与答题 <?php echo $val['count']; ?> 次
 					                                        		<?php } ?>
-					                                        	</p>
+					                                        	</div>
 					                                    	</div>
 					                                    </div>
 					                                </div>
-												</div>
+												</li>
 											<?php } ?>
+										</ul>
 
-											<div class="col-xs-12 help-user-invite-list-nav">
-												<div class="pull-right">
-													<button class="btn btn-xs bgm-lightblue prev"><i class="md md-chevron-left"></i></button>
-													<button class="btn btn-xs bgm-lightblue next"><i class="md md-chevron-right"></i></button>
-												</div>
+										<div class="col-xs-12 help-user-invite-list-nav">
+											<div class="text-center">
+												<button class="btn btn-icon btn-xs bgm-lightblue prev"><i class="md md-chevron-left"></i></button>
+												<button class="btn btn-icon btn-xs bgm-lightblue next"><i class="md md-chevron-right"></i></button>
 											</div>
 										</div>
 									<?php } ?>
