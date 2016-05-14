@@ -14,11 +14,11 @@
 
 						<div class="question-quiz-actions card-body card-padding">
 							<ul class="question-quiz-action-items">
-								<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> <span class="hidden-xs">查看</span>答案<span class="hidden-xs">解析</span></a></li>
+								<li class="question-quiz-action-item view-solution"><a href="javascript:void(0);" class="btn  bgm-cyan"><i class="md md-spellcheck hidden-xs"></i> 查看解析</a></li>
 								<?php if($this->question_info['quiz_id']) { ?>
-									<li class="question-quiz-action-item question-discuss"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> <span class="hidden-xs">参与答题</span>讨论</a></li>
+									<li class="question-quiz-action-item question-discuss"><a href="javascript:void(0);" class="btn btn-warning"><i class="md md-comment hidden-xs"></i> 参与讨论</a></li>
 								<?php } ?>
-								<li class="question-quiz-action-item email-invite"><a data-toggle="modal" href="#modalInviteFriend" class="btn bgm-deeppurple"><i class="md md-email hidden-xs"></i> 邀请<span class="hidden-xs">朋友答题</span></a></li>
+								<li class="question-quiz-action-item question-invite"><a href="javascript:void(0);" class="btn bgm-deeppurple"><i class="md md-person-add hidden-xs"></i> 邀请答题</a></li>
 							</ul>
 						</div>
 
@@ -138,26 +138,26 @@
                             
                             <div class="tab-content p-20">
                                 <div role="tabpanel" class="tab-pane animated fadeIn active" id="tab-1">
-                                	<?php if($this->invited_user_count) { ?>
-	                            		<ul class="invite-list clearfix" id="invited-user-list">
-										</ul>
-										<div class="load-more invited-users">
-			                                <a href="javascript:void(0);" auto-load="false" id="load-more-invited-users"><i class="md md-refresh"></i> 加载更多</a>
-			                            </div>
-		                            <?php } else { ?>
-		                            	<div class="text-center no-invited-users">
-		                            		<p class="c-gray">目前还没有被邀请的用户</p>
-		                            		<a href="javascript:void(0);" class="c-blue add-user-invitations"><i class="md md-person-add"></i> 邀请答题</a>
-		                            	</div>
-		                            <?php } ?>
+                                	 <div class="invite-list clearfix" id="invited-user-list">  
+                                	 </div>
+                                	 <div class="load-more invited-users">
+								        <a href="javascript:void(0);" auto-load="false" id="load-more-invited-users"><i class="md md-refresh"></i> 加载更多</a>
+								    </div>
                                 </div>
                                 
                                 <div role="tabpanel" class="tab-pane animated fadeIn clearfix" id="tab-2">
                                 	<div class="help-user-header clearfix">
-                                		<div class="help-user-search form-group col-xs-6">
-                                			<div class="input-group help-user-search-box">
-                                				<input id="invite-input" type="text" class="search-field form-control" placeholder="站内搜索你想邀请的人">
-                                				<i class="md input-group-addon md-search c-gray"></i> 
+                                		<div class="help-user-search col-xs-6 form-group">
+                                			<div class="help-user-search-box dropdown input-group">
+												<input id="invite-input" type="text" class="search-field form-control" placeholder="站内搜索你想邀请的人">
+                                				<i class="md input-group-addon md-search c-gray"></i>
+	                                				
+                                				<div class="dropdown-menu dropdown-menu-lg pull-left">
+													<div class="listview">
+														<div class="title lv-header c-gray"></div>
+														<div class="aw-dropdown-list lv-body c-overflow" tabindex="1"></div>
+													</div>
+												</div>
                                 			</div>
                                 		</div>
                                 		<div class="col-xs-6">
@@ -168,10 +168,12 @@
                                 		</div>
                                 	</div>
 									
-									<div class="col-xs-12 clearfix">
-										<div class="user-invited-users-list" id="user-invited-users-list">
-	                        			</div>
-									</div>
+									<?php if($this->user_id) { ?>
+										<div class="col-xs-12 clearfix">
+											<div class="user-invited-users-list" id="user-invited-users-list">
+		                        			</div>
+										</div>
+									<?php } ?>
                                 	
                                     <?php if ($this->helpful_users) { ?>
 										<ul class="help-user-invite-list clearfix" data-page="1" data-perpage="6">

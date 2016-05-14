@@ -34,21 +34,43 @@ $(function(){
 
     function updateInvitedUsers() {
     	$.get(G_BASE_URL + '/question/ajax/invited_users/question_id-' + QUESTION_ID + '__page-1', function (response) {
-			$('#invited-user-list').html(response);
-			initPopover($('#invited-user-list .content-popover'));
+    		if(response != '') {
+    			$('#invited-user-list').html(response);
+    			initPopover($('#invited-user-list .content-popover'));
 
-			// 重置加载更多按钮
+    			$('.invited-users.load-more').html('<a href="javascript:void(0);" auto-load="false" id="load-more-invited-users"><i class="md md-refresh"></i> 加载更多</a>').show();
+    			AWS.load_list_view(G_BASE_URL + "/question/ajax/invited_users/question_id-" + QUESTION_ID, $('#load-more-invited-users'), $('#invited-user-list'), 2, setupPopover);
 
-			$('.load-more .invited-users').html('<a href="javascript:void(0);" auto-load="false" id="load-more-invited-users"><i class="md md-refresh"></i> 加载更多</a>');
+    		} else {
+    			$('#invited-user-list').html('<div class="text-center no-invited-users"><p class="c-gray">目前还没有被邀请的用户</p><a href="javascript:void(0);" class="c-blue add-user-invitations"><i class="md md-person-add"></i> 邀请答题</a></div>');
+    			$('.invited-users.load-more').hide();
+    		}
 		});
     }
 
     updateInvitedUsers();
 
-    $('.add-user-invitations').click(function(e) {
+    $('#invited-user-list').on('click', '.add-user-invitations', function(e) {
     	e.preventDefault();
     	$('#add-user-invitation-tab').click();
     });
+
+    // 邀请答题按钮
+
+    $('.question-invite').click(function(){
+    	$('#add-user-invitation-tab').click();
+
+    	$('html, body').animate({
+			scrollTop: $('.question-invitation').offset().top - 150
+		}, {
+			duration: 600,
+			queue: true
+		});
+    });
+
+    // 加载更多邀请用户
+
+   	AWS.load_list_view(G_BASE_URL + "/question/ajax/invited_users/question_id-" + QUESTION_ID, $('#load-more-invited-users'), $('#invited-user-list'), 2, setupPopover);
 
     // 邀请用户分页
 
@@ -91,10 +113,6 @@ $(function(){
     	updateHelpUserItems(pgnum, perpg);
     });
 
-    // 加载更多邀请用户
-
-    AWS.load_list_view(G_BASE_URL + "/question/ajax/invited_users/question_id-" + QUESTION_ID, $('#load-more-invited-users'), $('#invited-user-list'), 2, setupPopover);
-
     // 用户邀请的用户列表
 
     function updateUserInvitations() {
@@ -105,7 +123,7 @@ $(function(){
 
     updateUserInvitations();
 
-    $('.toggle-invitation').click(function(e) {
+    $('.question-invitation').on('click', '.toggle-invitation', function(e) {
     	e.preventDefault();
 
     	if(G_USER_ID <= 0) {
@@ -113,7 +131,7 @@ $(function(){
 			return;
 		}
 
-    	var $this = $(this);
+    	var $this = $(e.target);
     	if($this.hasClass('active')) {
     		$.post(G_BASE_URL + '/question/ajax/save_invite/question_id-' + QUESTION_ID + '__uid-' + $this.attr('data-id'), function (result) {
 				if(result.errno == -1) {

@@ -25,17 +25,29 @@
             取消邀请
         </a>
 
-        <div class="dropdown-menu cancel-user-invitations-dropdown pull-right">
+        <div class="dropdown-menu dropdown-menu-lg pull-right">
             <div class="listview">
             	<div class="lv-body">
             		<?php foreach($this->user_invitations_all as $key => $val) { ?>
 						<div class="lv-item">
-		                    <div class="pull-left m-r-10">
-		                        <img class="user-invitations-img img-circle" alt="" src="<?php echo get_avatar_url($val["recipients_uid"], "min"); ?>" />
-		                    </div>
-		                   
-		                    <span class="user-invitations-username c-lightblue"><?php echo $val["recipient_info"]["user_name"]; ?></span>
-		                    <span class="user-invitations-action pull-right"><a href="javascript:void(0);" class="cancel-user-invitation c-gray" data-id="<?php echo $val["recipients_uid"]; ?>">取消邀请</a></span>
+							<div class="media">
+								<div class="pull-left">
+			                        <img class="lv-img-sm img-circle" alt="" src="<?php echo get_avatar_url($val["recipients_uid"], "min"); ?>" />
+			                    </div>
+			                    <div class="pull-right">
+			                    	<a href="javascript:void(0);" class="cancel-user-invitation btn btn-xs bgm-gray" data-id="<?php echo $val["recipients_uid"]; ?>">取消邀请</a>
+			                    </div>
+			                    	
+			                    <div class="media-body">
+			                    	
+			                    	<div class="lv-title">
+			                    		<?php echo $val["recipient_info"]["user_name"]; ?>
+			                    	</div>
+			                    	<small class="lv-small">
+			                    		<?php echo $val["recipient_info"]["signature"]; ?>
+			                    	</small>
+			                    </div>
+							</div>
 						</div>
 					<?php } ?>
             	</div>

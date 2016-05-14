@@ -309,7 +309,7 @@ var AW_TEMPLATE = {
 			'</div>',
 
 	'inbox' :
-			'<div class="modal fade alert-box aw-inbox">'+
+			'<div class="modal fade alert-box inbox">'+
 				'<div class="modal-dialog">'+
 					'<div class="modal-content">'+
 						'<div class="modal-header">'+
@@ -318,14 +318,18 @@ var AW_TEMPLATE = {
 						'<div class="modal-body">'+
 							'<form action="' + G_BASE_URL + '/inbox/ajax/send/" method="post" id="quick_publish" onsubmit="return false">'+
 								'<input type="hidden" name="post_hash" value="' + G_POST_HASH + '" />'+
-								'<input id="invite-input" class="form-control" type="text" placeholder="' + _t('搜索用户') + '" name="recipient" value="{{recipient}}" />'+
-								'<div class="aw-dropdown">'+
-									'<p class="title">' + _t('没有找到相关结果') + '</p>'+
-									'<ul class="aw-dropdown-list">'+
-									'</ul>'+
-								'</div>'+
+								'<div class="dropdown">' + 
+									'<input id="invite-input" class="form-control" type="text" placeholder="' + _t('搜索用户') + '" name="recipient" value="{{recipient}}" />'+
+									'<div class="dropdown-menu dropdown-menu-lg pull-left">' +
+										'<div class="listview">' +
+											'<div class="title lv-header c-gray"></div>' +
+											'<div class="aw-dropdown-list lv-body c-overflow" tabindex="1"></div>' +
+										'</div>' +
+									'</div>' +
+								'</div>' + 
+									
 								'<div class="m-t-15">'+ 
-									'<textarea class="form-control" name="message" rows="3" placeholder="' + _t('私信内容...') + '"></textarea>'+
+									'<textarea class="form-control message" name="message" rows="3" placeholder="' + _t('私信内容...') + '"></textarea>'+
 								'</div>'+
 							'</form>'+
 						'</div>'+
@@ -455,7 +459,9 @@ var AW_TEMPLATE = {
 	'searchDropdownListArticles' :
 		'<a class="lv-item clearfix" href="{{url}}"><span class="pull-right c-gray">{{comments}} ' + _t('条评论') + '</span><div class="lv-title"><span class="search-result-tag bgm-cyan">知识</span>{{content}} </div></a>',
 	'inviteDropdownList' :
-		'<li class="user"><a data-url="{{url}}" data-id="{{uid}}" data-actions="{{action}}" data-value="{{name}}"><img class="img" src="{{img}}" />{{name}}</a></li>',
+		'<div class="lv-item clearfix"><div class="media"><div class="pull-left"><a href="{{url}}" class="user-tag user-img" data-id="{{uid}}"><img class="lv-img-sm" src="{{img}}" /></a></div><div class="pull-right"><a href="javascript:void(0)" class="toggle-invitation active btn btn-xs" data-id="{{uid}}">发送邀请</a></div><div class="media-body"><div class="lv-title"><a href="{{url}}" class="user-tag user-name" data-id="{{uid}}">{{name}}</a></div><small class="lv-small">{{intro}}</small></div></div></div>',
+	'inboxDropdownList':
+		'<a class="lv-item clearfix" data-username="{{name}}" href="javascript:void(0);"><div class="media"><div class="pull-left"><img class="lv-img-sm" src="{{img}}" /></div><div class="media-body"><div class="lv-title">{{name}}</div><small class="lv-small">{{intro}}</small></div></div></a>',
 	'editTopicDorpdownList' :
 		'<li class="question"><a>{{name}}</a></li>',
 	'questionRedirectList' :

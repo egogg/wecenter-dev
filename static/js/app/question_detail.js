@@ -160,12 +160,12 @@ $(function()
 	}, 'html');
 
     //邀请用户下拉绑定
-    AWS.Dropdown.bind_dropdown_list($('.aw-invite-box #invite-input'), 'invite');
+    AWS.Dropdown.bind_dropdown_list($('#invite-input'), 'invite');
 
     //邀请用户回答点击事件
-	$(document).on('click', '.aw-invite-box .aw-dropdown-list a', function () {
-	    AWS.User.invite_user($(this),$(this).find('img').attr('src'));
-	});
+	// $(document).on('click', '.aw-invite-box .aw-dropdown-list a', function () {
+	//     AWS.User.invite_user($(this),$(this).find('img').attr('src'));
+	// });
 
 	//相关链接按钮
 	$('.aw-question-detail .aw-add-question-related').click(function()

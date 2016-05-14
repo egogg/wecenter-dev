@@ -797,11 +797,11 @@ var AWS =
 				break;
 
 				case 'inbox' :
-					AWS.Dropdown.bind_dropdown_list($('.aw-inbox #invite-input'), 'inbox');
+					AWS.Dropdown.bind_dropdown_list($('.inbox #invite-input'), 'inbox');
 					//私信用户下拉点击事件
-					$(document).on('click','.aw-inbox .aw-dropdown-list li a',function() {
-						$('.alert-box #quick_publish input.form-control').val($(this).text());
-						$(this).parents('.aw-dropdown').hide();
+					$('body').on('click', '.inbox .lv-item', function() {
+						$('.inbox #quick_publish input.form-control').val($(this).attr('data-username'));
+						$(this).parents('.dropdown').removeClass('open');
 					});
 				break;
 
@@ -2332,16 +2332,19 @@ AWS.Dropdown =
 			$(selector).focus(function()
 			{
 				// $(selector).parent().find('.aw-dropdown').show();
-				$(selector).closest('.navbar-search-input').addClass('open');
+				$(selector).closest('.dropdown').addClass('open');
 			});
 		}
+
 		$(selector).keyup(function(e)
 		{
+			$(selector).closest('.dropdown').addClass('open');
+
 			if (type == 'search')
 			{
 				$(selector).parent().find('.search').show().children('a').text($(selector).val());
-				$(selector).closest('.navbar-search-input').addClass('open');
 			}
+
 			if ($(selector).val().length >= 1)
 			{
 				if (e.which != 38 && e.which != 40 && e.which != 188 && e.which != 13)
@@ -2351,8 +2354,7 @@ AWS.Dropdown =
 			}
 			else
 			{
-			   $(selector).parent().find('.aw-dropdown').hide();
-			   $(selector).closest('.navbar-search-input').removeClass('open');
+			   $(selector).closest('.dropdown').removeClass('open');
 			}
 
 			if (type == 'topic')
@@ -2444,8 +2446,7 @@ AWS.Dropdown =
 
 		$(selector).blur(function()
 		{
-			$(selector).parent().find('.aw-dropdown').delay(500).fadeOut(300);
-			// $(selector).closest('.navbar-search-input').removeClass('open');
+			// $(selector).closest('.dropdown').removeClass('open');
 		});
 	},
 
@@ -2479,6 +2480,7 @@ AWS.Dropdown =
 			AWS.G.dropdown_list_xhr.abort(); // 中止上一次ajax请求
 		}
 		var url;
+		var noresult = '没有找到相关结果';
 		switch (type)
 		{
 			case 'search' :
@@ -2494,8 +2496,12 @@ AWS.Dropdown =
 			break;
 
 			case 'invite' :
+				url = G_BASE_URL + '/search/ajax/search/?type=users&q=' + encodeURIComponent(data) + '&limit=10';
+				noresult = '没有找到你想邀请的人';
+				break;
 			case 'inbox' :
 				url = G_BASE_URL + '/search/ajax/search/?type=users&q=' + encodeURIComponent(data) + '&limit=10';
+				noresult = '没有找到相关的人';
 			break;
 
 			case 'topic_question' :
@@ -2567,14 +2573,7 @@ AWS.Dropdown =
 								break;
 
 								case 'users':
-									if (a.detail.signature == '')
-									{
-										var signature = _t('暂无介绍');
-									}
-									else
-									{
-										var signature = a.detail.signature;
-									}
+									var signature = a.detail.signature;
 
 									$(selector).parent().find('.aw-dropdown-list').append(Hogan.compile(AW_TEMPLATE.searchDropdownListUsers).render(
 									{
@@ -2656,19 +2655,36 @@ AWS.Dropdown =
 						break;
 
 					case 'inbox' :
+						$.each(result, function (i, a)
+							{
+								var signature = a.detail.signature;
+
+								$(selector).parent().find('.aw-dropdown-list').append(Hogan.compile(AW_TEMPLATE.inboxDropdownList).render(
+								{
+									'uid': a.uid,
+									'name': a.name,
+									'img': a.detail.avatar_file,
+									'intro': signature
+								}));
+							});
+						break;
 					case 'invite' :
 						$.each(result, function (i, a)
 						{
+							var signature = a.detail.signature;
+
 							$(selector).parent().find('.aw-dropdown-list').append(Hogan.compile(AW_TEMPLATE.inviteDropdownList).render(
 							{
 								'uid': a.uid,
 								'name': a.name,
-								'img': a.detail.avatar_file
+								'img': a.detail.avatar_file,
+								'intro': signature,
+								'url': a.url
 							}));
 						});
 						break;
-
 				}
+
 				if (type == 'publish')
 				{
 					$(selector).parent().find('.aw-publish-suggest-question, .aw-publish-suggest-question .aw-dropdown-list').show();
@@ -2682,7 +2698,7 @@ AWS.Dropdown =
 				}
 			}else
 			{
-				$(selector).parent().find('.aw-dropdown').show().end().find('.title').html(_t('没有找到相关结果')).show();
+				$(selector).parent().find('.aw-dropdown').show().end().find('.title').html(noresult).show();
 				$(selector).parent().find('.aw-dropdown-list, .aw-publish-suggest-question').hide();
 			}
 		}, 'json');

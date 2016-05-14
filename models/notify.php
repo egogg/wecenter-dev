@@ -917,7 +917,7 @@ class notify_class extends AWS_MODEL
 							break;
 
 						case self::TYPE_INVITE_QUESTION:
-							$data[$key]['extend_message'][] = $users_list . ' ' . AWS_APP::lang()->_t('邀请你参与问题');
+							$data[$key]['extend_message'][] = $users_list . ' ' . AWS_APP::lang()->_t('邀请你回答问题');
 
 							break;
 					}
@@ -989,7 +989,7 @@ class notify_class extends AWS_MODEL
 					break;
 
 					case self::TYPE_INVITE_QUESTION:
-						$data[$key]['message'] = '<a href="' . $val['p_url'] . '">' . $val['p_user_name'] . '</a> ' . AWS_APP::lang()->_t('邀请你参与问题') . ' <a href="' . $val['key_url'] . '">' . $val['title'] . '</a>';
+						$data[$key]['message'] = '<a href="' . $val['p_url'] . '">' . $val['p_user_name'] . '</a> ' . AWS_APP::lang()->_t('邀请你回答问题') . ' <a href="' . $val['key_url'] . '">' . $val['title'] . '</a>';
 
 						break;
 

@@ -22,8 +22,8 @@ $(document).ready(function ()
         });
 
         $(document).on('click', function (e) {
-            if(!$(e.target).is('.navbar-search-input.dropdown.open .dropdown-menu, #aw-search-query')) {
-                $('.navbar-search-input.dropdown').removeClass('open');
+            if(!$(e.target).is('.dropdown.open .dropdown-menu, #main-search-query')) {
+                $('.dropdown').removeClass('open');
             }
         });
 
@@ -566,7 +566,7 @@ $(document).ready(function ()
     });
 
     //搜索下拉
-    AWS.Dropdown.bind_dropdown_list('#aw-search-query', 'search');
+    AWS.Dropdown.bind_dropdown_list('#main-search-query', 'search');
 
     //编辑器@人
     AWS.at_user_lists('#wmd-input, .aw-article-replay-box #comment_editor', 5);

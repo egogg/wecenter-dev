@@ -1558,6 +1558,12 @@ li.user-quiz-record-item.timeout:before {
 
 .help-user-search-box {
 	border: 1px solid #eee;
+	border-collapse: collapse;
+	width: 300px;
+}
+
+.help-user-search-box .input-group-addon {
+	border: 1px !important;
 }
 
 .help-user-search-box .search-field {
@@ -1567,6 +1573,10 @@ li.user-quiz-record-item.timeout:before {
 .help-user-search-box i {
 	font-size: 18px;
 	vertical-align: middle !important;
+}
+
+.help-user-search-box .listview .lv-header {
+	border-bottom: none;
 }
 
 .help-user-email-invite {
@@ -1589,6 +1599,8 @@ li.user-quiz-record-item.timeout:before {
 	font-size: 12px;
 	max-height: 17px;
 	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 	padding-right: 5px;
 }
 
@@ -1641,10 +1653,6 @@ li.user-quiz-record-item.timeout:before {
 .user-invited-users-items li {
 	display: inline-block;
 	margin-right: 5px;
-}
-
-.cancel-user-invitations-dropdown {
-	width: 250px;
 }
 
 .user-invitations-img {
@@ -3102,7 +3110,7 @@ input.form-control {
     border: 1px solid #eee;
     background-color: white;
     font-size: 24px;
-    z-index: 1040;
+    z-index: 10;
     -webkit-backface-visibility: hidden;
 }
 
@@ -3262,6 +3270,16 @@ input.form-control {
 	font-size: 12px;
 	padding-left: 15px;
 }
+
+.inbox .listview .lv-header {
+	border-bottom: none;
+}
+
+.inbox textarea.message {
+	padding: 10px;
+	resize: none;
+	height: 120px;
+} 
 
 /*notifications*/
 

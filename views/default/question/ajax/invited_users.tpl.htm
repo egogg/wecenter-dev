@@ -1,6 +1,6 @@
-<?php if($this->invited_users) { ?>
+<?php if($this->invited_users) { ?>                          
 	<?php foreach ($this->invited_users AS $key => $val) { ?>
-		<li class="col-xs-6 help-user-item">
+		<div class="col-xs-6 help-user-item">
 			<div class="media">
                 <div class="pull-left">
                     <a class="user-tag user-img" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">
@@ -54,6 +54,6 @@
                     </div>
                 </div>
             </div>
-		</li>
+		</div>
 	<?php } ?>
 <?php } ?>
