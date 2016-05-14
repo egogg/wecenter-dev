@@ -1671,6 +1671,10 @@ li.user-quiz-record-item.timeout:before {
 	line-height: 24px;
 }
 
+.load-more.invited-users {
+	display: none;
+}
+
 .no-invited-users {
 	padding-top: 100px;
 	padding-bottom: 100px;
