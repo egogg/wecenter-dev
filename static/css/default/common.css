@@ -770,7 +770,7 @@ header .main-nav ul li a.active {
 }
 
 .follow, .follow:active, .follow:focus {
-	padding: 3px 8px;
+	padding: 5px 8px;
     color: #4CAF50;
     border-radius: 2px;
     border: 1px solid #4CAF50;
@@ -946,20 +946,28 @@ header .main-nav ul li a.active {
 	font-size: 12px;
 }
 
-.question-publisher img {
-	width: 40px;
-	height: 40px;
-}
-
-.question-publisher-stats {
-	display: block;
-}
-
 .question-publisher-stats li {
 	display: inline-block;
-	float: left;
 	padding-right: 10px;
-	font-size: 12px;
+	font-size: 13px;
+}
+
+.question-publisher-stats li:last-child {
+	border-right: none;
+}
+
+.question-publisher-signature {
+	padding: 15px;
+	border-left: 3px solid #eee;
+	padding: 5px 15px;
+}
+
+.question-publisher-actions {
+	margin-top: 15px;
+}
+
+.question-publisher-actions li {
+	display: inline-block;
 }
 
 .question-quiz-board {
@@ -1255,13 +1263,6 @@ li.user-quiz-record-item.timeout:before {
 	margin-bottom: 15px 0;
 }
 
-.comment-user-info .user-avatar {
-	width: 30px !important;
-	height: 30px !important;
-	margin-right: 5px;
-	display: inline-block;
-}
-
 .comment-list {
 	border: none;
 	box-shadow: none;
@@ -1311,7 +1312,7 @@ li.user-quiz-record-item.timeout:before {
 .sub-comment-item {
 	border-top: 1px dashed #eee !important;
 	border-left: 3px solid #eee;
-    padding-left: 5px !important;
+    padding-left: 12px !important;
     padding-right: 0 !important;
 }
 
@@ -1332,6 +1333,11 @@ li.user-quiz-record-item.timeout:before {
 .new-sub-comment {
 	font-size: 12px;
 	border-left: none;
+}
+
+.comment-item {
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
 }
 
 .sub-comment-item.sub-comment-box {
@@ -1362,6 +1368,14 @@ li.user-quiz-record-item.timeout:before {
 
 /* 问题页面 */
 
+.question-header .question-publish-info {
+	display: inline-block;
+}
+
+.question-header .question-tags {
+	float: right;
+}
+
 .question-publish-info .publisher-img-sm {
 	width: 24px;
 	height: 24px;
@@ -1371,10 +1385,6 @@ li.user-quiz-record-item.timeout:before {
 .question-title .question-publish-info {
 	display: inline-block;
 	float: left;
-}
-
-.question-header {
-	height: 40px;
 }
 
 .question-content h1 {
@@ -1453,9 +1463,6 @@ li.user-quiz-record-item.timeout:before {
 	margin-bottom: 0px;
 }
 
-.question-stats {
-	margin: 15px 0;
-}
 .question-stats-item li {
 	display: inline-block;
 	margin-right: 15px;
@@ -2818,6 +2825,15 @@ i.dot {
 	margin-right: 0;
 }
 
+.btn-wireframe {
+	border: 1px solid #eee !important;
+	color: #888 !important;
+}
+
+// .btn-wireframe:hover {
+// 	border-color: #aaa !important;
+// }
+
 /* 分类颜色 */
 
 .c-category-1{color:#607D8B !important;}
@@ -3197,10 +3213,6 @@ input.form-control {
 
 .user-info-menu {
 	z-index: 100;
-}
-
-.user-info-menu .signature {
-	font-size: 12px;
 }
 
 .user-info-menu.affix {

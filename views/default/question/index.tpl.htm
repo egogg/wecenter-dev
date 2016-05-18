@@ -5,11 +5,51 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-8">
-					<!-- 题目信息  -->
 					<div class="card">
+						<!-- 题目信息  -->
+						<div class="card-header question-header clearfix">
+							<!-- 作者信息 -->
+							<div class="question-publish-info">
+								<?php if ($this->question_info['user_info']) { ?>
+									<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>">
+										<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($this->question_info['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($this->question_info['user_info']['verified']) { ?><?php if ($this->question_info['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+											<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
+									</a>
+									<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>">
+										<?php echo $this->question_info['user_info']['user_name']; ?>
+									</a>
+								<?php } ?>
+								<span class="c-gray">
+									• <?php echo date_friendly($this->question_info['update_time']); ?>
+								</span>
+							</div>
+
+							<!-- 题目标签 -->
+							<div class="question-tags">
+								<!-- 问题分类 -->
+								<?php if ($this->question_info['category_info']) { ?>
+						    		<li class="question-tag-item">
+							    		<a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
+											<span><?php echo $this->question_info['category_info']['title']; ?></span>
+										</a>
+									</li>
+								<?php } ?>
+
+								<!-- 问题难度 -->
+								<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
+								<li class="question-tag-item">
+									<?php TPL::output('question/ajax/question_difficulty'); ?>
+								</li>
+								
+								<!-- 答题类型 -->
+								<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
+								<li class="question-tag-item">
+									<?php TPL::output('question/ajax/question_quiz_type'); ?>
+								</li>
+							</div>
+						</div>
 						<!-- 问题内容 -->
 						<div class="question-loader clearfix">
-							
 						</div>
 
 						<div class="question-quiz-actions card-body card-padding">
@@ -242,7 +282,7 @@
 							</h3>
 						</div>
 						<!-- 回复内容 -->
-						<div class="card-body card-padding question-comment p-t-0">			
+						<div class="card-body card-padding question-comment">			
 							<div class="comment-list t-view">
 								<div class="tv-comments">
 									<div class="answer-items" data-load-answer="<?php if($this->show_answers) { ?>1<?php } else { ?>0<?php }?>">
@@ -310,25 +350,23 @@
 						<div class="card-header card-padding p-b-0 question-publisher">
 							<div class="media">
 								<div class="pull-left">
-									<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'max'); ?>" /></a>
-									<div class="text-center m-t-5">
-										<span class="question-publisher-mark">出题</span>
-									</div>
+									<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><img class="img-circle" alt="<?php echo $this->question_info['user_info']['user_name']; ?>" src="<?php echo get_avatar_url($this->question_info['published_uid'], 'mid'); ?>" /></a>
 								</div>
 								<div class="media-body">
 			                        <div class="media-heading publisher-title">
 			                        	<h4>
-			                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a><a class="c-gray m-l-5 send-mail" data-toggle="tooltip" data-original-title="发送私信" data-placement="right" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $this->question_info['user_info']['user_name']; ?>');"><i class="md md-email"></i></a>
+			                        		<span class="question-publisher-mark m-r-5">出题</span>
+			                        		<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>"><?php echo $this->question_info['user_info']['user_name']; ?></a>
 			                        	</h4>
-										
-										<ul class="question-publisher-stats m-b-5 clearfix">
+
+				                        <ul class="question-publisher-stats clearfix">
 											<li class="<?php if($this->question_info['user_info']['question_quiz_success_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">正确率 <?php echo number_format($this->question_info['user_info']['question_quiz_success_ratio'] * 100, 1) ?>%</span>
 											
 											<li class="<?php if($this->question_info['user_info']['question_quiz_poft_ratio'] >= 0.5) { ?>c-green<?php } else { ?>c-red<?php } ?>">一次通过率 <?php echo number_format($this->question_info['user_info']['question_quiz_poft_ratio'] * 100, 1) ?>%</span>
+											
 										</ul>
-
-				                    	<ul class="question-publisher-stats">
-				                    		<li>
+										<ul class="question-publisher-stats clearfix">
+											<li>
 				                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-publish">出题 <span><?php echo $this->question_info['user_info']['question_count']; ?></span></a>
 				                    		</li>
 				                    		<li>
@@ -337,28 +375,34 @@
 				                    		<li>
 				                    			<a href="people/questions/id-<?php echo $this->question_info['user_info']['uid']; ?>__type-comments">讨论 <span><?php echo $this->question_info['user_info']['answer_count']; ?></span></a>
 				                    		</li>
-				                    	</ul>
-					                    
+										</ul>
 			                        </div>
 			                    </div>
 							</div>
 			            </div>
-			            <div class="card-body p-t-0 card-padding">
-							<div class="m-t-10">
-								<?php echo $this->question_info['user_info']['signature']; ?>
-							</div>	
+			            <div class="card-body p-t-10 card-padding">		
+							<p class="question-publisher-signature">
+                        		<?php echo $this->question_info['user_info']['signature']; ?>
+                        	</p>
 
-							<div class="m-t-25">
-								<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher <?php if ($this->user_follow_check) { ?>following<?php } ?>">
-			            			<span>
-			            				<?php if ($this->user_follow_check) { ?>
-			            					<i class="md md-check"></i> 正在关注
-			            				<?php } else { ?>
-			            					<i class="md md-add"></i> 添加关注
-			            				<?php } ?>
-			            			</span>
-			            		</a>
-							</div>
+	                    	<ul class="question-publisher-actions">
+	                    		<li>
+	                    			<a class="btn btn-link btn-wireframe" href="javascript:void(0);" onclick="AWS.dialog('inbox', '<?php echo $this->question_info['user_info']['user_name']; ?>');"><i class="md md-email"></i> 发送私信</a>
+	                    		</li>
+	                    			
+	                    		<li class="pull-right">
+									<a href="javascript:void(0);" onclick="AWS.User.follow($(this), 'user', <?php echo $this->question_info['user_info']['uid']; ?>);" class="follow question-publisher <?php if ($this->user_follow_check) { ?>following<?php } ?>">
+				            			<span>
+				            				<?php if ($this->user_follow_check) { ?>
+				            					<i class="md md-check"></i> 正在关注
+				            				<?php } else { ?>
+				            					<i class="md md-add"></i> 添加关注
+				            				<?php } ?>
+				            			</span>
+				            		</a>
+								</li>
+	                    	</ul>
+								
 						</div>
 					</div>
 
@@ -376,7 +420,7 @@
 					<?php if ($this->question_quiz_record) { ?>
 						<div class="card hidden-xs">
 							<div class="card-header">
-								<h2>答题纪录</h2>
+								<h2>答题记录</h2>
 								<ul class="actions">
 				                    <li class="action-item-link">
 				                       <a href="question/record/<?php echo $this->question_info['question_id']; ?>">所有记录<i class="md md-chevron-right c-lightblue"></i></a>
@@ -394,14 +438,14 @@
 					<?php } ?>
 
 					<!-- 相关问题 -->
-					<?php if ($this->question_related_list) { ?>
+					<?php if ($this->recommend_question_list) { ?>
 						<div class="card hidden-xs">
 							<div class="card-header">
-								<h2>你可能喜欢的答题</h2>
+								<h2>你可能喜欢的问题</h2>
 							</div>
 							<div class="listview">
 		                        <div class="lv-body">
-									<?php TPL::assign('question_list_lite', $this->question_related_list); ?>
+									<?php TPL::assign('question_list_lite', $this->recommend_question_list); ?>
 									<?php TPL::output('block/question_list_lite'); ?>
 		                        </div>
 		                        <div class="lv-footer"></div>

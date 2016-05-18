@@ -111,12 +111,19 @@ class main extends AWS_CONTROLLER
 			$question_info['attachs_ids'] = FORMAT::parse_attachs($question_info['question_detail'], true);
 		}
 
-		if ($question_info['category_id'] AND get_setting('category_enable') == 'Y')
+		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
+
+		// 分类信息
+
+		if ($question_info['category_id'])
 		{
 			$question_info['category_info'] = $this->model('system')->get_category_info($question_info['category_id']);
 		}
 
-		$question_info['user_info'] = $this->model('account')->get_user_info_by_uid($question_info['published_uid'], true);
+		if(intval($question_info['quiz_id']) > 0) 
+		{
+			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
+		}
 
 		// if ($_GET['column'] != 'log')
 		// {
@@ -339,16 +346,19 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('question_topics', $question_topics);
 
-		$related_questions = $this->model('question')->get_related_question_list($question_info['question_id'], $question_info['question_content']);
-		if ($related_questions)
+		// 可能喜欢的问题
+
+		$exclude_qids[] = $question_info['question_id'];
+		$recommend_questions = $this->model('question')->get_recommend_question_list_by_category($question_info['question_id'], $exclude_qids, $this->user_id, 8);
+		if ($recommend_questions)
 		{
-			foreach ($related_questions as $key => $value)
+			foreach ($recommend_questions as $key => $value)
 			{
 				// 获取相关问题的附加图片
 
 				if ($value['has_attach'])
 				{
-					$related_questions[$key]['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
+					$recommend_questions[$key]['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
 				}
 
 				// 获取是否为限时答题信息
@@ -359,16 +369,16 @@ class main extends AWS_CONTROLLER
 					$quiz_info = $this->model('quiz')->get_question_quiz_info_by_id($value['quiz_id']);
 					$is_countdown = ($quiz_info['countdown'] > 0);
 				}
-				$related_questions[$key]['is_countdown'] = $is_countdown;
+				$recommend_questions[$key]['is_countdown'] = $is_countdown;
 			}
 
-			TPL::assign('question_related_list', $related_questions);
+			TPL::assign('recommend_question_list', $recommend_questions);
 		}
 		TPL::assign('question_related_links', $this->model('related')->get_related_links('question', $question_info['question_id']));
 
-
 		// 推荐用户答题功能
 
+		$exclude_uids[] = $question_info['published_uid'];
 		if($this->user_id)
 		{
 			$exclude_uids[] = $this->user_id;

@@ -701,6 +701,68 @@ class question_class extends AWS_MODEL
 		return $question_related_list;
 	}
 
+	public function get_recommend_question_list_by_category($question_id, $exclude_ids = null, $uid = null, $limit = 5)
+	{
+		if(!$question_info = $this->get_question_info_by_id($question_id))
+		{
+			return false;
+		}
+
+		$excluded_question_ids = $exclude_ids;
+
+		// 获取用户已经参与过的问题
+
+		if($uid)
+		{
+			$question_ids = $this->query_all("(SELECT DISTINCT question_id FROM " . get_table('answer') . " WHERE uid = " . intval($uid) . " ) UNION (SELECT DISTINCT question_id FROM " . get_table('question_quiz_record') . " WHERE uid = " . intval($uid) . ")");
+			foreach ($question_ids as $key => $val) 
+			{
+				$excluded_question_ids[] = $val['question_id'];
+			}
+		}
+
+		$where = ' WHERE category_id = ' . intval($question_info['category_id']);
+		if(!empty($excluded_question_ids))
+		{
+			$where .= " AND question_id NOT IN (" . implode(',', $excluded_question_ids) . ")";
+		}
+
+		// 获取分类中最活跃的问题
+
+		$category_questions = $this->query_all("SELECT *, answer_count + quiz_count_total AS count FROM " . get_table('question') . $where . " ORDER BY count DESC LIMIT " . intval($limit));
+
+		$more_count = $limit - count($category_questions);
+
+		if($more_count <= 0)
+		{
+			return $category_questions;
+		}
+		else 
+		{
+			foreach ($category_questions as $key => $val) 
+			{
+				$excluded_question_ids[] = $val['question_id'];
+			}
+		}
+
+		// 获取最活跃的问题作为补充
+
+		$where = "";
+		if($excluded_question_ids)
+		{
+			$where = " WHERE question_id NOT IN (" . implode(',', $excluded_question_ids) . ")";
+		}
+
+		$questions = $this->query_all("SELECT *, answer_count + quiz_count_total AS count from " . get_table('question') . $where . " ORDER BY count DESC LIMIT " . intval($more_count));
+		
+		foreach ($questions as $key => $val) 
+		{
+			$category_questions[] = $val;
+		}
+
+		return $category_questions;
+	}
+
 	/**
 	 *
 	 * 得到用户感兴趣问题列表

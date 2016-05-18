@@ -1,45 +1,13 @@
-<div class="card-header card-padding">
-	<!-- 作者信息 -->
-	<div class="question-publish-info">
-		<?php if ($this->question_info['user_info']) { ?>
-			<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-img" data-id="<?php echo $this->question_info['user_info']['uid']; ?>">
-				<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($this->question_info['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($this->question_info['user_info']['verified']) { ?><?php if ($this->question_info['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-					<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-			</a>
-			<a href="people/<?php echo $this->question_info['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-name" data-id="<?php echo $this->question_info['user_info']['uid']; ?>">
-				<?php echo $this->question_info['user_info']['user_name']; ?>
-			</a>
-		<?php } ?>
-		<span class="c-gray">
-			• <?php echo date_friendly($this->question_info['update_time']); ?>
-		</span>
-	</div>
+<div class="card-header question-title m-b-15 clearfix">
+    <h2>
+    	<?php if(!$this->show_question_content) { ?>
+    		<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($this->question_info['question_content'], 2, 4, 'UTF-8', '***'); ?>
+    	<?php } else { ?>
+    		<?php echo $this->question_info['question_content']; ?>
+    	<?php } ?>
+    </h2>
 
-	<!-- 题目标签 -->
-	<div class="question-tags m-t-10">
-		<!-- 问题分类 -->
-		<?php if ($this->question_info['category_info']) { ?>
-    		<li class="question-tag-item">
-	    		<a data-type="category" data-id="<?php echo $this->question_info['category_info']['id']; ?>" class="question-tag c-bluegray b-bluegray" href="javascript:;">
-					<span><?php echo $this->question_info['category_info']['title']; ?></span>
-				</a>
-			</li>
-		<?php } ?>
-
-		<!-- 问题难度 -->
-		<?php TPL::assign('question_difficulty', $this->question_info['difficulty']); ?>
-		<li class="question-tag-item">
-			<?php TPL::output('question/ajax/question_difficulty'); ?>
-		</li>
-		
-		<!-- 答题类型 -->
-		<?php TPL::assign('question_quiz_type', $this->question_info['question_quiz']['type']); ?>
-		<li class="question-tag-item">
-			<?php TPL::output('question/ajax/question_quiz_type'); ?>
-		</li>
-	</div>
-
-	 <!-- 管理选项 -->
+	<!-- 管理选项 -->
     <?php if ((!$this->question_info['lock'] AND ($this->question_info['published_uid'] == $this->user_id OR $this->user_info['permission']['edit_question'])) OR $this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
 	    <ul class="actions">
 	    	<li data-tigger="hover" data-toggle="tooltip" data-placement="bottom" data-content="编辑问题" title data-original-title="编辑问题"><a href="publish/<?php echo $this->question_info['question_id']; ?>"><i class="md md-create"></i></a></li>
@@ -66,16 +34,6 @@
 		    <?php } ?>
 	    </ul>  
     <?php } ?>
-</div>
-
-<div class="card-header question-title m-b-15 clearfix">
-    <h2>
-    	<?php if(!$this->show_question_content) { ?>
-    		<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($this->question_info['question_content'], 2, 4, 'UTF-8', '***'); ?>
-    	<?php } else { ?>
-    		<?php echo $this->question_info['question_content']; ?>
-    	<?php } ?>
-    </h2>
 </div>
 
 <div class="card-body card-padding question-body">		

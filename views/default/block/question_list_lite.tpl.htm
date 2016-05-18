@@ -13,10 +13,10 @@
 			<div class="media-body">
 				<?php if($val['is_countdown']) { ?>
 					<div class="countdown-question-title">
-						<?php if($this->user_id AND ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR $this->user_id == $val['published_uid'])) { ?>
-						<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($val['question_content'], 2, 4, 'UTF-8', '***'); ?>
-						<?php } else { ?>
+						<?php if($this->user_id AND ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator'] OR ($this->user_id == $val['published_uid']))) { ?>
 							<i class="md md-access-alarm"></i> 限时答题：<?php echo $val['question_content']; ?>
+						<?php } else { ?>
+							<i class="md md-access-alarm"></i> 限时答题：***<?php echo cjk_substr($val['question_content'], 2, 4, 'UTF-8', '***'); ?>
 						<?php } ?>
 					</div>
 				<?php } else { ?>
