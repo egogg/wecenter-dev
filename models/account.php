@@ -820,11 +820,6 @@ class account_class extends AWS_MODEL
 
     public function check_username_char($user_name)
     {
-        if (is_digits($user_name))
-        {
-            return AWS_APP::lang()->_t('用户名不能为纯数字');
-        }
-
         if (strstr($user_name, '-'))
         {
             return AWS_APP::lang()->_t('用户名不能包含 -');
