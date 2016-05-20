@@ -17,6 +17,17 @@ if (!defined('IN_ANWSION'))
 
 class account_class extends AWS_MODEL
 {
+
+    /**
+     * 产生随机用户名
+     *
+     * @param length
+     */
+    public function random_username($length = 8)
+    {
+        return join('', array_map(function($value) { return $value == 1 ? mt_rand(1, 9) : mt_rand(0, 9); }, range(1, $length)));
+    }
+
     /**
      * 检查用户名是否已经存在
      *
@@ -492,7 +503,7 @@ class account_class extends AWS_MODEL
      */
     public function insert_user($user_name, $password, $email = null, $sex = 0, $mobile = null)
     {
-        if (!$user_name OR !$password)
+        if (!$user_name)
         {
             return false;
         }
@@ -502,16 +513,24 @@ class account_class extends AWS_MODEL
             return false;
         }
 
+        if($password)
+        {
+            $salt = fetch_salt(4);
+            $encode_password = compile_password($password, $salt);
+        }
+        else
+        {
+            $encode_password = null;
+        }
+
         if ($email AND $user_info = $this->get_user_info_by_email($email, false))
         {
             return false;
         }
 
-        $salt = fetch_salt(4);
-
         if ($uid = $this->insert('users', array(
             'user_name' => htmlspecialchars($user_name),
-            'password' => compile_password($password, $salt),
+            'password' => $encode_password,
             'salt' => $salt,
             'email' => htmlspecialchars($email),
             'sex' => intval($sex),

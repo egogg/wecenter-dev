@@ -11,7 +11,7 @@
 							<div class="card-header card-padding login-header text-center p-b-0">
 								<a href="<?php echo base_url(); ?>" class="login-logo"></a>
 								<h1 class="c-green f-20">登录授权成功</h1>
-								<p class="f-500 f-15 m-b-0">完善你在脑壳网的注册信息</p>
+								<p class="f-500 f-15 m-b-0">您是第一次登录，请完善您在脑壳网的信息</p>
 							</div>
 							<div class="card-body card-padding">
 								<div class="login-form">
@@ -19,14 +19,14 @@
 										<input type="hidden" name="return_url" value="<?php echo $this->return_url; ?>" />
 										<ul>
 											<li class="m-b-20">
-												<input name="user_name" class="form-control" type="text" placeholder="用户名" tips="请输入一个 2-14 位的用户名" errortips="用户名长度不符合" value="<?php echo $this->user_name; ?>" />
+												<input name="user_name" class="form-control" type="text" placeholder="昵称" tips="请输入一个 2-14 位的昵称" errortips="昵称的长度不符合" value="<?php echo $this->user_name; ?>" />
 											</li>
 											<li class="m-b-20">
 												<input name="email" class="form-control" type="text" placeholder="邮箱" tips="请输入你常用的电子邮箱" errortips="邮箱格式不正确" value="<?php echo $this->email; ?>" />
 											</li>
 
 											<li class="clearfix">
-												<button class="btn btn-lg btn-primary submit" onclick="AWS.ajax_post($('#login_form'), AWS.ajax_processer, 'error_message');" id="login_submit" class="btn btn-lg btn-primary submit">进入脑壳网</button>
+												<button class="btn btn-lg btn-primary submit" id="sns-register-submit">进入脑壳网</button>
                                             </li>
 										</ul>
 									</form>
