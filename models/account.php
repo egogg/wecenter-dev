@@ -29,6 +29,24 @@ class account_class extends AWS_MODEL
     }
 
     /**
+     * 产生随机密码
+     *
+     * @param length
+     */
+    public function random_password($length = 8)
+    {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+        $pass = array(); 
+        $alphaLength = strlen($alphabet) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $n = rand(0, $alphaLength);
+            $pass[] = $alphabet[$n];
+        }
+
+        return implode($pass); 
+    }
+
+    /**
      * 检查用户名是否已经存在
      *
      * @param string
@@ -517,10 +535,12 @@ class account_class extends AWS_MODEL
         {
             $salt = fetch_salt(4);
             $encode_password = compile_password($password, $salt);
+            $is_auto_password = false;
         }
         else
         {
-            $encode_password = null;
+            $encode_password = compile_password($this->random_password(), $salt);
+            $is_auto_password = true;
         }
 
         if ($email AND $user_info = $this->get_user_info_by_email($email, false))
@@ -531,6 +551,7 @@ class account_class extends AWS_MODEL
         if ($uid = $this->insert('users', array(
             'user_name' => htmlspecialchars($user_name),
             'password' => $encode_password,
+            'is_auto_password' => $is_auto_password,
             'salt' => $salt,
             'email' => htmlspecialchars($email),
             'sex' => intval($sex),
