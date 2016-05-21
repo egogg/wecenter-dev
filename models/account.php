@@ -59,6 +59,55 @@ class account_class extends AWS_MODEL
         return $this->fetch_one('users', 'uid', "user_name = '" . $this->quote($user_name) . "' OR url_token = '" . $this->quote($user_name) . "'");
     }
 
+    public function is_valid_username($user_name)
+    {
+        if (strstr($user_name, '-'))
+        {
+            false;
+        }
+
+        $length = strlen(convert_encoding($user_name, 'UTF-8', 'GB2312'));
+
+        $length_min = intval(get_setting('username_length_min'));
+
+        $length_max = intval(get_setting('username_length_max'));
+
+        if ($length < $length_min || $length > $length_max)
+        {
+            $flag = true;
+        }
+
+        switch(get_setting('username_rule'))
+        {
+            default:
+
+            break;
+
+            case 1:
+                if (!preg_match('/^[\x{4e00}-\x{9fa5}_a-zA-Z0-9]+$/u', $user_name) OR $flag)
+                {
+                    return false;
+                }
+            break;
+
+            case 2:
+                if (!preg_match("/^[a-zA-Z0-9_]+$/i", $user_name) OR $flag)
+                {
+                    return false;
+                }
+            break;
+
+            case 3:
+                if (!preg_match("/^[\x{4e00}-\x{9fa5}]+$/u", $user_name) OR $flag)
+                {
+                    return false;
+                }
+            break;
+        }
+
+        return true;
+    }
+
     /**
      * 检查用户名中是否包含敏感词或用户信息保留字
      *
@@ -671,19 +720,22 @@ class account_class extends AWS_MODEL
      * @param  int
      * @param  string
      */
-    public function update_user_password($oldpassword, $password, $uid, $salt)
+    public function update_user_password($oldpassword, $password, $uid, $salt, $ingore_old_password = false)
     {
         if (!$salt OR !$uid)
         {
             return false;
         }
 
-        $oldpassword = compile_password($oldpassword, $salt);
-
-        if ($this->count('users', "uid = " . intval($uid) . " AND password = '" . $this->quote($oldpassword) . "'") != 1)
+        if(!$ingore_old_password) 
         {
-            return false;
-        }
+            $oldpassword = compile_password($oldpassword, $salt);
+
+            if ($this->count('users', "uid = " . intval($uid) . " AND password = '" . $this->quote($oldpassword) . "'") != 1)
+            {
+                return false;
+            }
+        }  
 
         return $this->update_user_password_ingore_oldpassword($password, $uid, $salt);
     }
@@ -705,6 +757,21 @@ class account_class extends AWS_MODEL
         $this->update('users', array(
             'password' => compile_password($password, $salt),
             'salt' => $salt
+        ), 'uid = ' . intval($uid));
+
+        return true;
+    }
+
+    /**
+     * 更新自动密码状态
+     *
+     * @param $uid
+     * @param stat
+     */
+    public function set_auto_password($uid, $stat)
+    {
+        $this->update('users', array(
+            'is_auto_password' => intval($stat)
         ), 'uid = ' . intval($uid));
 
         return true;

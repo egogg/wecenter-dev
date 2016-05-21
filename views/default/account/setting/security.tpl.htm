@@ -4,15 +4,21 @@
 <form class="setting-security" action="account/ajax/modify_password/" method="post" id="setting_form">
 	<section class="user-setting-group">
         <div class="user-setting-group-header">
-            <h2><i class="md md-lock m-r-5"></i> 修改密码</h2>
+            <?php if($this->user_info['is_auto_password']) { ?>
+                <h2><i class="md md-lock m-r-5"></i> 设置新密码</h2>
+            <?php } else { ?>
+                <h2><i class="md md-lock m-r-5"></i> 修改密码</h2>
+            <?php } ?>
         </div>
         <div class="user-setting-group-body p-l-25">
-        	<dl class="dl-horizontal">
-        		<dt>当前密码</dt>
-        		<dd>
-        			<input type="password" class="form-control" id="input-password-old" name="old_password" />
-        		</dd>
-        	</dl>
+            <?php if(!$this->user_info['is_auto_password']) { ?>
+            	<dl class="dl-horizontal">
+            		<dt>当前密码</dt>
+            		<dd>
+            			<input type="password" class="form-control" id="input-password-old" name="old_password" />
+            		</dd>
+            	</dl>
+            <?php } ?>
 
         	<dl class="dl-horizontal">
         		<dt>新的密码</dt>

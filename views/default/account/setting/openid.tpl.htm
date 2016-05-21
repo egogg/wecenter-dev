@@ -14,22 +14,22 @@
 		<?php if (get_setting('qq_login_enabled') == 'Y') { ?>
 			<li class="clearfix">
 				<div class="col-xs-4">
-					<i class="icon icon-qq"></i>
+					<i class="icon icon-qq c-blue"></i>
 				</div>
 				
 				<div class="col-xs-4">
 					<?php if ($this->qq) { ?>
 						<?php echo $this->qq['nickname']; ?>
 					<?php }  else { ?>
-						QQ账号
+						QQ [ <span class="c-gray">未绑定</span> ]
 					<?php } ?>
 				</div>
 				
 				<div class="col-xs-4">
 					<?php if ($this->qq) { ?>
-						<a href="account/openid/qq/unbind/" class="btn btn-normal btn-gray">取消绑定</a>
+						<a href="account/openid/qq/unbind/" class="btn btn-link">取消绑定</a>
 					<?php } else { ?>
-						<a href="account/openid/qq/bind/" class="btn btn-normal btn-success"><?php _e('绑定'); ?></a>
+						<a href="account/openid/qq/bind/" class="btn btn-success"><?php _e('绑定'); ?></a>
 					<?php } ?>
 				</div>
 			</li>
@@ -38,22 +38,22 @@
 		<?php if (get_setting('sina_weibo_enabled') == 'Y') { ?>
 			<li class="clearfix">
 				<div class="col-xs-4">
-					<i class="icon icon-weibo"></i>
+					<i class="icon icon-weibo c-red"></i>
 				</div>
 				
 				<div class="col-xs-4">
 					<?php if ($this->sina_weibo) { ?>
 						<a href="http://weibo.com/<?php echo $this->sina_weibo['id']; ?>" target="_blank"><?php echo $this->sina_weibo['name']; ?></a>
 					<?php } else { ?>
-						微博
+						微博 [ <span class="c-gray">未绑定</span> ]
 					<?php } ?>
 				</div>
 				
 				<div class="col-xs-4">
 					<?php if ($this->sina_weibo) { ?>
-						<a href="account/openid/weibo/unbind/" class="btn btn-normal btn-gray">取消绑定</a>
+						<a href="account/openid/weibo/unbind/" class="btn btn-link">取消绑定</a>
 					<?php } else { ?>
-						<a href="account/openid/weibo/bind/" class="btn btn-normal btn-success">绑定</a>
+						<a href="account/openid/weibo/bind/" class="btn btn-success">绑定</a>
 					<?php } ?>
 				</div>	
 			</li>
@@ -75,9 +75,9 @@
 				
 				<div class="col-xs-4">
 					<?php if ($this->weixin) { ?>
-						<a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/account/ajax/unbinding_weixin/');" class="btn btn-normal btn-gray">取消绑定</a>
+						<a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL + '/account/ajax/unbinding_weixin/');" class="btn btn-link">取消绑定</a>
 					<?php } else { ?>
-						<a onclick="AWS.dialog('alertImg', {'hide' : 'show', 'url' : '<?php echo G_STATIC_URL; ?>/css/<?php echo $this->template_name; ?>/img/wechat_code.jpg', 'message' : '请关注公众帐号进行绑定操作'});" href="javascript:;" class="btn btn-normal btn-success">绑定</a>
+						<a onclick="AWS.dialog('alertImg', {'hide' : 'show', 'url' : '<?php echo G_STATIC_URL; ?>/css/<?php echo $this->template_name; ?>/img/wechat_code.jpg', 'message' : '请关注公众帐号进行绑定操作'});" href="javascript:;" class="btn btn-success">绑定</a>
 					<?php } ?>
 				</div>
 			</li>
@@ -99,9 +99,9 @@
 				
 				<div class="col-xs-4">
 					<?php if ($this->google) { ?>
-					<a href="account/openid/google/unbind/" class="btn btn-normal btn-gray">取消绑定</a>
+					<a href="account/openid/google/unbind/" class="btn btn-link">取消绑定</a>
 					<?php } else { ?>
-					<a href="account/openid/google/bind/" class="btn btn-normal btn-success">绑定</a>
+					<a href="account/openid/google/bind/" class="btn btn-success">绑定</a>
 					<?php } ?>
 				</div>
 			</li>
@@ -123,9 +123,9 @@
 				
 				<div class="col-xs-4">
 					<?php if ($this->facebook) { ?>
-					<a href="account/openid/facebook/unbind/" class="btn btn-normal btn-gray">取消绑定</a>
+					<a href="account/openid/facebook/unbind/" class="btn btn-link">取消绑定</a>
 					<?php } else { ?>
-					<a href="account/openid/facebook/bind/" class="btn btn-normal btn-success">绑定</a>
+					<a href="account/openid/facebook/bind/" class="btn btn-success">绑定</a>
 					<?php } ?>
 				</div>
 			</li>
@@ -147,9 +147,9 @@
 				
 				<div class="col-xs-4">
 					<?php if ($this->twitter) { ?>
-					<a href="account/openid/twitter/unbind/" class="btn btn-normal btn-gray">取消绑定</a>
+					<a href="account/openid/twitter/unbind/" class="btn btn-link">取消绑定</a>
 					<?php } else { ?>
-					<a href="account/openid/twitter/bind/" class="btn btn-normal btn-success">绑定</a>
+					<a href="account/openid/twitter/bind/" class="btn btn-success">绑定</a>
 					<?php } ?>
 				</div>
 			</li>

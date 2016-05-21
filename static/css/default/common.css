@@ -3099,7 +3099,7 @@ input.form-control {
 
 .sns-login-items li {
 	display: inline-block;
-	margin-right: 15px;
+	margin: 0 20px;
 }
 
 .sns-login-items li a {
@@ -3413,6 +3413,15 @@ input.form-control {
 
 .openid-items li {
 	margin: 20px 0;
+}
+
+.openid-items .col-xs-4 {
+	line-height: 30px;
+}
+
+.openid-items i.icon {
+	vertical-align: middle;
+	font-size: 20px;
 }
 
 /*user homepage*/

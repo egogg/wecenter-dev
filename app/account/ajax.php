@@ -24,7 +24,8 @@ class ajax extends AWS_CONTROLLER
 			'valid_email_active',
 			'request_find_password',
 			'find_password_modify',
-			'weixin_login_process'
+			'weixin_login_process',
+			'update_user_email'
 		);
 
 		return $rule_action;
@@ -477,7 +478,7 @@ class ajax extends AWS_CONTROLLER
 
 		$this->model('active')->new_valid_email($this->user_id);
 
-		H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('邮件发送成功')));
+		H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('激活邮件发送成功')));
 	}
 
 	public function valid_email_active_action()
@@ -952,9 +953,41 @@ class ajax extends AWS_CONTROLLER
 		H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('隐私设置保存成功')));
 	}
 
+	public function update_user_email_action()
+	{
+		if (! H::valid_email($_GET['email']))
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请输入正确的 E-Mail 地址')));
+		}
+		
+		if(!$this->user_info['valid_email'])
+		{
+			if($this->user_info['email'] != $_GET['email'])
+			{
+				if ($this->model('account')->check_email($_GET['email']))
+				{
+					H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('邮箱已经存在, 请使用新的邮箱')));
+				} 
+				else 
+				{
+					$update_data['email'] = $_GET['email'];
+					$this->model('account')->update_users_fields($update_data, $this->user_id);
+				}
+			}
+
+			$this->model('active')->new_valid_email($this->user_id, $_GET['email']);
+			
+			H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('激活邮件发送成功')));
+		}
+		else 
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('您的邮件已经激活')));
+		}
+	}
+
 	public function profile_setting_action()
 	{
-		if (!$this->user_info['user_name'] OR $this->user_info['user_name'] == $this->user_info['email'] AND $_POST['user_name'])
+		if ($_POST['user_name'])
 		{
 			$update_data['user_name'] = htmlspecialchars(trim($_POST['user_name']));
 
@@ -1080,9 +1113,12 @@ class ajax extends AWS_CONTROLLER
 
 	public function modify_password_action()
 	{
-		if (!$_POST['old_password'])
+		if(!$this->user_info['is_auto_password']) 
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入当前密码')));
+			if (!$_POST['old_password'])
+			{
+				H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入当前密码')));
+			}
 		}
 
 		if ($_POST['password'] != $_POST['re_password'])
@@ -1108,8 +1144,9 @@ class ajax extends AWS_CONTROLLER
 			}
 		}
 
-		if ($this->model('account')->update_user_password($_POST['old_password'], $_POST['password'], $this->user_id, $this->user_info['salt']))
+		if ($this->model('account')->update_user_password($_POST['old_password'], $_POST['password'], $this->user_id, $this->user_info['salt'], $this->user_info['is_auto_password']))
 		{
+			$this->model('account')->set_auto_password($this->user_id, false);
 			H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('密码修改成功, 请牢记新密码')));
 		}
 		else
