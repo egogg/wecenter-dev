@@ -959,7 +959,7 @@ class ajax extends AWS_CONTROLLER
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请输入正确的 E-Mail 地址')));
 		}
-		
+
 		if(!$this->user_info['valid_email'])
 		{
 			if($this->user_info['email'] != $_GET['email'])
@@ -976,7 +976,7 @@ class ajax extends AWS_CONTROLLER
 			}
 
 			$this->model('active')->new_valid_email($this->user_id, $_GET['email']);
-			
+
 			H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('激活邮件发送成功')));
 		}
 		else 
@@ -1151,7 +1151,7 @@ class ajax extends AWS_CONTROLLER
 		}
 		else
 		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入正确的当前密码')));
+			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请输入正确的当前密码')));
 		}
 	}
 

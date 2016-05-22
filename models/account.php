@@ -580,9 +580,9 @@ class account_class extends AWS_MODEL
             return false;
         }
 
+        $salt = fetch_salt(4);
         if($password)
         {
-            $salt = fetch_salt(4);
             $encode_password = compile_password($password, $salt);
             $is_auto_password = false;
         }
