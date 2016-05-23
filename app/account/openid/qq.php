@@ -180,13 +180,14 @@ class openid_qq extends AWS_CONTROLLER
 
                     // 自动生成用户名
 
-                    $user_name = AWS_APP::session()->qq_user['nickname'];
+                    $user_name = str_replace('-', '', AWS_APP::session()->qq_user['nickname']);
                     while($this->model('account')->check_username($user_name) || !$this->model('account')->is_valid_username($user_name) || $this->model('account')->check_username_sensitive_words($user_name))
                     {
                         $user_name = $this->model('account')->random_username();
                     }
 
                     TPL::assign('user_name', $user_name);
+                    TPL::assign('sns_type', 'QQ');
 
                     TPL::import_css('css/register.css');
 

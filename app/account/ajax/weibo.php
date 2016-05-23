@@ -72,18 +72,6 @@ class ajax_weibo extends AWS_CONTROLLER
             ), -1, AWS_APP::lang()->_t('E-Mail 已经被使用, 或格式不正确')));
         }
 
-        if (strlen($_POST['password']) < 6 or strlen($_POST['password']) > 16)
-        {
-            H::ajax_json_output(AWS_APP::RSM(array(
-                'input' => 'userPassword'
-            ), -1, AWS_APP::lang()->_t('密码长度不符合规则')));
-        }
-
-        if (!$_POST['agreement_chk'])
-        {
-            H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('你必需同意用户协议才能继续')));
-        }
-
         if (get_setting('ucenter_enabled') == 'Y')
         {
             $result = $this->model('ucenter')->register($_POST['user_name'], $_POST['password'], $_POST['email']);

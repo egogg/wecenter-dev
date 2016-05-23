@@ -10,7 +10,7 @@
 						<div class="login-block">
 							<div class="card-header card-padding login-header text-center p-b-0">
 								<a href="<?php echo base_url(); ?>" class="login-logo"></a>
-								<h1 class="c-green f-20">登录授权成功</h1>
+								<h1 class="c-green f-20"><?php if($this->sns_type == 'QQ') { ?>QQ<?php } else if($this->sns_type == "weibo") { ?>新浪微博<?php } ?>登录授权成功</h1>
 								<p class="f-500 f-15 m-b-0">您是第一次登录，请完善您在脑壳网的信息</p>
 							</div>
 							<div class="card-body card-padding">
