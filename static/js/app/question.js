@@ -334,7 +334,7 @@ $(function(){
 			var takenQuiz = (QUIZ_RETRY_COUNT > 0);
 
 			formatCountdownInfo();
-			parseQuestionQuiz(!takenQuiz);
+			parseQuestionQuiz(PASSED_QUIZ);
 
 			// 提示信息
 
@@ -371,14 +371,7 @@ $(function(){
 		});
 	}
 
-	function submitAnswerHandle(answer, spendTime) {
-		// 检查用户是否登录
-
-		if(G_USER_ID <= 0) {
-			window.location.href = G_BASE_URL + '/account/login/';
-			return;
-		}
-
+	function checkAnswer(answer, spendTime) {
 		// 检查问题答案
 
 		$.get(G_BASE_URL + '/question/ajax/question_quiz_submit_answer/question_id-' + QUESTION_ID + '__answer-' + answer + '__spend_time-' + spendTime + '__record_id-' + QUESTION_QUIZ_RECORD_ID, function (quiz_result) {
@@ -445,6 +438,40 @@ $(function(){
         }, 'json');
 	}
 
+	function submitAnswerHandle(answer, spendTime) {
+		
+		// 检查用户是否登录
+
+		if(G_USER_ID <= 0) {
+			window.location.href = G_BASE_URL + '/account/login/';
+			return;
+		}
+
+		// 如果已经通过了答题，提示是否继续尝试
+
+		var PASSED_QUIZ = $('input[name=question-quiz-record-passed]').val();
+		if(PASSED_QUIZ) {
+			textInfo = '你已经通过了答题，回答正确<strong class="c-red">不加分</strong>，回答错误<strong class="c-red">仍然扣分</strong>';
+			swal({   
+                	title: '答题提示',
+                	text: textInfo,   
+                	html: true,
+                	confirmButtonText: "继续答题",
+                	showCancelButton: true,
+				    cancelButtonText: "返回问题",
+                	type: 'warning'
+            	},
+            	function() {
+            		checkAnswer(answer, spendTime);
+            	}
+            );
+
+            return;
+		}	
+
+		checkAnswer(answer, spendTime);	
+	}
+
 	function answerTimeoutHandle() {
 		// 检查用户是否登录
 
@@ -487,12 +514,7 @@ $(function(){
 		}, 'json');
 	}
 
-	function parseQuestionQuiz(enabled) {
-
-		if(typeof enabled == 'undefined') {
-			enabled = true;
-		}
-
+	function parseQuestionQuiz(passed) {
 		QUESTION_QUIZ = $('input[name=question-quiz-content]').val();
 		QUESTION_QUIZ_ID = $('input[name=question-quiz-id]').val();
 		QUESTION_QUIZ_RECORD_ID = $('input[name=question-quiz-record-id]').val();
@@ -505,13 +527,18 @@ $(function(){
 			IS_JSON = false;
 		}
 
+		var enableCountdown = true;
+		if(passed) {
+			enableCountdown = false;
+		}
+
 		if (IS_JSON) {
 			$('.question-quiz-content').nkrQuiz({
 				'mode' : 'single',
 				'showSubmit' : true,
-				'enableCountdown' : true,
+				'enableCountdown' : enableCountdown,
 				'data' : quizContent,
-				'enabled' : enabled,
+				'enabled' : true,
 				'onSubmitAnswer' : submitAnswerHandle,
 				'onTimeout' : answerTimeoutHandle
 			});
@@ -622,7 +649,6 @@ $(function(){
 		retryQuizIntegralAction(function(){
 			$('.question-quiz-board').hide();
 			parseQuestionQuiz();
-			// $('.question-quiz-content').fadeIn();
 		});
 	});
 

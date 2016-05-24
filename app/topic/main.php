@@ -41,7 +41,7 @@ class main extends AWS_CONTROLLER
 
 		if (!$topic_info)
 		{
-			H::redirect_msg(AWS_APP::lang()->_t('专题题不存在'), '/');
+			H::redirect_msg(AWS_APP::lang()->_t('专题不存在'), '/');
 		}
 
 		// if ($topic_info['merged_id'] AND $topic_info['merged_id'] != $topic_info['topic_id'])
@@ -327,7 +327,7 @@ class main extends AWS_CONTROLLER
 			'per_page' => $per_page
 		))->create_links());
 
-		$this->crumb(AWS_APP::lang()->_t('专题目录'), '/topic/');
+		$this->crumb(AWS_APP::lang()->_t('专题'), '/topic/');
 
 		TPL::output('topic/square');
 	}

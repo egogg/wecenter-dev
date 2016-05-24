@@ -5,64 +5,17 @@
 			<div class="container">
 				<a class="navbar-brand icon-logo" href="<?php echo base_url(); ?>" title="脑壳网">脑壳网</a>
 				<a class="navbar-slogan hidden-xs" href="<?php echo base_url(); ?>">中文最大智力答题社区</a>
-				<div class="navbar-user visible-xs">
-					<ul class="navbar-user-actions clearfix">
-						<li class="dropdown">
-							<a href="javascript:void(0);" data-toggle="dropdown" aria-expanded="false">
-								<?php $total_unread = $this->user_info['inbox_unread'] + $this->user_info['notification_unread']; if ($total_unread != 0) {?>
-									<span class="m-count unread-total-mobile"><?php echo $total_unread?></span>
-								<?php } ?>
-								<span class="navbar-mobile-account">
-		                       		<?php if ($this->user_id) { ?>
-										<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?>" />
-										<span class="caret"></span>
-		                       		<?php } else { ?>
-		                       			<i class="md md-person"></i>
-		                       		<?php } ?>
-	                       		</span>
-	                    	</a>
-	                    	<ul class="dropdown-menu dm-icon pull-right">
-		                    	<?php if($this->user_id) { ?>
-		                    		<li><a href="publish/"><i class="md md-create"></i> 发表问题</a></li>
-		                    		<?php if ($this->user_info['permission']['is_administortar'] OR $this->user_info['permission']['is_moderator']) { ?>
-		                    			<li><a href="publish/article/"><i class="md md-school"></i> 发布知识</a></li>
-		                    		<?php } ?>
-		                    		<li class="divider"></li>
-		                    		<li>
-										<a href="notifications/" class="<?php if ($_GET['app'] == 'notifications') { ?>active<?php } ?>"><span class="badge badge-important pull-right" style="display:none" id="notifications_unread_mobile"><?php echo $this->user_info['notification_unread']; ?></span><i class="md md-notifications"></i> 我的消息</a>
-									</li>
-		                    		<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
-									<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread_mobile">0</span><i class="md md-mail"></i> 我的私信</a></li>
-									<li><a href="favorite/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-bookmark"></i> 我的收藏</a></li>
-									<li><a href="account/setting/profile/"><i class="md md-settings"></i> 我的设置</a></li>
-									<li class="divider"></li>
-									<li><a href="account/logout/"><i class="md md-exit-to-app"></i> 退出登录</a></li>
-		                        <?php } else { ?>
-		                        	<li class="navbar-login">
-					                    <a href="account/login/">登录</a>
-					                </li>
-					                <li class="navbar-register">
-					                    <a href="account/register/">注册</a>
-					                </li>
-		                        <?php } ?>
-	                        </ul>
-						</li>
-						<li>
-							<a href="javascript:void(0);" id="navbar-mobile-search-icon"><i class="md md-search"></i></a>
-						</li>
-					</ul>
-                </div>
 				<div class="navbar-user hidden-xs">
 		            <ul class="navbar-user-actions clearfix">
 		            	<!-- 登陆&注册栏 -->
 						<?php if ($this->user_id) { ?>
 							<li class="dropdown">
 								<a href="#" data-toggle="dropdown" aria-expanded="false">
-									<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?>" />
-									<span class="caret"></span>
 									<?php if ($this->user_info['inbox_unread'] != 0) {?>
 										<span class="m-count unread-mail"><?php echo $this->user_info['inbox_unread']?></span>
 									<?php } ?>
+									<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?>" />
+									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu dm-icon pull-right">
 									<li><a href="publish/"><i class="md md-create"></i> 发表问题</a></li>
@@ -71,7 +24,7 @@
 		                    		<?php } ?>
 									<li class="divider"></li>
 									<li><a href="people/<?php echo $this->user_info['url_token']; ?>"><i class="md md-home"></i> 我的主页</a></li>
-		                           	<li><a href="inbox/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-mail"></i> 我的私信</a></li>
+		                           	<li><a href="inbox/"><?php if($this->user_info['inbox_unread'] > 0) { ?><span class="badge badge-important pull-right" id="inbox_unread"><?php echo $this->user_info['inbox_unread']; ?></span><?php } ?><i class="md md-mail"></i> 我的私信</a></li>
 		                           	<li><a href="favorite/"><span class="badge badge-important pull-right hide" id="inbox_unread">0</span><i class="md md-bookmark"></i> 我的收藏</a></li>
 									<li><a href="account/setting/profile/"><i class="md md-settings"></i> 我的设置</a></li>
 									<li class="divider"></li>
@@ -133,31 +86,21 @@
 					<span class="navbar-search-icon" title="<?php _e('搜索'); ?>" id="global_search_btns" onClick="$('#global_search_form').submit();"><a class="icon icon-search"></a></span>
 				</form>
 			</div>
-			<div class="navbar-mobile-search visible-xs">
-				<div class="navbar-mobile-search-form-wrap">
-					<form class="navbar-search" action="search/" id="navbar-mobile-search-form" method="post">
-						<div class="navbar-search-input">
-							<input class="form-control search-query" type="text" placeholder="搜索问题、专题或人" autocomplete="off" name="q" />
-						</div>
-						<span class="navbar-search-icon" title="搜索" id="navbar-mobile-search-btns" onClick="$('#navbar-mobile-search-form').submit();"><a class="icon icon-search"></a></span>
-					</form>
-				</div>
-				<div>
-					<a class="navbar-mobile-search-close" type="button" aria-label="Close"><span aria-hidden="true">×</span></a>
-				</div>
-			</div>
 		</div>
-        <nav class="main-nav">
-        	<div class="container">
-        		<ul>
-        			<li><a href="<?php echo base_url(); ?>" class="<?php if ($_GET['app'] == 'explore') { ?>active<?php } ?>">精选</a></li>
-        			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>">题库</a></li>
-					<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>">专题</a></li>
-					<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>">知识</a></li>
-					<li><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>">排行</a></li>
-				</ul>
-        	</div>
-        </nav>
+		<div class="main-nav">
+			<div class="container">
+		        <nav>
+	        		<ul>
+	        			<li><a href="<?php echo base_url(); ?>" class="<?php if ($_GET['app'] == 'explore') { ?>active<?php } ?>">精选</a></li>
+	        			<li><a href="question/" class="<?php if ($_GET['app'] == 'question') { ?>active<?php } ?>">题库</a></li>
+						<li><a href="topic/" class="<?php if ($_GET['app'] == 'topic') { ?>active<?php } ?>">专题</a></li>
+						<li><a href="article/" class="<?php if ($_GET['app'] == 'article') { ?>active<?php } ?>">知识</a></li>
+						<li><a href="people/" class="<?php if ($_GET['app'] == 'people') { ?>active<?php } ?>">排行</a></li>
+					</ul>
+		        </nav>
+	        </div>
+		</div>
+			
 	</header>
 	
 	<?php if ($this->user_id AND $this->user_info['email'] AND !$this->user_info['valid_email'] AND get_setting('register_valid_type') != 'N') { ?>

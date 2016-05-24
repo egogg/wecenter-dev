@@ -82,7 +82,7 @@ class ajax_weibo extends AWS_CONTROLLER
             }
 
             $uid = $result['user_info']['uid'];
-
+            
             $redirect_url = '/account/sync_login/';
         }
         else

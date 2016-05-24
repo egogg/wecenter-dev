@@ -568,7 +568,7 @@ class main extends AWS_CONTROLLER
 
 	public function index_square_action()
 	{
-		$this->crumb(AWS_APP::lang()->_t('问题'), '/question/');
+		$this->crumb(AWS_APP::lang()->_t('题库'), '/question/');
 
 		// 导航
 		// if (TPL::is_output('block/content_nav_menu.tpl.htm', 'question/square'))

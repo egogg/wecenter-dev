@@ -54,12 +54,12 @@ header .unread-notify {
 }
 
 header .unread-mail {
-	left: 28px;
+	left: 14px;
 	top: -5px;
 }
 
 header .unread-total-mobile {
-	left: 15px;
+	left: 14px;
 	top: -5px;
 }
 
@@ -188,11 +188,10 @@ header .main-nav ul li a {
     display: block;
     font-size: 15px;
     padding: 11px 18px;
-    color: #fff;
+   	color: rgba(255, 255, 255, 0.6);
 }
 
 header .main-nav ul li a:hover {
-	background: #03A9F4;
 	color: #fff;
 }
 
