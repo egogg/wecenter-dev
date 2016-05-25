@@ -638,6 +638,36 @@ var AWS =
         });
 	},
 
+	//显示pie控件
+
+    showpie: function(id, size) {
+    	var pie = $('.' + id);
+    	var value = pie.attr('data-percent');
+    	var trackColor = '#eee';
+    	var scaleColor = 'rgba(255,255,255,0)';
+    	var barColor = '#4CAF50';
+    	if(value <= 50) {
+    		barColor = '#F44336';
+    	}
+
+    	var percentElement = pie.find('.percent');
+    	percentElement.removeClass('c-green').removeClass('c-red');
+    	if(value <= 50) {
+    		percentElement.addClass('c-red');
+    	} else {
+    		percentElement.addClass('c-green');
+    	}
+    	
+        pie.easyPieChart({
+            trackColor: trackColor,
+            scaleColor: scaleColor,
+            barColor: barColor,
+            lineWidth: 2,
+            lineCap: 'butt',
+            size: size
+        });
+    },
+
 	/**
 	 *	公共弹窗
 	 *	publish     : 发起
@@ -1252,28 +1282,6 @@ var AWS =
 					}
 				}
 
-		        //显示pie控件
-
-		        function _showpie(id, size) {
-		        	var pie = $('.' + id);
-		        	var value = pie.attr('data-percent');
-		        	var trackColor = '#eee';
-		        	var scaleColor = '#ccc';
-		        	var barColor = '#4CAF50';
-		        	if(value <= 50) {
-		        		barColor = '#F44336';
-		        	}
-		        	
-			        pie.easyPieChart({
-			            trackColor: trackColor,
-			            scaleColor: scaleColor,
-			            barColor: barColor,
-			            lineWidth: 4,
-			            lineCap: 'butt',
-			            size: size
-			        });
-			    }
-
 				//获取数据
 				function _getdata(type, url)
 				{
@@ -1433,7 +1441,7 @@ var AWS =
 				{
 
 					if ($('.user-pie-ratio')[0]) {
-			            _showpie('user-pie-ratio', 95);
+			            AWS.showpie('user-pie-ratio', 100);
 			        }
 
 					var left = _this.offset().left,

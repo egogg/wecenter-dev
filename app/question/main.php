@@ -561,8 +561,7 @@ class main extends AWS_CONTROLLER
 		TPL::import_css('css/quiz.css');
 		TPL::import_js('js/sweetalert.min.js');
 		TPL::import_css('css/sweetalert.css');
-		TPL::import_js('js/jquery.knob.min.js');
-
+		
 		TPL::output('question/index');
 	}
 

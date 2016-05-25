@@ -36,7 +36,33 @@
     <?php } ?>
 </div>
 
-<div class="card-body card-padding question-body">		
+<div class="card-body card-padding question-body">
+	<!-- 倒计时 -->
+	<?php if($this->question_info['question_quiz'] and $this->question_info['question_quiz']['countdown'] > 0 and !$this->passed_quiz) { ?>
+		<div class="countdown-timer-wrap m-b-15" >
+			<ul class="countdown-timer" id="countdown-timer" data-countdown="<?php echo $this->question_info['question_quiz']['countdown']; ?>">
+				<li>
+					<div class="easy-pie countdown-hour" data-percent="100">
+						<div class="dial hour">60</div>
+						<div class="dial-title">时</div>
+					</div>
+				</li>
+				<li>
+					<div class="easy-pie countdown-minute" data-percent="100">
+						<div class="dial minute">60</div>
+						<div class="dial-title">分</div>
+					</div>
+				</li>
+				<li>
+					<div class="easy-pie countdown-second" data-percent="100">
+						<div class="dial second">60</div>
+						<div class="dial-title">秒</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	<?php } ?>
+			
 	<div class="question-content">
 		<!-- 问题详细描述 -->
 
@@ -64,6 +90,10 @@
 					该题为开放讨论题<span class="hidden-xs">（你可以谈谈你自己的分析与想法）</span>
 				<?php } ?>
 			</h3>
+
+				
+	
+			<!-- 答题选项 -->
 			<?php if($this->show_question_quiz) { ?>
 				<div class="question-quiz-body">
 					<input type="hidden" name="question-quiz-id" value="<?php echo $this->question_info['question_quiz']['id']; ?>">
@@ -83,22 +113,7 @@
 <div class="card-body card-padding p-t-10 p-b-10">
 	<!-- 非答题状态，显示状态 -->
 	<?php if(!$this->answer_question_mode) { ?>
-		<!-- 倒计时面板 -->
-		<?php if($this->question_info['question_quiz'] and $this->question_info['question_quiz']['countdown'] > 0 and !$this->passed_quiz) { ?>
-			<div class="countdown-value" data-countdown="<?php echo $this->question_info['question_quiz']['countdown']; ?>">
-				<ul>
-					<li class="countdown-hour">
-						<input type="text" value="0" class="dial hour"><span>时</span>
-					</li>
-					<li class="countdown-minute">
-						<input type="text" value="0" class="dial minute"><span>分</span>
-					</li>
-					<li class="countdown-second">
-						<input type="text" value="0" class="dial second"><span>秒</span>
-					</li>
-				</ul>
-			</div>
-		<?php } ?>
+		
 		<div class="question-quiz-board">
 			<?php if($this->quiz_record_count) { ?>
 				<!-- 有答题记录 -->

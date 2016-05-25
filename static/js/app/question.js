@@ -228,81 +228,132 @@ $(function(){
 
 	// 问题内容
 
-	function formatCountdownInfo() {
+ 	function initCountdownTimer(size) {
+ 		var seconds = $('#countdown-timer').attr('data-countdown');
+ 		timer = '<li>' +
+					'<div class="easy-pie countdown-hour" data-percent="100">' +
+						'<div class="dial hour">60</div>' +
+						'<div class="dial-title">时</div>' +
+					'</div>' +
+				'</li>' +
+				'<li>' +
+					'<div class="easy-pie countdown-minute" data-percent="100">' +
+						'<div class="dial minute">60</div>' +
+						'<div class="dial-title">分</div>' +
+					'</div>' +
+				'</li>' +
+				'<li>' +
+					'<div class="easy-pie countdown-second" data-percent="100">' +
+						'<div class="dial second">60</div>' +
+						'<div class="dial-title">秒</div>' +
+					'</div>' +
+				'</li>';
+		$('#countdown-timer').html(timer);
+
+ 		var hour = parseInt(seconds / 3600);
+        var minute = parseInt(seconds / 60);
+        var second = parseInt(seconds % 60);
+
+        var hourElement = $('#countdown-timer .countdown-hour').attr('data-percent', (60 - hour) * 5 / 3);
+        $('#countdown-timer .dial.hour').text(hour);
+        $('#countdown-timer .countdown-minute').attr('data-percent', (60 - minute) * 5 / 3);
+        $('#countdown-timer .dial.minute').text(minute);
+       	$('#countdown-timer .countdown-second').attr('data-percent', (60 - second) * 5 / 3);
+        $('#countdown-timer .dial.second').text(second);
+
+        if(hour > 0) {
+		    hourElement.show();
+		} else {
+		    hourElement.hide();
+		}
+
+		var trackColor = '#eee';
+    	var scaleColor = 'rgba(255,255,255,0)';
+    	var barColor = '#03A9F4';
+
+		$('#countdown-timer .easy-pie').easyPieChart({
+            trackColor: trackColor,
+            scaleColor: scaleColor,
+            barColor: barColor,
+            lineWidth: 2,
+            animate: {duration: 100},
+            lineCap: 'butt',
+            size: size
+        });
+ 	}
+
+	function updateCountdownTimer(countdown) {
 		// 限时答题，限时时间
 
-		$('.countdown-value').each(function() {
-			var countdownElement = $(this);
-			var seconds = parseInt(countdownElement.attr('data-countdown'));
+		$('#countdown-timer').attr('data-countdown', countdown);
 
-			var hour = parseInt(seconds / 3600);
-	        var minute = parseInt(seconds / 60);
-	        var second = parseInt(seconds % 60);
+		var hour = parseInt(countdown / 3600);
+        var minute = parseInt(countdown / 60);
+        var second = parseInt(countdown % 60);
 
-	        var hourDial = countdownElement.find('.dial.hour');
-	        var minuteDial = countdownElement.find('.dial.minute');
-	        var secondDial = countdownElement.find('.dial.second');
+        var hourElement = $('#countdown-timer .countdown-hour');
+        var hourDial = $('#countdown-timer .dial.hour');
+        var minuteElement = $('#countdown-timer .countdown-minute');
+        var minuteDial = $('#countdown-timer .dial.minute');
+        var secondElement = $('#countdown-timer .countdown-second');
+        var secondDial = $('#countdown-timer .dial.second');
 
-	        var hourElement = countdownElement.find('.countdown-hour');
+        if(hour > 0) {
+		    hourElement.show();
+		} else {
+		    hourElement.hide();
+		}
 
-	        countdownElement.find('.dial').knob({
-		        'width' : 90,
-		        'height' : 90,
-		        'min' : 0,
-		        'max' : 60,
-		        'readOnly' : true,
-		        'fgColor': '#039AF4',
-		        'bgColor': '#e0e0e0',
-		        'inputColor': '#039AF4',
-		        'thickness': 0.1,
+		var minuteBarColor = '#03A9F4';
+		minuteDial.removeClass('c-red');
+		if(hour == 0 && minute == 0) {
+			minuteBarColor = '#f44336';
+			minuteDial.addClass('c-red');
+		}
 
-		        format: function (v) {return (60 - v) % 60;}
-		    });
+		var secondBarColor = '#03A9F4';
+		secondDial.removeClass('c-orange').removeClass('c-red');
+		if(hour == 0 && minute == 0 && second <= 10 && second > 0) {
+			secondBarColor = '#FFC107';
+			secondDial.addClass('c-orange');
+		} else if(hour == 0 && minute == 0 && second == 0) {
+			secondBarColor = '#f44336';
+			secondDial.addClass('c-red');
+		}
+		minuteElement.data('easyPieChart').options.barColor = minuteBarColor;
+		secondElement.data('easyPieChart').options.barColor = secondBarColor;
 
-	       
-            hourDial.trigger(
-                'configure',
-                {
-                    'max': hour
-                }
-            );
-            hourDial.val(hour).trigger('change');
-	        if(hour > 0) {
-	            hourElement.show();
-	        } else {
-	            hourElement.hide();
-	        }
+		hourElement.data('easyPieChart').update((60 - hour) * 5 / 3);
+		hourDial.text(hour);
+		minuteElement.data('easyPieChart').update((60 - minute) * 5 / 3);
+		minuteDial.text(minute);
+		secondElement.data('easyPieChart').update((60 - second) * 5 / 3);
+		secondDial.text(second);
+	}
 
-            minuteDial.val((60 - minute) % 60).trigger('change');
-            if(minute == 0) {
-            	minuteDial.trigger(
-	                'configure',
-	                {
-	                    'fgColor': '#f44336',
-		        		'bgColor': '#f44336',
-		        		'inputColor': '#f44336'
-	                }
-	            );
-            }
-            
-            secondDial.trigger(
-                'configure',
-                {
-                    'max': 60
-                }
-            );
-            secondDial.val((60 - second) % 60).trigger('change');
-            if(second == 0) {
-            	secondDial.trigger(
-	                'configure',
-	                {
-	                    'fgColor': '#039AF4',
-		        		'bgColor': '#039AF4',
-		        		'inputColor': '#039AF4'
-	                }
-	            );
-            }
-		});
+	function setupCoundownTimerAffix() {
+		var timerElement = $('#countdown-timer');
+	    if(timerElement.length != 0)
+	    {
+	        $('.countdown-timer-wrap').height(timerElement.height());
+
+	        timerElement.on('affixed.bs.affix', function () {
+	            // $('#nav-question-list-header > .card').css({"padding-left": navBarPadding, "padding-right": navBarPadding});
+	            // $('#nav-question-list-header .card-body').addClass('container p-l-0');
+	            initCountdownTimer(60);
+	        });
+
+	        timerElement.on('affixed-top.bs.affix', function() {
+	            // $('#nav-question-list-header > .card').css({"padding-left": 0, "padding-right": 0});
+	            // $('#nav-question-list-header .card-body').removeClass('container p-l-0');
+	            // header.css({"box-shadow": "0px 1px 4px rgba(0, 0, 0, 0.3)"});
+	            initCountdownTimer(100);
+	        });
+
+	        timerElement.affix({
+	            offset: { top: timerElement.offset().top}
+	        });
+	    }
 	}
 
 	// 加载问题内容
@@ -329,11 +380,12 @@ $(function(){
 		$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
 			$('.question-loader').html(response);
 
-			var QUIZ_RETRY_COUNT = $('input[name=question-quiz-record-try-count]').val();
+			// var QUIZ_RETRY_COUNT = $('input[name=question-quiz-record-try-count]').val();
 			var PASSED_QUIZ = $('input[name=question-quiz-record-passed]').val();
-			var takenQuiz = (QUIZ_RETRY_COUNT > 0);
+			// var takenQuiz = (QUIZ_RETRY_COUNT > 0);
 
-			formatCountdownInfo();
+			initCountdownTimer(100);
+			setupCoundownTimerAffix();
 			parseQuestionQuiz(PASSED_QUIZ);
 
 			// 提示信息
@@ -367,11 +419,22 @@ $(function(){
 
 		$.get(G_BASE_URL + '/question/ajax/begin_question_quiz_countdown/id-' + QUESTION_ID, function (response) {
 			$('.question-loader').html(response).css('opacity',0).animate({opacity:1}, 300);
+			initCountdownTimer(100);
+			setupCoundownTimerAffix();
 			parseQuestionQuiz();
 		});
 	}
 
 	function checkAnswer(answer, spendTime) {
+		var spiner = '<div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
+		var checking = swal({   
+			title: '',   
+			text: spiner + '<p class="m-t-10 f-12 c-gray">正在检查答案</p>', 
+			html: true, 
+			allowEscapeKey: false,
+			showConfirmButton: false 
+		});
+
 		// 检查问题答案
 
 		$.get(G_BASE_URL + '/question/ajax/question_quiz_submit_answer/question_id-' + QUESTION_ID + '__answer-' + answer + '__spend_time-' + spendTime + '__record_id-' + QUESTION_QUIZ_RECORD_ID, function (quiz_result) {
@@ -435,6 +498,8 @@ $(function(){
                 	}
                 );
             }
+
+            checking.close();
         }, 'json');
 	}
 
@@ -452,7 +517,8 @@ $(function(){
 		var PASSED_QUIZ = $('input[name=question-quiz-record-passed]').val();
 		if(PASSED_QUIZ) {
 			textInfo = '你已经通过了答题，回答正确<strong class="c-red">不加分</strong>，回答错误<strong class="c-red">仍然扣分</strong>';
-			swal({   
+			swal(
+				{   
                 	title: '答题提示',
                 	text: textInfo,   
                 	html: true,
@@ -461,15 +527,17 @@ $(function(){
 				    cancelButtonText: "返回问题",
                 	type: 'warning'
             	},
-            	function() {
-            		checkAnswer(answer, spendTime);
+            	function(isConfirm) {
+            		if(isConfirm) {
+            			setTimeout(function(){     
+            				checkAnswer(answer, spendTime);  
+            			}, 10);	
+            		}
             	}
             );
-
-            return;
+		} else {
+			checkAnswer(answer, spendTime);
 		}	
-
-		checkAnswer(answer, spendTime);	
 	}
 
 	function answerTimeoutHandle() {
@@ -540,6 +608,7 @@ $(function(){
 				'data' : quizContent,
 				'enabled' : true,
 				'onSubmitAnswer' : submitAnswerHandle,
+				'onCountdown': updateCountdownTimer,
 				'onTimeout' : answerTimeoutHandle
 			});
 		}

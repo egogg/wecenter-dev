@@ -1295,7 +1295,16 @@ class ajax extends AWS_CONTROLLER
 
 			if($is_correct_answer)
 			{
-				$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_CORRECT', $required_integral, AWS_APP::lang()->_t('答题正确 #') . $_GET['question_id']);
+				// 对于回答过的问题不加积分
+
+				if(!$this->model('quiz')->user_question_quiz_passed($question_info['question_id'], $this->user_id))
+				{
+					$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_CORRECT', $required_integral, AWS_APP::lang()->_t('答题正确 #') . $_GET['question_id']);
+				} 
+				else 
+				{
+					$required_integral = 0;
+				}
 			}
 			else
 			{
@@ -1411,14 +1420,10 @@ class ajax extends AWS_CONTROLLER
 
 		// 用户答题记录
 
-		$passed_quiz = false;
-		if($quiz_record = $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id, 1, 5))
-		{
-			$passed_quiz = $quiz_record[0]['passed'];
-			TPL::assign('quiz_record_count', $this->model('quiz')->get_question_quiz_record_user_count());
-		}
-
-		TPL::assign('quiz_record', $quiz_record);
+		TPL::assign('quiz_record', $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id, 1, 5));
+		$try_count = $this->model('quiz')->get_question_quiz_record_user_count();
+		TPL::assign('quiz_record_count', $try_count);
+		$passed_quiz = $this->model('quiz')->user_question_quiz_passed($question_info['question_id'], $this->user_id);
 		TPL::assign('passed_quiz', $passed_quiz);
 
 		// 是否显示答题选项

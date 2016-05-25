@@ -31,16 +31,18 @@ var AW_TEMPLATE = {
 					'</div>'+
 				'</div>'+
 				'<div class="card-body card-padding p-t-0">'+
-					'<div class="col-sm-6 p-t-20 p-b-20 text-center">'+
-						'<div class="easy-pie user-pie-ratio" data-percent="{{success_ratio}}">'+
-							'<div class="percent">{{success_ratio}}</div>'+
-							'<div class="pie-title">正确率</div>'+
+					'<div class="m-t-10 m-b-20 clearfix">' +
+						'<div class="col-sm-6 p-l-0 text-center">'+
+							'<div class="easy-pie user-pie-ratio" data-percent="{{success_ratio}}">'+
+								'<div class="percent">{{success_ratio}}</div>'+
+								'<div class="pie-title">正确率</div>'+
+							'</div>'+
 						'</div>'+
-					'</div>'+
-					'<div class="col-sm-6 p-t-20 p-b-20 text-center">'+
-						'<div class="easy-pie user-pie-ratio" data-percent="{{poft_ratio}}">'+
-							'<div class="percent">{{poft_ratio}}</div>'+
-							'<div class="pie-title">一次通过率</div>'+
+						'<div class="col-sm-6 p-r-0 text-center">'+
+							'<div class="easy-pie user-pie-ratio" data-percent="{{poft_ratio}}">'+
+								'<div class="percent">{{poft_ratio}}</div>'+
+								'<div class="pie-title">一次通过率</div>'+
+							'</div>'+
 						'</div>'+
 					'</div>'+
 					'<div>'+

@@ -11182,7 +11182,7 @@ input:focus {
 }
 
 .easy-pie:not(.main-pie) .percent:after {
-  font-size: 20px;
+  font-size: 14px;
 }
 
 .easy-pie .pie-title {

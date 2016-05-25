@@ -359,32 +359,12 @@
 
             if(typeof options.enableCountdown != 'undefined' && options.enableCountdown) {
                 if(quizItem.countdown > 0) {
-                    quizContent = '<div class="quiz-countdown">';
-                    quizContent += '<ul class="timer hidden"><li class="countdown-hour"><input type="text" value="75" class="dial hour"><span>时</span></li><li class="countdown-minute"><input type="text" value="75" class="dial minute"><span>分</span></li><li class="countdown-second"><input type="text" value="75" class="dial second"><span>秒</span></li></ul></div>';
-                    this.$element.append(quizContent);
-                    $('.dial').knob({
-                        'width' : 90,
-                        'height' : 90,
-                        'readOnly' : true,
-                        'min': 0,
-                        'max': 60,
-                        'fgColor': '#039AF4',
-                        'bgColor': '#e0e0e0',
-                        'thickness': 0.1,
-
-                        format: function (v) {return 60 - v;}
-                    });
-
-                    // setup countdown timer
-
                     var countdown = quizItem.countdown;
-                    var timerControl = this.$element.find('.quiz-countdown .timer');
-                    _updateTimer(timerControl, countdown);
-                    timerControl.removeClass('hidden');
                     function countdownUpdate() {
                         countdown--;
-                        _updateTimer(timerControl, countdown);
-                        timerControl.attr('data-time-spend', countdown);
+                        if(typeof options.onTimeout == 'function') {
+                            options.onCountdown(countdown);
+                        }
                         if(countdown == 0) {
                             clearInterval(options.timer);
                             if(typeof options.lockQuiz == 'function') {
@@ -475,7 +455,6 @@
                     }
 
                     this.$element.find('.quiz-submit').remove();
-                    this.$element.find('.quiz-countdown').remove();
                 }
             }
         };
@@ -592,63 +571,6 @@
      * private methods
      */
 
-    _updateTimer = function(timerElement, seconds) {
-        var hour = parseInt(seconds / 3600);
-        var minute = parseInt(seconds / 60);
-        var second = parseInt(seconds % 60);
-        var hasHour = false;
-        var hasMinute = false;
-        var inAlarm = false;
-
-        var hourDial = timerElement.find('.dial.hour');
-        var minuteDial = timerElement.find('.dial.minute');
-        var secondDial = timerElement.find('.dial.second');
-
-        var hourElement = timerElement.find('.countdown-hour');
-        var minuteElement = timerElement.find('.countdown-minute');
-
-        if(hour > 0) {
-            hourDial.val(60 - hour).trigger('change');
-            // timeStr += '<span class="hour well">' + ('00' + hour).slice(-2) + ' 时</span>';
-            hasHour = true;
-            hourElement.show();
-        } else {
-            hourElement.hide();
-        }
-
-        if(minute > 0) {
-            hasMinute = true;
-            minuteElement.show();
-        } else {
-            minuteDial.trigger(
-                'configure',
-                {
-                    'fgColor': '#F44336',
-                    'inputColor': '#F44336'
-                }
-            );
-            // minuteElement.hide();
-        }
-        minuteDial.val(60 - minute).trigger('change');
-
-        if(!hasHour && !hasMinute && (second < 10)) {
-            inAlarm = true;
-            var color = '#FF9800';
-            if(second == 0) {
-                var color = '#F44336';
-            }
-
-            secondDial.trigger(
-                'configure',
-                {
-                    'fgColor': color,
-                    'inputColor': color
-                }
-            );
-        }
-        secondDial.val(60 - second).trigger('change');
-    }
-
     privateMethod = function () {
         
     };
@@ -702,6 +624,10 @@
         },
 
         onSubmitAnswer : function (answer, spendTime) {
+
+        },
+
+        onCountdown : function (second){
 
         },
 
