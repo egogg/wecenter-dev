@@ -358,6 +358,9 @@
             // countdown
 
             if(typeof options.enableCountdown != 'undefined' && options.enableCountdown) {
+                if(typeof options.beforeCountdown == 'function') {
+                    options.beforeCountdown();
+                }
                 if(quizItem.countdown > 0) {
                     var countdown = quizItem.countdown;
                     function countdownUpdate() {
@@ -433,13 +436,15 @@
                             }
                             
                             if(typeof options.onSubmitAnswer == 'function') {
-                                options.onSubmitAnswer(answer, spendTime);
+                                if(!options.onSubmitAnswer(answer, spendTime)) {
+                                    return;
+                                } else {
+                                    if(typeof options.lockQuiz == 'function') {
+                                        options.lockQuiz(element);
+                                    }
+                                }
                             }
-                        }
-
-                        if(typeof options.lockQuiz == 'function') {
-                            options.lockQuiz(element);
-                        }
+                        }           
                     }, this));
                 }
 
@@ -624,6 +629,10 @@
         },
 
         onSubmitAnswer : function (answer, spendTime) {
+
+        },
+
+        beforeCountdown: function (){
 
         },
 

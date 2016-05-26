@@ -228,6 +228,11 @@ $(function(){
 
 	// 问题内容
 
+	function beforeCountdown() {
+		$('.countdown-timer').addClass('active');
+		setupCoundownTimerAffix();
+	}
+
  	function initCountdownTimer(size) {
  		var seconds = $('#countdown-timer').attr('data-countdown');
  		timer = '<li>' +
@@ -332,7 +337,7 @@ $(function(){
 	}
 
 	function setupCoundownTimerAffix() {
-		var timerElement = $('#countdown-timer');
+		var timerElement = $('.countdown-timer');
 	    if(timerElement.length != 0)
 	    {
 	        $('.countdown-timer-wrap').height(timerElement.height());
@@ -509,7 +514,7 @@ $(function(){
 
 		if(G_USER_ID <= 0) {
 			window.location.href = G_BASE_URL + '/account/login/';
-			return;
+			return false;
 		}
 
 		// 如果已经通过了答题，提示是否继续尝试
@@ -529,15 +534,19 @@ $(function(){
             	},
             	function(isConfirm) {
             		if(isConfirm) {
-            			setTimeout(function(){     
-            				checkAnswer(answer, spendTime);  
-            			}, 10);	
+            			setTimeout(function(){
+            				checkAnswer(answer, spendTime); 
+            				return true; 
+            			}, 10);
             		}
             	}
             );
 		} else {
 			checkAnswer(answer, spendTime);
+			return true;
 		}	
+
+		return false;
 	}
 
 	function answerTimeoutHandle() {
@@ -608,6 +617,7 @@ $(function(){
 				'data' : quizContent,
 				'enabled' : true,
 				'onSubmitAnswer' : submitAnswerHandle,
+				'beforeCountdown': beforeCountdown,
 				'onCountdown': updateCountdownTimer,
 				'onTimeout' : answerTimeoutHandle
 			});
