@@ -1816,8 +1816,8 @@ class question_class extends AWS_MODEL
 				$order_key = 'popular_value DESC';
 
 				break;
-			case 'update_time':
-				$order_key = 'update_time DESC';
+			case 'add_time':
+				$order_key = 'add_time DESC';
 
 				break;
 			case 'quiz_count':
@@ -1841,7 +1841,7 @@ class question_class extends AWS_MODEL
 
 				break;
 			default:
-				$order_key = 'update_time DESC';
+				$order_key = 'add_time DESC';
 		}
 
 		$where = array();

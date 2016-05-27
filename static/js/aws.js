@@ -650,13 +650,13 @@ var AWS =
     		barColor = '#F44336';
     	}
 
-    	var percentElement = pie.find('.percent');
-    	percentElement.removeClass('c-green').removeClass('c-red');
-    	if(value <= 50) {
-    		percentElement.addClass('c-red');
-    	} else {
-    		percentElement.addClass('c-green');
-    	}
+    	// var percentElement = pie.find('.percent');
+    	// percentElement.removeClass('c-green').removeClass('c-red');
+    	// if(value <= 50) {
+    	// 	percentElement.addClass('c-red');
+    	// } else {
+    	// 	percentElement.addClass('c-green');
+    	// }
     	
         pie.easyPieChart({
             trackColor: trackColor,

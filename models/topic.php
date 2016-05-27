@@ -1512,11 +1512,11 @@ class topic_class extends AWS_MODEL
 	public function get_question_list_by_topic($topic_id = null, $page = 1, $per_page = 10)
 	{
 		$question_ids = array();
-		$relations = $this->fetch_page('topic_relation', 'topic_id = ' . intval($topic_id) . ' AND type = "question"', ' id ASC', $page, $per_page);
+		$relations = $this->fetch_page('topic_relation', 'topic_id = ' . intval($topic_id) . ' AND type = "question"', ' add_time DESC', $page, $per_page);
 		$this->question_list_total = $this->found_rows();
 		foreach ($relations as $key => $value) 
 		{
-			$question_ids[$value['id']] = $value['item_id'];	
+			$question_ids[] = $value['item_id'];	
 		}
 
 		if(!$question_ids)
@@ -1524,7 +1524,7 @@ class topic_class extends AWS_MODEL
 			return false;
 		}
 
-		$questions = $this->fetch_all('question', 'question_id IN(' . implode(',', $question_ids) . ')', 'update_time DESC');
+		$questions = $this->fetch_all('question', 'question_id IN(' . implode(',', $question_ids) . ')', 'add_time DESC');
 
 		$question_list = array();
 		foreach ($questions as $key => $value) {

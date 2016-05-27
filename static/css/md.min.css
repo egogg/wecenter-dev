@@ -11143,7 +11143,7 @@ input:focus {
 .easy-pie {
   display: inline-block;
   position: relative;
-  padding: 0 5px 10px;
+  padding: 0 10px 10px;
 }
 
 .easy-pie .percent {

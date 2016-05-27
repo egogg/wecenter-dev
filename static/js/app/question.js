@@ -267,9 +267,9 @@ $(function(){
         $('#countdown-timer .dial.second').text(second);
 
         if(hour > 0) {
-		    hourElement.show();
+		    hourElement.parents('li').show();
 		} else {
-		    hourElement.hide();
+		    hourElement.parents('li').hide();
 		}
 
 		var trackColor = '#eee';
@@ -304,9 +304,9 @@ $(function(){
         var secondDial = $('#countdown-timer .dial.second');
 
         if(hour > 0) {
-		    hourElement.show();
+		    hourElement.parents('li').show();
 		} else {
-		    hourElement.hide();
+		    hourElement.parents('li').hide();
 		}
 
 		var minuteBarColor = '#03A9F4';
@@ -337,21 +337,16 @@ $(function(){
 	}
 
 	function setupCoundownTimerAffix() {
-		var timerElement = $('.countdown-timer');
+		var timerElement = $('.countdown-timer.active');
 	    if(timerElement.length != 0)
 	    {
 	        $('.countdown-timer-wrap').height(timerElement.height());
 
 	        timerElement.on('affixed.bs.affix', function () {
-	            // $('#nav-question-list-header > .card').css({"padding-left": navBarPadding, "padding-right": navBarPadding});
-	            // $('#nav-question-list-header .card-body').addClass('container p-l-0');
 	            initCountdownTimer(60);
 	        });
 
 	        timerElement.on('affixed-top.bs.affix', function() {
-	            // $('#nav-question-list-header > .card').css({"padding-left": 0, "padding-right": 0});
-	            // $('#nav-question-list-header .card-body').removeClass('container p-l-0');
-	            // header.css({"box-shadow": "0px 1px 4px rgba(0, 0, 0, 0.3)"});
 	            initCountdownTimer(100);
 	        });
 
