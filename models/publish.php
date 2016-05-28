@@ -187,7 +187,7 @@ class publish_class extends AWS_MODEL
 
 			if ($weixin_user_info['weixin_settings']['NEW_ANSWER'] != 'N')
 			{
-				$this->model('weixin')->send_text_message($weixin_user['openid'], "您的问题 [" . $question_info['question_content'] . "] 收到了新的回答:\n\n" . strip_tags($answer_content), $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_id));
+				$this->model('weixin')->send_text_message($weixin_user['openid'], "您的问题 [" . $question_info['question_content'] . "] 收到了新的回答:\n\n" . strip_tags($answer_content), $this->model('openid_weixin_weixin')->redirect_url('/question/' . $question_id));
 			}
 		}
 

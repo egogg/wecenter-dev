@@ -306,60 +306,6 @@ header .main-nav ul li a.active {
 	border-left-color: #03A9F4;
 }
 
-.m-question-list-heading.affix {
-	z-index: 500;
-	width: 100%;
-	top: 0;
-	left: 0;
-}
-
-.m-question-list-heading.affix>.card {
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-}
-
-.m-question-list-heading .card {
-	margin-bottom: 0;
-}
-
-.m-question-filter>li {
-	display: inline-block;
-	float: left;
-	padding-right: 15px;
-}
-
-.m-question-filter>li:last-child {
-	padding-right: 0;
-}
-
-.m-question-filter i {
-	font-size: 18px;
-	width: 18px;
-	line-height: 100%;
-    vertical-align: top;
-}
-
-.m-question-list-publish {
-	float: right !important;
-	border-left: 1px solid #f0f0f0;
-	padding-left: 18px;
-	padding-right: 18px!important;
-}
-
-.m-question-list-publish a {
-	color: #03A9F4;
-}
-
-.m-question-menu-dialog .modal-dialog {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-}
-
-.m-question-menu-dialog .modal-content {
-	height: 100%;
-	width: 100%;
-}
-
 /*问题列表*/
 
 .question-list-publish-info {
@@ -534,41 +480,6 @@ header .main-nav ul li a.active {
 .user-list-square li img {
 	width: 35px;
 	height: 35px;
-}
-
-/*移动版筛选列表*/
-
-.m-question-filter-list {
-	margin-bottom: 0;
-	box-shadow: none;
-}
-
-.m-question-filter-row {
-	padding: 10px 0 !important;
-}
-
-.m-question-filter-items {
-	display: table-cell;
-	vertical-align: top;
-	padding-left: 2em;
-}
-
-.m-question-filter-items li {
-	display: inline-block;
-	float: left;
-	padding: 0 6px;
-	line-height: 30px;
-}
-
-.m-question-filter-items li a {
-	padding: 5px 10px;
-}
-
-.m-question-filter-items li.active a {
-	color: #03A9F4;
-	border: 1px solid #03A9F4;
-	border-radius: 2px;
-	margin: -1px;
 }
 
 /*侧边栏*/
@@ -2344,10 +2255,6 @@ li.action-item-link a:hover:before {
 	height: 104px;
 }
 
-.m-question-list-filter-bar {
-	margin-bottom: 10px;
-}
-
 .sign-in-alert-hint {
 	padding: 25px;
     border-left: 3px solid #eee;
@@ -3608,17 +3515,6 @@ table td{vertical-align: middle !important;}
 .aw-editor-dropdown li a{white-space:nowrap;overflow: hidden;}
 .aw-editor-dropdown img{margin-right: 5px;}
 
-/* email未验证提示 */
-.aw-email-verify{height:38px;line-height:38px;background-color: #fff07b;border-bottom: 1px solid #d9cda7;color: #988328;}
-
-/* 邀请回复 */
-.aw-mod.email-invite-replay .btn-success{margin-top:10px;}
-/* 发起 */
-.aw-mod.publish-help .mod-body p, .aw-mod.topic-edit-help .mod-body p{padding:10px 0;color: #999;}
-/* 用户列表页按擅长话题搜索 */
-.aw-mod.people-sort .mod-body{position: relative;}
-.aw-mod.people-sort .mod-body .icon-down{position: absolute;right: 8px;top: 10px;}
-
 /* 附件上传 */
 
 .upload-box {
@@ -3677,19 +3573,10 @@ a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radiu
 
 /* @用户下拉 */
 .content_cursor{position: absolute;z-index:-1;max-width:600px;font-size: 14px;font-family: "Helvetica Neue",Helvetica,Arial,'微软雅黑','Microsoft YaHei',sans-serif;word-wrap: break-word;opacity: 0;}
-.aw-invite-dropdown{position:absolute;left:0;top:0;z-index:1010;min-width:160px;background: #fff;border:1px solid #e6e6e6;border-radius:2px;}
-.aw-invite-dropdown li{padding:5px 10px;cursor: pointer;}
-.aw-invite-dropdown li:hover, .aw-invite-dropdown li.active{background: #f0f0f0;}
-.aw-invite-dropdown li img{width: 30px;height: 30px;}
-.aw-invite-dropdown li a{display: inline-block;height: 30px;line-height: 30px;padding-left:10px;cursor: pointer;}
-.aw-invite-dropdown p{height: 26px;line-height: 26px;padding-left: 10px;margin:0;}
 
 /* 微信绑定弹窗box */
 .aw-alert-img-box .modal-body{background:none;text-align: center;}
 .aw-alert-img-box .modal-body img{max-width: 328px;}
-
-/* 私信弹窗 */
-.aw-inbox .aw-dropdown{top: auto;}
 
 /* 微信登陆页面 */
 .aw-wechat-body{background: #333;}

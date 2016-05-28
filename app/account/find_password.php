@@ -37,11 +37,6 @@ class find_password extends AWS_CONTROLLER
 
 	public function modify_action()
 	{
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/find_password_modify/?key=' . $_GET['key']);
-		}
-
 		if (!$active_code_row = $this->model('active')->get_active_code($_GET['key'], 'FIND_PASSWORD'))
 		{
 			H::redirect_msg(AWS_APP::lang()->_t('链接已失效'), '/');

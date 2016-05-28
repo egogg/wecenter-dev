@@ -22,11 +22,6 @@ class main extends AWS_CONTROLLER
 
 	public function index_action()
 	{
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/topic/' . $_GET['id']);
-		}
-
 		if (is_digits($_GET['id']))
 		{
 			if (!$topic_info = $this->model('topic')->get_topic_by_id($_GET['id']))
@@ -247,11 +242,6 @@ class main extends AWS_CONTROLLER
 
 	public function index_square_action()
 	{
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/topic/');
-		}
-
 		$per_page = 18;
 		
 		// 今日话题

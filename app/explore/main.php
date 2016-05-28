@@ -21,24 +21,10 @@ class main extends AWS_CONTROLLER
 	
 	public function setup()
 	{
-		if (is_mobile() AND !$_GET['ignore_ua_check'])
-		{
-			switch ($_GET['app'])
-			{
-				default:
-					HTTP::redirect('/m/');
-				break;
-			}
-		}
 	}
 
 	public function index_action()
 	{
-		// if (is_mobile())
-		// {
-		// 	HTTP::redirect('/m/explore/' . $_GET['id']);
-		// }
-
 		if ($this->user_id)
 		{
 			$this->crumb(AWS_APP::lang()->_t('精选'), '/explore');
@@ -255,10 +241,6 @@ class main extends AWS_CONTROLLER
 
 		TPL::import_js('js/sweetalert.min.js');
 		TPL::import_css('css/sweetalert.css');
-
-		// 移动版
-
-		TPL::assign('is_mobile', is_mobile());
 
 		TPL::output('explore/index');
 	}

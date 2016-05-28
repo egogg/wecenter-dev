@@ -27,11 +27,6 @@ class main extends AWS_CONTROLLER
 			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
 		}
 
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/article/' . $_GET['id']);
-		}
-
 		if (! $article_info = $this->model('article')->get_article_info_by_id($_GET['id']))
 		{
 			H::redirect_msg(AWS_APP::lang()->_t('文章不存在或已被删除'), '/');
@@ -172,11 +167,6 @@ class main extends AWS_CONTROLLER
 
 	public function index_square_action()
 	{
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/article/');
-		}
-
 		$this->crumb(AWS_APP::lang()->_t('知识'), '/article/');
 
 		if ($_GET['category'])

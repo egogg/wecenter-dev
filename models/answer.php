@@ -695,7 +695,7 @@ class answer_class extends AWS_MODEL
 
 				if ($weixin_user_info['weixin_settings']['NEW_COMMENT'] != 'N')
 				{
-					$this->model('weixin')->send_text_message($weixin_user['openid'], "您在 [" . $question_info['question_content'] . "] 中的回答收到了新评论:\n\n" . strip_tags($message), $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_info['question_id'] . '?answer_id=' . $answer_info['answer_id'] . '&single=TRUE'));
+					$this->model('weixin')->send_text_message($weixin_user['openid'], "您在 [" . $question_info['question_content'] . "] 中的回答收到了新评论:\n\n" . strip_tags($message), $this->model('openid_weixin_weixin')->redirect_url('/question/' . $question_info['question_id'] . '?answer_id=' . $answer_info['answer_id'] . '&single=TRUE'));
 				}
 			}
 		}
@@ -717,7 +717,7 @@ class answer_class extends AWS_MODEL
 					{
 						$answer_user = $this->model('account')->get_user_info_by_uid($uid);
 
-						$this->model('weixin')->send_text_message($weixin_user['openid'], $answer_user['user_name'] . " 在问题 [" . $question_info['question_content'] . "] 的答案评论中提到了您", $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_info['question_id'] . '?answer_id=' . $answer_info['answer_id'] . '&single=TRUE'));
+						$this->model('weixin')->send_text_message($weixin_user['openid'], $answer_user['user_name'] . " 在问题 [" . $question_info['question_content'] . "] 的答案评论中提到了您", $this->model('openid_weixin_weixin')->redirect_url('/question/' . $question_info['question_id'] . '?answer_id=' . $answer_info['answer_id'] . '&single=TRUE'));
 					}
 				}
 			}

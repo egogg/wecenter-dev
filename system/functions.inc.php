@@ -1018,25 +1018,25 @@ function fetch_file_lists($dir, $file_type = null)
  */
 function is_mobile($ignore_cookie = false)
 {
-	// return false;
+	return false;
 	// if (HTTP::get_cookie('_ignore_ua_check') == 'TRUE' AND !$ignore_cookie)
 	// {
 	// 	return true;
 	// }
 
-	$user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+	// $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 
-	if (preg_match('/playstation/i', $user_agent) OR preg_match('/ipad/i', $user_agent) OR preg_match('/ucweb/i', $user_agent))
-	{
-		return false;
-	}
+	// if (preg_match('/playstation/i', $user_agent) OR preg_match('/ipad/i', $user_agent) OR preg_match('/ucweb/i', $user_agent))
+	// {
+	// 	return false;
+	// }
 
-	if (preg_match('/iemobile/i', $user_agent) OR preg_match('/mobile\ssafari/i', $user_agent) OR preg_match('/iphone\sos/i', $user_agent) OR preg_match('/android/i', $user_agent) OR preg_match('/symbian/i', $user_agent) OR preg_match('/series40/i', $user_agent))
-	{
-		return true;
-	}
+	// if (preg_match('/iemobile/i', $user_agent) OR preg_match('/mobile\ssafari/i', $user_agent) OR preg_match('/iphone\sos/i', $user_agent) OR preg_match('/android/i', $user_agent) OR preg_match('/symbian/i', $user_agent) OR preg_match('/series40/i', $user_agent))
+	// {
+	// 	return true;
+	// }
 
-	return false;
+	// return false;
 }
 
 /**

@@ -88,11 +88,6 @@ class main extends AWS_CONTROLLER
 			}
 		}
 
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/login/url-' . $_GET['url']);
-		}
-
 		$this->crumb(AWS_APP::lang()->_t('登录'), '/account/login/');
 
 		TPL::import_css('css/login.css');
@@ -122,11 +117,6 @@ class main extends AWS_CONTROLLER
 
 	public function register_action()
 	{
-		if (is_mobile() AND !$_GET['ignore_ua_check'])
-		{
-			HTTP::redirect('/m/register/?email=' . $_GET['email'] . '&icode=' . $_GET['icode']);
-		}
-
 		if (get_setting('register_type') == 'close')
 		{
 			H::redirect_msg(AWS_APP::lang()->_t('本站目前关闭注册'), '/');

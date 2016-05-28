@@ -212,13 +212,10 @@ class ajax extends AWS_CONTROLLER
 		if (get_setting('register_valid_type') == 'N' OR $user_info['group_id'] != 3 OR $_POST['email'] == $invitation['invitation_email'])
 		{
 			$this->model('account')->setcookie_login($user_info['uid'], $user_info['user_name'], $_POST['password'], $user_info['salt']);
-
-			if (!$_POST['_is_mobile'])
-			{
-				H::ajax_json_output(AWS_APP::RSM(array(
-					'url' => get_js_url('/first_login-TRUE')
-				), 1, null));
-			}
+			
+			H::ajax_json_output(AWS_APP::RSM(array(
+				'url' => get_js_url('/first_login-TRUE')
+			), 1, null));
 		}
 		else
 		{
@@ -226,32 +223,10 @@ class ajax extends AWS_CONTROLLER
 
 			$this->model('active')->new_valid_email($uid);
 
-			if (!$_POST['_is_mobile'])
-			{
-				H::ajax_json_output(AWS_APP::RSM(array(
-					'url' => get_js_url('/account/valid_email/')
-				), 1, null));
-			}
-		}
-
-		if ($_POST['_is_mobile'])
-		{
-			if ($_POST['return_url'])
-			{
-				$user_info = $this->model('account')->get_user_info_by_uid($uid);
-
-				$this->model('account')->setcookie_login($user_info['uid'], $user_info['user_name'], $_POST['password'], $user_info['salt']);
-
-				$return_url = strip_tags($_POST['return_url']);
-			}
-			else
-			{
-				$return_url = get_js_url('/m/');
-			}
-
 			H::ajax_json_output(AWS_APP::RSM(array(
-				'url' => $return_url
+				'url' => get_js_url('/account/valid_email/')
 			), 1, null));
+			
 		}
 	}
 
@@ -307,19 +282,14 @@ class ajax extends AWS_CONTROLLER
 
 					$url = get_js_url('/account/valid_email/');
 				}
-				else if ($user_info['is_first_login'] AND !$_POST['_is_mobile'])
+				else if ($user_info['is_first_login'])
 				{
 					$url = get_js_url('/first_login-TRUE');
 				}
-				else if ($_POST['return_url'] AND !strstr($_POST['return_url'], '/logout') AND
-					($_POST['_is_mobile'] AND strstr($_POST['return_url'], '/m/') OR
+				else if ($_POST['return_url'] AND !strstr($_POST['return_url'], '/logout') OR
 					strstr($_POST['return_url'], '://') AND strstr($_POST['return_url'], base_url())))
 				{
 					$url = strip_tags($_POST['return_url']);
-				}
-				else if ($_POST['_is_mobile'])
-				{
-					$url = get_js_url('/m/');
 				}
 
 				if (get_setting('ucenter_enabled') == 'Y')
@@ -570,14 +540,7 @@ class ajax extends AWS_CONTROLLER
 
 		AWS_APP::session()->find_password = $user_info['email'];
 
-		if (is_mobile())
-		{
-			$url = get_js_url('/m/find_password_success/');
-		}
-		else
-		{
-			$url = get_js_url('/account/find_password/process_success/');
-		}
+		$url = get_js_url('/account/find_password/process_success/');
 
 		H::ajax_json_output(AWS_APP::RSM(array(
 			'url' => $url

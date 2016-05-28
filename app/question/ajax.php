@@ -133,7 +133,7 @@ class ajax extends AWS_CONTROLLER
 
 		if ($weixin_user = $this->model('openid_weixin_weixin')->get_user_info_by_uid($invite_user_info['uid']) AND $invite_user_info['weixin_settings']['QUESTION_INVITE'] != 'N')
 		{
-			$this->model('weixin')->send_text_message($weixin_user['openid'], "有用户邀请你回答问题 [" . $question_info['question_content'] . "]", $this->model('openid_weixin_weixin')->redirect_url('/m/question/' . $question_info['question_id']));
+			$this->model('weixin')->send_text_message($weixin_user['openid'], "有用户邀请你回答问题 [" . $question_info['question_content'] . "]", $this->model('openid_weixin_weixin')->redirect_url('/question/' . $question_info['question_id']));
 		}
 
 		$notification_id = $this->model('notify')->send($this->user_id, $invite_user_info['uid'], notify_class::TYPE_INVITE_QUESTION, notify_class::CATEGORY_QUESTION, intval($_GET['question_id']), array(
@@ -296,15 +296,7 @@ class ajax extends AWS_CONTROLLER
 		TPL::assign('question', $this->model('question')->get_question_info_by_id($answer_info['question_id']));
 
 		TPL::assign('answer_comments', $comments);
-
-		if (is_mobile())
-		{
-			TPL::output("m/ajax/question_comments");
-		}
-		else
-		{
-			TPL::output("question/ajax/comments");
-		}
+		TPL::output("question/ajax/comments");
 	}
 
 	public function save_question_comment_action()
@@ -578,23 +570,12 @@ class ajax extends AWS_CONTROLLER
 			), $this->user_id, $_POST['attach_access_key']);
 
 			H::ajax_json_output(AWS_APP::RSM(array(
-				'url' => get_js_url('/publish/wait_approval/question_id-' . $question_info['question_id'] . '__is_mobile-' . $_POST['_is_mobile'])
+				'url' => get_js_url('/publish/wait_approval/question_id-' . $question_info['question_id'])
 			), 1, null));
 		}
 		else
 		{
 			$answer_id = $this->model('publish')->publish_answer($question_info['question_id'], $answer_content, $this->user_id, $_POST['anonymous'], $_POST['attach_access_key'], $_POST['auto_focus']);
-
-			if ($_POST['_is_mobile'])
-			{
-				//$url = get_js_url('/m/question/id-' . $question_info['question_id'] . '__item_id-' . $answer_id . '__rf-false');
-
-				$this->model('answer')->set_answer_publish_source($answer_id, 'mobile');
-			}
-			else
-			{
-				//$url = get_js_url('/question/' . $question_info['question_id'] . '?item_id=' . $answer_id . '&rf=false');
-			}
 
 			$answer_info = $this->model('answer')->get_answer_by_id($answer_id);
 
@@ -611,18 +592,9 @@ class ajax extends AWS_CONTROLLER
 
 			TPL::assign('answer_info', $answer_info);
 
-			if (is_mobile())
-			{
-				H::ajax_json_output(AWS_APP::RSM(array(
-					'ajax_html' => TPL::output('m/ajax/question_answer', false)
-				), 1, null));
-			}
-			else
-			{
-				H::ajax_json_output(AWS_APP::RSM(array(
-					'ajax_html' => TPL::output('question/ajax/answer', false)
-				), 1, null));
-			}
+			H::ajax_json_output(AWS_APP::RSM(array(
+				'ajax_html' => TPL::output('question/ajax/answer', false)
+			), 1, null));
 		}
 	}
 

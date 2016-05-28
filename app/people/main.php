@@ -28,11 +28,6 @@ class main extends AWS_CONTROLLER
 			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
 		}
 
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/people/' . $_GET['id']);
-		}
-
         if (is_digits($_GET['id']))
         {
             if (!$user = $this->model('account')->get_user_info_by_uid($_GET['id'], TRUE))
@@ -127,11 +122,6 @@ class main extends AWS_CONTROLLER
 
 	public function index_square_action()
 	{
-		if (is_mobile())
-		{
-			HTTP::redirect('/m/people/');
-		}
-
 		if (!$_GET['page'])
 		{
 			$_GET['page'] = 1;
@@ -263,11 +253,6 @@ class main extends AWS_CONTROLLER
 			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
 		}
 
-		// if (is_mobile())
-		// {
-		// 	HTTP::redirect('/m/people/' . $_GET['id']);
-		// }
-
         if (is_digits($_GET['id']))
         {
             if (!$user = $this->model('account')->get_user_info_by_uid($_GET['id'], TRUE))
@@ -381,11 +366,6 @@ class main extends AWS_CONTROLLER
 		{
 			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
 		}
-
-		// if (is_mobile())
-		// {
-		// 	HTTP::redirect('/m/people/' . $_GET['id']);
-		// }
 
         if (is_digits($_GET['id']))
         {

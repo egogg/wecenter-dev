@@ -639,22 +639,7 @@ class ajax extends AWS_CONTROLLER
         {
             $question_id = $this->model('publish')->publish_question($_POST['question_content'], $_POST['question_detail'], $_POST['category_id'], $this->user_id, $_POST['question_difficulty'], $quiz_id, $_POST['topics'], $_POST['anonymous'], $_POST['attach_access_key'], $_POST['ask_user_id'], $this->user_info['permission']['create_topic']);
 
-            if ($_POST['_is_mobile'])
-            {
-                if ($weixin_user = $this->model('openid_weixin_weixin')->get_user_info_by_uid($this->user_id))
-                {
-                    if ($weixin_user['location_update'] > time() - 7200)
-                    {
-                        $this->model('geo')->set_location('question', $question_id, $weixin_user['longitude'], $weixin_user['latitude']);
-                    }
-                }
-
-                $url = get_js_url('/m/question/' . $question_id);
-            }
-            else
-            {
-                $url = get_js_url('/question/' . $question_id);
-            }
+            $url = get_js_url('/question/' . $question_id);
 
             H::ajax_json_output(AWS_APP::RSM(array(
                 'url' => $url
@@ -758,15 +743,8 @@ class ajax extends AWS_CONTROLLER
         else
         {
             $article_id = $this->model('publish')->publish_article($_POST['title'], $_POST['message'], $this->user_id, $_POST['topics'], $_POST['category_id'], $_POST['attach_access_key'], $this->user_info['permission']['create_topic']);
-
-            if ($_POST['_is_mobile'])
-            {
-                $url = get_js_url('/m/article/' . $article_id);
-            }
-            else
-            {
-                $url = get_js_url('/article/' . $article_id);
-            }
+            
+            $url = get_js_url('/article/' . $article_id);
 
             H::ajax_json_output(AWS_APP::RSM(array(
                 'url' => $url
