@@ -287,7 +287,7 @@ class ajax extends AWS_CONTROLLER
 					$url = get_js_url('/first_login-TRUE');
 				}
 				else if ($_POST['return_url'] AND !strstr($_POST['return_url'], '/logout') OR
-					strstr($_POST['return_url'], '://') AND strstr($_POST['return_url'], base_url())))
+					strstr($_POST['return_url'], '://') AND strstr($_POST['return_url'], base_url()))
 				{
 					$url = strip_tags($_POST['return_url']);
 				}
