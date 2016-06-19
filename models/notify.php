@@ -942,7 +942,7 @@ class notify_class extends AWS_MODEL
 							$data[$key]['message'] = '<a href="' . $val['p_url'] . '">' . $val['p_user_name'] . '</a>';
 						}
 
-						$data[$key]['message'] .= ' ' . AWS_APP::lang()->_t('回复了问题') . ' <a href="' . $val['key_url'] . '">' . $val['title'] . '</a>';
+						$data[$key]['message'] .= ' ' . AWS_APP::lang()->_t('讨论了问题') . ' <a href="' . $val['key_url'] . '">' . $val['title'] . '</a>';
 
 						break;
 

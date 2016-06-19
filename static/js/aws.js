@@ -146,9 +146,13 @@ var AWS =
 				return false;
 			}
 
-			if (result.err)
+			if (result.errno == -1)
 			{
 				AWS.alert(result.err);
+			}
+			else if(result.errno == 0)
+			{
+				AWS.inform(result.err);
 			}
 			else if (result.rsm && result.rsm.url)
 			{

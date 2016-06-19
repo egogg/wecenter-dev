@@ -35,7 +35,7 @@ if (defined('SAE_TMP_PATH'))
 	define('IN_SAE', true);
 }
 
-define('ROOT_PATH', dirname(dirname(__FILE__)) . '/');
+define('ROOT_PATH', dirname($_SERVER["SCRIPT_FILENAME"]) . '/');
 
 @ini_set('display_errors', '0');
 

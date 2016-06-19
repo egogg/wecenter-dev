@@ -83,6 +83,17 @@ $(document).ready(function ()
 
                     case 'email' :
                         isValidValue = is_valid_email(inputValue);
+                        if(isValidValue) {
+                            $.get(G_BASE_URL + '/account/ajax/check_email/email' + '-' + encodeURIComponent(inputValue), function (result)
+                            {
+                                if (result.errno == -1)
+                                {
+                                    isValidValue = false;
+                                    errorTips = result.err;
+                                    updateCheckResult();
+                                }
+                            }, 'json');
+                        }
                     break;
 
                     case 'password' :

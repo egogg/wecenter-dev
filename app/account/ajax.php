@@ -63,7 +63,7 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('邮箱地址已被使用')));
 		}
 
-		H::ajax_json_output(AWS_APP::RSM(null, 1, null));
+		H::ajax_json_output(AWS_APP::RSM(null, 0, null));
 	}
 
 	public function register_process_action()
@@ -116,10 +116,10 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('密码长度不符合规则')));
 		}
 
-		if (! $_POST['agreement_chk'])
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('你必需同意用户协议才能继续')));
-		}
+		// if (! $_POST['agreement_chk'])
+		// {
+		// 	H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('你必需同意用户协议才能继续')));
+		// }
 
 		// 检查验证码
 		if (!AWS_APP::captcha()->is_validate($_POST['seccode_verify']) AND get_setting('register_seccode') == 'Y')
@@ -220,6 +220,7 @@ class ajax extends AWS_CONTROLLER
 		else
 		{
 			AWS_APP::session()->valid_email = $user_info['email'];
+			$this->model('account')->setcookie_login($user_info['uid'], $user_info['user_name'], $_POST['password'], $user_info['salt']);
 
 			$this->model('active')->new_valid_email($uid);
 
@@ -422,7 +423,7 @@ class ajax extends AWS_CONTROLLER
 		
 		AWS_APP::session()->valid_email = strtolower($_POST['email']);
 		
-		H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('邮件发送成功')));
+		H::ajax_json_output(AWS_APP::RSM(null, 0, AWS_APP::lang()->_t('邮件发送成功')));
 	}
 
 	public function send_valid_mail_action()

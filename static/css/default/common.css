@@ -3060,12 +3060,21 @@ input.form-control {
 	color: #fff;
 }
 
+.captcha-input {
+	float: right;
+	width: 50%;
+}
+
 .aw-register-verify input {
 	width: 60%;
 }
 
 #modify_email_form {
 	display: none;
+}
+
+#modify_email_form input {
+	height: 30px;
 }
 
 /*侧边底部工具栏*/
