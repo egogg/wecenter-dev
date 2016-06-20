@@ -36,6 +36,11 @@ class recommend_class extends AWS_MODEL
 		return $this->fetch_all('recommend_homepage', 'item_type = "' . $item_type . '"', 'add_time' , intval($limit));
 	}
 
+	public function get_recommend_homepage_item_list($item_type, $page, $per_page)
+	{
+		return $this->fetch_page('recommend_homepage', 'item_type = "' . $item_type . '"', null, $page, $per_page);
+	}
+
 	public function get_recommend_homepage_question_ids()
 	{
 		$items = $this->fetch_all('recommend_homepage', 'item_type = "question"');

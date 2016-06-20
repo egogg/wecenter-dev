@@ -32,6 +32,8 @@ class core_pagination
 	var $num_tag_close		= '';
 	var $query_string_segment = 'page';
 	var $display_pages		= TRUE;
+	var $page_tag_open	    = '<li>';
+	var $page_tag_close     = '</li>';
 
 	var $page_base_url = '';
 
@@ -196,7 +198,7 @@ class core_pagination
 		}
 
 		// Render the pages
-		if ($this->display_pages !== FALSE)
+		if ($this->display_pages)
 		{
 			// Write the digit links
 			for ($loop = $start -1; $loop <= $end; $loop++)
@@ -228,6 +230,10 @@ class core_pagination
 					}
 				}
 			}
+		}
+		else 
+		{
+			$output .= $this->page_tag_open . $this->cur_page . $this->page_tag_close;
 		}
 
 		// Render the "next" link
