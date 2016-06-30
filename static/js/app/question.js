@@ -380,13 +380,12 @@ $(function(){
 		$.get(G_BASE_URL + '/question/ajax/init_question_content/id-' + QUESTION_ID, function (response) {
 			$('.question-loader').html(response);
 
-			// var QUIZ_RETRY_COUNT = $('input[name=question-quiz-record-try-count]').val();
+			var QUIZ_TRY_COUNT = $('input[name=question-quiz-record-try-count]').val();
 			var PASSED_QUIZ = $('input[name=question-quiz-record-passed]').val();
-			// var takenQuiz = (QUIZ_RETRY_COUNT > 0);
 
 			initCountdownTimer(100);
 			setupCoundownTimerAffix();
-			parseQuestionQuiz(PASSED_QUIZ);
+			parseQuestionQuiz(QUIZ_TRY_COUNT == 0 || (QUIZ_TRY_COUNT > 0 && PASSED_QUIZ));
 
 			// 提示信息
 
@@ -498,9 +497,7 @@ $(function(){
                 	}
                 );
             }
-
-            checking.close();
-        }, 'json');
+		}, 'json');
 	}
 
 	function submitAnswerHandle(answer, spendTime) {
@@ -599,16 +596,11 @@ $(function(){
 			IS_JSON = false;
 		}
 
-		var enableCountdown = true;
-		if(passed) {
-			enableCountdown = false;
-		}
-
 		if (IS_JSON) {
 			$('.question-quiz-content').nkrQuiz({
 				'mode' : 'single',
-				'showSubmit' : true,
-				'enableCountdown' : enableCountdown,
+				'showSubmit' : passed,
+				'enableCountdown' : passed,
 				'data' : quizContent,
 				'enabled' : true,
 				'onSubmitAnswer' : submitAnswerHandle,
