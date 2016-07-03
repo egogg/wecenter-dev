@@ -1477,6 +1477,10 @@ li.user-quiz-record-item.timeout:before {
 	background-color: #f9f9f9;
 }
 
+.alert-get-integral .md {
+	vertical-align: baseline;
+}
+
 .alert-edit-solution {
 	border-left: 3px solid #e0e0e0;
     padding: 15px;

@@ -385,7 +385,7 @@ $(function(){
 
 			initCountdownTimer(100);
 			setupCoundownTimerAffix();
-			parseQuestionQuiz(QUIZ_TRY_COUNT == 0 || (QUIZ_TRY_COUNT > 0 && PASSED_QUIZ));
+			parseQuestionQuiz(QUIZ_TRY_COUNT == 0 || (QUIZ_TRY_COUNT > 0 && PASSED_QUIZ), !PASSED_QUIZ);
 
 			// 提示信息
 
@@ -420,7 +420,7 @@ $(function(){
 			$('.question-loader').html(response).css('opacity',0).animate({opacity:1}, 300);
 			initCountdownTimer(100);
 			setupCoundownTimerAffix();
-			parseQuestionQuiz();
+			parseQuestionQuiz(true, true);
 		});
 	}
 
@@ -583,7 +583,7 @@ $(function(){
 		}, 'json');
 	}
 
-	function parseQuestionQuiz(passed) {
+	function parseQuestionQuiz(showSubmit, enableCountdown) {
 		QUESTION_QUIZ = $('input[name=question-quiz-content]').val();
 		QUESTION_QUIZ_ID = $('input[name=question-quiz-id]').val();
 		QUESTION_QUIZ_RECORD_ID = $('input[name=question-quiz-record-id]').val();
@@ -599,8 +599,8 @@ $(function(){
 		if (IS_JSON) {
 			$('.question-quiz-content').nkrQuiz({
 				'mode' : 'single',
-				'showSubmit' : passed,
-				'enableCountdown' : passed,
+				'showSubmit' : showSubmit,
+				'enableCountdown' : enableCountdown,
 				'data' : quizContent,
 				'enabled' : true,
 				'onSubmitAnswer' : submitAnswerHandle,
@@ -714,7 +714,7 @@ $(function(){
 
 		retryQuizIntegralAction(function(){
 			$('.question-quiz-board').hide();
-			parseQuestionQuiz();
+			parseQuestionQuiz(true, true);
 		});
 	});
 

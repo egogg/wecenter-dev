@@ -1240,27 +1240,6 @@ class ajax extends AWS_CONTROLLER
 
 		if(!$is_special_user)
 		{
-			if($_GET['record_id'])
-			{
-				// 更新已有答题记录状态
-
-				$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
-			}
-			else
-			{
-				// 保存新的答题记录
-
-				$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
-			}
-
-			// 更新用户答题统计
-
-			$this->model('account')->update_user_quiz_count_info($this->user_id);
-
-			// 更新问题答题统计
-
-			$this->model('question')->update_question_quiz_count_info($question_info['question_id']);
-
 			// 积分操作
 
 			$required_integral = $this->question_quiz_answer_integral($_GET['question_id'], $is_correct_answer);
@@ -1282,6 +1261,29 @@ class ajax extends AWS_CONTROLLER
 			{
 				$this->model('integral')->process($this->user_id, 'QUESTION_QUIZ_INCORRECT', -$required_integral, AWS_APP::lang()->_t('答题错误 #') . $_GET['question_id']);
 			}
+
+			// 更新答题记录
+
+			if($_GET['record_id'])
+			{
+				// 更新已有答题记录状态
+
+				$this->model('quiz')->update_question_quiz_record($_GET['record_id'], $user_answer, $is_correct_answer, $spend_time);
+			}
+			else
+			{
+				// 保存新的答题记录
+
+				$this->model('quiz')->save_question_quiz_record($_GET['question_id'], $this->user_id, $user_answer, $is_correct_answer, $spend_time);
+			}
+
+			// 更新用户答题统计
+
+			$this->model('account')->update_user_quiz_count_info($this->user_id);
+
+			// 更新问题答题统计
+
+			$this->model('question')->update_question_quiz_count_info($question_info['question_id']);
 		}
 
         H::ajax_json_output(array(
