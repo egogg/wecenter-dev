@@ -99,6 +99,10 @@ class quiz_class extends AWS_MODEL
 		$records = $this->fetch_page('question_quiz_record', 'question_id = ' . intval($question_id) . ' AND uid = ' . intval($uid), ' start_time DESC', $page, $per_page);
 		$this->user_record_list_total = $this->found_rows();
 
+		foreach ($records as $key => $value) {
+			$records[$key]['is_countdown'] = $this->is_question_quiz_countdown($value['question_id']);
+		}
+
 		return $records;
 	}
 
@@ -120,6 +124,7 @@ class quiz_class extends AWS_MODEL
 		$record_list = array();
 		foreach ($records as $key => $value) {
 			$record_list[$key] = $value;
+			$record_list[$key]['is_countdown'] = $this->is_question_quiz_countdown($value['question_id']);
 			$record_list[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['uid'], true);
 		}
 
@@ -401,5 +406,22 @@ class quiz_class extends AWS_MODEL
 	public function get_user_failed_question_count($uid)
 	{
 		return count($this->get_user_failed_question_ids($uid));
+	}
+
+	public function is_question_quiz_countdown($question_id)
+	{
+		$question_info = $this->model('question')->get_question_info_by_id($question_id);
+		if(!$question_info or !$question_info['quiz_id'])
+		{
+			return false;
+		}
+
+		$quiz_info = $this->get_question_quiz_info_by_id($question_info['quiz_id']);
+		if(!$quiz_info)
+		{
+			return false;
+		}
+
+		return ($quiz_info['countdown'] > 0);
 	}
 }

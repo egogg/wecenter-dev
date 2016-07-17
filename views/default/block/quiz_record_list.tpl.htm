@@ -12,7 +12,7 @@
                         <span class="c-green">
                             答题通过
                         </span>
-                    <?php } else if($this->question_info['quiz_info']['countdown'] > 0 and $val['time_spend'] <= 0) { ?>
+                    <?php } else if($val['is_countdown'] and $val['time_spend'] <= 0) { ?>
                         <span class="c-amber">
                             答题超时
                         </span>
@@ -21,7 +21,7 @@
                             答题失败
                         </span>
                     <?php } ?>
-                    <?php if($this->question_info['quiz_info']['countdown'] > 0 and $val['time_spend'] > 0) { ?><span class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</span><?php } ?>
+                    <?php if($val['is_countdown'] and $val['time_spend'] > 0) { ?><span class="c-gray">（用时<?php echo $val['time_spend']; ?>秒）</span><?php } ?>
                 </div>
                 <small class="lv-small"><?php echo date_friendly($val['start_time']); ?></small>
             </div>

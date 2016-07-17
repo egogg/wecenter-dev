@@ -2053,7 +2053,7 @@ class question_class extends AWS_MODEL
 		return $this->query_all("SELECT DISTINCT uid FROM " . get_table('answer') . " WHERE question_id = " . intval($question_id));
 	}
 
-	public function get_helpful_users_by_category_id($category_id, $exclude_uids = null, $limit = 24)
+	public function get_recommend_users_by_category_id($category_id, $exclude_uids = null, $limit = 24)
 	{
 		$quiz_record_table = get_table('question_quiz_record');
 		$question_table = get_table('question');

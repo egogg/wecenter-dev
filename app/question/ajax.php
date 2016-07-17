@@ -1927,8 +1927,7 @@ class ajax extends AWS_CONTROLLER
 
 		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_list_page($question_info['question_id'], $_GET['page'], 10);
 
-		TPL::assign('question_quiz_record_list', $question_quiz_record);
-
+		TPL::assign('quiz_record_list', $question_quiz_record);
 		TPL::output('block/quiz_record_list');
 	}
 

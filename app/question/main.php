@@ -409,22 +409,22 @@ class main extends AWS_CONTROLLER
 		}
 		TPL::assign('exclude_uids', $exclude_uids);
 
-		$helpful_users = $this->model('question')->get_helpful_users_by_category_id($question_info['category_id'], $exclude_uids, get_setting('user_question_invite_recommend'));
-		if($helpful_users)
+		$recommend_users = $this->model('question')->get_recommend_users_by_category_id($question_info['category_id'], $exclude_uids, get_setting('user_question_invite_recommend'));
+		if($recommend_users)
 		{
 			$uids = null;
-			foreach ($helpful_users as $key => $val) 
+			foreach ($recommend_users as $key => $val) 
 			{
 				$uids[] = $val['uid'];
 			}
 			
 			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
-			foreach ($helpful_users as $key => $val) 
+			foreach ($recommend_users as $key => $val) 
 			{
-				$helpful_users[$key]['user_info'] = $users_info[$val['uid']];
+				$recommend_users[$key]['user_info'] = $users_info[$val['uid']];
 			}
 		}
-		TPL::assign('helpful_users', $helpful_users);
+		TPL::assign('recommend_users', $recommend_users);
 
 		TPL::assign('invited_user_count', $this->model('question')->get_invited_user_count($question_info['question_id']));
 
@@ -438,23 +438,23 @@ class main extends AWS_CONTROLLER
 		// 		}
 		// 	}
 
-		// 	if ($helpful_users = $this->model('topic')->get_helpful_users_by_topic_ids($question_topic_ids, 17))
+		// 	if ($recommend_users = $this->model('topic')->get_recommend_users_by_topic_ids($question_topic_ids, 17))
 		// 	{
-		// 		foreach ($helpful_users AS $key => $val)
+		// 		foreach ($recommend_users AS $key => $val)
 		// 		{
 		// 			if ($val['user_info']['uid'] == $this->user_id)
 		// 			{
-		// 				unset($helpful_users[$key]);
+		// 				unset($recommend_users[$key]);
 		// 			}
 		// 			else
 		// 			{
-		// 				$helpful_users[$key]['has_invite'] = $this->model('question')->has_question_invite($question_info['question_id'], $val['user_info']['uid'], $this->user_id);
+		// 				$recommend_users[$key]['has_invite'] = $this->model('question')->has_question_invite($question_info['question_id'], $val['user_info']['uid'], $this->user_id);
 
-		// 				$helpful_users[$key]['experience'] = end($helpful_users[$key]['experience']);
+		// 				$recommend_users[$key]['experience'] = end($recommend_users[$key]['experience']);
 		// 			}
 		// 		}
 
-		// 		TPL::assign('helpful_users', $helpful_users);
+		// 		TPL::assign('recommend_users', $recommend_users);
 		// 	}
 		// }
 
@@ -523,17 +523,10 @@ class main extends AWS_CONTROLLER
 
 			$this->model('question')->set_is_first_visited($question_info['question_id'], 0);
 		}
-		
 
 		// 答题动态信息
 
-		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_by_question($question_info['question_id'], 5);
-		if($question_quiz_record) {
-			foreach ($question_quiz_record as $key => $value) {
-				$question_quiz_record[$key]['user_info'] = $this->model('account')->get_user_info_by_uid($value['uid'], true);
-			}
-		}
-			
+		$question_quiz_record = $this->model('quiz')->get_question_quiz_record_list_page($question_info['question_id'], 1, 5);
 		TPL::assign('question_quiz_record', $question_quiz_record);
 
 		// // 添加题目解析提示提示
