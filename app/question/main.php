@@ -492,8 +492,7 @@ class main extends AWS_CONTROLLER
 			// fileupload
 			TPL::import_js('js/fileupload.js');
 		}
-
-		TPL::assign('attach_access_key', md5($this->user_id . time()));
+		
 		TPL::assign('redirect_message', $redirect_message);
 
 		$recommend_posts = $this->model('posts')->get_recommend_posts_by_topic_ids($question_topic_ids);

@@ -497,10 +497,10 @@ class ajax extends AWS_CONTROLLER
 
 	public function save_answer_action()
 	{
-		if ($this->user_info['integral'] < 0 and get_setting('integral_system_enabled') == 'Y')
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你的剩余积分已经不足以进行此操作')));
-		}
+		// if ($this->user_info['integral'] < 0 and get_setting('integral_system_enabled') == 'Y')
+		// {
+		// 	H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('你的剩余积分已经不足以进行此操作')));
+		// }
 
 		if (!$question_info = $this->model('question')->get_question_info_by_id($_POST['question_id']))
 		{
@@ -519,17 +519,17 @@ class ajax extends AWS_CONTROLLER
 			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('请输入回复内容')));
 		}
 
-		// 判断是否是问题发起者
-		if (get_setting('answer_self_question') == 'N' and $question_info['published_uid'] == $this->user_id)
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('不能回复自己发布的问题，你可以修改问题内容')));
-		}
+		// // 判断是否是问题发起者
+		// if (get_setting('answer_self_question') == 'N' and $question_info['published_uid'] == $this->user_id)
+		// {
+		// 	H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('不能回复自己发布的问题，你可以修改问题内容')));
+		// }
 
-		// 判断是否已回复过问题
-		if ((get_setting('answer_unique') == 'Y') AND $this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
-		{
-			H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('一个问题只能回复一次，你可以编辑回复过的回复')));
-		}
+		// // 判断是否已回复过问题
+		// if ((get_setting('answer_unique') == 'Y') AND $this->model('answer')->has_answer_by_uid($question_info['question_id'], $this->user_id))
+		// {
+		// 	H::ajax_json_output(AWS_APP::RSM(null, '-1', AWS_APP::lang()->_t('一个问题只能回复一次，你可以编辑回复过的回复')));
+		// }
 
 		if (strlen($answer_content) < get_setting('answer_length_lower'))
 		{
@@ -1773,13 +1773,13 @@ class ajax extends AWS_CONTROLLER
 			$answer_count_where = 'uid IN(' . implode($follow_uids, ',') . ')';
 			$answer_order_by = 'add_time ASC';
 		}
-		else if ($_GET['sort_key'] == 'add_time')
+		else if ($_GET['sort_key'] == 'popularity')
 		{
-			$answer_order_by = $_GET['sort_key'] . " " . $_GET['sort'];
+			$answer_order_by = "agree_count " . $_GET['sort'] . ", against_count ASC, add_time ASC";
 		}
 		else
 		{
-			$answer_order_by = "agree_count " . $_GET['sort'] . ", against_count ASC, add_time ASC";
+			$answer_order_by = "add_time " . $_GET['sort'];
 		}
 
 		if ($answer_count_where)
@@ -1909,6 +1909,10 @@ class ajax extends AWS_CONTROLLER
 		{
 			$user_answered = false;
 		}
+		
+		// 评论附件
+
+		TPL::assign('attach_access_key', md5($this->user_id . time()));
 
 		TPL::assign('user_answered', $user_answered);
 		TPL::assign('answers', $answers);

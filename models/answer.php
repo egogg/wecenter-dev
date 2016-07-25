@@ -78,6 +78,35 @@ class answer_class extends AWS_MODEL
 		return $answer_list;
 	}
 
+	public function get_question_answer_list($question_id, $where = null, $order = 'add_time DESC', $page, $per_page)
+	{
+		if ($where)
+		{
+			$_where = ' AND (' . $where . ')';
+		}
+		
+		if ($answer_list = $this->fetch_page('answer', 'question_id = ' . intval($question_id) . $_where, $order, $page, $per_page))
+		{
+			foreach($answer_list as $key => $val)
+			{
+				$uids[] = $val['uid'];
+			}
+		}
+
+		if ($uids)
+		{
+			if ($users_info = $this->model('account')->get_user_info_by_uids($uids, true))
+			{
+				foreach($answer_list as $key => $val)
+				{
+					$answer_list[$key]['user_info'] = $users_info[$val['uid']];
+				}
+			}
+		}
+
+		return $answer_list;
+	}
+
 	public function get_vote_user_by_answer_id($answer_id)
 	{
 		if (!$answer_id)
