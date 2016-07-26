@@ -1841,7 +1841,7 @@ class question_class extends AWS_MODEL
 
 				break;
 			default:
-				$order_key = 'add_time DESC';
+				$order_key = 'update_time DESC, add_time DESC';
 		}
 
 		$where = array();
