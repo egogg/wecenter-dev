@@ -1870,6 +1870,16 @@ li.user-quiz-record-item.timeout:before {
 	background-color: transparent;
 }
 
+.article-comment-items {
+	margin-top: 15px !important;
+}
+
+.article-comment-items .user-avatar {
+	height: 35px;
+	width: 35px;
+	margin-right: 5px;
+}
+
 .article-footer {
 	border-top: 1px solid #eee;
 }
