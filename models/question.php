@@ -923,12 +923,12 @@ class question_class extends AWS_MODEL
 
 	public function get_invited_user_ids($question_id)
 	{
-		return $this->query_all("SELECT DISTINCT recipients_uid as uid FROM " . $this->get_table('question_invite') . " WHERE question_id = " . intval($question_id));
+		return $this->query_all("SELECT DISTINCT recipients_uid as uid FROM " . $this->get_table('question_invite') . " WHERE question_id = " . intval($question_id) . " AND recipients_uid IS NOT NULL");
 	}
 
 	public function get_invited_users($question_id, $uid = null, $limit = 10)
 	{
-		$where = 'question_id = ' . intval($question_id);
+		$where = 'question_id = ' . intval($question_id) . " AND recipients_uid IS NOT NULL";
 
 		if($uid)
 		{
@@ -940,12 +940,12 @@ class question_class extends AWS_MODEL
 
 	public function get_invited_user_list($question_id, $page = 1, $per_page = 8, $order = 'add_time ASC')
 	{
-		return $this->fetch_page('question_invite', 'question_id = ' . intval($question_id), $order, $page, $per_page);
+		return $this->fetch_page('question_invite', 'question_id = ' . intval($question_id) . " AND recipients_uid IS NOT NULL", $order, $page, $per_page);
 	}
 
 	public function get_invited_user_count($question_id, $uid = null)
 	{
-		$where = 'question_id = ' . intval($question_id);
+		$where = 'question_id = ' . intval($question_id) . " AND recipients_uid IS NOT NULL";
 
 		if($uid)
 		{
@@ -1985,18 +1985,13 @@ class question_class extends AWS_MODEL
 	public function get_user_question_list_publish($uid = 0, $page = 1, $per_page = 5) 
 	{
 		$questions = $this->fetch_page('question', 'published_uid = ' . intval($uid), 'update_time DESC', $page, $per_page);
-	
-		$question_list = array();
-		foreach ($questions as $key => $value) {
-			if ($value['has_attach'])
-			{
-				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
-			}
-
-			$question_list[$key] = $value;
+		
+		foreach ($questions as $key => $value) 
+		{
+			$this->load_list_question_info($questions[$key], $value, $this->user_id);
 		}
 
-		return $question_list;
+		return $questions;
 	}
 
 	public function get_user_question_list_answered($uid = 0, $page = 1, $per_page = 5)
@@ -2008,17 +2003,12 @@ class question_class extends AWS_MODEL
 			$questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page);
 		}
 
-		$question_list = array();
-		foreach ($questions as $key => $value) {
-			if ($value['has_attach'])
-			{
-				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
-			}
-
-			$question_list[$key] = $value;
+		foreach ($questions as $key => $value) 
+		{
+			$this->load_list_question_info($questions[$key], $value, $this->user_id);
 		}
 
-		return $question_list;
+		return $questions;
 	}
 
 	public function get_user_question_list_failed($uid = 0, $page = 1, $per_page = 5)
@@ -2030,17 +2020,12 @@ class question_class extends AWS_MODEL
 			$questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page);
 		}
 
-		$question_list = array();
-		foreach ($questions as $key => $value) {
-			if ($value['has_attach'])
-			{
-				$value['attachs'] = $this->model('publish')->get_attach('question', $value['question_id'], 'min');
-			}
-
-			$question_list[$key] = $value;
+		foreach ($questions as $key => $value) 
+		{
+			$this->load_list_question_info($questions[$key], $value, $this->user_id);
 		}
 
-		return $question_list;
+		return $questions;
 	}
 
 	public function get_quized_uids($question_id)

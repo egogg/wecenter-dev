@@ -120,6 +120,9 @@ class main extends AWS_CONTROLLER
 			$question_info['question_quiz'] = $this->model('quiz')->get_question_quiz_info_by_id($question_info['quiz_id']);
 		}
 
+		$this->model('question')->calc_popular_value($question_info['question_id']);
+		$this->model('question')->update_views($question_info['question_id']);
+
 		// if ($_GET['column'] != 'log')
 		// {
 			// $this->model('question')->calc_popular_value($question_info['question_id']);

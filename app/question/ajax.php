@@ -23,16 +23,6 @@ class ajax extends AWS_CONTROLLER
 			'remove_answer',
 			'fetch_share_data',
 			'init_question_content',
-			'question_quiz_submit_answer',
-			'begin_question_quiz_countdown',
-			'get_question_solution',
-			'get_question_solution_record',
-			'save_question_solution_record',
-			'get_question_quiz_retry_integral',
-			'save_question_quiz_retry_integral',
-			'get_question_view_solution_integral',
-			'save_question_view_solution_integral',
-			'question_quiz_timeout',
 			'load_more_question_quiz_record',
 			'load_more_question_quiz_record_user',
 			'invited_users',
@@ -1127,6 +1117,13 @@ class ajax extends AWS_CONTROLLER
 
 	public function question_quiz_submit_answer_action()
 	{
+		if(!$this->user_id) 
+		{
+			H::ajax_json_output(array(
+				'internal_error' => true 
+			));
+		}
+
 		// 获取答案信息
 
 		if(!$_GET['question_id'])
@@ -1392,6 +1389,11 @@ class ajax extends AWS_CONTROLLER
 
 		$this->complete_unfinished_question_quiz_record();
 
+		// 更新查看次数
+
+		$this->model('question')->calc_popular_value($question_info['question_id']);
+		$this->model('question')->update_views($question_info['question_id']);
+
 		// 用户答题记录
 
 		TPL::assign('quiz_record', $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id, 1, 5));
@@ -1427,6 +1429,11 @@ class ajax extends AWS_CONTROLLER
 
 	public function begin_question_quiz_countdown_action ()
 	{
+		if(!$this->user_id)
+		{
+			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('非法用户')));
+		}
+
 		if(!($question_info = $this->model('question')->load_detailed_question_info($_GET['id'])))
 		{
 			H::ajax_json_output(AWS_APP::RSM(null, - 1, AWS_APP::lang()->_t('问题不存在或已被删除')));

@@ -363,8 +363,10 @@
                 }
                 if(quizItem.countdown > 0) {
                     var countdown = quizItem.countdown;
+                    var spendTime = 0;
                     function countdownUpdate() {
                         countdown--;
+                        spendTime++;
                         if(typeof options.onTimeout == 'function') {
                             options.onCountdown(countdown);
                         }
@@ -430,10 +432,6 @@
 
                         if(typeof options.getQuizResult == 'function') {
                             var answer = options.getQuizResult(this.$element);
-                            var spendTime = -1;
-                            if(quizItem.countdown > 0) {
-                                spendTime = quizItem.countdown - this.$element.find('.quiz-countdown .timer').attr('data-time-spend');
-                            }
                             
                             if(typeof options.onSubmitAnswer == 'function') {
                                 if(!options.onSubmitAnswer(answer, spendTime)) {
