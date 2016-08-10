@@ -19,6 +19,7 @@ class ajax extends AWS_CONTROLLER
 			'user_info',
 			'questions',
 			'answers',
+			'follows',
 			'topics'
 		);
 

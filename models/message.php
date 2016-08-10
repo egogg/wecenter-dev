@@ -219,4 +219,17 @@ class message_class extends AWS_MODEL
 		$this->delete('inbox', 'sender_remove = 1 AND recipient_receipt = 1');
 		$this->delete('inbox_dialog', 'sender_count = 0 AND recipient_count = 0');
 	}
+
+	public function get_message_page_by_dialog_id($dialog_id, $page, $per_page)
+	{
+		if ($inbox = $this->fetch_page('inbox', 'dialog_id = ' . intval($dialog_id), 'id DESC', $page, $per_page))
+		{
+			foreach ($inbox AS $key => $val)
+			{
+				$message[$val['id']] = $val;
+			}
+		}
+
+		return $message;
+	}
 }
