@@ -657,6 +657,7 @@ class ajax extends AWS_CONTROLLER
 		}
 
 		$update_data['avatar_file'] = $this->model('account')->get_avatar($this->user_id, null, 1) . basename($thumb_file['min']);
+		$update_data['profile_update_time'] = time();
 
 		// 更新主表
 		$this->model('account')->update_users_fields($update_data, $this->user_id);

@@ -29,3 +29,11 @@ INSERT INTO `aws_system_setting` (`varname`, `value`) VALUES
 USE `naokr`;
 
 ALTER TABLE `aws_users` ADD COLUMN `is_auto_password` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否为随机密码';
+
+-------------------------------------------------------------------------------
+-- 2016-08-11
+-------------------------------------------------------------------------------
+
+USE `naokr`;
+
+ALTER TABLE `aws_users` ADD COLUMN `profile_update_time` int(10) DEFAULT NULL COMMENT '信息更新时间';

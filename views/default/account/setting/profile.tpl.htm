@@ -38,7 +38,7 @@
             <dl class="dl-horizontal">
                 <dt>头像</dt>
                 <dd>
-                	<img class="img-circle" src="<?php echo get_avatar_url($this->user_id, 'max'); ?>?rand=<?php echo rand(1, 999); ?>" alt="" id="avatar_src" />
+                	<img class="img-circle" src="<?php echo get_avatar_url($this->user_id, 'max'); ?><?php if($this->user_info['profile_update_time']) { echo '?v=' . $this->user_info['profile_update_time']; } ?>" alt="" id="avatar_src" />
                 	<div class="user-avatar-upload">
                 		<a class="btn btn-mini btn-success" id="avatar_uploader" href="javascript:;"><?php _e('上传头像'); ?></a> <span id="avatar_uploading_status" class="hide"><i class="aw-loading"></i> <?php _e('文件上传中...'); ?></span>
                 	</div>
