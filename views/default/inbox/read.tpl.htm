@@ -35,7 +35,7 @@
                                     <?php foreach($this->list AS $key => $val) { ?>
                                         <div class="lv-item media <?php if ($val['uid'] != $this->user_id) { ?>right<?php } ?>">
                                             <a data-id="<?php echo $val['uid']; ?>" href="people/<?php if ($val['uid'] == $this->user_id) { ?><?php echo $this->user_info['url_token']; ?><?php } else { ?><?php echo $val['url_token']; ?><?php } ?>" data-id="<?php echo $val['uid']; ?>" class="user-tag user-img lv-avatar <?php if ($val['uid'] == $this->user_id) { ?>pull-left<?php  } else { ?>pull-right<?php } ?>">
-                                                <img src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="" />
+                                                <img src="<?php echo get_avatar_url($val['uid'], 'mid'); ?><?php if($val['profile_update_time']) { echo '?v=' . $val['profile_update_time']; } ?>" alt="" />
                                             </a>
                                             <div class="media-body">
                                                 <div class="ms-item">

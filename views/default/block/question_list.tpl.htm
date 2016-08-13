@@ -22,7 +22,7 @@
 					<div class="question-publish-info">
 						<?php if ($question['user_info']) { ?>
 							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-img" data-id="<?php echo $question['user_info']['uid']; ?>">
-								<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+								<img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($question['user_info']['uid'], 'min'); ?><?php if($question['user_info']['profile_update_time']) { echo '?v=' . $question['user_info']['profile_update_time']; } ?>" alt="" /><?php if ($question['user_info']['verified']) { ?><?php if ($question['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
 								<?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
 							</a>
 							<a href="people/<?php echo $question['user_info']['url_token']; ?>" target="_blank" rel="nofollow" class="user-tag user-name" data-id="<?php echo $question['user_info']['uid']; ?>">

@@ -34,7 +34,7 @@
 											<div class="pull-left">
 												<?php if ($val['answer_info']['anonymous'] == 0) { ?>
 													<a class="user-tag user-img" data-id="<?php echo $val['user_info']['uid']; ?>" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
-														<img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'mid'); ?>" alt="<?php echo $val['user_info']['user_name']; ?>" />
+														<img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'mid'); ?><?php if($val['user_info']['profile_update_time']) { echo '?v=' . $val['user_info']['profile_update_time']; } ?>" alt="<?php echo $val['user_info']['user_name']; ?>" />
 													</a>
 												<?php } else { ?>
 													<a href="javascript:;">

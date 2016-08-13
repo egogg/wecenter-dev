@@ -2,17 +2,14 @@
     <div class="media">
         <div class="comment-user-info clearfix pull-left">
             <a class="user-tag user-img" data-id="<?php echo $this->answer_info['uid']; ?>" href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="pull-left">
-                <img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($this->answer_info['uid'], 'min'); ?>" alt="" /> 
+                <img class="img-responsive img-circle user-avatar" src="<?php echo get_avatar_url($this->answer_info['uid'], 'min'); ?><?php if($this->answer_info['user_info']['profile_update_time']) { echo '?v=' . $this->answer_info['user_info']['profile_update_time']; } ?>" alt="<?php echo $this->answer_info['user_info']['user_name'] ?>" /> 
             </a>
         </div>
         <div class="media-body">
         
            <div class="meadia-header">
-               <a class="user-tag user-name" data-id="<?php echo $this->answer_info['uid']; ?>" href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="tvh-user pull-left">
-                <?php echo $this->answer_info['user_info']['user_name']; ?>
-                <?php if ($this->answer_info['user_info']['verified']) { ?>
-                    <i class="icon-v<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?> i-ve<?php } ?>" title="<?php if ($this->answer_info['user_info']['verified'] == 'enterprise') { ?>企业认证<?php } else { ?>个人认证<?php } ?>"></i>
-                <?php } ?>
+                <a class="user-tag user-name" data-id="<?php echo $this->answer_info['uid']; ?>" href="people/<?php echo $this->answer_info['user_info']['url_token']; ?>" class="tvh-user pull-left">
+                    <?php echo $this->answer_info['user_info']['user_name']; ?>
                 </a>
                 <small class="c-gray">• <?php echo date_friendly($this->answer_info['add_time'], 604800, 'Y-m-d'); ?></small>
            </div>

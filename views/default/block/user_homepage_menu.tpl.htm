@@ -4,7 +4,7 @@
             <div class="card-header card-padding">
                 <div class="m-b-10">
                     <a href="people/<?php echo $this->user['url_token']; ?>">
-                        <img class="user-info-avatar" src="<?php echo get_avatar_url($this->user['uid'], 'max'); ?>" alt="<?php echo $this->user['user_name']; ?>">
+                        <img class="user-info-avatar" src="<?php echo get_avatar_url($this->user['uid'], 'max'); ?><?php if($this->user['profile_update_time']) { echo '?v=' . $this->user['profile_update_time']; } ?>" alt="<?php echo $this->user['user_name']; ?>">
                     </a>
                     
                     <?php if($this->user_id) { ?>

@@ -14,7 +14,7 @@
 									<?php if ($this->user_info['inbox_unread'] != 0) {?>
 										<span class="m-count unread-mail"><?php echo $this->user_info['inbox_unread']?></span>
 									<?php } ?>
-									<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?>" />
+									<img class="avatar" alt="<?php echo $this->user_info['user_name']; ?>" src="<?php echo get_avatar_url($this->user_info['uid'], 'mid'); ?><?php if($this->user_info['profile_update_time']) { echo '?v=' . $this->user_info['profile_update_time']; } ?>" />
 									<span class="caret"></span>
 								</a>
 								<ul class="dropdown-menu dm-icon pull-right">

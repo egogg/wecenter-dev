@@ -72,6 +72,7 @@ class main extends AWS_CONTROLLER
 					$data[$key]['count'] = $value['recipient_count'];
 
 					$data[$key]['uid'] = $value['sender_uid'];
+					$data[$key]['profile_update_time'] = $users_info[$value['sender_uid']]['profile_update_time'];
 				}
 				else if ($value['sender_uid'] == $this->user_id AND $value['sender_count']) // 当前处于发送用户
 				{
@@ -81,6 +82,7 @@ class main extends AWS_CONTROLLER
 					$data[$key]['unread'] = $value['sender_unread'];
 					$data[$key]['count'] = $value['sender_count'];
 					$data[$key]['uid'] = $value['recipient_uid'];
+					$data[$key]['profile_update_time'] = $users_info[$value['recipient_uid']]['profile_update_time'];
 				}
 
 				$data[$key]['last_message'] = $last_message[$value['id']];
@@ -155,6 +157,7 @@ class main extends AWS_CONTROLLER
 
 					$list[$key]['user_name'] = $recipient_user['user_name'];
 					$list[$key]['url_token'] = $recipient_user['url_token'];
+					$list[$key]['profile_update_time'] = $recipient_user['profile_update_time'];
 				}
 			}
 		}

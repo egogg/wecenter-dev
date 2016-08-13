@@ -619,27 +619,9 @@ class topic_class extends AWS_MODEL
 
 	public function get_focus_users_by_topic($topic_id, $limit = 10)
 	{
-		$user_list = array();
-
-		$uids = $this->query_all("SELECT DISTINCT uid FROM " . $this->get_table('topic_focus') . " WHERE topic_id = " . intval($topic_id), $limit);
-
-		if ($uids)
+		if ($uids = $this->query_all("SELECT DISTINCT uid FROM " . $this->get_table('topic_focus') . " WHERE topic_id = " . intval($topic_id), $limit))
 		{
-			$user_list_query = $this->model('account')->get_user_info_by_uids(fetch_array_value($uids, 'uid'));
-
-			if ($user_list_query)
-			{
-				foreach ($user_list_query AS $user_info)
-				{
-					$user_list[$user_info['uid']]['uid'] = $user_info['uid'];
-
-					$user_list[$user_info['uid']]['user_name'] = $user_info['user_name'];
-
-					$user_list[$user_info['uid']]['avatar_file'] = get_avatar_url($user_info['uid'], 'mid');
-
-					$user_list[$user_info['uid']]['url'] = get_js_url('/people/' . $user_info['url_token']);
-				}
-			}
+			$user_list = $this->model('account')->get_user_info_by_uids(fetch_array_value($uids, 'uid'));
 		}
 
 		return $user_list;

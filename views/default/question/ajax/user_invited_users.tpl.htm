@@ -4,9 +4,10 @@
 		<?php foreach($this->user_invitations as $key => $val) { ?>
 			<li>
 				<a class="user-tag user-img" data-id="<?php echo $val['recipients_uid']; ?>" href="people/<?php echo $val['recipients_uid']; ?>">
-                	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['recipients_uid'], 'min'); ?>" />
+                	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['recipients_uid'], 'min'); ?><?php if($val['recipient_info']['profile_update_time']) { echo '?v=' . $val['recipient_info']['profile_update_time']; } ?>" />
                 </a>
 			</li>
+			<?php if($key >= 4) {break;} ?>			
 		<?php } ?>
 	</ul>
 		
@@ -28,11 +29,11 @@
         <div class="dropdown-menu dropdown-menu-lg pull-right">
             <div class="listview">
             	<div class="lv-body">
-            		<?php foreach($this->user_invitations_all as $key => $val) { ?>
+            		<?php foreach($this->user_invitations as $key => $val) { ?>
 						<div class="lv-item">
 							<div class="media">
 								<div class="pull-left">
-			                        <img class="lv-img-sm img-circle" alt="" src="<?php echo get_avatar_url($val["recipients_uid"], "min"); ?>" />
+			                        <img class="lv-img-sm img-circle" alt="" src="<?php echo get_avatar_url($val["recipients_uid"], "min"); ?><?php if($val["recipient_info"]['profile_update_time']) { echo '?v=' . $val["recipient_info"]['profile_update_time']; } ?>" />
 			                    </div>
 			                    <div class="pull-right">
 			                    	<a href="javascript:void(0);" class="cancel-user-invitation btn btn-xs bgm-gray" data-id="<?php echo $val["recipients_uid"]; ?>">取消邀请</a>

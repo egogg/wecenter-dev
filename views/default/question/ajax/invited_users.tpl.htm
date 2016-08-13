@@ -4,14 +4,14 @@
 			<div class="media">
                 <div class="pull-left">
                     <a class="user-tag user-img" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">
-                    	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['recipient_info']['uid'], 'mid'); ?>" />
+                    	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['recipient_info']['uid'], 'mid'); ?><?php if($val['profile_update_time']) { echo '?v=' . $val['profile_update_time']; } ?>" />
                     </a>
                 </div>
                 <div class="media-body">
                     <div class="media-heading">
                     	<div class="invited_by">
 							<span class="c-gray">由</span> <a class="user-tag user-img" data-id="<?php echo $val['sender_info']['uid']; ?>" href="people/<?php echo $val['sender_info']['url_token']; ?>">
-		                    	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['sender_info']['uid'], 'min'); ?>" />
+		                    	<img class="img-circle" alt="" src="<?php echo get_avatar_url($val['sender_info']['uid'], 'min'); ?><?php if($val['sender_info']['profile_update_time']) { echo '?v=' . $val['sender_info']['profile_update_time']; } ?>" />
 		                    </a> <span class="c-gray">邀请</span>
 						</div>
                     	<a class="user-tag user-name" data-id="<?php echo $val['recipient_info']['uid']; ?>" href="people/<?php echo $val['recipient_info']['url_token']; ?>">

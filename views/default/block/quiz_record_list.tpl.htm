@@ -2,7 +2,7 @@
     <li class="lv-item">
         <div class="media">
             <a class="user-tag user-img pull-left" data-id="<?php echo $val['user_info']['uid']; ?>" href="people/<?php echo $val['user_info']['url_token']; ?>">
-                <img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'max'); ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
+                <img class="lv-img-sm" src="<?php echo get_avatar_url($val['user_info']['uid'], 'min'); ?><?php if($val['user_info']['profile_update_time']) { echo '?v=' . $val['user_info']['profile_update_time']; } ?>" alt="" /><?php if ($val['user_info']['verified']) { ?><?php if ($val['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
             <?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
             </a>
             <div class="media-body">

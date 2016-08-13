@@ -659,6 +659,8 @@ class ajax extends AWS_CONTROLLER
 		$update_data['avatar_file'] = $this->model('account')->get_avatar($this->user_id, null, 1) . basename($thumb_file['min']);
 		$update_data['profile_update_time'] = time();
 
+		$version = $update_data['profile_update_time'];
+
 		// 更新主表
 		$this->model('account')->update_users_fields($update_data, $this->user_id);
 
@@ -667,10 +669,13 @@ class ajax extends AWS_CONTROLLER
 			$this->model('integral')->process($this->user_id, 'UPLOAD_AVATAR', round((get_setting('integral_system_config_profile') * 0.2)), '上传头像');
 		}
 
-		echo htmlspecialchars(json_encode(array(
+		$result = json_encode(array(
 			'success' => true,
+			'version' => $version,
 			'thumb' => get_setting('upload_url') . '/avatar/' . $this->model('account')->get_avatar($this->user_id, null, 1) . basename($thumb_file['max'])
-		)), ENT_NOQUOTES);
+		));
+
+		echo '<script>parent.window.postMessage(\''. $result . '\', "*");</script>';
 	}
 
 	function add_edu_action()

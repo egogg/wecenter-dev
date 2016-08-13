@@ -21,7 +21,7 @@
                 <div class="media">
                     <span class="user-rank-tag <?php echo $rank_colors[$key % 3]; ?>"><?php echo $key + 1; ?></span>
                     <div class="user-tag user-img pull-left" data-id="<?php echo $val['uid']; ?>">
-                        <img class="lv-img-sm" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?>" alt="">
+                        <img class="lv-img-sm" src="<?php echo get_avatar_url($val['uid'], 'mid'); ?><?php if($val['profile_update_time']) { echo '?v=' . $val['profile_update_time']; } ?>" alt="">
                     </div>
                     <div class="media-body">
                         <div class="lv-title">

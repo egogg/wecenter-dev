@@ -12,9 +12,7 @@
                             <div class="article-publisher-info">
                                 <?php if ($this->article_info['user_info']) { ?>
                                     <a class="user-tag user-img" data-id="<?php echo $this->article_info['user_info']['uid']; ?>" href="people/<?php echo $this->article_info['user_info']['url_token']; ?>">
-                                        <img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($this->article_info['user_info']['uid'], 'min'); ?>" alt="" /><?php if ($this->article_info['user_info']['verified']) { ?><?php if ($this->article_info['user_info']['verified'] == 'personal') { ?><i class="icon icon-v"></i>
-                                            <?php } else { ?><i class="icon icon-v i-ve"></i><?php } ?><?php } ?>
-                                        
+                                        <img class="publisher-img-sm hidden-xs" src="<?php echo get_avatar_url($this->article_info['user_info']['uid'], 'min'); ?><?php if($this->article_info['user_info']['profile_update_time']) { echo '?v=' . $this->article_info['user_info']['profile_update_time']; } ?>" alt="" />
                                     </a>
                                     <a class="user-tag user-name" data-id="<?php echo $this->article_info['user_info']['uid']; ?>" href="people/<?php echo $this->article_info['user_info']['url_token']; ?>">
                                         <span class="publisher-user-name c-lightblue">

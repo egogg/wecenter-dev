@@ -2016,26 +2016,24 @@ class ajax extends AWS_CONTROLLER
 		if($this->user_id)
 		{
 			$invite_limit = get_setting('user_question_invite_limit');
-			$user_invitations = $this->model('question')->get_invited_users($_GET['question_id'], $_GET['uid'], 5);
+			$user_invitations = $this->model('question')->get_invited_users($_GET['question_id'], $_GET['uid'], $invite_limit);
 			$user_invite_count = $this->model('question')->get_invited_user_count($_GET['question_id'], $_GET['uid']);
 			$remaind_invite_count = $invite_limit - $user_invite_count;
 
-			$user_invitations_all = $this->model('question')->get_invited_users($_GET['question_id'], $_GET['uid'], $invite_limit);
 			$uids = null;
-			foreach ($user_invitations_all as $key => $val) 
+			foreach ($user_invitations as $key => $val) 
 			{
 				$uids[] = $val['recipients_uid'];
 			}
 			
 			$users_info = $this->model('account')->get_user_info_by_uids($uids, true);
-			foreach ($user_invitations_all as $key => $val) 
+			foreach ($user_invitations as $key => $val) 
 			{
-				$user_invitations_all[$key]['recipient_info'] = $users_info[$val['recipients_uid']];
+				$user_invitations[$key]['recipient_info'] = $users_info[$val['recipients_uid']];
 			}
 
 			TPL::assign('user_invite_count', $user_invite_count);
-			TPL::assign('user_invitations', $user_invitations);
-			TPL::assign('user_invitations_all', $user_invitations_all);
+			TPL::assign('user_invitations', array_values($user_invitations));
 			TPL::assign('remaind_invite_count', $remaind_invite_count);
 
 			TPL::output('question/ajax/user_invited_users');

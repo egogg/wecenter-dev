@@ -5,11 +5,11 @@
  */
 function FileUpload (type, element, container, url, options, callback)
 {
-	var _this = this;
 	this.type = type;
 	this.element = element;
 	this.container = container;
 	this.url = url;
+	this.instanceId = Date.now();
     this.options = {
 		'multiple' : true,
 		'deleteBtn' : true,
@@ -54,8 +54,9 @@ FileUpload.prototype =
 	// 初始化上传器
 	init : function (element, container)
 	{
-		var form = this.createForm(),
-			input = this.createInput();
+		var _this = this;
+		var form = _this.createForm(),
+			input = _this.createInput();
 
 		$(element).prepend($(form).append(input));
 
@@ -65,15 +66,16 @@ FileUpload.prototype =
 	// 创建表单
 	createForm : function ()
 	{
-		var form = this.toElement('<form method="post" enctype="multipart/form-data"><input type="submit" class="submit" /></form>');
+		var _this = this;
+		var form = _this.toElement('<form method="post" enctype="multipart/form-data"><input type="submit" class="submit" /></form>');
 
 		$(form).attr({
 			'id' : 'upload-form',
-			'action' : this.url,
-			'target' : 'ajaxUpload'
+			'action' : _this.url,
+			'target' : 'ajaxUpload-' + _this.instanceId
 		});
 
-		this.form = form;
+		_this.form = form;
 
 		return form;
 	},
@@ -81,12 +83,13 @@ FileUpload.prototype =
 	// 创建input
 	createInput : function ()
 	{
-		var _this = this, input = this.toElement('<input type="file" />');
+		var _this = this;
+		var input = _this.toElement('<input type="file" />');
 
 		$(input).attr({
 			'class' : 'file-input',
 			'name' : 'aws_upload_file',
-			'multiple' : this.options.multiple ? 'multiple' : false
+			'multiple' : _this.options.multiple ? 'multiple' : false
 		});
 
 		$(input).change(function()
@@ -100,7 +103,8 @@ FileUpload.prototype =
 	// 创建隐藏域 (wecenter定制)
 	createHiddenInput : function(attach_id)
 	{
-		var _this = this, input = this.toElement('<input type="hidden" name="attach_ids[]" class="hidden-input" />');
+		var _this = this;
+		var input = _this.toElement('<input type="hidden" name="attach_ids[]" class="hidden-input" />');
 
 		$(input).val(attach_id);
 
@@ -110,10 +114,11 @@ FileUpload.prototype =
 	// 创建iframe
 	createIframe : function ()
 	{
-		var iframe = this.toElement('<iframe></iframe>');
+		var _this = this;
+		var iframe = _this.toElement('<iframe></iframe>');
     	$(iframe).attr({
-    		'class': 'hide upload-iframe',
-    		'name': 'ajaxUpload'
+    		'class': ' upload-iframe',
+    		'name': 'ajaxUpload-' + _this.instanceId
     	});
     	return iframe;
 	},
@@ -177,75 +182,66 @@ FileUpload.prototype =
 	        var url = this.url + '&aws_upload_file=' + file.name + '&timestamp=' + new Date().getTime();
 
 	        xhr.open("POST", url);
-
 	        xhr.send(file);
 		}
         else
         {
         	//低版本ie上传
-			var iframe = this.createIframe();
+
+			this.iframe = this.createIframe();
 
 			if (this.options.loading_status)
 			{
 				$(this.options.loading_status).show();
 			}
 
-        	if (iframe.addEventListener)
+        	if (window.addEventListener)
         	{
-		        iframe.addEventListener('load', function()
-	        	{
-	        		_this.getIframeContentJSON(iframe, _this.container);
+	        	window.addEventListener('message', function(event) {
+	        		_this.getIframeMessageJSON(event, _this.container);
 	        	}, false);
-		    } else if (iframe.attachEvent)
+		    } else if (window.attachEvent)
 		    {
-		        iframe.attachEvent('onload', function()
-	        	{
-	        		_this.getIframeContentJSON(iframe, _this.container);
+	        	window.attachEvent('onmessage', function(event) {
+	        		_this.getIframeMessageJSON(event, _this.container);
 	        	});
 	    	}
 
-    		$('#aw-ajax-box').append(iframe);
-
+    		$('body').append(this.iframe);
         	$(this.form).find('.submit').click();
         }
 	},
 
-	// 从iframe获取json内容
-	getIframeContentJSON : function (iframe, container)
-	{
-		var doc = iframe.contentDocument ? iframe.contentDocument: iframe.contentWindow.document,
-			response, filename;
+	// iframe返回的消息处理函数
 
-            response = eval("(" + doc.body.innerHTML + ")");
+	getIframeMessageJSON : function(event, container) {
+		if(event.source == this.iframe.contentWindow) {
+			var response = JSON.parse(event.data);
 
-            if (this.type == 'file')
-            {
-            	this.render(this.li, response);
+			if(this.type == 'file') {
+				this.render(this.li, response);
 
 	           	filename = this.getName($('#upload-form .file-input')[0].value);
-
 	           	$(this.li).find('.title').html(filename);
-            }
-            else
-            {
-            	$(this.options.loading_status).hide();
+			} else {
+				$(this.options.loading_status).hide();
+				var thumbUrl = response.thumb;
+				if(response.version) {
+					thumbUrl += ('?v=' + response.version);
+				}
 
-            	if ($(this.container).attr('src'))
-            	{
-            		$(this.container).attr('src', response.thumb + '?' + Math.round(Math.random() * 10000));
-            	}
-            	else
-            	{
-            		$(this.container).css(
-            		{
-            			'background' : 'url(' + response.thumb + '?' + Math.round(Math.random() * 10000) + ')'
-            		});
-            	}
-            }
+	        	if ($(this.container).attr('src')) {
+	        		$(this.container).attr('src', thumbUrl);
+	        	} else {
+	        		$(this.container).css({
+	        			'background' : 'url(' + thumbUrl + ')'
+	        		});
+	        	}
+			}
 
-           	$('.upload-iframe').detach();
-
-           	this.oncallback();
+			$(this.iframe).detach();
+       		this.oncallback();
+		}
 	},
 
 	// ajax完成callback
