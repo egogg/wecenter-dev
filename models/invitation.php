@@ -49,6 +49,11 @@ class invitation_class extends AWS_MODEL
 		return $this->fetch_all('invitation', $where, $orderby, $limit);
 	}
 
+	public function get_invitation_list_page($uid, $page = 1, $per_page = 10)
+	{
+		return $this->fetch_page('invitation', 'uid = ' . intval($uid), 'invitation_id DESC', $page, $per_page);
+	}
+
 	public function get_invitation_by_id($invitation_id)
 	{
 		return $this->fetch_row('invitation', 'invitation_id = ' . intval($invitation_id));

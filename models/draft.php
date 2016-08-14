@@ -101,4 +101,20 @@ class draft_class extends AWS_MODEL
 
 		return $draft;
 	}
+
+	public function get_draft_list($type, $uid, $page, $per_page)
+	{
+		if ($draft_list = $this->fetch_page('draft', "uid = " . intval($uid) . " AND `type` = '" . $this->quote($type) . "'", 'time DESC', $page, $per_page))
+		{
+			foreach ($draft_list AS $key => $val)
+			{
+				if ($val['data'])
+				{
+					$draft_list[$key]['data'] = unserialize($val_list['data']);
+				}
+			}
+		}
+
+		return $draft_list;
+	}
 }

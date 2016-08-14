@@ -30,7 +30,7 @@ class main extends AWS_CONTROLLER
     public function index_action()
     {
         $this->crumb(AWS_APP::lang()->_t('积分'), '/integral/');
-
+        
         TPL::output('integral/index');
     }
 }
