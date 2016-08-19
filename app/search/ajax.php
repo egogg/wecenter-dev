@@ -47,20 +47,15 @@ class ajax extends AWS_CONTROLLER
 					case 'questions':
 						$search_result_questions[] = $this->model('question')->get_question_info_by_id($val['search_id']);
 
-						$search_result[$key]['focus'] = $this->model('question')->has_focus_question($val['search_id'], $this->user_id);
-
 						break;
 
 					case 'topics':
 						$search_result_topics[] = $this->model('topic')->get_topic_by_id($val['search_id']);
 
-						$search_result[$key]['focus'] = $this->model('topic')->has_focus_topic($this->user_id, $val['search_id']);
-
 						break;
 
 					case 'users':
 						$search_result_users[] = $this->model('account')->get_user_info_by_uid($val['search_id']);
-						$search_result[$key]['focus'] = $this->model('follow')->user_follow_check($this->user_id, $val['search_id']);
 
 						break;
 
@@ -99,6 +94,13 @@ class ajax extends AWS_CONTROLLER
 			}
 
 			$search_result_articles[$key] = $value;
+		}
+
+		// 用户关注
+
+		foreach ($search_result_users as $key => $value) 
+		{
+			$search_result_users[$key]['follow_check'] = $this->model('follow')->user_follow_check($this->user_id, $value['uid']);
 		}
 
 		TPL::assign('search_result_questions', $search_result_questions);
