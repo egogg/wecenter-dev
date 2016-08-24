@@ -2000,15 +2000,16 @@ class question_class extends AWS_MODEL
 		if($answered_question_ids)
 		{
 			$where = 'question_id IN(' . implode(',', $answered_question_ids) . ')';
-			$questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page);
-		}
+			if($questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page)) 
+			{
+				foreach ($questions as $key => $value) 
+				{
+					$this->load_list_question_info($questions[$key], $value, $this->user_id);
+				}
 
-		foreach ($questions as $key => $value) 
-		{
-			$this->load_list_question_info($questions[$key], $value, $this->user_id);
-		}
-
-		return $questions;
+				return $questions;
+			}
+		}		
 	}
 
 	public function get_user_question_list_failed($uid = 0, $page = 1, $per_page = 5)
@@ -2017,15 +2018,17 @@ class question_class extends AWS_MODEL
 		if($failed_question_ids)
 		{
 			$where = 'question_id IN(' . implode(',', $failed_question_ids) . ')';
-			$questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page);
-		}
 
-		foreach ($questions as $key => $value) 
-		{
-			$this->load_list_question_info($questions[$key], $value, $this->user_id);
-		}
-
-		return $questions;
+			if($questions = $this->fetch_page('question', $where, 'update_time DESC', $page, $per_page)) 
+			{
+				foreach ($questions as $key => $value) 
+				{
+					$this->load_list_question_info($questions[$key], $value, $this->user_id);
+				}
+				
+				return $questions;
+			}
+		}	
 	}
 
 	public function get_quized_uids($question_id)

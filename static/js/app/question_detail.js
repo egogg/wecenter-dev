@@ -187,6 +187,18 @@ $(function()
     $('.markitup-box a').attr('target','_blank');
 });
 
+$(document).ready(function(){
+	if(typeof QUESTION_ID != 'undefined') {
+		if($('.footer-share-list')[0]) {
+	        $('.footer-share-list').nkrShare({
+	        	title : QUESTION_SHARE_TITLE,
+	        	description: QUESTION_SHARE_DESCRIPTION,
+	        	pic : QUESTION_SHARE_PICS 
+	        });
+	    }
+	}
+});
+
 function one_click_add_topic(selector, topic_title, question_id)
 {
 	$.post(G_BASE_URL + '/topic/ajax/save_topic_relation/', 'type=question&item_id=' + question_id + '&topic_title=' + topic_title, function (result) {

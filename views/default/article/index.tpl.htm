@@ -127,15 +127,18 @@
                             <div class="pull-right footer-share">
                                 <span class="footer-share-title">分享到</span>
                                 <ul class="footer-share-list">
-                                    <li class="footer-share-item weibo">
-                                        <a class="bgm-red" onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});">  <i class="icon icon-weibo"></i>
+                                    <li class="footer-share-item">
+                                        <a href="#" class="bgm-red weibo"><i class="icon icon-weibo"></i>
                                         </a>
                                     </li>
-                                    <li class="footer-share-item qzone">
-                                        <a class="bgm-indigo" onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
+                                    <li class="footer-share-item">
+                                        <a href="#" class="bgm-green wechat"><i class="icon icon-wechat"></i></a>
                                     </li>
-                                    <li class="footer-share-item wechat">
-                                        <a class="bgm-green" onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
+                                    <li class="footer-share-item">
+                                        <a href="#" class="bgm-lightgreen douban"><i class="icon icon-douban"></i></a>
+                                    </li>
+                                    <li class="footer-share-item">
+                                        <a href="#" class="bgm-indigo qzone"><i class="icon icon-qzone"></i></a>
                                     </li>
                                     <!-- <li class="footer-share-item">
                                         <a href="javascript:void(0);">
@@ -262,6 +265,12 @@
 <script type="text/javascript">
     var ANSWER_EDIT_TIME = <?php echo get_setting('answer_edit_time'); ?>;
     var ARTICLE_ID = <?php echo $this->article_info['id']; ?>;
+
+    // share items
+
+    var ARTICLE_SHARE_TITLE = "<?php echo $this->article_info['title']; ?>";
+    var ARTICLE_SHARE_DESCRIPTION = "<?php echo excerpt($this->article_info['message'], 0, 80); ?>";
+    var ARTICLE_SHARE_PICS = "<?php foreach($this->article_info['attachs'] AS $attach) {if($attach['is_image']) {echo $attach['attachment']; break;}} ?>";
  
     $(document).ready(function () {
 
@@ -279,6 +288,16 @@
         AWS.at_user_lists('#wmd-input');
 
         AWS.Init.init_article_comment_box('.article-reply-comment');
+
+        // 分享
+
+        if($('.footer-share-list')[0]) {
+            $('.footer-share-list').nkrShare({
+                title : ARTICLE_SHARE_TITLE,
+                description: ARTICLE_SHARE_DESCRIPTION,
+                pic : ARTICLE_SHARE_PICS 
+            });
+        }
     });
 </script>
 

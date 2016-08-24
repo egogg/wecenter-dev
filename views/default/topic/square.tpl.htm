@@ -55,7 +55,7 @@
                                             </a>
                                             
                                             <div class="topic-description">
-                                                <?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['topic_description']))), 0, 28, 'UTF-8', '...'); ?> <a target="_blank" href="topic/<?php echo $val['topic_id']; ?>">进入专题 <i class="md md-chevron-right"></i></a>
+                                                <?php echo excerpt($val['topic_description'], 0, 28); ?> <a target="_blank" href="topic/<?php echo $val['topic_id']; ?>">进入专题 <i class="md md-chevron-right"></i></a>
                                             </div>
                                         </div>
                                     </div>

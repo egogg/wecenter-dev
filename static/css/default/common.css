@@ -1518,7 +1518,6 @@ li.user-quiz-record-item.timeout:before {
 
 .help-user-search-box {
 	border: 1px solid #eee;
-	border-collapse: collapse;
 	width: 300px;
 }
 
@@ -3523,6 +3522,15 @@ input.form-control {
 		height: 78px;
 		width: auto;
 	}
+}
+
+/* 分享 */
+
+.share-description {
+	margin-top: 15px;
+	width: 250px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* 公共部分 */

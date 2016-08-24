@@ -1305,3 +1305,8 @@ function get_paid_progress_bar($amount, $paid)
 
 	return intval(($paid / $amount) * 100);
 }
+
+function excerpt($html, $start, $length, $dot='...')
+{
+	return cjk_substr(trim(preg_replace('/(\s|\&nbsp\;|　|\xc2\xa0|[[attach].*[\/attach]]|[[\/\!]*?[^\[\]]*?]|si)/', '', strip_tags($html))), intval($start), intval($start) + intval($length), 'UTF-8', $dot);
+}

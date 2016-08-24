@@ -1389,11 +1389,6 @@ class ajax extends AWS_CONTROLLER
 
 		$this->complete_unfinished_question_quiz_record();
 
-		// 更新查看次数
-
-		$this->model('question')->calc_popular_value($question_info['question_id']);
-		$this->model('question')->update_views($question_info['question_id']);
-
 		// 用户答题记录
 
 		TPL::assign('quiz_record', $this->model('quiz')->get_question_quiz_record_by_user($question_info['question_id'], $this->user_id, 1, 5));

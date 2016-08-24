@@ -92,7 +92,7 @@
 			            		</div>
 			            	<?php } else { ?>
 			            		<p>
-			            			<span class="hidden-xs"><?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($question['question_detail']))), 0, 68, 'UTF-8', '...'); ?></span>
+			            			<span class="hidden-xs"><?php echo excerpt($question['question_detail'], 0, 68); ?></span>
 			            			<a href="question/<?php echo $question['question_id']; ?>" class="question-list-answer-question c-lightblue" target="_blank">开始答题 <i class="md md-chevron-right"></i></a>
 			            		</p>
 			            	<?php } ?>

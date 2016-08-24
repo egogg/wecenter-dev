@@ -75,7 +75,7 @@
                                         </h4>
                                         
                                         <div class="article-excerpt">
-									    	<?php echo cjk_substr(str_replace("\r\n", ' ', preg_replace('|\[.*\].*\[\/.*\]|si', '', strip_tags($val['message']))), 0, 60, 'UTF-8', '...'); ?>
+									    	<?php echo excerpt($val['message'], 0, 80); ?>
 									    	<a href="article/<?php echo $val['id']; ?>">阅读全部<i class="md md-chevron-right"></i></a>
 									    </div>
 									    <div class="article-stats">

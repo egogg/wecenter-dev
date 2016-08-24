@@ -162,6 +162,11 @@ class main extends AWS_CONTROLLER
 		$bookmark_count = $this->model('favorite')->get_favorite_counts('article', $article_info['id']);
 		TPL::assign('bookmark_count', $bookmark_count);
 
+		TPL::import_js('js/sweetalert.min.js');
+		TPL::import_css('css/sweetalert.css');
+		TPL::import_js('js/jquery-qrcode.min.js');
+		TPL::import_js('js/share.js');
+
 		TPL::output('article/index');
 	}
 

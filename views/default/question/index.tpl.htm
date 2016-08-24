@@ -119,15 +119,18 @@
 							<div class="pull-right footer-share">
 								<span class="footer-share-title">分享到</span>
 								<ul class="footer-share-list">
-									<li class="footer-share-item weibo">
-										<a class="bgm-red" onclick="AWS.User.share_out({webid: 'tsina', content: $(this).parents('.aw-question-detail').find('.markitup-box')});">	<i class="icon icon-weibo"></i>
+									<li class="footer-share-item">
+										<a href="#" class="bgm-red weibo"><i class="icon icon-weibo"></i>
 										</a>
 									</li>
-									<li class="footer-share-item qzone">
-										<a class="bgm-indigo" onclick="AWS.User.share_out({webid: 'qzone', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-qzone"></i></a>
+									<li class="footer-share-item">
+										<a href="#" class="bgm-green wechat"><i class="icon icon-wechat"></i></a>
 									</li>
-									<li class="footer-share-item wechat">
-										<a class="bgm-green" onclick="AWS.User.share_out({webid: 'weixin', content: $(this).parents('.aw-question-detail')});"><i class="icon icon-wechat"></i></a>
+									<li class="footer-share-item">
+										<a href="#" class="bgm-lightgreen douban"><i class="icon icon-douban"></i></a>
+									</li>
+									<li class="footer-share-item">
+										<a href="#" class="bgm-indigo qzone"><i class="icon icon-qzone"></i></a>
 									</li>
 									<!-- <li class="footer-share-item">
 										<a href="javascript:void(0);">
@@ -476,9 +479,16 @@
 	var PUBLISH_SUCCESS_HINT = '<?php echo $this->is_first_visited; ?>';
 	var PUBLISH_SUCCESS_INTEGRAL = '<?php echo $this->publish_integral; ?>' ;
 	var USER_INTEGRAL = '<?php echo $this->user_integral; ?>';
+
+	// share items
+
+	var QUESTION_SHARE_DESCRIPTION = "<?php if($this->question_info['quiz_info'] AND $this->question_info['quiz_info']['countdown']){echo '该题为限时答题，你需要在规定的时间内完成答题'; } else {echo excerpt($this->question_info['question_detail'], 0, 80);} ?>";
+	var QUESTION_SHARE_TITLE = "<?php if($this->question_info['quiz_info'] AND $this->question_info['quiz_info']['countdown']) { echo '限时答题：***' . cjk_substr($this->question_info['question_content'], 2, 4, 'UTF-8', '***'); } else {echo $this->question_info['question_content']; } ?>";
+	var QUESTION_SHARE_PICS = "<?php if(!($this->question_info['quiz_info'] AND $this->question_info['quiz_info']['countdown']) AND $this->question_info['attachs']) { foreach ($this->question_info['attachs'] AS $attach) {if ($attach['is_image']) { echo $attach['thumb'];}}} ?>";
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>
+
 
 <?php TPL::output('block/fixed_side_toolbar.tpl.htm'); ?>
 <?php TPL::output('global/footer.tpl.htm'); ?>
