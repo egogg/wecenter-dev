@@ -2009,7 +2009,7 @@ class question_class extends AWS_MODEL
 
 				return $questions;
 			}
-		}		
+		}
 	}
 
 	public function get_user_question_list_failed($uid = 0, $page = 1, $per_page = 5)
