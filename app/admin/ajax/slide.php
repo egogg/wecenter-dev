@@ -26,6 +26,11 @@ class ajax_slide extends AWS_ADMIN_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请填写幻灯片标题')));
         }
 
+        if (!$_POST['category'])
+        {
+            H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('请选择幻灯片分类')));
+        }
+
         if ($_POST['id'])
         {
             $slide_info = $this->model('slide')->get_slide_by_id($_POST['id']);
@@ -38,7 +43,7 @@ class ajax_slide extends AWS_ADMIN_CONTROLLER
 
         if ($slide_info)
         {
-            $this->model('slide')->save_slide($slide_info['id'], $_POST['title'], $_POST['description'], $_POST['link']);
+            $this->model('slide')->save_slide($slide_info['id'], $_POST['title'], $_POST['description'], $_POST['link'], $_POST['category']);
 
             $id = $slide_info['id'];
         }

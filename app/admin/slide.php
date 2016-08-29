@@ -21,7 +21,13 @@ class slide extends AWS_ADMIN_CONTROLLER
 
     public function list_action()
     {
-        TPL::assign('slide_list', $this->model('slide')->get_slide_list());
+        $slide_list = $this->model('slide')->get_slide_list();
+        foreach ($slide_list as $key => $value) 
+        {
+            $slide_list[$key]['category_info'] = $this->model('slide')->get_slide_category_info($value['category']);
+        }
+
+        TPL::assign('slide_list', $slide_list);
 
         TPL::output('admin/slide/list');
     }

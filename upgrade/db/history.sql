@@ -37,3 +37,11 @@ ALTER TABLE `aws_users` ADD COLUMN `is_auto_password` tinyint(1) NOT NULL DEFAUL
 USE `naokr`;
 
 ALTER TABLE `aws_users` ADD COLUMN `profile_update_time` int(10) DEFAULT NULL COMMENT '信息更新时间';
+
+-------------------------------------------------------------------------------
+-- 2016-08-28
+-------------------------------------------------------------------------------
+
+USE `naokr`;
+
+ALTER TABLE `aws_slide` ADD COLUMN `category` varchar(255) DEFAULT NULL COMMENT '幻灯片链接分类';

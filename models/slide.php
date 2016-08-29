@@ -67,7 +67,7 @@ class slide_class extends AWS_MODEL
         return $data_raw;
     }
 
-    public function save_slide($id = null, $title, $description = null, $link = null)
+    public function save_slide($id = null, $title, $description = null, $link = null, $category = 'others')
     {
         if (isset($id) AND !is_digits($id))
         {
@@ -79,6 +79,7 @@ class slide_class extends AWS_MODEL
             'description' => $description,
             'link' => $link,
             'add_time' => time(),
+            'category' => trim($category)
         );
 
         if ($id)
@@ -120,5 +121,71 @@ class slide_class extends AWS_MODEL
     public function get_frontend_slides()
     {
         return $this->fetch_all('slide', '`order` > 0', 'order ASC');
+    }
+
+    public function get_slide_category_info($category)
+    {
+        $category_info = array('type' => $category);
+        switch ($category) {
+            case 'question':
+            {
+                $category_info['title'] = '智力答题';
+                $category_info['link'] = 'question/';
+
+                break;
+            }  
+            case 'topic':
+            {
+                $category_info['title'] = '专题集锦';
+                $category_info['link'] = 'topic/';
+
+                break;
+            }
+            case 'article':
+            {
+                $category_info['title'] = '知识分享';
+                $category_info['link'] = 'article/';
+
+                break;
+            }
+            case 'user':
+            {
+                $category_info['title'] = '焦点用户';
+                $category_info['link'] = 'people/';
+
+                break;
+            }
+            case 'ask':
+            {
+                $category_info['title'] = '问题求助';
+                $category_info['link'] = 'ask/';
+
+                break;
+            }
+            case 'activity':
+            {
+                $category_info['title'] = '精彩活动';
+                $category_info['link'] = '';
+                
+                break;
+            }
+            case 'advertise':
+            {
+                $category_info['title'] = '广告';
+                $category_info['link'] = '';
+                
+                break;
+            }
+            default:
+            {
+                $category_info['type'] = 'others';
+                $category_info['title'] = '其他';
+                $category_info['link'] = '';
+
+                break;
+            }   
+        }
+
+        return $category_info;
     }
 }

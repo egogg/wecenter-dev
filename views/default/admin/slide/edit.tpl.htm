@@ -56,6 +56,25 @@
                     <tr>
                         <td>
                             <div class="form-group">
+                                <span class="col-sm-4 col-xs-3 control-label"><?php _e('幻灯片分类'); ?>:</span>
+                                <div class="col-sm-5 col-xs-8">
+                                    <select name="category" class="form-control">
+                                        <option value="question" <?php if($this->slide_info['category'] == 'question') { ?>selected<?php } ?>>问题</option>
+                                        <option value="topic" <?php if($this->slide_info['category'] == 'topic') { ?>selected<?php } ?>>专题</option>
+                                        <option value="article" <?php if($this->slide_info['category'] == 'article') { ?>selected<?php } ?>>知识</option>
+                                        <option value="user" <?php if($this->slide_info['category'] == 'user') { ?>selected<?php } ?>>用户</option>
+                                        <option value="ask" <?php if($this->slide_info['category'] == 'ask') { ?>selected<?php } ?>>提问</option>
+                                        <option value="actvity" <?php if($this->slide_info['category'] == 'actvity') { ?>selected<?php } ?>>活动</option>
+                                        <option value="advertise" <?php if($this->slide_info['category'] == 'advertise') { ?>selected<?php } ?>>广告</option>
+                                        <option value="others" <?php if($this->slide_info['category'] == 'others') { ?>selected<?php } ?>>其他</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="form-group">
                                 <span class="col-sm-4 col-xs-3 control-label"><?php _e('幻灯片图片'); ?>:</span>
                                 <div class="col-sm-5 col-xs-8 nopadding">
                                     <div class="col-sm-5">

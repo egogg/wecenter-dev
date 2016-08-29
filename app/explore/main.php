@@ -66,6 +66,10 @@ class main extends AWS_CONTROLLER
 		// 首页幻灯片
 
 		$slides = $this->model('slide')->get_frontend_slides();
+		foreach ($slides as $key => $val) 
+		{
+			$slides[$key]['category_info'] = $this->model('slide')->get_slide_category_info($val['category']);
+		}
 		TPL::assign('slides', $slides);
 
 		// 导航

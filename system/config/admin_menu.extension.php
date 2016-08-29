@@ -1,8 +1,8 @@
 <?php
 
 $config[] = array(
-    'title' => AWS_APP::lang()->_t('自定义功能'),
-    'cname' => 'custom',
+    'title' => AWS_APP::lang()->_t('自定义'),
+    'cname' => 'nao',
     'children' => array(
         array(
             'id' => 601,
