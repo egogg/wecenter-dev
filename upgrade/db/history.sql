@@ -45,3 +45,30 @@ ALTER TABLE `aws_users` ADD COLUMN `profile_update_time` int(10) DEFAULT NULL CO
 USE `naokr`;
 
 ALTER TABLE `aws_slide` ADD COLUMN `category` varchar(255) DEFAULT NULL COMMENT '幻灯片链接分类';
+
+-------------------------------------------------------------------------------
+-- 2016-09-02
+-------------------------------------------------------------------------------
+
+USE `naokr`;
+
+INSERT INTO `aws_system_setting` (`varname`, `value`) VALUES 
+('sitemap_dir', 's:0:"";'),
+('sitemap_dir_m', 's:0:"";'),
+('sitemap_basename', 's:0:"";'),
+('sitemap_basename_m', 's:0:"";'),
+('sitemap_update_time', 's:1:"0";'),
+('sitemap_update_frequency', 's:4:"week";');
+
+-------------------------------------------------------------------------------
+-- 2016-09-03
+-------------------------------------------------------------------------------
+
+USE `naokr`;
+
+INSERT INTO `aws_system_setting` (`varname`, `value`) VALUES 
+('baidu_push_token', 's:0:"";'),
+('baidu_push_site', 's:0:"";'),
+('baidu_push_site_m', 's:0:"";'),
+('seo_base_url', 's:0:"";'),
+('seo_base_url_m', 's:0:"";');

@@ -20,6 +20,10 @@ class publish_class extends AWS_MODEL
 				$question_id = $this->publish_question($approval_item['data']['question_content'], $approval_item['data']['question_detail'], $approval_item['data']['category_id'], $approval_item['uid'], $approval_item['data']['topics'], $approval_item['data']['anonymous'], $approval_item['data']['attach_access_key'], $approval_item['data']['ask_user_id'], $approval_item['data']['permission_create_topic']);
 
 				$this->model('notify')->send(0, $approval_item['uid'], notify_class::TYPE_QUESTION_APPROVED, notify_class::CATEGORY_QUESTION, 0, array('question_id' => $question_id));
+				
+				// baidu push
+
+           		$this->model('seo')->baidu_push_all('question/' . $question_id);
 
 				break;
 
@@ -32,6 +36,10 @@ class publish_class extends AWS_MODEL
 				$article_id = $this->publish_article($approval_item['data']['title'], $approval_item['data']['message'], $approval_item['uid'], $approval_item['data']['topics'], $approval_item['data']['category_id'], $approval_item['data']['attach_access_key'], $approval_item['data']['permission_create_topic']);
 
 				$this->model('notify')->send(0, $approval_item['uid'], notify_class::TYPE_ARTICLE_APPROVED, notify_class::CATEGORY_ARTICLE, 0, array('article_id' => $article_id));
+
+				// baidu push
+
+            	$this->model('seo')->baidu_push_all('article/' . $article_id);
 
 				break;
 
@@ -281,6 +289,10 @@ class publish_class extends AWS_MODEL
 			// 自动关注该问题
 			$this->model('question')->add_focus_question($question_id, $uid, $anonymous, false);
 
+			// 百度主动推送
+
+            $this->model('seo')->baidu_push_all('question/' . $question_id);
+
 			// 记录日志
 			ACTION_LOG::save_action($uid, $question_id, ACTION_LOG::CATEGORY_QUESTION, ACTION_LOG::ADD_QUESTION, $question_content, $question_detail, 0, intval($anonymous));
 
@@ -340,6 +352,10 @@ class publish_class extends AWS_MODEL
 			}
 
 			$this->model('search_fulltext')->push_index('article', $title, $article_id);
+
+			// 百度主动推送
+
+            $this->model('seo')->baidu_push_all('article/' . $article_id);
 
 			// 记录日志
 			ACTION_LOG::save_action($uid, $article_id, ACTION_LOG::CATEGORY_QUESTION, ACTION_LOG::ADD_ARTICLE, $title, $message, 0);

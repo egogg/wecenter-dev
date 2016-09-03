@@ -23,7 +23,7 @@ class sitemap_class extends AWS_MODEL
 			foreach ($question_entries as $key => $value) 
 			{
 				$entries[$key]['permalink'] = 'question/' . $value['question_id'];
-				$entries[$key]['updated'] = date_friendly($value['update_time'], 604800, 'Y-m-d');
+				$entries[$key]['updated'] = date('Y-m-d', $value['update_time']);
 			}
 		}
 
@@ -38,7 +38,7 @@ class sitemap_class extends AWS_MODEL
 			foreach ($article_entries as $key => $value) 
 			{
 				$entries[$key]['permalink'] = 'article/' . $value['id'];
-				$entries[$key]['updated'] = date_friendly($value['add_time'], 604800, 'Y-m-d');
+				$entries[$key]['updated'] = date('Y-m-d', $value['add_time']);
 			}
 		}
 
@@ -53,7 +53,7 @@ class sitemap_class extends AWS_MODEL
 			foreach ($topic_entries as $key => $value) 
 			{
 				$entries[$key]['permalink'] = 'topic/' . $value['topic_id'];
-				$entries[$key]['updated'] = date_friendly($value['add_time'], 604800, 'Y-m-d');
+				$entries[$key]['updated'] = date('Y-m-d', $value['add_time']);
 			}
 		}
 

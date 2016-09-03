@@ -12,3 +12,5 @@ Disallow: /tmp/
 Disallow: /views/
 Disallow: /static/
 Disallow: /?/admin/
+
+Sitemap: http://www.naokr.com/sitemap.xml.gz

@@ -1,9 +1,8 @@
 USE `naokr`;
 
 INSERT INTO `aws_system_setting` (`varname`, `value`) VALUES 
-('sitemap_dir', 's:0:"";'),
-('sitemap_dir_m', 's:0:"";'),
-('sitemap_basename', 's:0:"";'),
-('sitemap_basename_m', 's:0:"";'),
-('sitemap_update_time', 's:1:"0";'),
-('sitemap_update_frequency', 's:4:"week";');
+('baidu_push_token', 's:0:"";'),
+('baidu_push_site', 's:0:"";'),
+('baidu_push_site_m', 's:0:"";'),
+('seo_base_url', 's:0:"";'),
+('seo_base_url_m', 's:0:"";');

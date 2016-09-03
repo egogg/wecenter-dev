@@ -2035,6 +2035,74 @@
                 </tr>
             </table>
         </div>
+
+        <?php } else if ($_GET['category'] == 'seo') { ?>
+        <div class="mod-head">
+            <h3>
+                <span class="pull-left"><?php _e('SEO优化'); ?></span>
+
+                <span class="pull-right"><a href="javascript:;" onclick="AWS.ajax_post($('#settings_form'));" class="btn btn-xs btn-primary mod-site-save"><?php _e('快速保存'); ?></a></span>
+            </h3>
+        </div>
+        <div class="tab-content mod-content">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('推送链接baseurl'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="seo_base_url" class="form-control" type="text" value="<?php echo $this->setting['seo_base_url']; ?>"/>
+                                <span class="help-block">推送链接的网站根地址，需要以/结尾。例如：http://www.naokr.com/</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('推送链接baseurl（移动版）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="seo_base_url_m" class="form-control" type="text" value="<?php echo $this->setting['seo_base_url_m']; ?>"/>
+                                <span class="help-block">推送链接的网站根地址（移动版），需要以/结尾。例如：http://m.naokr.com/</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('百度推送准入密钥'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="baidu_push_token" class="form-control" type="text" value="<?php echo $this->setting['baidu_push_token']; ?>"/>
+                                <span class="help-block">百度推送的准入密钥，可从百度站长工具的链接提交分类中获取，例如：2dg2Tedaypll7trH</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('百度推送站点名称'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="baidu_push_site" class="form-control" type="text" value="<?php echo $this->setting['baidu_push_site']; ?>"/>
+                                <span class="help-block">百度推送的站点名称，可从百度站长工具的链接提交分类中获取，例如：www.naokr.com</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('百度推送站点名称（移动版）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="baidu_push_site_m" class="form-control" type="text" value="<?php echo $this->setting['baidu_push_site_m']; ?>"/>
+                                <span class="help-block">百度推送的站点名称（移动版），可从百度站长工具的链接提交分类中获取，例如：m.naokr.com</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <?php } ?>
 
         <div class="tab-content mod-content mod-one-btn">

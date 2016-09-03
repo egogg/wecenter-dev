@@ -23,6 +23,11 @@ $config[] = array(
             'id' => 604,
             'title' => AWS_APP::lang()->_t('Sitemap管理'),
             'url' => 'admin/settings/category-sitemap'
+        ),
+        array(
+            'id' => 605,
+            'title' => AWS_APP::lang()->_t('SEO优化'),
+            'url' => 'admin/settings/category-seo'
         )
     )
 );
