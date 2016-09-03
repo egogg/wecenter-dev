@@ -105,7 +105,7 @@ class sitemap_class extends AWS_MODEL
 		return $entries;
 	}
 
-	public function generate_sitemap($filename, $baseurl, $entries, $ismobile = false)
+	public function generate_sitemap($filename, $baseurl, $entries, $ismobile = false, $for = 'baidu')
 	{
 		$xml = new DomDocument('1.0', 'utf-8'); 
 		$xml->formatOutput = true; 
@@ -115,6 +115,22 @@ class sitemap_class extends AWS_MODEL
 		$urlset -> appendChild(
 		    new DomAttr('xmlns', 'http://www.sitemaps.org/schemas/sitemap/0.9')
 		);
+
+		if($ismobile)
+		{
+			if($for == 'baidu')
+			{
+				$urlset -> appendChild(
+				    new DomAttr('xmlns:mobile', 'http://www.baidu.com/schemas/sitemap-mobile/1/')
+				);
+			}
+			else if ($for = 'google')
+			{
+				$urlset -> appendChild(
+				    new DomAttr('xmlns:mobile', 'http://www.google.com/schemas/sitemap-mobile/1.0')
+				);
+			}
+		}
 
 		// appending it to document
 		$xml -> appendChild($urlset);
@@ -164,7 +180,8 @@ class sitemap_class extends AWS_MODEL
         {
         	return self::SITEMAP_DIR_NOT_EXIST;
         }
-        $sitemap_filename = $sitemap_dir . '/sitemap.xml';
+        $sitemap_filename_baidu = $sitemap_dir . '/sitemap.baidu.xml';
+        $sitemap_filename_google = $sitemap_dir . '/sitemap.google.xml';
 
         if(!is_writable($sitemap_dir))
         {
@@ -175,7 +192,8 @@ class sitemap_class extends AWS_MODEL
         {
             return self::SITEMAP_DIR_NOT_EXIST_M;
         }
-        $sitemap_filename_m = $sitemap_dir_m . '/sitemap.xml';
+        $sitemap_filename_baidu_m = $sitemap_dir_m . '/sitemap.baidu.xml';
+        $sitemap_filename_google_m = $sitemap_dir_m . '/sitemap.google.xml';
 
         if(!is_writable($sitemap_dir_m))
         {
@@ -193,8 +211,10 @@ class sitemap_class extends AWS_MODEL
         }
 
         $entries = $this->model('sitemap')->get_site_entries($update_time);
-        $this->model('sitemap')->generate_sitemap($sitemap_filename, $sitemap_basename, $entries);
-        $this->model('sitemap')->generate_sitemap($sitemap_filename_m, $sitemap_basename_m, $entries, true);
+        $this->model('sitemap')->generate_sitemap($sitemap_filename_baidu, $sitemap_basename, $entries, false, 'baidu');
+        $this->model('sitemap')->generate_sitemap($sitemap_filename_baidu_m, $sitemap_basename_m, $entries, true, 'baidu');
+        $this->model('sitemap')->generate_sitemap($sitemap_filename_google, $sitemap_basename, $entries, false, 'google');
+        $this->model('sitemap')->generate_sitemap($sitemap_filename_google_m, $sitemap_basename_m, $entries, true, 'google');
 
         return self::SITEMAP_SUCCESS;
 	}

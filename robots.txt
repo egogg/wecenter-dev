@@ -13,4 +13,5 @@ Disallow: /views/
 Disallow: /static/
 Disallow: /?/admin/
 
-Sitemap: http://www.naokr.com/sitemap.xml.gz
+Sitemap: http://www.naokr.com/sitemap.baidu.xml.gz
+Sitemap: http://www.naokr.com/sitemap.google.xml.gz
