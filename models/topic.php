@@ -1547,4 +1547,15 @@ class topic_class extends AWS_MODEL
 
 		return $has_relation;
 	}
+
+	public function get_topic_entries_by_datetime($datetime)
+	{
+		$where = '';
+		if($datetime)
+		{
+			$where = ' WHERE add_time > ' . intval($datetime);
+		}
+
+		return $this->query_all("SELECT topic_id, add_time FROM " . get_table('topic') . $where);
+	}
 }

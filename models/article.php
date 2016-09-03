@@ -488,4 +488,15 @@ class article_class extends AWS_MODEL
 
 		$this->model('posts')->set_posts_index($article_id, 'article');
 	}
+
+	public function get_article_entries_by_datetime($datetime = null)
+	{
+		$where = '';
+		if($datetime)
+		{
+			$where = ' WHERE add_time > ' . intval($datetime);
+		}
+
+		return $this->query_all("SELECT id, add_time FROM " . get_table('article') . $where);
+	}
 }

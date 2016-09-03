@@ -2121,4 +2121,15 @@ class question_class extends AWS_MODEL
 		
 		return $recommend_users;
 	}
+
+	public function get_question_entries_by_datetime($datetime = null)
+	{
+		$where = '';
+		if($datetime)
+		{
+			$where = ' WHERE add_time > ' . intval($datetime);
+		}
+
+		return $this->query_all("SELECT question_id, update_time FROM " . get_table('question') . $where);
+	}
 }

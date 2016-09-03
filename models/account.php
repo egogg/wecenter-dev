@@ -1581,4 +1581,15 @@ class account_class extends AWS_MODEL
         }
         return $this->get_users_list("forbidden = 0 AND group_id >=4 AND group_id < 99", $limit, true, false, $sort_key);
     }
+
+    public function get_user_entries_by_datetime($datetime)
+    {
+        $where = '';
+        if($datetime)
+        {
+            $where = ' WHERE reg_time > ' . intval($datetime);
+        }
+
+        return $this->query_all("SELECT uid, last_active FROM " . get_table('users') . $where);
+    }
 }

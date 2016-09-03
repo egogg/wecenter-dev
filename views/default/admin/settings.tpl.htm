@@ -1945,7 +1945,98 @@
                 </tr>
             </table>
         </div>
+        
+        <?php } else if ($_GET['category'] == 'sitemap') { ?>
+        <div class="mod-head">
+            <h3>
+                <span class="pull-left"><?php _e('Sitemap管理'); ?></span>
+
+                <span class="pull-right"><a href="javascript:;" onclick="AWS.ajax_post($('#settings_form'));" class="btn btn-xs btn-primary mod-site-save"><?php _e('快速保存'); ?></a></span>
+            </h3>
+        </div>
+        <div class="tab-content mod-content">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('sitemap.xml 存放目录'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="sitemap_dir" class="form-control" type="text" value="<?php echo $this->setting['sitemap_dir']; ?>"/>
+                                <span class="help-block">末尾不带 / 或 \，目前网站根目录绝对路径：<?php echo ROOT_PATH; ?></span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('网站根地址'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="sitemap_basename" class="form-control" type="text" value="<?php echo $this->setting['sitemap_basename']; ?>"/>
+                                <span class="help-block">网站链接根地址，例如：http://www.naokr.com/</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('sitemap.xml 存放目录（移动版）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="sitemap_dir_m" class="form-control" type="text" value="<?php echo $this->setting['sitemap_dir_m']; ?>"/>
+                                <span class="help-block">移动版目录，绝对路径，需咨询后台管理员进行设置</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('网站根地址（移动版）'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="sitemap_basename_m" class="form-control" type="text" value="<?php echo $this->setting['sitemap_basename_m']; ?>"/>
+                                <span class="help-block">移动版网站链接根地址， 例如http://m.naokr.com/</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('自动更新频率'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <select class="form-control" name="sitemap_update_frequency">
+                                    <option value="disabled"<?php if ($this->setting['sitemap_update_frequency'] == 'disabled') { ?> selected="selected"<?php } ?>>关闭自动更新</option>
+                                    <option value="week"<?php if ($this->setting['sitemap_update_frequency'] == 'day') { ?> selected="selected"<?php } ?>>每天</option>
+                                    <option value="week"<?php if ($this->setting['sitemap_update_frequency'] == 'week') { ?> selected="selected"<?php } ?>>每周</option>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label"><?php _e('sitemap.xml 最后更新日期'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <?php if($this->setting['sitemap_update_time']) { ?>
+                                    <span><?php echo date('Y-m-d g:i:s', $this->setting['sitemap_update_time']); ?></span>
+                                <?php } else { ?>
+                                    <span>尚未更新</span>
+                                <?php } ?>
+                                    
+                                <div class="help-block">
+                                    <input type="submit" class="btn btn-primary" onclick="$('#sitemap_form').submit(); return false;" value="<?php _e('手动更新'); ?>">
+                                    <input type="submit" class="btn btn-danger" onclick="$('#sitemap_form_reset').submit(); return false;" value="<?php _e('重新生成全站sitemap'); ?>">
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <?php } ?>
+
         <div class="tab-content mod-content mod-one-btn">
             <div class="center-block">
                 <input type="button" value="<?php _e('保存设置'); ?>" class="btn btn-primary" onclick="AWS.ajax_post($('#settings_form'));" />
@@ -1953,6 +2044,11 @@
         </div>
     </div>
     </form>
+    
+    <?php if ($_GET['category'] == 'sitemap') { ?>
+        <form action="admin/sitemap/init/" method="post" id="sitemap_form"></form>
+        <form action="admin/sitemap/init/reset-1" method="post" id="sitemap_form_reset"></form>
+    <?php } ?>
 </div>
 
 <?php TPL::output('admin/global/footer.tpl.htm'); ?>

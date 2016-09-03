@@ -167,6 +167,11 @@ class crond_class extends AWS_MODEL
         $this->model('question')->auto_lock_question();
         $this->model('active')->clean_expire();
 
+        if(get_setting('sitemap_update_frequency') == 'day')
+        {
+            $this->model('sitemap')->generate_sitemap_all();
+        }
+
         if ((!get_setting('db_engine') OR get_setting('db_engine') == 'MyISAM') AND !defined('IN_SAE'))
         {
             $this->query('OPTIMIZE TABLE `' . get_table('sessions') . '`');
@@ -180,5 +185,10 @@ class crond_class extends AWS_MODEL
     {
         $this->model('system')->clean_break_attach();
         $this->model('email')->mail_queue_error_clean();
+
+        if(get_setting('sitemap_update_frequency') == 'week')
+        {
+            $this->model('sitemap')->generate_sitemap_all();
+        }
     }
 }
